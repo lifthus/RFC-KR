@@ -134,38 +134,19 @@ in the Revised BSD License.
 
 HTTP/1.1은 멀티플렉싱 레이어를 포함하지 않으므로, 병렬적인 다중 TCP 연결을 사용해 요청을 처리한다. 하지만 TCP의 혼잡 제어는 하나의 연결 단위로 이루어질 뿐 다중 연결 전체를 고려해 이루어지는 것이 아니기 때문에, 이러한 병렬적인 다중 연결은 혼잡 제어와 네트워크 효율에 부정적인 영향을 미친다.
 
-HTTP/2 ([HTTP/2]) introduced a binary framing and multiplexing layer
-to improve latency without modifying the transport layer. However,
-because the parallel nature of HTTP/2's multiplexing is not visible
-to TCP's loss recovery mechanisms, a lost or reordered packet causes
-all active transactions to experience a stall regardless of whether
-that transaction was directly impacted by the lost packet.
 [HTTP/2](https://datatracker.ietf.org/doc/html/rfc7540)는 텍스트 기반의 HTTP/1과 달리 바이너리 프레이밍과 멀티플렉싱 레이어를 도입해 전송 계층의 수정 없이 지연 시간을 개선한다. 그러나 HTTP/2 멀티플렉싱의 병렬적인 속성을 TCP의 손실 복구 매커니즘 쪽에서는 알 수 없기 때문에, 패킷의 손실이나 재정렬은 TCP 연결 상 모든 활성 트랜잭션들이 손실 패킷과 직접적으로 관련있는지 상관없이 스톨되게 한다.
 
-(역주:바이너리 프레이밍과 멀티플렉싱은 메시지를 여러 바이너리 조각으로 잘게 쪼개서 전송할 수 있도록 한다. TCP는 패킷 손실등의 문제가 발생하면 재전송을 요청하는데, 그동안 후속 패킷의 전송이 막힌다. 이를 Head-of-line blocking이라고 한다.)
+(역주:바이너리 프레이밍과 멀티플렉싱은 메시지를 여러 바이너리 조각으로 잘게 쪼개서 순서와 상관없이 전송할 수 있도록 하는 것을 말한다. 그리고 TCP는 패킷 손실등의 문제가 발생하면 재전송을 요청하는데, 그동안 후속 패킷의 전송이 막힌다(stall). 이를 Head-of-line blocking이라고 한다.)
 
 ### 1.2. QUIC 프로토콜 도입
 
-The QUIC transport protocol incorporates stream multiplexing and per-
-stream flow control, similar to that provided by the HTTP/2 framing
-layer. By providing reliability at the stream level and congestion
-control across the entire connection, QUIC has the capability to
-improve the performance of HTTP compared to a TCP mapping. QUIC also
-incorporates TLS 1.3 ([TLS]) at the transport layer, offering
-comparable confidentiality and integrity to running TLS over TCP,
-with the improved connection setup latency of TCP Fast Open ([TFO]).
+QUIC 전송 프로토콜은 HTTP/2의 프레이밍 레이어에서 제공하는 것과 비슷한 스트림 멀티플렉싱과 스트림 별 흐름 제어 기능을 제공한다. 스트림 수준에서 신뢰성을 제공하고 연결 전체에 걸친 혼잡 제어를 수행함으로써, QUIC은 TCP에 비해 HTTP 성능을 향상시키게 된다. QUIC은 또한 전송 계층에 [TLS 1.3](https://datatracker.ietf.org/doc/html/rfc8446)을 통합하여, [TCP Fast Open](https://datatracker.ietf.org/doc/html/rfc7413)의 향상된 초기 연결 시간을 가지는 TCP와 TLS의 조합과 같은 수준의 기밀성과 무결성을 제공한다.
 
-This document defines HTTP/3: a mapping of HTTP semantics over the
-QUIC transport protocol, drawing heavily on the design of HTTP/2.
-HTTP/3 relies on QUIC to provide confidentiality and integrity
-protection of data; peer authentication; and reliable, in-order, per-
-stream delivery. While delegating stream lifetime and flow-control
-issues to QUIC, a binary framing similar to the HTTP/2 framing is
-used on each stream. Some HTTP/2 features are subsumed by QUIC,
-while other features are implemented atop QUIC.
+이 문서는 HTTP/3를 정의한다. HTTP/3는 HTTP semantics의 QUIC 전송 프로토콜에 대한 매핑이며, HTTP/2 설계에 크게 의존한다. HTTP/3는 기밀성과 데이터 무결성 보호, 피어 인증, 각 스트림의 신뢰 가능하고 순서가 보장되는 전송을 제공하기 위해 QUIC에 의존한다. 스트림 생명주기와 흐름 제어 이슈를 QUIC에게 맡기며, 각 스트림에서는 HTTP/2와 비슷한 바이너리 프레이밍이 적용된다. HTTP/2의 일부 기능은 QUIC에 포함되며, 이외의 기능들은 QUIC 위 계층에서 구현된다.
 
 QUIC is described in [QUIC-TRANSPORT]. For a full description of
 HTTP/2, see [HTTP/2].
+QUIC에 관한 내용은 [RFC 9000](https://datatracker.ietf.org/doc/html/rfc9000)에서 기술된다. HTTP/2의 전체 내용은 [RFC 7540](https://datatracker.ietf.org/doc/html/rfc7540)에서 확인할 수 있다.
 
 2.  HTTP/3 Protocol Overview
 
