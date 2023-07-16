@@ -42,9 +42,9 @@ in the Revised BSD License.
 
 ## 목차
 
-######[1. 소개](#1-소개-introduction)
-[1.1. 이전 HTTP 버전들]()
-[1.2. QUIC 프로토콜 도입]()
+######[1. 소개](#1-소개)
+[1.1. 이전 HTTP 버전들](#11-이전-http-버전들)
+[1.2. QUIC 프로토콜 도입](#12-quic-프로토콜-도입)
 
 ######[2. HTTP/3 개요]()
 [2.1. 문서 구성]()
@@ -124,27 +124,15 @@ in the Revised BSD License.
    Index
    Author's Address
 
-## 1. 소개 Introduction
+## 1. 소개
 
-HTTP semantics ([HTTP]) are used for a broad range of services on the
-Internet. These semantics have most commonly been used with HTTP/1.1
-and HTTP/2. HTTP/1.1 has been used over a variety of transport and
-session layers, while HTTP/2 has been used primarily with TLS over
-TCP. HTTP/3 supports the same semantics over a new transport
-protocol: QUIC.
+[HTTP semantics](https://www.rfc-editor.org/rfc/rfc9110)은 인터넷상의 광범위한 서비스들에서 사용된다. 대표적으로 HTTP/1.1과 HTTP2가 있다. HTTP/1.1은 다양한 전송 계층과 세션 계층 위에서 작동해왔고, HTTP/2는 주로 TCP 위에서 TLS와 함께 사용돼왔다. HTTP/3는 똑같은 체계를 새로운 전송 프로토콜인 QUIC 위에서 구현한다.
 
-1.1. Prior Versions of HTTP
+### 1.1. 이전 HTTP 버전들
 
-HTTP/1.1 ([HTTP/1.1]) uses whitespace-delimited text fields to convey
-HTTP messages. While these exchanges are human readable, using
-whitespace for message formatting leads to parsing complexity and
-excessive tolerance of variant behavior.
+[HTTP/1.1](https://datatracker.ietf.org/doc/html/rfc2616)는 HTTP 메세지를 전달하기 위해 공백으로 구분된 텍스트 필드를 사용한다. 이러한 형태는 사람이 메시지를 읽을 수 있도록 해주지만, 파싱을 복잡하게 만들고 과도한 변형을 허용하게 된다.
 
-Because HTTP/1.1 does not include a multiplexing layer, multiple TCP
-connections are often used to service requests in parallel. However,
-that has a negative impact on congestion control and network
-efficiency, since TCP does not share congestion control across
-multiple connections.
+HTTP/1.1은 멀티플렉싱 레이어를 포함하지 않으므로, 병렬적인 다중 TCP 연결을 사용해 요청을 처리한다. 하지만 TCP의 혼잡 제어는 하나의 연결 단위로 이루어질 뿐 다중 연결 전체를 고려해 이루어지는 것이 아니기 때문에, 이러한 병렬적인 다중 연결은 혼잡 제어와 네트워크 효율에 부정적인 영향을 미친다.
 
 HTTP/2 ([HTTP/2]) introduced a binary framing and multiplexing layer
 to improve latency without modifying the transport layer. However,
@@ -152,8 +140,11 @@ because the parallel nature of HTTP/2's multiplexing is not visible
 to TCP's loss recovery mechanisms, a lost or reordered packet causes
 all active transactions to experience a stall regardless of whether
 that transaction was directly impacted by the lost packet.
+[HTTP/2](https://datatracker.ietf.org/doc/html/rfc7540)는 텍스트 기반의 HTTP/1과 달리 바이너리 프레이밍과 멀티플렉싱 레이어를 도입해 전송 계층의 수정 없이 지연 시간을 개선한다. 그러나 HTTP/2 멀티플렉싱의 병렬적인 속성을 TCP의 손실 복구 매커니즘 쪽에서는 알 수 없기 때문에, 패킷의 손실이나 재정렬은 TCP 연결 상 모든 활성 트랜잭션들이 손실 패킷과 직접적으로 관련있는지 상관없이 스톨되게 한다.
 
-1.2. Delegation to QUIC
+(역주:바이너리 프레이밍과 멀티플렉싱은 메시지를 여러 바이너리 조각으로 잘게 쪼개서 전송할 수 있도록 한다. TCP는 패킷 손실등의 문제가 발생하면 재전송을 요청하는데, 그동안 후속 패킷의 전송이 막힌다. 이를 Head-of-line blocking이라고 한다.)
+
+### 1.2. QUIC 프로토콜 도입
 
 The QUIC transport protocol incorporates stream multiplexing and per-
 stream flow control, similar to that provided by the HTTP/2 framing
