@@ -42,146 +42,111 @@ in the Revised BSD License.
 
 ## 목차
 
-1.  Introduction
-    1.1. Prior Versions of HTTP
-    1.2. Delegation to QUIC
-2.  HTTP/3 Protocol Overview
-    2.1. Document Organization
-    2.2. Conventions and Terminology
-3.  Connection Setup and Management
-    3.1. Discovering an HTTP/3 Endpoint
-    3.1.1. HTTP Alternative Services
-    3.1.2. Other Schemes
-    3.2. Connection Establishment
-    3.3. Connection Reuse
-4.  Expressing HTTP Semantics in HTTP/3
-    4.1. HTTP Message Framing
-    4.1.1. Request Cancellation and Rejection
-    4.1.2. Malformed Requests and Responses
-    4.2. HTTP Fields
-    4.2.1. Field Compression
-    4.2.2. Header Size Constraints
-    4.3. HTTP Control Data
-    4.3.1. Request Pseudo-Header Fields
-    4.3.2. Response Pseudo-Header Fields
-    4.4. The CONNECT Method
-    4.5. HTTP Upgrade
-    4.6. Server Push
-5.  Connection Closure
-    5.1. Idle Connections
-    5.2. Connection Shutdown
-    5.3. Immediate Application Closure
-    5.4. Transport Closure
-6.  Stream Mapping and Usage
-    6.1. Bidirectional Streams
-    6.2. Unidirectional Streams
-    6.2.1. Control Streams
-    6.2.2. Push Streams
-    6.2.3. Reserved Stream Types
-7.  HTTP Framing Layer
-    7.1. Frame Layout
-    7.2. Frame Definitions
-    7.2.1. DATA
-    7.2.2. HEADERS
-    7.2.3. CANCEL_PUSH
-    7.2.4. SETTINGS
-    7.2.5. PUSH_PROMISE
-    7.2.6. GOAWAY
-    7.2.7. MAX_PUSH_ID
-    7.2.8. Reserved Frame Types
-8.  Error Handling
-    8.1. HTTP/3 Error Codes
-9.  Extensions to HTTP/3
-10. Security Considerations
-    10.1. Server Authority
-    10.2. Cross-Protocol Attacks
-    10.3. Intermediary-Encapsulation Attacks
-    10.4. Cacheability of Pushed Responses
-    10.5. Denial-of-Service Considerations
-    10.5.1. Limits on Field Section Size
-    10.5.2. CONNECT Issues
-    10.6. Use of Compression
-    10.7. Padding and Traffic Analysis
-    10.8. Frame Parsing
-    10.9. Early Data
-    10.10. Migration
-    10.11. Privacy Considerations
-11. IANA Considerations
-    11.1. Registration of HTTP/3 Identification String
-    11.2. New Registries
-    11.2.1. Frame Types
-    11.2.2. Settings Parameters
-    11.2.3. Error Codes
-    11.2.4. Stream Types
-12. References
-    12.1. Normative References
-    12.2. Informative References
-    Appendix A. Considerations for Transitioning from HTTP/2
-    A.1. Streams
-    A.2. HTTP Frame Types
-    A.2.1. Prioritization Differences
-    A.2.2. Field Compression Differences
-    A.2.3. Flow-Control Differences
-    A.2.4. Guidance for New Frame Type Definitions
-    A.2.5. Comparison of HTTP/2 and HTTP/3 Frame Types
-    A.3. HTTP/2 SETTINGS Parameters
-    A.4. HTTP/2 Error Codes
-    A.4.1. Mapping between HTTP/2 and HTTP/3 Errors
-    Acknowledgments
-    Index
-    Author's Address
+######[1. 소개](#1-소개)
+[1.1. 이전 HTTP 버전들](#11-이전-http-버전들)
+[1.2. QUIC 프로토콜 도입](#12-quic-프로토콜-도입)
 
-13. Introduction
+######[2. HTTP/3 개요]()
+[2.1. 문서 구성]()
+[2.2. 규칙과 용어]()
 
-HTTP semantics ([HTTP]) are used for a broad range of services on the
-Internet. These semantics have most commonly been used with HTTP/1.1
-and HTTP/2. HTTP/1.1 has been used over a variety of transport and
-session layers, while HTTP/2 has been used primarily with TLS over
-TCP. HTTP/3 supports the same semantics over a new transport
-protocol: QUIC.
+3. Connection Setup and Management
+   3.1. Discovering an HTTP/3 Endpoint
+   3.1.1. HTTP Alternative Services
+   3.1.2. Other Schemes
+   3.2. Connection Establishment
+   3.3. Connection Reuse 4. Expressing HTTP Semantics in HTTP/3
+   4.1. HTTP Message Framing
+   4.1.1. Request Cancellation and Rejection
+   4.1.2. Malformed Requests and Responses
+   4.2. HTTP Fields
+   4.2.1. Field Compression
+   4.2.2. Header Size Constraints
+   4.3. HTTP Control Data
+   4.3.1. Request Pseudo-Header Fields
+   4.3.2. Response Pseudo-Header Fields
+   4.4. The CONNECT Method
+   4.5. HTTP Upgrade
+   4.6. Server Push 5. Connection Closure
+   5.1. Idle Connections
+   5.2. Connection Shutdown
+   5.3. Immediate Application Closure
+   5.4. Transport Closure 6. Stream Mapping and Usage
+   6.1. Bidirectional Streams
+   6.2. Unidirectional Streams
+   6.2.1. Control Streams
+   6.2.2. Push Streams
+   6.2.3. Reserved Stream Types 7. HTTP Framing Layer
+   7.1. Frame Layout
+   7.2. Frame Definitions
+   7.2.1. DATA
+   7.2.2. HEADERS
+   7.2.3. CANCEL_PUSH
+   7.2.4. SETTINGS
+   7.2.5. PUSH_PROMISE
+   7.2.6. GOAWAY
+   7.2.7. MAX_PUSH_ID
+   7.2.8. Reserved Frame Types 8. Error Handling
+   8.1. HTTP/3 Error Codes 9. Extensions to HTTP/3 10. Security Considerations
+   10.1. Server Authority
+   10.2. Cross-Protocol Attacks
+   10.3. Intermediary-Encapsulation Attacks
+   10.4. Cacheability of Pushed Responses
+   10.5. Denial-of-Service Considerations
+   10.5.1. Limits on Field Section Size
+   10.5.2. CONNECT Issues
+   10.6. Use of Compression
+   10.7. Padding and Traffic Analysis
+   10.8. Frame Parsing
+   10.9. Early Data
+   10.10. Migration
+   10.11. Privacy Considerations 11. IANA Considerations
+   11.1. Registration of HTTP/3 Identification String
+   11.2. New Registries
+   11.2.1. Frame Types
+   11.2.2. Settings Parameters
+   11.2.3. Error Codes
+   11.2.4. Stream Types 12. References
+   12.1. Normative References
+   12.2. Informative References
+   Appendix A. Considerations for Transitioning from HTTP/2
+   A.1. Streams
+   A.2. HTTP Frame Types
+   A.2.1. Prioritization Differences
+   A.2.2. Field Compression Differences
+   A.2.3. Flow-Control Differences
+   A.2.4. Guidance for New Frame Type Definitions
+   A.2.5. Comparison of HTTP/2 and HTTP/3 Frame Types
+   A.3. HTTP/2 SETTINGS Parameters
+   A.4. HTTP/2 Error Codes
+   A.4.1. Mapping between HTTP/2 and HTTP/3 Errors
+   Acknowledgments
+   Index
+   Author's Address
 
-1.1. Prior Versions of HTTP
+## 1. 소개
 
-HTTP/1.1 ([HTTP/1.1]) uses whitespace-delimited text fields to convey
-HTTP messages. While these exchanges are human readable, using
-whitespace for message formatting leads to parsing complexity and
-excessive tolerance of variant behavior.
+[HTTP semantics](https://www.rfc-editor.org/rfc/rfc9110)은 인터넷상의 광범위한 서비스들에서 사용된다. 대표적으로 HTTP/1.1과 HTTP2가 있다. HTTP/1.1은 다양한 전송 계층과 세션 계층 위에서 작동해왔고, HTTP/2는 주로 TCP 위에서 TLS와 함께 사용돼왔다. HTTP/3는 똑같은 체계를 새로운 전송 프로토콜인 QUIC 위에서 구현한다.
 
-Because HTTP/1.1 does not include a multiplexing layer, multiple TCP
-connections are often used to service requests in parallel. However,
-that has a negative impact on congestion control and network
-efficiency, since TCP does not share congestion control across
-multiple connections.
+### 1.1. 이전 HTTP 버전들
 
-HTTP/2 ([HTTP/2]) introduced a binary framing and multiplexing layer
-to improve latency without modifying the transport layer. However,
-because the parallel nature of HTTP/2's multiplexing is not visible
-to TCP's loss recovery mechanisms, a lost or reordered packet causes
-all active transactions to experience a stall regardless of whether
-that transaction was directly impacted by the lost packet.
+[HTTP/1.1](https://datatracker.ietf.org/doc/html/rfc2616)는 HTTP 메세지를 전달하기 위해 공백으로 구분된 텍스트 필드를 사용한다. 이러한 형태는 사람이 메시지를 읽을 수 있도록 해주지만, 파싱을 복잡하게 만들고 과도한 변형을 허용하게 된다.
 
-1.2. Delegation to QUIC
+HTTP/1.1은 멀티플렉싱 레이어를 포함하지 않으므로, 병렬적인 다중 TCP 연결을 사용해 요청을 처리한다. 하지만 TCP의 혼잡 제어는 하나의 연결 단위로 이루어질 뿐 다중 연결 전체를 고려해 이루어지는 것이 아니기 때문에, 이러한 병렬적인 다중 연결은 혼잡 제어와 네트워크 효율에 부정적인 영향을 미친다.
 
-The QUIC transport protocol incorporates stream multiplexing and per-
-stream flow control, similar to that provided by the HTTP/2 framing
-layer. By providing reliability at the stream level and congestion
-control across the entire connection, QUIC has the capability to
-improve the performance of HTTP compared to a TCP mapping. QUIC also
-incorporates TLS 1.3 ([TLS]) at the transport layer, offering
-comparable confidentiality and integrity to running TLS over TCP,
-with the improved connection setup latency of TCP Fast Open ([TFO]).
+[HTTP/2](https://datatracker.ietf.org/doc/html/rfc7540)는 텍스트 기반의 HTTP/1과 달리 바이너리 프레이밍과 멀티플렉싱 레이어를 도입해 전송 계층의 수정 없이 지연 시간을 개선한다. 그러나 HTTP/2 멀티플렉싱의 병렬적인 속성을 TCP의 손실 복구 매커니즘 쪽에서는 알 수 없기 때문에, 패킷의 손실이나 재정렬은 TCP 연결 상 모든 활성 트랜잭션들이 손실 패킷과 직접적으로 관련있는지 상관없이 스톨되게 한다.
 
-This document defines HTTP/3: a mapping of HTTP semantics over the
-QUIC transport protocol, drawing heavily on the design of HTTP/2.
-HTTP/3 relies on QUIC to provide confidentiality and integrity
-protection of data; peer authentication; and reliable, in-order, per-
-stream delivery. While delegating stream lifetime and flow-control
-issues to QUIC, a binary framing similar to the HTTP/2 framing is
-used on each stream. Some HTTP/2 features are subsumed by QUIC,
-while other features are implemented atop QUIC.
+(역주:바이너리 프레이밍과 멀티플렉싱은 메시지를 여러 바이너리 조각으로 잘게 쪼개서 순서와 상관없이 전송할 수 있도록 하는 것을 말한다. 그리고 TCP는 패킷 손실등의 문제가 발생하면 재전송을 요청하는데, 그동안 후속 패킷의 전송이 막힌다(stall). 이를 Head-of-line blocking이라고 한다.)
+
+### 1.2. QUIC 프로토콜 도입
+
+QUIC 전송 프로토콜은 HTTP/2의 프레이밍 레이어에서 제공하는 것과 비슷한 스트림 멀티플렉싱과 스트림 별 흐름 제어 기능을 제공한다. 스트림 수준에서 신뢰성을 제공하고 연결 전체에 걸친 혼잡 제어를 수행함으로써, QUIC은 TCP에 비해 HTTP 성능을 향상시키게 된다. QUIC은 또한 전송 계층에 [TLS 1.3](https://datatracker.ietf.org/doc/html/rfc8446)을 통합하여, [TCP Fast Open](https://datatracker.ietf.org/doc/html/rfc7413)의 향상된 초기 연결 시간을 가지는 TCP와 TLS의 조합과 같은 수준의 기밀성과 무결성을 제공한다.
+
+이 문서는 HTTP/3를 정의한다. HTTP/3는 HTTP semantics의 QUIC 전송 프로토콜에 대한 매핑이며, HTTP/2 설계에 크게 의존한다. HTTP/3는 기밀성과 데이터 무결성 보호, 피어 인증, 각 스트림의 신뢰 가능하고 순서가 보장되는 전송을 제공하기 위해 QUIC에 의존한다. 스트림 생명주기와 흐름 제어 이슈를 QUIC에게 맡기며, 각 스트림에서는 HTTP/2와 비슷한 바이너리 프레이밍이 적용된다. HTTP/2의 일부 기능은 QUIC에 포함되며, 이외의 기능들은 QUIC 위 계층에서 구현된다.
 
 QUIC is described in [QUIC-TRANSPORT]. For a full description of
 HTTP/2, see [HTTP/2].
+QUIC에 관한 내용은 [RFC 9000](https://datatracker.ietf.org/doc/html/rfc9000)에서 기술된다. HTTP/2의 전체 내용은 [RFC 7540](https://datatracker.ietf.org/doc/html/rfc7540)에서 확인할 수 있다.
 
 2.  HTTP/3 Protocol Overview
 
