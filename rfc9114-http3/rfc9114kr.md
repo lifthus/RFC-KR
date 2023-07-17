@@ -52,79 +52,80 @@ in the Revised BSD License.
 [2.1. 문서 구성](#21-문서-구성)
 [2.2. 규칙과 용어](#22-규칙과-용어)
 
-3. Connection Setup and Management
-   3.1. Discovering an HTTP/3 Endpoint
-   3.1.1. HTTP Alternative Services
-   3.1.2. Other Schemes
-   3.2. Connection Establishment
-   3.3. Connection Reuse 4. Expressing HTTP Semantics in HTTP/3
-   4.1. HTTP Message Framing
-   4.1.1. Request Cancellation and Rejection
-   4.1.2. Malformed Requests and Responses
-   4.2. HTTP Fields
-   4.2.1. Field Compression
-   4.2.2. Header Size Constraints
-   4.3. HTTP Control Data
-   4.3.1. Request Pseudo-Header Fields
-   4.3.2. Response Pseudo-Header Fields
-   4.4. The CONNECT Method
-   4.5. HTTP Upgrade
-   4.6. Server Push 5. Connection Closure
-   5.1. Idle Connections
-   5.2. Connection Shutdown
-   5.3. Immediate Application Closure
-   5.4. Transport Closure 6. Stream Mapping and Usage
-   6.1. Bidirectional Streams
-   6.2. Unidirectional Streams
-   6.2.1. Control Streams
-   6.2.2. Push Streams
-   6.2.3. Reserved Stream Types 7. HTTP Framing Layer
-   7.1. Frame Layout
-   7.2. Frame Definitions
-   7.2.1. DATA
-   7.2.2. HEADERS
-   7.2.3. CANCEL_PUSH
-   7.2.4. SETTINGS
-   7.2.5. PUSH_PROMISE
-   7.2.6. GOAWAY
-   7.2.7. MAX_PUSH_ID
-   7.2.8. Reserved Frame Types 8. Error Handling
-   8.1. HTTP/3 Error Codes 9. Extensions to HTTP/3 10. Security Considerations
-   10.1. Server Authority
-   10.2. Cross-Protocol Attacks
-   10.3. Intermediary-Encapsulation Attacks
-   10.4. Cacheability of Pushed Responses
-   10.5. Denial-of-Service Considerations
-   10.5.1. Limits on Field Section Size
-   10.5.2. CONNECT Issues
-   10.6. Use of Compression
-   10.7. Padding and Traffic Analysis
-   10.8. Frame Parsing
-   10.9. Early Data
-   10.10. Migration
-   10.11. Privacy Considerations 11. IANA Considerations
-   11.1. Registration of HTTP/3 Identification String
-   11.2. New Registries
-   11.2.1. Frame Types
-   11.2.2. Settings Parameters
-   11.2.3. Error Codes
-   11.2.4. Stream Types 12. References
-   12.1. Normative References
-   12.2. Informative References
-   Appendix A. Considerations for Transitioning from HTTP/2
-   A.1. Streams
-   A.2. HTTP Frame Types
-   A.2.1. Prioritization Differences
-   A.2.2. Field Compression Differences
-   A.2.3. Flow-Control Differences
-   A.2.4. Guidance for New Frame Type Definitions
-   A.2.5. Comparison of HTTP/2 and HTTP/3 Frame Types
-   A.3. HTTP/2 SETTINGS Parameters
-   A.4. HTTP/2 Error Codes
-   A.4.1. Mapping between HTTP/2 and HTTP/3 Errors
-   Acknowledgments
-   Index
-   Author's Address
+###### [3. 연결 설정과 관리](#3-연결-설정과-관리)
+
+3.1. Discovering an HTTP/3 Endpoint
+3.1.1. HTTP Alternative Services
+3.1.2. Other Schemes
+3.2. Connection Establishment
+3.3. Connection Reuse 4. Expressing HTTP Semantics in HTTP/3
+4.1. HTTP Message Framing
+4.1.1. Request Cancellation and Rejection
+4.1.2. Malformed Requests and Responses
+4.2. HTTP Fields
+4.2.1. Field Compression
+4.2.2. Header Size Constraints
+4.3. HTTP Control Data
+4.3.1. Request Pseudo-Header Fields
+4.3.2. Response Pseudo-Header Fields
+4.4. The CONNECT Method
+4.5. HTTP Upgrade
+4.6. Server Push 5. Connection Closure
+5.1. Idle Connections
+5.2. Connection Shutdown
+5.3. Immediate Application Closure
+5.4. Transport Closure 6. Stream Mapping and Usage
+6.1. Bidirectional Streams
+6.2. Unidirectional Streams
+6.2.1. Control Streams
+6.2.2. Push Streams
+6.2.3. Reserved Stream Types 7. HTTP Framing Layer
+7.1. Frame Layout
+7.2. Frame Definitions
+7.2.1. DATA
+7.2.2. HEADERS
+7.2.3. CANCEL_PUSH
+7.2.4. SETTINGS
+7.2.5. PUSH_PROMISE
+7.2.6. GOAWAY
+7.2.7. MAX_PUSH_ID
+7.2.8. Reserved Frame Types 8. Error Handling
+8.1. HTTP/3 Error Codes 9. Extensions to HTTP/3 10. Security Considerations
+10.1. Server Authority
+10.2. Cross-Protocol Attacks
+10.3. Intermediary-Encapsulation Attacks
+10.4. Cacheability of Pushed Responses
+10.5. Denial-of-Service Considerations
+10.5.1. Limits on Field Section Size
+10.5.2. CONNECT Issues
+10.6. Use of Compression
+10.7. Padding and Traffic Analysis
+10.8. Frame Parsing
+10.9. Early Data
+10.10. Migration
+10.11. Privacy Considerations 11. IANA Considerations
+11.1. Registration of HTTP/3 Identification String
+11.2. New Registries
+11.2.1. Frame Types
+11.2.2. Settings Parameters
+11.2.3. Error Codes
+11.2.4. Stream Types 12. References
+12.1. Normative References
+12.2. Informative References
+Appendix A. Considerations for Transitioning from HTTP/2
+A.1. Streams
+A.2. HTTP Frame Types
+A.2.1. Prioritization Differences
+A.2.2. Field Compression Differences
+A.2.3. Flow-Control Differences
+A.2.4. Guidance for New Frame Type Definitions
+A.2.5. Comparison of HTTP/2 and HTTP/3 Frame Types
+A.3. HTTP/2 SETTINGS Parameters
+A.4. HTTP/2 Error Codes
+A.4.1. Mapping between HTTP/2 and HTTP/3 Errors
+Acknowledgments
+Index
+Author's Address
 
 ## 1. 소개
 
@@ -190,73 +191,53 @@ HTTP/2에서와 마찬가지로, 요청과 응답 필드들은 전송 간 압축
 
 ### 2.2. 규칙과 용어
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-"SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-"OPTIONAL" in this document are to be interpreted as described in
-BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
-capitals, as shown here.
+원본 영어 문서의 키워드 "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL"은 보여진 바와 같이 모두 대문자로 나타날 때 [BCP 14](https://www.rfc-editor.org/info/bcp14) [[RFC2119](https://datatracker.ietf.org/doc/html/rfc2119)] [[RFC8174](https://datatracker.ietf.org/doc/html/rfc8174)]에 기술된 대로 해석돼야 한다.
 
-This document uses the variable-length integer encoding from
-[QUIC-TRANSPORT].
+이 문서는 [QUIC-TRANSPORT](https://datatracker.ietf.org/doc/html/rfc9000)에서 사용되는 가변 길이 정수 인코딩을 사용한다.
 
-The following terms are used:
+원본 영어 문서에서 다음의 용어들이 사용된다:
 
-abort: An abrupt termination of a connection or stream, possibly due
-to an error condition.
+abort: 연결이나 스트림의 급작스러운 종료. 에러 조건에 의해 발생했을 가능성이 있다.
 
-client: The endpoint that initiates an HTTP/3 connection. Clients
-send HTTP requests and receive HTTP responses.
+client: HTTP/3 연결을 시작하는 엔드 포인트. 클라이언트는 HTTP 요청을 보내고 HTTP 응답을 받는다.
 
-connection: A transport-layer connection between two endpoints using
-QUIC as the transport protocol.
+connection: QUIC을 전송 프로토콜로 사용한 전송 계층에서 두 엔드 포인트의 연결.
 
-connection error: An error that affects the entire HTTP/3
-connection.
+connection error: HTTP/3 연결 전체에 영향을 주는 에러.
 
-endpoint: Either the client or server of the connection.
+endpoint: 연결의 클라이언트나 서버.
 
 frame: The smallest unit of communication on a stream in HTTP/3,
 consisting of a header and a variable-length sequence of bytes
 structured according to the frame type.
 
-      Protocol elements called "frames" exist in both this document and
-      [QUIC-TRANSPORT].  Where frames from [QUIC-TRANSPORT] are
-      referenced, the frame name will be prefaced with "QUIC".  For
-      example, "QUIC CONNECTION_CLOSE frames".  References without this
-      preface refer to frames defined in Section 7.2.
+frame: 하나의 헤더와 프레임 타입에 따라 구조화된 하나의 가변 길이 바이트 시퀀스로 구성되는 HTTP/3 스트림 상 통신의 최소 단위
 
-HTTP/3 connection: A QUIC connection where the negotiated
-application protocol is HTTP/3.
+```
+"프레임"이라 불리는 프로토콜 요소는 이 HTTP/3 문서와 QUIC 문서 양 쪽에 모두 존재한다. 이 문서에서 QUIC의 프레임이 참조되는 경우 "QUIC CONNECTION_CLOSE frames"와 같이 프레임 이름 앞에 "QUIC"이라는 접두사가 붙을 것이다. 이러한 접두사가 없는 경우는 7.2절에 정의된 프레임을 가리킨다.
+```
 
-peer: An endpoint. When discussing a particular endpoint, "peer"
-refers to the endpoint that is remote to the primary subject of
-discussion.
+HTTP/3 connection: 애플리케이션 프로토콜로 HTTP/3를 사용하기로 합의된 QUIC 연결
 
-receiver: An endpoint that is receiving frames.
+peer: 하나의 엔드포인트. 특정 엔드포인트를 거론할 때, "peer"는 거론되는 엔드포인트에 반대편의 엔드포인트를 가리킨다.
 
-sender: An endpoint that is transmitting frames.
+receiver: 프레임들을 수신하는 엔드포인트
 
-server: The endpoint that accepts an HTTP/3 connection. Servers
-receive HTTP requests and send HTTP responses.
+sender: 프레임들을 전송하는 엔드포인트
 
-stream: A bidirectional or unidirectional bytestream provided by the
-QUIC transport. All streams within an HTTP/3 connection can be
-considered "HTTP/3 streams", but multiple stream types are defined
-within HTTP/3.
+server: HTTP/3 연결을 접수하는 엔드포인트. 서버는 HTTP 요청을 받고 HTTP 응답을 보낸다.
 
-stream error: An application-level error on the individual stream.
+stream: QUIC 전송에 의해 제공되는 양방향 혹은 단방향 바이트 스트림. 한 HTTP/3 연결의 모든 스트림들은 "HTTP/3 스트림"이라 할 수 있지만, HTTP/3 내부적으로 또 여러 스트림 타입들이 정의된다.
 
-The term "content" is defined in Section 6.4 of [HTTP].
+stream error: 각 스트림에서 발생하는 애플리케이션 레벨에서의 에러
 
-Finally, the terms "resource", "message", "user agent", "origin
-server", "gateway", "intermediary", "proxy", and "tunnel" are defined
-in Section 3 of [HTTP].
+"content"라는 용어는 [RFC 9110의 6.4절](https://www.rfc-editor.org/rfc/rfc9110#name-content)에서 정의된다.
 
-Packet diagrams in this document use the format defined in
-Section 1.3 of [QUIC-TRANSPORT] to illustrate the order and size of
-fields.
+마지막으로, "resource", "message", "user agent", "origin server", "gateway", "intermediary", "proxy" 와 "tunnel"이라는 용어들은 [RFC 9110의 3절](https://www.rfc-editor.org/rfc/rfc9110#name-terminology-and-core-concep)에 정의된다.
 
-3.  Connection Setup and Management
+이 문서의 패킷 다이어그램들은[RFC 9000의 1.3절](https://datatracker.ietf.org/doc/html/rfc9000#section-1.3)에 정의된 포맷을 사용하여 필드들의 순서와 사이즈를 묘사한다.
+
+## 3. 연결 설정과 관리
 
 3.1. Discovering an HTTP/3 Endpoint
 
