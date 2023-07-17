@@ -49,8 +49,8 @@ in the Revised BSD License.
 
 ###### [2. HTTP/3 개요](#2-http3-개요)
 
-[2.1. 문서 구성]()
-[2.2. 규칙과 용어]()
+[2.1. 문서 구성](#21-문서-구성)
+[2.2. 규칙과 용어](#22-규칙과-용어)
 
 3. Connection Setup and Management
    3.1. Discovering an HTTP/3 Endpoint
@@ -164,42 +164,31 @@ HTTP/3 서버가 특정 엔드포인트에 존재한다는 것을 알게 됐을 
 
 HTTP/2에서와 마찬가지로, 요청과 응답 필드들은 전송 간 압축됩니다. [HPACK](https://datatracker.ietf.org/doc/html/rfc7541)은 순서에 맞게 전달되는 압축된 필드 섹션들에 기반하기 때문에(QUIC에서 보장되지 않음), HTTP/3는 HPACK을 [QPACK](https://datatracker.ietf.org/doc/html/rfc9204)으로 대체합니다. QPACK은 필드 테이블 상태를 수정 및 추적하기 위해 별도의 단방향 스트림들을 사용하는 반면, 인코딩된 필드 섹션들은 테이블 상태를 수정하지 않고 참조합니다.
 
-2.1. Document Organization
+### 2.1. 문서 구성
 
-The following sections provide a detailed overview of the lifecycle
-of an HTTP/3 connection:
+아래에 나오는 각 절들은 HTTP/3 연결 생명주기에 대한 자세한 개요를 제공한다:
 
-- "Connection Setup and Management" (Section 3) covers how an HTTP/3
-  endpoint is discovered and an HTTP/3 connection is established.
+- 3절 "연결 설정과 관리"에서는 한 HTTP/3 엔드포인드가 어떻게 발견되고 HTTP/3 연결이 어떻게 설정되는지에 관해 다룬다.
 
-- "Expressing HTTP Semantics in HTTP/3" (Section 4) describes how
-  HTTP semantics are expressed using frames.
+- 4절 "HTTP/3에서의 HTTP Semantics 표현"는 HTTP semantics가 어떻게 프레임을 사용해 표현되는지를 기술한다.
 
-- "Connection Closure" (Section 5) describes how HTTP/3 connections
-  are terminated, either gracefully or abruptly.
+- 5절 "연결 종료"는 HTTP/3 연결이 어떻게 자연스럽게, 혹은 급작스럽게 종료되는지 기술한다.
 
-The details of the wire protocol and interactions with the transport
-are described in subsequent sections:
+유선 프로토콜, 그리고 전송과의 상호작용들에 대한 세부사항들은 다음 절들에서 기술된다.
 
-- "Stream Mapping and Usage" (Section 6) describes the way QUIC
-  streams are used.
+- 6절 "스트림의 매핑과 사용"은 QUIC 스트림들이 어떻게 사용되는지 기술한다.
 
-- "HTTP Framing Layer" (Section 7) describes the frames used on most
-  streams.
+- 7절 "HTTP 프레이밍 레이어"는 대부분의 스트림들에 사용되는 프레임들에 관해 기술한다.
 
-- "Error Handling" (Section 8) describes how error conditions are
-  handled and expressed, either on a particular stream or for the
-  connection as a whole.
+- 8절 "에러 처리"는 에러 조건들이 특정 스트림이나 전체 연결 상에서 어떻게 다뤄지고 표현되는지 기술한다.
 
-Additional resources are provided in the final sections:
+부가적인 리소스들은 다음 마지막 절들에서 제공된다.
 
-- "Extensions to HTTP/3" (Section 9) describes how new capabilities
-  can be added in future documents.
+- 9절 "HTTP/3의 확장"은 나중에 문서에 새로운 기능들이 어떻게 추가될 수 있는지 서술한다.
 
-- A more detailed comparison between HTTP/2 and HTTP/3 can be found
-  in Appendix A.
+- HTTP2/와 HTTP/3의 더 자세한 비교는 부록 A에서 찾을 수 있다.
 
-  2.2. Conventions and Terminology
+### 2.2. 규칙과 용어
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
