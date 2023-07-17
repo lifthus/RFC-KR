@@ -47,7 +47,7 @@ in the Revised BSD License.
 [1.1. 이전 HTTP 버전들](#11-이전-http-버전들)
 [1.2. QUIC 프로토콜 도입](#12-quic-프로토콜-도입)
 
-###### [2. HTTP/3 개요]()
+###### [2. HTTP/3 개요](#2-http3-개요)
 
 [2.1. 문서 구성]()
 [2.2. 규칙과 용어]()
@@ -150,27 +150,15 @@ QUIC is described in [QUIC-TRANSPORT]. For a full description of
 HTTP/2, see [HTTP/2].
 QUIC에 관한 내용은 [RFC 9000](https://datatracker.ietf.org/doc/html/rfc9000)에서 기술된다. HTTP/2의 전체 내용은 [RFC 7540](https://datatracker.ietf.org/doc/html/rfc7540)에서 확인할 수 있다.
 
-2.  HTTP/3 Protocol Overview
+## 2. HTTP/3 개요
 
-HTTP/3 provides a transport for HTTP semantics using the QUIC
-transport protocol and an internal framing layer similar to HTTP/2.
+HTTP/3는 QUIC 전송 프로토콜과 HTTP/2의 것과 비슷한 내부 프레이밍 레이어를 이용해 HTTP semantics 전송을 제공한다.
 
-Once a client knows that an HTTP/3 server exists at a certain
-endpoint, it opens a QUIC connection. QUIC provides protocol
-negotiation, stream-based multiplexing, and flow control. Discovery
-of an HTTP/3 endpoint is described in Section 3.1.
+HTTP/3 서버가 특정 엔드포인트에 존재한다는 것을 알게 됐을 때, 클라이언트는 QUIC 연결을 열게 된다. QUIC은 프로토콜 협상, 스트림 기반 멀티플렉싱, 흐름 제어를 제공한다. HTTP/3 엔드포인트가 어떻게 발견되는지에 관해서는 3.1절에서 설명한다.
 
-Within each stream, the basic unit of HTTP/3 communication is a frame
-(Section 7.2). Each frame type serves a different purpose. For
-example, HEADERS and DATA frames form the basis of HTTP requests and
-responses (Section 4.1). Frames that apply to the entire connection
-are conveyed on a dedicated control stream.
+각 스트림에서 HTTP/3 통신의 기본단위는 프레임이다(7.2절). 각 프레임 타입은 다른 목적을 위해 사용된다. 예를 들어, HEADERS와 DATA 프레임은 HTTP 요청과 응답의 기본을 형성한다(4.1절). 전체 연결 상 프레임들은 전용 제어 스트림을 통해 전달된다.
 
-Multiplexing of requests is performed using the QUIC stream
-abstraction, which is described in Section 2 of [QUIC-TRANSPORT].
-Each request-response pair consumes a single QUIC stream. Streams
-are independent of each other, so one stream that is blocked or
-suffers packet loss does not prevent progress on other streams.
+각 요청들의 멀티플렉싱 처리는 [RFC 9000 Section 2](https://datatracker.ietf.org/doc/html/rfc9000#section-2)에 기술된 추상화된 QUIC 스트림에 의해 수행된다. 각 요청-응답 쌍은 하나의 QUIC 스트림을 사용한다. **스트림들은 서로 독립적이기 때문에, 한 스트림에 패킷 손실이 발생하거나 블락 되더라도 다른 스트림의 진행을 방해하지 않는다.**
 
 Server push is an interaction mode introduced in HTTP/2 ([HTTP/2])
 that permits a server to push a request-response exchange to a client
