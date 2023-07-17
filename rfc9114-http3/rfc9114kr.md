@@ -160,20 +160,9 @@ HTTP/3 서버가 특정 엔드포인트에 존재한다는 것을 알게 됐을 
 
 각 요청들의 멀티플렉싱 처리는 [RFC 9000 Section 2](https://datatracker.ietf.org/doc/html/rfc9000#section-2)에 기술된 추상화된 QUIC 스트림에 의해 수행된다. 각 요청-응답 쌍은 하나의 QUIC 스트림을 사용한다. **스트림들은 서로 독립적이기 때문에, 한 스트림에 패킷 손실이 발생하거나 블락 되더라도 다른 스트림의 진행을 방해하지 않는다.**
 
-Server push is an interaction mode introduced in HTTP/2 ([HTTP/2])
-that permits a server to push a request-response exchange to a client
-in anticipation of the client making the indicated request. This
-trades off network usage against a potential latency gain. Several
-HTTP/3 frames are used to manage server push, such as PUSH_PROMISE,
-MAX_PUSH_ID, and CANCEL_PUSH.
+서버 푸시는 HTTP/2에서 도입된 상호작용으로, 서버가 클라이언트에서 요청할 것으로 예상되는 지정된 요청-응답 교환을 푸시할 수 있도록 합니다. 이는 네트워크 사용량을 늘리는 대신 잠재적인 지연 시간 발생을 줄입니다. PUSH_PROMISE, MAX_PUSH_ID, CANCEL_PUSH 같은 몇몇 HTTP/3 프레임들이 서버 푸시에 사용됩니다.
 
-As in HTTP/2, request and response fields are compressed for
-transmission. Because HPACK ([HPACK]) relies on in-order
-transmission of compressed field sections (a guarantee not provided
-by QUIC), HTTP/3 replaces HPACK with QPACK ([QPACK]). QPACK uses
-separate unidirectional streams to modify and track field table
-state, while encoded field sections refer to the state of the table
-without modifying it.
+HTTP/2에서와 마찬가지로, 요청과 응답 필드들은 전송 간 압축됩니다. [HPACK](https://datatracker.ietf.org/doc/html/rfc7541)은 순서에 맞게 전달되는 압축된 필드 섹션들에 기반하기 때문에(QUIC에서 보장되지 않음), HTTP/3는 HPACK을 [QPACK](https://datatracker.ietf.org/doc/html/rfc9204)으로 대체합니다. QPACK은 필드 테이블 상태를 수정 및 추적하기 위해 별도의 단방향 스트림들을 사용하는 반면, 인코딩된 필드 섹션들은 테이블 상태를 수정하지 않고 참조합니다.
 
 2.1. Document Organization
 
