@@ -54,7 +54,8 @@ in the Revised BSD License.
 
 ###### [3. 연결 설정과 관리](#3-연결-설정과-관리)
 
-3.1. Discovering an HTTP/3 Endpoint
+[3.1. HTTP/3 엔드포인트 찾기](#31-http3-엔드포인트-찾기)
+
 3.1.1. HTTP Alternative Services
 3.1.2. Other Schemes
 3.2. Connection Establishment
@@ -239,7 +240,7 @@ stream error: 각 스트림에서 발생하는 애플리케이션 레벨에서�
 
 ## 3. 연결 설정과 관리
 
-3.1. Discovering an HTTP/3 Endpoint
+### 3.1. HTTP/3 엔드포인트 찾기
 
 HTTP relies on the notion of an authoritative response: a response
 that has been determined to be the most appropriate response for that
