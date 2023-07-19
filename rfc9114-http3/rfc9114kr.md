@@ -160,7 +160,7 @@ HTTP/3 서버가 특정 엔드포인트에 존재한다는 것을 알게 됐을 
 
 각 스트림에서 HTTP/3 통신의 기본단위는 프레임이다(7.2절). 각 프레임 타입은 다른 목적을 위해 사용된다. 예를 들어, HEADERS와 DATA 프레임은 HTTP 요청과 응답의 기본을 형성한다(4.1절). 전체 연결 상 프레임들은 전용 제어 스트림을 통해 전달된다.
 
-각 요청들의 멀티플렉싱 처리는 [RFC 9000 Section 2](https://datatracker.ietf.org/doc/html/rfc9000#section-2)에 기술된 추상화된 QUIC 스트림에 의해 수행된다. 각 요청-응답 쌍은 하나의 QUIC 스트림을 사용한다. **스트림들은 서로 독립적이기 때문에, 한 스트림에 패킷 손실이 발생하거나 블락 되더라도 다른 스트림의 진행을 방해하지 않는다.**
+각 요청들의 멀티플렉싱 처리는 [RFC 9000 2절](https://datatracker.ietf.org/doc/html/rfc9000#section-2)에 기술된 추상화된 QUIC 스트림에 의해 수행된다. 각 요청-응답 쌍은 하나의 QUIC 스트림을 사용한다. **스트림들은 서로 독립적이기 때문에, 한 스트림에 패킷 손실이 발생하거나 블락 되더라도 다른 스트림의 진행을 방해하지 않는다.**
 
 서버 푸시는 HTTP/2에서 도입된 상호작용으로, 서버가 클라이언트에서 요청할 것으로 예상되는 지정된 요청-응답 교환을 푸시할 수 있도록 합니다. 이는 네트워크 사용량을 늘리는 대신 잠재적인 지연 시간 발생을 줄입니다. PUSH_PROMISE, MAX_PUSH_ID, CANCEL_PUSH 같은 몇몇 HTTP/3 프레임들이 서버 푸시에 사용됩니다.
 
@@ -232,49 +232,25 @@ stream: QUIC 전송에 의해 제공되는 양방향 혹은 단방향 바이트 
 
 stream error: 각 스트림에서 발생하는 애플리케이션 레벨에서의 에러
 
-"content"라는 용어는 [RFC 9110의 6.4절](https://www.rfc-editor.org/rfc/rfc9110#name-content)에서 정의된다.
+"content"라는 용어는 [RFC 9110 6.4절](https://www.rfc-editor.org/rfc/rfc9110#name-content)에서 정의된다.
 
-마지막으로, "resource", "message", "user agent", "origin server", "gateway", "intermediary", "proxy" 와 "tunnel"이라는 용어들은 [RFC 9110의 3절](https://www.rfc-editor.org/rfc/rfc9110#name-terminology-and-core-concep)에 정의된다.
+마지막으로, "resource", "message", "user agent", "origin server", "gateway", "intermediary", "proxy" 와 "tunnel"이라는 용어들은 [RFC 9110 3절](https://www.rfc-editor.org/rfc/rfc9110#name-terminology-and-core-concep)에 정의된다.
 
-이 문서의 패킷 다이어그램들은[RFC 9000의 1.3절](https://datatracker.ietf.org/doc/html/rfc9000#section-1.3)에 정의된 포맷을 사용하여 필드들의 순서와 사이즈를 묘사한다.
+이 문서의 패킷 다이어그램들은[RFC 9000 1.3절](https://datatracker.ietf.org/doc/html/rfc9000#section-1.3)에 정의된 포맷을 사용하여 필드들의 순서와 사이즈를 묘사한다.
 
 ## 3. 연결 설정과 관리
 
 ### 3.1. HTTP/3 엔드포인트 찾기
 
-HTTP relies on the notion of an authoritative response: a response
-that has been determined to be the most appropriate response for that
-request given the state of the target resource at the time of
-response message origination by (or at the direction of) the origin
-server identified within the target URI. Locating an authoritative
-server for an HTTP URI is discussed in Section 4.3 of [HTTP].
+HTTP는 인가된 응답(authoritative response)이라는 개념에 의존한다. 인가된 응답은 어떤 요청에 대해서 타겟 URI에 속하는 것으로 식별된 원본(origin) 서버에 의해(혹은 그 지시에 의해) 응답 메시지가 생성될 때 타겟 리소스의 상태에 따라 해당 요청에 가장 적절한 응답으로 판단되는 응답을 말한다. HTTP URI에 대한 인가된 서버를 찾는 것에 관해서는 [RFC 9110 4.3절](https://www.rfc-editor.org/rfc/rfc9110#name-authoritative-access)에서 논의한다.
 
-The "https" scheme associates authority with possession of a
-certificate that the client considers to be trustworthy for the host
-identified by the authority component of the URI. Upon receiving a
-server certificate in the TLS handshake, the client MUST verify that
-the certificate is an acceptable match for the URI's origin server
-using the process described in Section 4.3.4 of [HTTP]. If the
-certificate cannot be verified with respect to the URI's origin
-server, the client MUST NOT consider the server authoritative for
-that origin.
+"https" 체계는 권한을 클라이언트가 URI의 권한 구성 요소에 의해 식별되는 호스트를 신뢰할 수 있도록 하는 자격증명(인증서)을 소유하는 것과 연관짓는다. TLS 핸드셰이크 과정에서 서버 자격증명을 수신하면, 클라이언트는 반드시(MUST) [RFC 9110 4.3.4절](https://www.rfc-editor.org/rfc/rfc9110#section-4.3.4)에 기술된 프로세스를 따라 해당 자격증명이 URI의 원본 서버에 적합한 매치인지 확인해야 한다. 만약 URI의 원본 서버와 관해 자격증명이 확인되지 않을 시, 클라이언트는 절대(MUST NOT) 해당 서버가 해당 원본(origin)에 대해 권한을 갖는 것으로 간주하면 안된다.
 
-A client MAY attempt access to a resource with an "https" URI by
-resolving the host identifier to an IP address, establishing a QUIC
-connection to that address on the indicated port (including
-validation of the server certificate as described above), and sending
-an HTTP/3 request message targeting the URI to the server over that
-secured connection. Unless some other mechanism is used to select
-HTTP/3, the token "h3" is used in the Application-Layer Protocol
-Negotiation (ALPN; see [RFC7301]) extension during the TLS handshake.
+클라이언트는 아마(MAY) 호스트 식별자를 IP 주소로 해서, 해당 IP 주소의 지정된 포트로 QUIC 연결을 형성하며(위에 서술한 서버 자격증명 검증 과정을 포함해서) "https" URI를 가진 리소스에 접근을 시도하고, 그 보안 연결 상으로 해당 서버의 URI를 타게팅하는 HTTP/3 요청 메시지를 보낼 수도 있을 것이다. HTTP/3를 선택하는데 다른 메커니즘이 사용되지 않는 다면, TLS 핸드셰이크 간 애플리케이션 계층 프로토콜 협상(ALPN; [RFC 7301](https://datatracker.ietf.org/doc/html/rfc7301)) 확장에 "h3" 토큰이 사용된다.
 
-Connectivity problems (e.g., blocking UDP) can result in a failure to
-establish a QUIC connection; clients SHOULD attempt to use TCP-based
-versions of HTTP in this case.
+**연결 문제(예컨대 UDP 차단 같은)는 QUIC 연결 수립의 실패로 이어질 수 있다**; 이 경우 클라이언트는 가능하다면(SHOULD) TCP 기반의 HTTP 버전을 사용하도록 해야 한다.
 
-Servers MAY serve HTTP/3 on any UDP port; an alternative service
-advertisement always includes an explicit port, and URIs contain
-either an explicit port or a default port associated with the scheme.
+서버는 아마(MAY) 어떤 UDP 포트에서든 HTTP/3를 제공할 수 있을 것이다; 대체 서비스 광고는 항상 명시적으로 포트를 포함하고, URI들은 체계(scheme)와 관련된 명시적 포트나 기본 포트를 포함한다.
 
 3.1.1. HTTP Alternative Services
 
