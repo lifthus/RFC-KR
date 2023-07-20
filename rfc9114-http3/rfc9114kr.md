@@ -284,21 +284,9 @@ QUIC 프로토콜 코어와 관련된 커넥션 레벨 옵션들이 초기 암�
 
 ### 3.3. 연결 재사용
 
-HTTP/3 connections are persistent across multiple requests. For best
-performance, it is expected that clients will not close connections
-until it is determined that no further communication with a server is
-necessary (for example, when a user navigates away from a particular
-web page) or until the server closes the connection.
+HTTP/3 연결은 여러 요청들에 걸쳐 지속적이다. 최상의 성능을 위해, 서버와 더 이상 통신이 필요하지 않은게 확실할 때나(예를 들어, 유저가 특정 웹 페이지를 벗어날 때) 서버가 연결을 닫을 때까지 클라이언트는 연결을 닫지 않는 편이 좋다.
 
-Once a connection to a server endpoint exists, this connection MAY be
-reused for requests with multiple different URI authority components.
-To use an existing connection for a new origin, clients MUST validate
-the certificate presented by the server for the new origin server
-using the process described in Section 4.3.4 of [HTTP]. This implies
-that clients will need to retain the server certificate and any
-additional information needed to verify that certificate; clients
-that do not do so will be unable to reuse the connection for
-additional origins.
+일단 서버 엔드포인트에 대한 연결이 존재하면, 이 연결은 아마(MAY) 여러 다른 URI 권한 구성요소들에 대한 요청들에 재사용될 수 있을 것이다. 새로운 오리진을 위해 기존 연결을 재사용하려면, 클라이언트는 새로운 오리진 서버를 위해 반드시(MUST) [RFC9110 4.3.4절](https://www.rfc-editor.org/rfc/rfc9110#name-https-certificate-verificat)에서 기술하는대로 서버가 제공한 자격증명을 검증해야한다. 이는 클라이언트가 서버 자격증명과 그 자격증명을 검증하기 위한 다른 추가적인 정보들을 보존해야 한다는 것을 의미한다; 이렇게 하지 않는 클라이언트는 추가적인 오리진들에 대해 연결을 재사용할 수 없을 것이다.
 
 If the certificate is not acceptable with regard to the new origin
 for any reason, the connection MUST NOT be reused and a new
