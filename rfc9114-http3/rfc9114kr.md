@@ -55,10 +55,12 @@ in the Revised BSD License.
 ###### [3. 연결 설정과 관리](#3-연결-설정과-관리)
 
 [3.1. HTTP/3 엔드포인트 찾기](#31-http3-엔드포인트-찾기)
-[3.1.1. HTTP 대체 서비스](#311-http-대체-서비스)
-[3.1.2. 다른 체계](#312-다른-체계)
-3.2. Connection Establishment
-3.3. Connection Reuse 4. Expressing HTTP Semantics in HTTP/3
+ㄴ [3.1.1. HTTP 대체 서비스](#311-http-대체-서비스)
+ㄴ [3.1.2. 다른 체계](#312-다른-체계)
+[3.2. 연결 수립](#32-연결-수립)
+[3.3. 연결 재사용](#33-연결-재사용)
+
+4. Expressing HTTP Semantics in HTTP/3
 
 4.1. HTTP Message Framing
 4.1.1. Request Cancellation and Rejection
@@ -150,7 +152,7 @@ QUIC 전송 프로토콜은 HTTP/2의 프레이밍 레이어에서 제공하는 
 
 QUIC is described in [QUIC-TRANSPORT]. For a full description of
 HTTP/2, see [HTTP/2].
-QUIC에 관한 내용은 [RFC 9000](https://datatracker.ietf.org/doc/html/rfc9000)에서 기술된다. HTTP/2의 전체 내용은 [RFC 7540](https://datatracker.ietf.org/doc/html/rfc7540)에서 확인할 수 있다.
+QUIC에 관한 내용은 [RFC9000](https://datatracker.ietf.org/doc/html/rfc9000)에서 기술된다. HTTP/2의 전체 내용은 [RFC 7540](https://datatracker.ietf.org/doc/html/rfc7540)에서 확인할 수 있다.
 
 ## 2. HTTP/3 개요
 
@@ -160,7 +162,7 @@ HTTP/3 서버가 특정 엔드포인트에 존재한다는 것을 알게 됐을 
 
 각 스트림에서 HTTP/3 통신의 기본단위는 프레임이다(7.2절). 각 프레임 타입은 다른 목적을 위해 사용된다. 예를 들어, HEADERS와 DATA 프레임은 HTTP 요청과 응답의 기본을 형성한다(4.1절). 전체 연결 상 프레임들은 전용 제어 스트림을 통해 전달된다.
 
-각 요청들의 멀티플렉싱 처리는 [RFC 9000 2절](https://datatracker.ietf.org/doc/html/rfc9000#section-2)에 기술된 추상화된 QUIC 스트림에 의해 수행된다. 각 요청-응답 쌍은 하나의 QUIC 스트림을 사용한다. **스트림들은 서로 독립적이기 때문에, 한 스트림에 패킷 손실이 발생하거나 블락 되더라도 다른 스트림의 진행을 방해하지 않는다.**
+각 요청들의 멀티플렉싱 처리는 [RFC9000 2절](https://datatracker.ietf.org/doc/html/rfc9000#section-2)에 기술된 추상화된 QUIC 스트림에 의해 수행된다. 각 요청-응답 쌍은 하나의 QUIC 스트림을 사용한다. **스트림들은 서로 독립적이기 때문에, 한 스트림에 패킷 손실이 발생하거나 블락 되더라도 다른 스트림의 진행을 방해하지 않는다.**
 
 서버 푸시는 HTTP/2에서 도입된 상호작용으로, 서버가 클라이언트에서 요청할 것으로 예상되는 지정된 요청-응답 교환을 푸시할 수 있도록 합니다. 이는 네트워크 사용량을 늘리는 대신 잠재적인 지연 시간 발생을 줄입니다. PUSH_PROMISE, MAX_PUSH_ID, CANCEL_PUSH 같은 몇몇 HTTP/3 프레임들이 서버 푸시에 사용됩니다.
 
@@ -232,21 +234,21 @@ stream: QUIC 전송에 의해 제공되는 양방향 혹은 단방향 바이트 
 
 stream error: 각 스트림에서 발생하는 애플리케이션 레벨에서의 에러
 
-"content"라는 용어는 [RFC 9110 6.4절](https://www.rfc-editor.org/rfc/rfc9110#name-content)에서 정의된다.
+"content"라는 용어는 [RFC9110 6.4절](https://www.rfc-editor.org/rfc/rfc9110#name-content)에서 정의된다.
 
 마지막으로, "resource", "message", "user agent", "origin server", "gateway", "intermediary", "proxy" 와 "tunnel"이라는 용어들은 [RFC 9110 3절](https://www.rfc-editor.org/rfc/rfc9110#name-terminology-and-core-concep)에 정의된다.
 
-이 문서의 패킷 다이어그램들은[RFC 9000 1.3절](https://datatracker.ietf.org/doc/html/rfc9000#section-1.3)에 정의된 포맷을 사용하여 필드들의 순서와 사이즈를 묘사한다.
+이 문서의 패킷 다이어그램들은[RFC9000 1.3절](https://datatracker.ietf.org/doc/html/rfc9000#section-1.3)에 정의된 포맷을 사용하여 필드들의 순서와 사이즈를 묘사한다.
 
 ## 3. 연결 설정과 관리
 
 ### 3.1. HTTP/3 엔드포인트 찾기
 
-HTTP는 인가된 응답(authoritative response)이라는 개념에 의존한다. 인가된 응답은 어떤 요청에 대해서 타겟 URI에 속하는 것으로 식별된 오리진 서버에 의해(혹은 그 지시에 의해) 응답 메시지가 생성될 때 타겟 리소스의 상태에 따라 해당 요청에 가장 적절한 응답으로 판단되는 응답을 말한다. HTTP URI에 대한 인가된 서버를 찾는 것에 관해서는 [RFC 9110 4.3절](https://www.rfc-editor.org/rfc/rfc9110#name-authoritative-access)에서 논의한다.
+HTTP는 인가된 응답(authoritative response)이라는 개념에 의존한다. 인가된 응답은 어떤 요청에 대해서 타겟 URI에 속하는 것으로 식별된 오리진 서버에 의해(혹은 그 지시에 의해) 응답 메시지가 생성될 때 타겟 리소스의 상태에 따라 해당 요청에 가장 적절한 응답으로 판단되는 응답을 말한다. HTTP URI에 대한 인가된 서버를 찾는 것에 관해서는 [RFC9110 4.3절](https://www.rfc-editor.org/rfc/rfc9110#name-authoritative-access)에서 논의한다.
 
-"https" 체계는 권한을 클라이언트가 URI의 권한 구성 요소에 의해 식별되는 호스트를 신뢰할 수 있도록 하는 자격증명(인증서)을 소유하는 것과 연관짓는다. TLS 핸드셰이크 과정에서 서버 자격증명을 수신하면, 클라이언트는 반드시(MUST) [RFC 9110 4.3.4절](https://www.rfc-editor.org/rfc/rfc9110#section-4.3.4)에 기술된 프로세스를 따라 해당 자격증명이 URI의 오리진 서버에 적합한 매치인지 확인해야 한다. 만약 URI의 오리진 서버와 관해 자격증명이 확인되지 않을 시, 클라이언트는 절대(MUST NOT) 해당 서버가 해당 오리진에 대해 권한을 갖는 것으로 간주하면 안된다.
+"https" 체계는 권한을 클라이언트가 URI의 권한 구성 요소에 의해 식별되는 호스트를 신뢰할 수 있도록 하는 자격증명(인증서)을 소유하는 것과 연관짓는다. TLS 핸드셰이크 과정에서 서버 자격증명을 수신하면, 클라이언트는 반드시(MUST) [RFC9110 4.3.4절](https://www.rfc-editor.org/rfc/rfc9110#section-4.3.4)에 기술된 프로세스를 따라 해당 자격증명이 URI의 오리진 서버에 적합한 매치인지 확인해야 한다. 만약 URI의 오리진 서버와 관해 자격증명이 확인되지 않을 시, 클라이언트는 절대(MUST NOT) 해당 서버가 해당 오리진에 대해 권한을 갖는 것으로 간주하면 안된다.
 
-클라이언트는 아마(MAY) 호스트 식별자를 IP 주소로 해서, 해당 IP 주소의 지정된 포트로 QUIC 연결을 형성하며(위에 서술한 서버 자격증명 검증 과정을 포함해서) "https" URI를 가진 리소스에 접근을 시도하고, 그 보안 연결 상으로 해당 서버의 URI를 타게팅하는 HTTP/3 요청 메시지를 보낼 수도 있을 것이다. HTTP/3를 선택하는데 다른 메커니즘이 사용되지 않는 다면, TLS 핸드셰이크 간 애플리케이션 계층 프로토콜 협상(ALPN; [RFC 7301](https://datatracker.ietf.org/doc/html/rfc7301)) 확장에 "h3" 토큰이 사용된다.
+클라이언트는 아마(MAY) 호스트 식별자를 IP 주소로 해서, 해당 IP 주소의 지정된 포트로 QUIC 연결을 형성하며(위에 서술한 서버 자격증명 검증 과정을 포함해서) "https" URI를 가진 리소스에 접근을 시도하고, 그 보안 연결 상으로 해당 서버의 URI를 타게팅하는 HTTP/3 요청 메시지를 보낼 수도 있을 것이다. HTTP/3를 선택하는데 다른 메커니즘이 사용되지 않는 다면, TLS 핸드셰이크 간 애플리케이션 계층 프로토콜 협상(ALPN; [RFC7301](https://datatracker.ietf.org/doc/html/rfc7301)) 확장에 "h3" 토큰이 사용된다.
 
 **연결 문제(예컨대 UDP 차단 같은)는 QUIC 연결 수립의 실패로 이어질 수 있다**; 이 경우 클라이언트는 가능하다면(SHOULD) TCP 기반의 HTTP 버전을 사용하도록 해야 한다.
 
@@ -254,7 +256,7 @@ HTTP는 인가된 응답(authoritative response)이라는 개념에 의존한다
 
 #### 3.1.1. HTTP 대체 서비스
 
-HTTP 오리진은 "h3" ALPN 토큰을 사용해 Alt-Svc HTTP 응답 헤더나 HTTP/2 ALTSVC 프레임([RFC 7838 4절](https://datatracker.ietf.org/doc/html/rfc7838#section-4))을 통해 대응하는 HTTP/3 엔드포인트가 가용함을 알릴 수 있다.
+HTTP 오리진은 "h3" ALPN 토큰을 사용해 Alt-Svc HTTP 응답 헤더나 HTTP/2 ALTSVC 프레임([RFC7838 4절](https://datatracker.ietf.org/doc/html/rfc7838#section-4))을 통해 대응하는 HTTP/3 엔드포인트가 가용함을 알릴 수 있다.
 
 예를 들어, 오리진은 HTTP 응답에 다음과 같은 헤더 필드를 포함하여 50781 UDP 포트에서 동일한 호스트네임으로 HTTP/3가 사용 가능함을 알릴 수 있다.
 
@@ -268,34 +270,19 @@ HTTP/3 지원을 알리는 Alt-Svc 레코드를 수신하면, 클라이언트는
 
 HTTP가 전송 프로토콜과는 독립적이긴 하지만, "http" 체계에서 권한은 무엇이든지 권한 구성 요소 내에서 호스트가 식별된 것의 지정된 포트에서 TCP 연결을 수신할 수 있는 능력과 연관된다. 따라서 HTTP/3는 TCP를 사용하지 않기 때문에, "http" URI로 식별되는 자원을 위한 인가된 서버에 직접적으로 접근하는데 사용될 수 없다. 하지만, ALTSVC 같은 프로토콜 확장은 인가된 서버가 마찬가지로 인가된 다른 서비스를 식별할 수 있도록 하고, 이는 HTTP/3를 통해 도달 가능할 수도 있을 것이다.
 
-"https" 체계가 아닌 오리진에 대해 요청을 하기 전에, 클라이언트는 반드시(MUST) 서버가 해당 체계를 지원하는지 확인해야 한다. "http" 체계의 오리진들에 대해서는, 이를 수행하기 위한 실험적인 방법이 [RFC 8164](https://datatracker.ietf.org/doc/html/rfc8164)에 기술돼있다. 다른 메커니즘들은 앞으로 다양한 체계들에 대해 정의될 수 있을 것이다.
+"https" 체계가 아닌 오리진에 대해 요청을 하기 전에, 클라이언트는 반드시(MUST) 서버가 해당 체계를 지원하는지 확인해야 한다. "http" 체계의 오리진들에 대해서는, 이를 수행하기 위한 실험적인 방법이 [RFC8164](https://datatracker.ietf.org/doc/html/rfc8164)에 기술돼있다. 다른 메커니즘들은 앞으로 다양한 체계들에 대해 정의될 수 있을 것이다.
 
-3.2. Connection Establishment
+### 3.2. 연결 수립
 
-HTTP/3 relies on QUIC version 1 as the underlying transport. The use
-of other QUIC transport versions with HTTP/3 MAY be defined by future
-specifications.
+HTTP/3 전송의 기반은 QUIC 버전 1에 의존한다. 다른 QUIC 전송 버전들을 HTTP/3와 함께 사용하는 것은 아마(MAY) 추후의 명세서에 정의될 수 있을 것이다.
 
-QUIC version 1 uses TLS version 1.3 or greater as its handshake
-protocol. HTTP/3 clients MUST support a mechanism to indicate the
-target host to the server during the TLS handshake. If the server is
-identified by a domain name ([DNS-TERMS]), clients MUST send the
-Server Name Indication (SNI; [RFC6066]) TLS extension unless an
-alternative mechanism to indicate the target host is used.
+QUIC 버전 1은 핸드셰이크 프로토콜로 버전 1.3 이상의 TLS를 사용한다. HTTP/3 클라이언트는 반드시(MUST) TLS 핸드셰이크간에 서버에게 타겟 호스트를 알릴 수 있는 메커니즘을 지원해야 한다. 만약 서버가 도메인 네임([RFC8499](https://datatracker.ietf.org/doc/html/rfc8499))으로 식별된다면, 타겟 호스트를 지칭할 수 있는 다른 메커니즘이라도 사용되고 있는게 아닌 이상 클라이언트는 반드시(MUST) Server Name Indication(SNI; [RFC6066](https://datatracker.ietf.org/doc/html/rfc6066)) TLS 확장을 보내야 한다.
 
-QUIC connections are established as described in [QUIC-TRANSPORT].
-During connection establishment, HTTP/3 support is indicated by
-selecting the ALPN token "h3" in the TLS handshake. Support for
-other application-layer protocols MAY be offered in the same
-handshake.
+QUIC 연결은 [RFC9000](https://datatracker.ietf.org/doc/html/rfc9000)에 나온대로 수립된다. 연결 수립 과정에서, HTTP/3 지원 여부는 TLS 핸드셰이크에서 "h3" ALPN 토큰을 선택함으로써 알린다. 다른 애플리케이션 계층 프로토콜들의 지원 여부는 아마(MAY) 같은 핸드셰이크에서 제공될 것이다.
 
-While connection-level options pertaining to the core QUIC protocol
-are set in the initial crypto handshake, settings specific to HTTP/3
-are conveyed in the SETTINGS frame. After the QUIC connection is
-established, a SETTINGS frame MUST be sent by each endpoint as the
-initial frame of their respective HTTP control stream.
+QUIC 프로토콜 코어와 관련된 커넥션 레벨 옵션들이 초기 암호화 핸드셰이크에서 설정되는 반면, HTTP/3에 대한 세부 설정은 SETTINGS 프레임을 통해 전달딘다. QUIC 연결이 수립된 후, 각 엔드포인트는 반드시(MUST) SETTINGS 프레임을 각각의 HTTP 제어 스트림의 최초 프레임으로 보내야 한다.
 
-3.3. Connection Reuse
+### 3.3. 연결 재사용
 
 HTTP/3 connections are persistent across multiple requests. For best
 performance, it is expected that clients will not close connections
