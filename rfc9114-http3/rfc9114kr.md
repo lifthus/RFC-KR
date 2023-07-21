@@ -60,9 +60,9 @@ in the Revised BSD License.
 [3.2. 연결 수립](#32-연결-수립)
 [3.3. 연결 재사용](#33-연결-재사용)
 
-4. Expressing HTTP Semantics in HTTP/3
+###### [4. HTTP/3에서의 HTTP Semantics 표현](#4-http3에서의-http-semantics-표현)
 
-4.1. HTTP Message Framing
+[4.1. HTTP 메시지 프레이밍](#41-http-메시지-프레이밍)
 4.1.1. Request Cancellation and Rejection
 4.1.2. Malformed Requests and Responses
 4.2. HTTP Fields
@@ -250,7 +250,7 @@ HTTP는 인가된 응답(authoritative response)이라는 개념에 의존한다
 
 클라이언트는 아마(MAY) 호스트 식별자를 IP 주소로 해서, 해당 IP 주소의 지정된 포트로 QUIC 연결을 형성하며(위에 서술한 서버 자격증명 검증 과정을 포함해서) "https" URI를 가진 리소스에 접근을 시도하고, 그 보안 연결 상으로 해당 서버의 URI를 타게팅하는 HTTP/3 요청 메시지를 보낼 수도 있을 것이다. HTTP/3를 선택하는데 다른 메커니즘이 사용되지 않는 다면, TLS 핸드셰이크 간 애플리케이션 계층 프로토콜 협상(ALPN; [RFC7301](https://datatracker.ietf.org/doc/html/rfc7301)) 확장에 "h3" 토큰이 사용된다.
 
-**연결 문제(예컨대 UDP 차단 같은)는 QUIC 연결 수립의 실패로 이어질 수 있다**; 이 경우 클라이언트는 가능하다면(SHOULD) TCP 기반의 HTTP 버전을 사용하도록 해야 한다.
+**연결 문제(예컨대 UDP 차단 같은)는 QUIC 연결 수립의 실패로 이어질 수 있다**; 이 경우 클라이언트는 웬만하면(SHOULD) TCP 기반의 HTTP 버전을 사용하도록 해야 한다.
 
 서버는 아마(MAY) 어떤 UDP 포트에서든 HTTP/3를 제공할 수 있을 것이다; 대체 서비스를 알릴 때는 항상 명시적으로 포트를 포함하고, URI들은 체계(scheme)와 관련된 명시적 포트나 기본 포트를 포함한다.
 
@@ -288,40 +288,17 @@ HTTP/3 연결은 여러 요청들에 걸쳐 지속적이다. 최상의 성능을
 
 일단 서버 엔드포인트에 대한 연결이 존재하면, 이 연결은 아마(MAY) 여러 다른 URI 권한 구성요소들에 대한 요청들에 재사용될 수 있을 것이다. 새로운 오리진을 위해 기존 연결을 재사용하려면, 클라이언트는 새로운 오리진 서버를 위해 반드시(MUST) [RFC9110 4.3.4절](https://www.rfc-editor.org/rfc/rfc9110#name-https-certificate-verificat)에서 기술하는대로 서버가 제공한 자격증명을 검증해야한다. 이는 클라이언트가 서버 자격증명과 그 자격증명을 검증하기 위한 다른 추가적인 정보들을 보존해야 한다는 것을 의미한다; 이렇게 하지 않는 클라이언트는 추가적인 오리진들에 대해 연결을 재사용할 수 없을 것이다.
 
-If the certificate is not acceptable with regard to the new origin
-for any reason, the connection MUST NOT be reused and a new
-connection SHOULD be established for the new origin. If the reason
-the certificate cannot be verified might apply to other origins
-already associated with the connection, the client SHOULD revalidate
-the server certificate for those origins. For instance, if
-validation of a certificate fails because the certificate has expired
-or been revoked, this might be used to invalidate all other origins
-for which that certificate was used to establish authority.
+만약 새로운 오리진과 관련해 어떤 이유에서든 자격증명을 인정할 수 없다면, 해당 연결은 절대(MUST NOT) 재사용돼서는 안되고 웬만하면(SHOULD) 새로운 오리진에 대해 새로운 연결을 수립해야 할 것이다. 만약 자격증명을 검증할 수 없는 이유가 이미 해당 연결에 연관된 다른 오리진들에 대해서 적용될 수 있다면, 클라이언트는 웬만하면(SHOULD) 그 오리진들에 대한 서버 자격증명을 재검증해야 한다. 예컨대, 자격증명 검증이 기간만료나 폐기에 의해 실패하면, 이는 해당 자격증명을 권한을 설정하는데 사용한 다른 모든 오리진들을 무효화하는데 이용될 수 있을 것이다.
 
-Clients SHOULD NOT open more than one HTTP/3 connection to a given IP
-address and UDP port, where the IP address and port might be derived
-from a URI, a selected alternative service ([ALTSVC]), a configured
-proxy, or name resolution of any of these. A client MAY open
-multiple HTTP/3 connections to the same IP address and UDP port using
-different transport or TLS configurations but SHOULD avoid creating
-multiple connections with the same configuration.
+클라이언트는 웬만하면(SHOULD NOT) 한 IP 주소와 UDP 포트에 대해 하나를 초과하는 HTTP/3 연결을 열지 않는 것이 좋고, 이 IP 주소와 포트는 URI, 대체 서비스([RFC7838](https://datatracker.ietf.org/doc/html/rfc7838)), 설정된 프록시나 이들 중 하나에 대한 name resolution으로부터 유도될 수 있다. 아마(MAY) 클라이언트가 다른 설정의 전송과 TLS를 위해 같은 IP 주소와 UDP 포트에 대해 여러 HTTP/3 연결을 열게 되는 경우도 있겠지만 웬만하면(SHOULD) 여러 연결을 똑같은 설정으로 만드는 것은 피해야 한다.
 
-Servers are encouraged to maintain open HTTP/3 connections for as
-long as possible but are permitted to terminate idle connections if
-necessary. When either endpoint chooses to close the HTTP/3
-connection, the terminating endpoint SHOULD first send a GOAWAY frame
-(Section 5.2) so that both endpoints can reliably determine whether
-previously sent frames have been processed and gracefully complete or
-terminate any necessary remaining tasks.
+서버는 열려있는 HTTP/3 연결들을 가능한 오래 유지하도록 권장되지만 필요하다면 유휴 상태의 연결들을 종료할 수 있는 권한을 가진다. 엔드포인트 중 하나가 HTTP/3 연결을 닫기로 결정할 때, 연결을 종료하는 쪽의 엔드포인트는 웬만하면(SHOULD) 먼저 GOAWAY 프레임(5.2절)을 보내 양쪽의 각 엔드포인트가 이전에 보내진 프레임들이 처리됐고 자연스럽게 종료할지 혹은 필요한 남은 작업들을 종료할지 안정적으로 결정할 수 있도록 해야한다.
 
-A server that does not wish clients to reuse HTTP/3 connections for a
-particular origin can indicate that it is not authoritative for a
-request by sending a 421 (Misdirected Request) status code in
-response to the request; see Section 7.4 of [HTTP].
+클라이언트가 특정 오리진에 대해 HTTP/3 연결을 재사용하지 않기를 바라는 서버는 요청에 대해 421 (Misdirected Request) 상태 코드 응답을 보내 오리진에 대해 권한이 없음을 나타낼 수 있다; [RFC9110 7.4절](https://www.rfc-editor.org/rfc/rfc9110#name-rejecting-misdirected-reque) 참조.
 
-4.  Expressing HTTP Semantics in HTTP/3
+## 4. HTTP/3에서의 HTTP Semantics 표현
 
-4.1. HTTP Message Framing
+### 4.1. HTTP 메시지 프레이밍
 
 A client sends an HTTP request on a request stream, which is a
 client-initiated bidirectional QUIC stream; see Section 6.1. A
