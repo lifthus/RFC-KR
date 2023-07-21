@@ -152,7 +152,7 @@ QUIC 전송 프로토콜은 HTTP/2의 프레이밍 레이어에서 제공하는 
 
 QUIC is described in [QUIC-TRANSPORT]. For a full description of
 HTTP/2, see [HTTP/2].
-QUIC에 관한 내용은 [RFC9000](https://datatracker.ietf.org/doc/html/rfc9000)에서 기술된다. HTTP/2의 전체 내용은 [RFC 7540](https://datatracker.ietf.org/doc/html/rfc7540)에서 확인할 수 있다.
+QUIC에 관한 내용은 [RFC9000](https://datatracker.ietf.org/doc/html/rfc9000)에서 기술된다. HTTP/2의 전체 내용은 [RFC7540](https://datatracker.ietf.org/doc/html/rfc7540)에서 확인할 수 있다.
 
 ## 2. HTTP/3 개요
 
@@ -236,7 +236,7 @@ stream error: 각 스트림에서 발생하는 애플리케이션 레벨에서�
 
 "content"라는 용어는 [RFC9110 6.4절](https://www.rfc-editor.org/rfc/rfc9110#name-content)에서 정의된다.
 
-마지막으로, "resource", "message", "user agent", "origin server", "gateway", "intermediary", "proxy" 와 "tunnel"이라는 용어들은 [RFC 9110 3절](https://www.rfc-editor.org/rfc/rfc9110#name-terminology-and-core-concep)에 정의된다.
+마지막으로, "resource", "message", "user agent", "origin server", "gateway", "intermediary", "proxy" 와 "tunnel"이라는 용어들은 [RFC9110 3절](https://www.rfc-editor.org/rfc/rfc9110#name-terminology-and-core-concep)에 정의된다.
 
 이 문서의 패킷 다이어그램들은[RFC9000 1.3절](https://datatracker.ietf.org/doc/html/rfc9000#section-1.3)에 정의된 포맷을 사용하여 필드들의 순서와 사이즈를 묘사한다.
 
