@@ -300,37 +300,21 @@ HTTP/3 연결은 여러 요청들에 걸쳐 지속적이다. 최상의 성능을
 
 ### 4.1. HTTP 메시지 프레이밍
 
-A client sends an HTTP request on a request stream, which is a
-client-initiated bidirectional QUIC stream; see Section 6.1. A
-client MUST send only a single request on a given stream. A server
-sends zero or more interim HTTP responses on the same stream as the
-request, followed by a single final HTTP response, as detailed below.
-See Section 15 of [HTTP] for a description of interim and final HTTP
-responses.
+클라이언트는 하나의 요청 스트림에 하나의 HTTP 요청을 실어보내고, 이 요청 스트림은 클라이언트가 초기화한 양방향 QUIC 스트림이다; 6.1절 참조. 클라이언트는 주어진 하나의 스트림에 반드시(MUST) 오직 하나의 요청만 보내야 한다. 서버는 아래의 자세한 설명대로 0개 이상의 중간 HTTP 응답들과 이들을 따르는 하나의 최종 HTTP 응답을 요청에서 쓰인 것과 같은 스트림을 통해 보내야 한다. 이 중간 응답과 최종 응답에 관해서는 [RFC 9110 15절]를 참조하라.
 
-Pushed responses are sent on a server-initiated unidirectional QUIC
-stream; see Section 6.2.2. A server sends zero or more interim HTTP
-responses, followed by a single final HTTP response, in the same
-manner as a standard response. Push is described in more detail in
-Section 4.6.
+푸시된 응답들은 서버가 초기화한 단방향 QUIC 스트림을 통해 보내진다; 6.2.2절 참조. 서버는 표준 응답과 같은 방식으로 0개 이상의 중간 HTTP 응답과 그를 따르는 하나의 최종 응답을 보낸다. 푸시에 관해서는 4.6절에서 더 자세히 설명한다.
 
-On a given stream, receipt of multiple requests or receipt of an
-additional HTTP response following a final HTTP response MUST be
-treated as malformed.
+**주어진 스트림에서, 여러 요청을 수신하거나 최종 HTTP 응답 이후의 추가적인 응답은 반드시(MUST) 잘못된 것으로 처리**돼야 한다.
 
-An HTTP message (request or response) consists of:
+HTTP 메시지 (요청이나 응답)은 다음으로 구성된다:
 
-1.  the header section, including message control data, sent as a
-    single HEADERS frame,
+1. 헤더 섹션, 메시지 컨트롤 데이터를 포함하며, 단독 HEADERS 프레임으로 보내진다.
 
-2.  optionally, the content, if present, sent as a series of DATA
-    frames, and
+2. 컨텐츠, 선택적인 요소이며, 만약 존재한다면 일련의 DATA 프레임들로 보내진다.
 
-3.  optionally, the trailer section, if present, sent as a single
-    HEADERS frame.
+3. 트레일러 섹션, 선택적인 요소이며, 만약 존재한다면 단독 HEADERS 프레임으로 보내진다.
 
-Header and trailer sections are described in Sections 6.3 and 6.5 of
-[HTTP]; the content is described in Section 6.4 of [HTTP].
+헤더와 트레일러 섹션은 [RFC9110 6.3절](https://www.rfc-editor.org/rfc/rfc9110#name-header-fields)과 [RFC9110 6.5절](https://www.rfc-editor.org/rfc/rfc9110#name-trailer-fields), 콘텐츠에 관해서는 [RFC9110 6.4절](https://www.rfc-editor.org/rfc/rfc9110#name-content)에서 서술되고 있다.
 
 Receipt of an invalid sequence of frames MUST be treated as a
 connection error of type H3_FRAME_UNEXPECTED. In particular, a DATA
