@@ -64,13 +64,13 @@ in the Revised BSD License.
 
 [4.1. HTTP 메시지 프레이밍](#41-http-메시지-프레이밍)
 ㄴ [4.1.1. 요청 취소와 거부](#411-요청-취소와-거부)
-4.1.2. Malformed Requests and Responses
-4.2. HTTP Fields
-4.2.1. Field Compression
-4.2.2. Header Size Constraints
+ㄴ [4.1.2. 잘못된 요청과 응답](#412-잘못된-요청과-응답)
+[4.2. HTTP 필드](#42-http-필드)
+ㄴ [4.2.1. 필드 압축](#421-필드-압축)
+ㄴ [4.2.2. 헤더 사이즈 제약](#422-헤더-사이즈-제약)
 4.3. HTTP Control Data
-4.3.1. Request Pseudo-Header Fields
-4.3.2. Response Pseudo-Header Fields
+ㄴ 4.3.1. Request Pseudo-Header Fields
+ㄴ 4.3.2. Response Pseudo-Header Fields
 4.4. The CONNECT Method
 4.5. HTTP Upgrade
 4.6. Server Push 5. Connection Closure
