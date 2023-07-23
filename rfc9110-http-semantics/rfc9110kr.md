@@ -7,22 +7,18 @@ Updates: 3864 greenbytes
 Category: Standards Track June 2022
 ISSN: 2070-1721
 
-                             HTTP Semantics
+Translated by [Lifthus](https://github.com/lifthus)
 
-Abstract
+# HTTP Semantics
 
-The Hypertext Transfer Protocol (HTTP) is a stateless application-
-level protocol for distributed, collaborative, hypertext information
-systems. This document describes the overall architecture of HTTP,
-establishes common terminology, and defines aspects of the protocol
-that are shared by all versions. In this definition are core
-protocol elements, extensibility mechanisms, and the "http" and
-"https" Uniform Resource Identifier (URI) schemes.
+## 요약
 
-This document updates RFC 3864 and obsoletes RFCs 2818, 7231, 7232,
-7233, 7235, 7538, 7615, 7694, and portions of 7230.
+Hypertext Transfer Protocol (HTTP)는 분산형, 협업형, 하이퍼텍스트 정보 시스템들을 위한 무상태성을 띄는 애플리케이션 레벨의 프로토콜이다. 이 문서는 HTTP의 전반적인 아키텍처를 기술하고, 공통적인 용어를 확립하며, 프로토콜의 모든 버전에서 공유되는 면들을 정의한다. 이 정의에는 핵심 프로토콜 요소들, 확장성 메커니즘, 그리고 "http"와 "https" Uniform Resource Identifier (URI) scheme이 포함된다.
 
-Status of This Memo
+이 문서는 RFC 3864를 갱신하고 RFC 2818, 7231, 7232,
+7233, 7235, 7538, 7615, 7694 문서 전체와 7230 문서의 일부를 대체한다.
+
+### Status of This Memo
 
 This is an Internet Standards Track document.
 
@@ -36,7 +32,7 @@ Information about the current status of this document, any errata,
 and how to provide feedback on it may be obtained at
 https://www.rfc-editor.org/info/rfc9110.
 
-Copyright Notice
+### Copyright Notice
 
 Copyright (c) 2022 IETF Trust and the persons identified as the
 document authors. All rights reserved.
@@ -63,350 +59,317 @@ not be created outside the IETF Standards Process, except to format
 it for publication as an RFC or to translate it into languages other
 than English.
 
-Table of Contents
+## 목차
 
-1.  Introduction
-    1.1. Purpose
-    1.2. History and Evolution
-    1.3. Core Semantics
-    1.4. Specifications Obsoleted by This Document
-2.  Conformance
-    2.1. Syntax Notation
-    2.2. Requirements Notation
-    2.3. Length Requirements
-    2.4. Error Handling
-    2.5. Protocol Version
-3.  Terminology and Core Concepts
-    3.1. Resources
-    3.2. Representations
-    3.3. Connections, Clients, and Servers
-    3.4. Messages
-    3.5. User Agents
-    3.6. Origin Server
-    3.7. Intermediaries
-    3.8. Caches
-    3.9. Example Message Exchange
-4.  Identifiers in HTTP
-    4.1. URI References
-    4.2. HTTP-Related URI Schemes
-    4.2.1. http URI Scheme
-    4.2.2. https URI Scheme
-    4.2.3. http(s) Normalization and Comparison
-    4.2.4. Deprecation of userinfo in http(s) URIs
-    4.2.5. http(s) References with Fragment Identifiers
-    4.3. Authoritative Access
-    4.3.1. URI Origin
-    4.3.2. http Origins
-    4.3.3. https Origins
-    4.3.4. https Certificate Verification
-    4.3.5. IP-ID Reference Identity
-5.  Fields
-    5.1. Field Names
-    5.2. Field Lines and Combined Field Value
-    5.3. Field Order
-    5.4. Field Limits
-    5.5. Field Values
-    5.6. Common Rules for Defining Field Values
-    5.6.1. Lists (#rule ABNF Extension)
-    5.6.1.1. Sender Requirements
-    5.6.1.2. Recipient Requirements
-    5.6.2. Tokens
-    5.6.3. Whitespace
-    5.6.4. Quoted Strings
-    5.6.5. Comments
-    5.6.6. Parameters
-    5.6.7. Date/Time Formats
-6.  Message Abstraction
-    6.1. Framing and Completeness
-    6.2. Control Data
-    6.3. Header Fields
-    6.4. Content
-    6.4.1. Content Semantics
-    6.4.2. Identifying Content
-    6.5. Trailer Fields
-    6.5.1. Limitations on Use of Trailers
-    6.5.2. Processing Trailer Fields
-    6.6. Message Metadata
-    6.6.1. Date
-    6.6.2. Trailer
-7.  Routing HTTP Messages
-    7.1. Determining the Target Resource
-    7.2. Host and :authority
-    7.3. Routing Inbound Requests
-    7.3.1. To a Cache
-    7.3.2. To a Proxy
-    7.3.3. To the Origin
-    7.4. Rejecting Misdirected Requests
-    7.5. Response Correlation
-    7.6. Message Forwarding
-    7.6.1. Connection
-    7.6.2. Max-Forwards
-    7.6.3. Via
-    7.7. Message Transformations
-    7.8. Upgrade
-8.  Representation Data and Metadata
-    8.1. Representation Data
-    8.2. Representation Metadata
-    8.3. Content-Type
-    8.3.1. Media Type
-    8.3.2. Charset
-    8.3.3. Multipart Types
-    8.4. Content-Encoding
-    8.4.1. Content Codings
-    8.4.1.1. Compress Coding
-    8.4.1.2. Deflate Coding
-    8.4.1.3. Gzip Coding
-    8.5. Content-Language
-    8.5.1. Language Tags
-    8.6. Content-Length
-    8.7. Content-Location
-    8.8. Validator Fields
-    8.8.1. Weak versus Strong
-    8.8.2. Last-Modified
-    8.8.2.1. Generation
-    8.8.2.2. Comparison
-    8.8.3. ETag
-    8.8.3.1. Generation
-    8.8.3.2. Comparison
-    8.8.3.3. Example: Entity Tags Varying on Content-Negotiated
-    Resources
-9.  Methods
-    9.1. Overview
-    9.2. Common Method Properties
-    9.2.1. Safe Methods
-    9.2.2. Idempotent Methods
-    9.2.3. Methods and Caching
-    9.3. Method Definitions
-    9.3.1. GET
-    9.3.2. HEAD
-    9.3.3. POST
-    9.3.4. PUT
-    9.3.5. DELETE
-    9.3.6. CONNECT
-    9.3.7. OPTIONS
-    9.3.8. TRACE
-10. Message Context
-    10.1. Request Context Fields
-    10.1.1. Expect
-    10.1.2. From
-    10.1.3. Referer
-    10.1.4. TE
-    10.1.5. User-Agent
-    10.2. Response Context Fields
-    10.2.1. Allow
-    10.2.2. Location
-    10.2.3. Retry-After
-    10.2.4. Server
-11. HTTP Authentication
-    11.1. Authentication Scheme
-    11.2. Authentication Parameters
-    11.3. Challenge and Response
-    11.4. Credentials
-    11.5. Establishing a Protection Space (Realm)
-    11.6. Authenticating Users to Origin Servers
-    11.6.1. WWW-Authenticate
-    11.6.2. Authorization
-    11.6.3. Authentication-Info
-    11.7. Authenticating Clients to Proxies
-    11.7.1. Proxy-Authenticate
-    11.7.2. Proxy-Authorization
-    11.7.3. Proxy-Authentication-Info
-12. Content Negotiation
-    12.1. Proactive Negotiation
-    12.2. Reactive Negotiation
-    12.3. Request Content Negotiation
-    12.4. Content Negotiation Field Features
-    12.4.1. Absence
-    12.4.2. Quality Values
-    12.4.3. Wildcard Values
-    12.5. Content Negotiation Fields
-    12.5.1. Accept
-    12.5.2. Accept-Charset
-    12.5.3. Accept-Encoding
-    12.5.4. Accept-Language
-    12.5.5. Vary
-13. Conditional Requests
-    13.1. Preconditions
-    13.1.1. If-Match
-    13.1.2. If-None-Match
-    13.1.3. If-Modified-Since
-    13.1.4. If-Unmodified-Since
-    13.1.5. If-Range
-    13.2. Evaluation of Preconditions
-    13.2.1. When to Evaluate
-    13.2.2. Precedence of Preconditions
-14. Range Requests
-    14.1. Range Units
-    14.1.1. Range Specifiers
-    14.1.2. Byte Ranges
-    14.2. Range
-    14.3. Accept-Ranges
-    14.4. Content-Range
-    14.5. Partial PUT
-    14.6. Media Type multipart/byteranges
-15. Status Codes
-    15.1. Overview of Status Codes
-    15.2. Informational 1xx
-    15.2.1. 100 Continue
-    15.2.2. 101 Switching Protocols
-    15.3. Successful 2xx
-    15.3.1. 200 OK
-    15.3.2. 201 Created
-    15.3.3. 202 Accepted
-    15.3.4. 203 Non-Authoritative Information
-    15.3.5. 204 No Content
-    15.3.6. 205 Reset Content
-    15.3.7. 206 Partial Content
-    15.3.7.1. Single Part
-    15.3.7.2. Multiple Parts
-    15.3.7.3. Combining Parts
-    15.4. Redirection 3xx
-    15.4.1. 300 Multiple Choices
-    15.4.2. 301 Moved Permanently
-    15.4.3. 302 Found
-    15.4.4. 303 See Other
-    15.4.5. 304 Not Modified
-    15.4.6. 305 Use Proxy
-    15.4.7. 306 (Unused)
-    15.4.8. 307 Temporary Redirect
-    15.4.9. 308 Permanent Redirect
-    15.5. Client Error 4xx
-    15.5.1. 400 Bad Request
-    15.5.2. 401 Unauthorized
-    15.5.3. 402 Payment Required
-    15.5.4. 403 Forbidden
-    15.5.5. 404 Not Found
-    15.5.6. 405 Method Not Allowed
-    15.5.7. 406 Not Acceptable
-    15.5.8. 407 Proxy Authentication Required
-    15.5.9. 408 Request Timeout
-    15.5.10. 409 Conflict
-    15.5.11. 410 Gone
-    15.5.12. 411 Length Required
-    15.5.13. 412 Precondition Failed
-    15.5.14. 413 Content Too Large
-    15.5.15. 414 URI Too Long
-    15.5.16. 415 Unsupported Media Type
-    15.5.17. 416 Range Not Satisfiable
-    15.5.18. 417 Expectation Failed
-    15.5.19. 418 (Unused)
-    15.5.20. 421 Misdirected Request
-    15.5.21. 422 Unprocessable Content
-    15.5.22. 426 Upgrade Required
-    15.6. Server Error 5xx
-    15.6.1. 500 Internal Server Error
-    15.6.2. 501 Not Implemented
-    15.6.3. 502 Bad Gateway
-    15.6.4. 503 Service Unavailable
-    15.6.5. 504 Gateway Timeout
-    15.6.6. 505 HTTP Version Not Supported
-16. Extending HTTP
-    16.1. Method Extensibility
-    16.1.1. Method Registry
-    16.1.2. Considerations for New Methods
-    16.2. Status Code Extensibility
-    16.2.1. Status Code Registry
-    16.2.2. Considerations for New Status Codes
-    16.3. Field Extensibility
-    16.3.1. Field Name Registry
-    16.3.2. Considerations for New Fields
-    16.3.2.1. Considerations for New Field Names
-    16.3.2.2. Considerations for New Field Values
-    16.4. Authentication Scheme Extensibility
-    16.4.1. Authentication Scheme Registry
-    16.4.2. Considerations for New Authentication Schemes
-    16.5. Range Unit Extensibility
-    16.5.1. Range Unit Registry
-    16.5.2. Considerations for New Range Units
-    16.6. Content Coding Extensibility
-    16.6.1. Content Coding Registry
-    16.6.2. Considerations for New Content Codings
-    16.7. Upgrade Token Registry
-17. Security Considerations
-    17.1. Establishing Authority
-    17.2. Risks of Intermediaries
-    17.3. Attacks Based on File and Path Names
-    17.4. Attacks Based on Command, Code, or Query Injection
-    17.5. Attacks via Protocol Element Length
-    17.6. Attacks Using Shared-Dictionary Compression
-    17.7. Disclosure of Personal Information
-    17.8. Privacy of Server Log Information
-    17.9. Disclosure of Sensitive Information in URIs
-    17.10. Application Handling of Field Names
-    17.11. Disclosure of Fragment after Redirects
-    17.12. Disclosure of Product Information
-    17.13. Browser Fingerprinting
-    17.14. Validator Retention
-    17.15. Denial-of-Service Attacks Using Range
-    17.16. Authentication Considerations
-    17.16.1. Confidentiality of Credentials
-    17.16.2. Credentials and Idle Clients
-    17.16.3. Protection Spaces
-    17.16.4. Additional Response Fields
-18. IANA Considerations
-    18.1. URI Scheme Registration
-    18.2. Method Registration
-    18.3. Status Code Registration
-    18.4. Field Name Registration
-    18.5. Authentication Scheme Registration
-    18.6. Content Coding Registration
-    18.7. Range Unit Registration
-    18.8. Media Type Registration
-    18.9. Port Registration
-    18.10. Upgrade Token Registration
-19. References
-    19.1. Normative References
-    19.2. Informative References
-    Appendix A. Collected ABNF
-    Appendix B. Changes from Previous RFCs
-    B.1. Changes from RFC 2818
-    B.2. Changes from RFC 7230
-    B.3. Changes from RFC 7231
-    B.4. Changes from RFC 7232
-    B.5. Changes from RFC 7233
-    B.6. Changes from RFC 7235
-    B.7. Changes from RFC 7538
-    B.8. Changes from RFC 7615
-    B.9. Changes from RFC 7694
-    Acknowledgements
-    Index
-    Authors' Addresses
+###### [1. 소개](#1-소개)
 
-20. Introduction
+[1.1. 목적](#11-목적)
+[1.2. 역사와 발전](#12-역사와-발전)
+[1.3. 핵심 의미체계](#13-핵심-의미체계)
+[1.4. 이 문서에 의해 대체된 사양들](#14-이-문서에-의해-대체된-사양들)
 
-1.1. Purpose
+###### [2. 준수 사항](#2-준수-사항)
 
-The Hypertext Transfer Protocol (HTTP) is a family of stateless,
-application-level, request/response protocols that share a generic
-interface, extensible semantics, and self-descriptive messages to
-enable flexible interaction with network-based hypertext information
-systems.
+[2.1. 문법 표기](#21-문법-표기)
+[2.2. 요구사항 표기](#22-요구사항-표기)
+[2.3. 길이 요구사항](#23-길이-요구사항)
+[2.4. 에러 핸들링](#24-에러-핸들링)
+[2.5. 프로토콜 버전](#25-프로토콜-버전)
 
-HTTP hides the details of how a service is implemented by presenting
-a uniform interface to clients that is independent of the types of
-resources provided. Likewise, servers do not need to be aware of
-each client's purpose: a request can be considered in isolation
-rather than being associated with a specific type of client or a
-predetermined sequence of application steps. This allows general-
-purpose implementations to be used effectively in many different
-contexts, reduces interaction complexity, and enables independent
-evolution over time.
+###### [3. 용어와 핵심 개념들](#3-용어와-핵심-개념들)
 
-HTTP is also designed for use as an intermediation protocol, wherein
-proxies and gateways can translate non-HTTP information systems into
-a more generic interface.
+3.1. Resources
+3.2. Representations
+3.3. Connections, Clients, and Servers
+3.4. Messages
+3.5. User Agents
+3.6. Origin Server
+3.7. Intermediaries
+3.8. Caches
+3.9. Example Message Exchange 4. Identifiers in HTTP
+4.1. URI References
+4.2. HTTP-Related URI Schemes
+4.2.1. http URI Scheme
+4.2.2. https URI Scheme
+4.2.3. http(s) Normalization and Comparison
+4.2.4. Deprecation of userinfo in http(s) URIs
+4.2.5. http(s) References with Fragment Identifiers
+4.3. Authoritative Access
+4.3.1. URI Origin
+4.3.2. http Origins
+4.3.3. https Origins
+4.3.4. https Certificate Verification
+4.3.5. IP-ID Reference Identity 5. Fields
+5.1. Field Names
+5.2. Field Lines and Combined Field Value
+5.3. Field Order
+5.4. Field Limits
+5.5. Field Values
+5.6. Common Rules for Defining Field Values
+5.6.1. Lists (#rule ABNF Extension)
+5.6.1.1. Sender Requirements
+5.6.1.2. Recipient Requirements
+5.6.2. Tokens
+5.6.3. Whitespace
+5.6.4. Quoted Strings
+5.6.5. Comments
+5.6.6. Parameters
+5.6.7. Date/Time Formats 6. Message Abstraction
+6.1. Framing and Completeness
+6.2. Control Data
+6.3. Header Fields
+6.4. Content
+6.4.1. Content Semantics
+6.4.2. Identifying Content
+6.5. Trailer Fields
+6.5.1. Limitations on Use of Trailers
+6.5.2. Processing Trailer Fields
+6.6. Message Metadata
+6.6.1. Date
+6.6.2. Trailer 7. Routing HTTP Messages
+7.1. Determining the Target Resource
+7.2. Host and :authority
+7.3. Routing Inbound Requests
+7.3.1. To a Cache
+7.3.2. To a Proxy
+7.3.3. To the Origin
+7.4. Rejecting Misdirected Requests
+7.5. Response Correlation
+7.6. Message Forwarding
+7.6.1. Connection
+7.6.2. Max-Forwards
+7.6.3. Via
+7.7. Message Transformations
+7.8. Upgrade 8. Representation Data and Metadata
+8.1. Representation Data
+8.2. Representation Metadata
+8.3. Content-Type
+8.3.1. Media Type
+8.3.2. Charset
+8.3.3. Multipart Types
+8.4. Content-Encoding
+8.4.1. Content Codings
+8.4.1.1. Compress Coding
+8.4.1.2. Deflate Coding
+8.4.1.3. Gzip Coding
+8.5. Content-Language
+8.5.1. Language Tags
+8.6. Content-Length
+8.7. Content-Location
+8.8. Validator Fields
+8.8.1. Weak versus Strong
+8.8.2. Last-Modified
+8.8.2.1. Generation
+8.8.2.2. Comparison
+8.8.3. ETag
+8.8.3.1. Generation
+8.8.3.2. Comparison
+8.8.3.3. Example: Entity Tags Varying on Content-Negotiated
+Resources 9. Methods
+9.1. Overview
+9.2. Common Method Properties
+9.2.1. Safe Methods
+9.2.2. Idempotent Methods
+9.2.3. Methods and Caching
+9.3. Method Definitions
+9.3.1. GET
+9.3.2. HEAD
+9.3.3. POST
+9.3.4. PUT
+9.3.5. DELETE
+9.3.6. CONNECT
+9.3.7. OPTIONS
+9.3.8. TRACE 10. Message Context
+10.1. Request Context Fields
+10.1.1. Expect
+10.1.2. From
+10.1.3. Referer
+10.1.4. TE
+10.1.5. User-Agent
+10.2. Response Context Fields
+10.2.1. Allow
+10.2.2. Location
+10.2.3. Retry-After
+10.2.4. Server 11. HTTP Authentication
+11.1. Authentication Scheme
+11.2. Authentication Parameters
+11.3. Challenge and Response
+11.4. Credentials
+11.5. Establishing a Protection Space (Realm)
+11.6. Authenticating Users to Origin Servers
+11.6.1. WWW-Authenticate
+11.6.2. Authorization
+11.6.3. Authentication-Info
+11.7. Authenticating Clients to Proxies
+11.7.1. Proxy-Authenticate
+11.7.2. Proxy-Authorization
+11.7.3. Proxy-Authentication-Info 12. Content Negotiation
+12.1. Proactive Negotiation
+12.2. Reactive Negotiation
+12.3. Request Content Negotiation
+12.4. Content Negotiation Field Features
+12.4.1. Absence
+12.4.2. Quality Values
+12.4.3. Wildcard Values
+12.5. Content Negotiation Fields
+12.5.1. Accept
+12.5.2. Accept-Charset
+12.5.3. Accept-Encoding
+12.5.4. Accept-Language
+12.5.5. Vary 13. Conditional Requests
+13.1. Preconditions
+13.1.1. If-Match
+13.1.2. If-None-Match
+13.1.3. If-Modified-Since
+13.1.4. If-Unmodified-Since
+13.1.5. If-Range
+13.2. Evaluation of Preconditions
+13.2.1. When to Evaluate
+13.2.2. Precedence of Preconditions 14. Range Requests
+14.1. Range Units
+14.1.1. Range Specifiers
+14.1.2. Byte Ranges
+14.2. Range
+14.3. Accept-Ranges
+14.4. Content-Range
+14.5. Partial PUT
+14.6. Media Type multipart/byteranges 15. Status Codes
+15.1. Overview of Status Codes
+15.2. Informational 1xx
+15.2.1. 100 Continue
+15.2.2. 101 Switching Protocols
+15.3. Successful 2xx
+15.3.1. 200 OK
+15.3.2. 201 Created
+15.3.3. 202 Accepted
+15.3.4. 203 Non-Authoritative Information
+15.3.5. 204 No Content
+15.3.6. 205 Reset Content
+15.3.7. 206 Partial Content
+15.3.7.1. Single Part
+15.3.7.2. Multiple Parts
+15.3.7.3. Combining Parts
+15.4. Redirection 3xx
+15.4.1. 300 Multiple Choices
+15.4.2. 301 Moved Permanently
+15.4.3. 302 Found
+15.4.4. 303 See Other
+15.4.5. 304 Not Modified
+15.4.6. 305 Use Proxy
+15.4.7. 306 (Unused)
+15.4.8. 307 Temporary Redirect
+15.4.9. 308 Permanent Redirect
+15.5. Client Error 4xx
+15.5.1. 400 Bad Request
+15.5.2. 401 Unauthorized
+15.5.3. 402 Payment Required
+15.5.4. 403 Forbidden
+15.5.5. 404 Not Found
+15.5.6. 405 Method Not Allowed
+15.5.7. 406 Not Acceptable
+15.5.8. 407 Proxy Authentication Required
+15.5.9. 408 Request Timeout
+15.5.10. 409 Conflict
+15.5.11. 410 Gone
+15.5.12. 411 Length Required
+15.5.13. 412 Precondition Failed
+15.5.14. 413 Content Too Large
+15.5.15. 414 URI Too Long
+15.5.16. 415 Unsupported Media Type
+15.5.17. 416 Range Not Satisfiable
+15.5.18. 417 Expectation Failed
+15.5.19. 418 (Unused)
+15.5.20. 421 Misdirected Request
+15.5.21. 422 Unprocessable Content
+15.5.22. 426 Upgrade Required
+15.6. Server Error 5xx
+15.6.1. 500 Internal Server Error
+15.6.2. 501 Not Implemented
+15.6.3. 502 Bad Gateway
+15.6.4. 503 Service Unavailable
+15.6.5. 504 Gateway Timeout
+15.6.6. 505 HTTP Version Not Supported 16. Extending HTTP
+16.1. Method Extensibility
+16.1.1. Method Registry
+16.1.2. Considerations for New Methods
+16.2. Status Code Extensibility
+16.2.1. Status Code Registry
+16.2.2. Considerations for New Status Codes
+16.3. Field Extensibility
+16.3.1. Field Name Registry
+16.3.2. Considerations for New Fields
+16.3.2.1. Considerations for New Field Names
+16.3.2.2. Considerations for New Field Values
+16.4. Authentication Scheme Extensibility
+16.4.1. Authentication Scheme Registry
+16.4.2. Considerations for New Authentication Schemes
+16.5. Range Unit Extensibility
+16.5.1. Range Unit Registry
+16.5.2. Considerations for New Range Units
+16.6. Content Coding Extensibility
+16.6.1. Content Coding Registry
+16.6.2. Considerations for New Content Codings
+16.7. Upgrade Token Registry 17. Security Considerations
+17.1. Establishing Authority
+17.2. Risks of Intermediaries
+17.3. Attacks Based on File and Path Names
+17.4. Attacks Based on Command, Code, or Query Injection
+17.5. Attacks via Protocol Element Length
+17.6. Attacks Using Shared-Dictionary Compression
+17.7. Disclosure of Personal Information
+17.8. Privacy of Server Log Information
+17.9. Disclosure of Sensitive Information in URIs
+17.10. Application Handling of Field Names
+17.11. Disclosure of Fragment after Redirects
+17.12. Disclosure of Product Information
+17.13. Browser Fingerprinting
+17.14. Validator Retention
+17.15. Denial-of-Service Attacks Using Range
+17.16. Authentication Considerations
+17.16.1. Confidentiality of Credentials
+17.16.2. Credentials and Idle Clients
+17.16.3. Protection Spaces
+17.16.4. Additional Response Fields 18. IANA Considerations
+18.1. URI Scheme Registration
+18.2. Method Registration
+18.3. Status Code Registration
+18.4. Field Name Registration
+18.5. Authentication Scheme Registration
+18.6. Content Coding Registration
+18.7. Range Unit Registration
+18.8. Media Type Registration
+18.9. Port Registration
+18.10. Upgrade Token Registration 19. References
+19.1. Normative References
+19.2. Informative References
+Appendix A. Collected ABNF
+Appendix B. Changes from Previous RFCs
+B.1. Changes from RFC 2818
+B.2. Changes from RFC 7230
+B.3. Changes from RFC 7231
+B.4. Changes from RFC 7232
+B.5. Changes from RFC 7233
+B.6. Changes from RFC 7235
+B.7. Changes from RFC 7538
+B.8. Changes from RFC 7615
+B.9. Changes from RFC 7694
+Acknowledgements
+Index
+Authors' Addresses
 
-One consequence of this flexibility is that the protocol cannot be
-defined in terms of what occurs behind the interface. Instead, we
-are limited to defining the syntax of communication, the intent of
-received communication, and the expected behavior of recipients. If
-the communication is considered in isolation, then successful actions
-ought to be reflected in corresponding changes to the observable
-interface provided by servers. However, since multiple clients might
-act in parallel and perhaps at cross-purposes, we cannot require that
-such changes be observable beyond the scope of a single response.
+## 1. 소개
 
-1.2. History and Evolution
+### 1.1. 목적
+
+Hypertext Transfer Protocol (HTTP)는 네트워크 기반 하이퍼텍스트 정보 시스템과 유연하게 상호작용할 수 있도록 일반적인 인터페이스, 확장 가능한 의미체계, 자기설명적 메시지를 가지는 무상태성, 애플리케이션-레벨, 요청/응답 여러 프로토콜들 중 하나다.
+
+HTTP는 제공되는 리소스의 타입과 무관한 클라이언트에게 균일한 인터페이스를 제시함으로써 서비스가 정확히 어떻게 구현됐는가를 숨긴다. 비슷하게, 서버는 각 클라이언트의 목적을 알 필요가 없다: 하나의 요청은 특정 타입의 클라이언트나 미리 결정된 애플리케이션이 진행되는 단계의 순서 같은 것과 관계없이 각각 별도로 고려될 수 있다. 이는 다른 많은 상황들에서 효율적으로 사용될 수 있는 범용적인 구현을 가능하게 하며, 상호작용의 복잡도를 줄이고, 시간이 지남에 따라 독립적으로 발전할 수 있도록 한다.
+
+HTTP는 또한 중개 프로토콜로 사용하도록 설계됐는데, 이 경우 프록시나 게이트웨이는 HTTP가 아닌 정보 시스템을 더 일반적인 인터페이스로 변환할 수 있다.
+
+이 유연성의 한 결과로써 이 프로토콜은 인터페이스 뒤에서 무슨 일이 일어나냐를 가지고는 정의될 수 없게 됐다. 대신에, 우리가 할 수 있는 것은 통신의 문법, 수신된 통신의 의도, 그리고 수신하는 쪽의 예상되는 행동을 정의하는 것으로 제한된다. 각 통신이 별도로 고려된다면, 통신의 성공적인 어떤 행동은 서버가 제공하는 관측 가능한 인터페이스의 변화에 반영되어야 한다. 그러나, 한번에 여러 클라이언트들이 병렬적으로 행동하게될 수 있고 또 교차적인 목적을 띌 수 있기 때문에, 우리는 그러한 인터페이스의 변화가 단일 응답의 범위를 넘어서까지 관측 가능하도록 요구할 수는 없다.
+
+### 1.2. 역사와 발전
 
 HTTP has been the primary information transfer protocol for the World
 Wide Web since its introduction in 1990. It began as a trivial
@@ -447,7 +410,7 @@ document) and caching ([CACHING]) from the current HTTP/1.1 messaging
 syntax ([HTTP/1.1]) to allow each major protocol version to progress
 independently while referring to the same core semantics.
 
-1.3. Core Semantics
+### 1.3. 핵심 의미체계
 
 HTTP provides a uniform interface for interacting with a resource
 (Section 3.1) -- regardless of its type, nature, or implementation --
@@ -478,6 +441,7 @@ negotiation" (Section 12).
 
 1.4. Specifications Obsoleted by This Document
 
+```
 +============================================+===========+=====+
 | Title | Reference | See |
 +============================================+===========+=====+
@@ -502,6 +466,7 @@ negotiation" (Section 12).
 +--------------------------------------------+-----------+-----+
 
                                Table 1
+```
 
 [*] This document only obsoletes the portions of RFC 7230 that are
 independent of the HTTP/1.1 messaging syntax and connection
@@ -6665,7 +6630,7 @@ selected representation contains a total of 1234 bytes:
 
   Content-Range: bytes 734-1233/1234
 
-14.5. Partial PUT
+  14.5. Partial PUT
 
 Some origin servers support PUT of a partial representation when the
 user agent sends a Content-Range header field (Section 14.4) in the
@@ -8204,7 +8169,7 @@ documented if the default behavior is not appropriate:
 - If the field ought to be removed when automatically redirecting a
   request due to security concerns (see Section 15.4).
 
-16.3.2.1. Considerations for New Field Names
+  16.3.2.1. Considerations for New Field Names
 
 Authors of specifications defining new fields are advised to choose a
 short but descriptive field name. Short names avoid needless data
@@ -8356,9 +8321,9 @@ put constraints on how new authentication schemes can work:
   consider and document the related security considerations (see
   Section 17.16.4).
 
-16.5. Range Unit Extensibility
+  16.5. Range Unit Extensibility
 
-16.5.1. Range Unit Registry
+  16.5.1. Range Unit Registry
 
 The "HTTP Range Unit Registry" defines the namespace for the range
 unit names and refers to their corresponding specifications. It is
