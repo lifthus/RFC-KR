@@ -63,14 +63,14 @@ in the Revised BSD License.
 ###### [4. HTTP/3에서의 HTTP Semantics 표현](#4-http3에서의-http-semantics-표현)
 
 [4.1. HTTP 메시지 프레이밍](#41-http-메시지-프레이밍)
-4.1.1. Request Cancellation and Rejection
-4.1.2. Malformed Requests and Responses
-4.2. HTTP Fields
-4.2.1. Field Compression
-4.2.2. Header Size Constraints
+ㄴ [4.1.1. 요청 취소와 거부](#411-요청-취소와-거부)
+ㄴ [4.1.2. 잘못된 요청과 응답](#412-잘못된-요청과-응답)
+[4.2. HTTP 필드](#42-http-필드)
+ㄴ [4.2.1. 필드 압축](#421-필드-압축)
+ㄴ [4.2.2. 헤더 사이즈 제약](#422-헤더-사이즈-제약)
 4.3. HTTP Control Data
-4.3.1. Request Pseudo-Header Fields
-4.3.2. Response Pseudo-Header Fields
+ㄴ 4.3.1. Request Pseudo-Header Fields
+ㄴ 4.3.2. Response Pseudo-Header Fields
 4.4. The CONNECT Method
 4.5. HTTP Upgrade
 4.6. Server Push 5. Connection Closure
@@ -300,100 +300,41 @@ HTTP/3 연결은 여러 요청들에 걸쳐 지속적이다. 최상의 성능을
 
 ### 4.1. HTTP 메시지 프레이밍
 
-A client sends an HTTP request on a request stream, which is a
-client-initiated bidirectional QUIC stream; see Section 6.1. A
-client MUST send only a single request on a given stream. A server
-sends zero or more interim HTTP responses on the same stream as the
-request, followed by a single final HTTP response, as detailed below.
-See Section 15 of [HTTP] for a description of interim and final HTTP
-responses.
+클라이언트는 하나의 요청 스트림에 하나의 HTTP 요청을 실어보내고, 이 요청 스트림은 클라이언트가 초기화한 양방향 QUIC 스트림이다; 6.1절 참조. 클라이언트는 주어진 하나의 스트림에 반드시(MUST) 오직 하나의 요청만 보내야 한다. 서버는 아래의 자세한 설명대로 0개 이상의 중간 HTTP 응답들과 이들을 따르는 하나의 최종 HTTP 응답을 요청에서 쓰인 것과 같은 스트림을 통해 보내야 한다. 이 중간 응답과 최종 응답에 관해서는 [RFC 9110 15절]를 참조하라.
 
-Pushed responses are sent on a server-initiated unidirectional QUIC
-stream; see Section 6.2.2. A server sends zero or more interim HTTP
-responses, followed by a single final HTTP response, in the same
-manner as a standard response. Push is described in more detail in
-Section 4.6.
+푸시된 응답들은 서버가 초기화한 단방향 QUIC 스트림을 통해 보내진다; 6.2.2절 참조. 서버는 표준 응답과 같은 방식으로 0개 이상의 중간 HTTP 응답과 그를 따르는 하나의 최종 응답을 보낸다. 푸시에 관해서는 4.6절에서 더 자세히 설명한다.
 
-On a given stream, receipt of multiple requests or receipt of an
-additional HTTP response following a final HTTP response MUST be
-treated as malformed.
+**주어진 스트림에서, 여러 요청을 수신하거나 최종 HTTP 응답 이후의 추가적인 응답은 반드시(MUST) 잘못된 것으로 처리**돼야 한다.
 
-An HTTP message (request or response) consists of:
+HTTP 메시지 (요청이나 응답)은 다음으로 구성된다:
 
-1.  the header section, including message control data, sent as a
-    single HEADERS frame,
+1. 헤더 섹션, 메시지 컨트롤 데이터를 포함하며, 단독 HEADERS 프레임으로 보내진다.
 
-2.  optionally, the content, if present, sent as a series of DATA
-    frames, and
+2. 컨텐츠, 선택적인 요소이며, 만약 존재한다면 일련의 DATA 프레임들로 보내진다.
 
-3.  optionally, the trailer section, if present, sent as a single
-    HEADERS frame.
+3. 트레일러 섹션, 선택적인 요소이며, 만약 존재한다면 단독 HEADERS 프레임으로 보내진다.
 
-Header and trailer sections are described in Sections 6.3 and 6.5 of
-[HTTP]; the content is described in Section 6.4 of [HTTP].
+헤더와 트레일러 섹션은 [RFC9110 6.3절](https://www.rfc-editor.org/rfc/rfc9110#name-header-fields)과 [RFC9110 6.5절](https://www.rfc-editor.org/rfc/rfc9110#name-trailer-fields), 콘텐츠에 관해서는 [RFC9110 6.4절](https://www.rfc-editor.org/rfc/rfc9110#name-content)에서 서술되고 있다.
 
-Receipt of an invalid sequence of frames MUST be treated as a
-connection error of type H3_FRAME_UNEXPECTED. In particular, a DATA
-frame before any HEADERS frame, or a HEADERS or DATA frame after the
-trailing HEADERS frame, is considered invalid. Other frame types,
-especially unknown frame types, might be permitted subject to their
-own rules; see Section 9.
+잘못된 순서의 프레임들을 수신할 경우에는 반드시(MUST) H3_FRAME_UNEXPECTED 타입의 연결 에러로 취급해야 한다. 특히, DATA 프레임이 그 어떤 HEADERS 프레임보다 앞에 오거나, HEADERS 프레임이나 DATA 프레임이 트레일러 HEADERS 프레임 뒤에 온다면, 유효하지 않은 것으로 간주된다. 다른 프레임 타입들, 특히 알 수 없는 프레임 타입들은, 그들 자신의 규칙에 따라 허용될 수도 있다; 9절 참조.
 
-A server MAY send one or more PUSH_PROMISE frames before, after, or
-interleaved with the frames of a response message. These
-PUSH_PROMISE frames are not part of the response; see Section 4.6 for
-more details. PUSH_PROMISE frames are not permitted on push streams;
-a pushed response that includes PUSH_PROMISE frames MUST be treated
-as a connection error of type H3_FRAME_UNEXPECTED.
+서버는 아마(MAY) 하나 이상의 PUSH_PROMISE 프레임들을 응답 메시지의 프레임 앞, 뒤, 혹은 중간에 끼워보낼 수 있을 것이다. 이 PUSH_PROMISE 프레임들은 응답의 일부가 아니다; 자세한 정보는 4.6절 참조. PUSH_PROMISE 프레임들은 푸시 스트림에서 허용되지 않는다; PUSH_PROMISE 프레임들을 포함하는 푸시된 응답은 반드시(MUST) H3_FRAME_UNEXPECTED 타입의 연결 에러로 취급돼야 한다.
 
-Frames of unknown types (Section 9), including reserved frames
-(Section 7.2.8) MAY be sent on a request or push stream before,
-after, or interleaved with other frames described in this section.
+예약된 프레임(7.2.8절)을 포함해 타입을 알 수 없는 프레임들은 (9절), 아마(MAY) 이 절에서 서술된 다른 프레임들의 앞, 뒤, 혹은 중간에 끼워져서 요청이나 푸시 스트림을 통해 보내질 수 있을 것이다.
 
-The HEADERS and PUSH_PROMISE frames might reference updates to the
-QPACK dynamic table. While these updates are not directly part of
-the message exchange, they must be received and processed before the
-message can be consumed. See Section 4.2 for more details.
+HEADERS와 PUSH_PROMISE 프레임들은 QPACK 동적 테이블의 업데이트를 참조할 수도 있다. 이 업데이트들이 직접적으로 메시지 교환의 일부는 아니지만, 이들은 메시지들이 소비될 수 있기 전에 꼭 수신되고 처리돼야 한다. 자세한 정보는 4.2절 참조.
 
-Transfer codings (see Section 7 of [HTTP/1.1]) are not defined for
-HTTP/3; the Transfer-Encoding header field MUST NOT be used.
+HTTP/3에서 Transfer codings ([RFC9112 7절])은 정의되지 않는다; Transfer-Encoding 헤더 필드는 절대(MUST NOT) 사용되서는 안된다.
 
-A response MAY consist of multiple messages when and only when one or
-more interim responses (1xx; see Section 15.2 of [HTTP]) precede a
-final response to the same request. Interim responses do not contain
-content or trailer sections.
+하나의 응답은 아마(MAY) 여러 개의 메시지들로 구성될 수 있는데, 이는 하나 이상의 중간 응답들(1xx; [RFC9110 15.2절](https://www.rfc-editor.org/rfc/rfc9110#section-15.2))이 최종 응답에 앞서는 경우다. 중간 응답들은 컨텐츠나 트레일러 섹션들을 포함하지 않는다.
 
-An HTTP request/response exchange fully consumes a client-initiated
-bidirectional QUIC stream. After sending a request, a client MUST
-close the stream for sending. Unless using the CONNECT method (see
-Section 4.4), clients MUST NOT make stream closure dependent on
-receiving a response to their request. After sending a final
-response, the server MUST close the stream for sending. At this
-point, the QUIC stream is fully closed.
+하나의 HTTP 요청/응답 교환은 클라이언트가 초기화한 양방향 QUIC 스트림을 완전히 소비한다. 요청이 보내지고 나면, 클라이언트는 반드시(MUST) 발신을 위한 스트림을 닫아야 한다. CONNECT 메소드 (4.4절 참조)를 사용하고 있지 않다면, 클라이언트는 절대(MUST NOT) 요청에 대한 응답을 수신함에 따라서 스트림을 닫아서는 안된다. 마지막 응답을 보내고 나서, 서버는 반드시(MUST) 발신을 위한 스트림을 닫아야 한다. 이 시점에서, QUIC 스트림은 완전히 닫힌다.
 
-When a stream is closed, this indicates the end of the final HTTP
-message. Because some messages are large or unbounded, endpoints
-SHOULD begin processing partial HTTP messages once enough of the
-message has been received to make progress. If a client-initiated
-stream terminates without enough of the HTTP message to provide a
-complete response, the server SHOULD abort its response stream with
-the error code H3_REQUEST_INCOMPLETE.
+스트림이 닫혔다면, 이는 마지막 HTTP 메시지의 끝을 의미한다. 어떤 메시지는 크고 또 제한이 없기 때문에, 각 엔드포인트는 웬만하면(SHOULD) 메시지가 처리를 진행할만큼 충분히 수신되고 나서 HTTP 메시지를 부분적으로 처리하기 시작해야 한다. 스트림이 완전한 응답을 제공할만큼 충분한 HTTP 메시지를 얻지 못한 상태에서 클라이언트가 초기화한 스트림이 종료된다면, 서버는 웬만하면(SHOULD) H3_REQUEST_INCOMPLETE 에러 코드와 함께 응답 스트림을 중단해야 한다.
 
-A server can send a complete response prior to the client sending an
-entire request if the response does not depend on any portion of the
-request that has not been sent and received. When the server does
-not need to receive the remainder of the request, it MAY abort
-reading the request stream, send a complete response, and cleanly
-close the sending part of the stream. The error code H3_NO_ERROR
-SHOULD be used when requesting that the client stop sending on the
-request stream. Clients MUST NOT discard complete responses as a
-result of having their request terminated abruptly, though clients
-can always discard responses at their discretion for other reasons.
-If the server sends a partial or complete response but does not abort
-reading the request, clients SHOULD continue sending the content of
-the request and close the stream normally.
+서버는 응답이 아직 보내지거나 수신되지 않은 요청의 그 어느 부분에도 의존하지 않는다면 클라이언트가 전체 요청을 보내기 전에 완전한 응답을 먼저 보낼 수 있다. 서버가 요청의 나머지 부분을 받을 필요가 없을 때, 서버는 아마(MAY) 요청 스트림을 읽어들이는 것을 중단하고, 완전한 응답을 보내고, 스트림의 발신 부분을 깔끔하게 닫을 수 있을 것이다. H3_NO_ERROR 에러 코드는 웬만하면(SHOULD) 클라이언트가 요청 스트림에서 보내는 것을 중단하도록 요청할 때 사용돼야 한다. 클라이언트는 다른 이유들에서는 항상 재량에 따라 응답을 버릴 수 있지만, 요청이 갑작스레 중단된 결과로 인해서는 절대(MUST NOT) 완전한 응답을 버려서는 안된다. 만약 서버가 부분적 혹은 완전한 응답을 보내고도 요청을 읽어들이는 것은 중단하지 않는다면, 클라이언트는 웬만하면(SHOULD) 요청 내용을 계속 보내고 정상적으로 스트림을 닫아야 한다.
 
-4.1.1. Request Cancellation and Rejection
+#### 4.1.1. 요청 취소와 거부
 
 Once a request stream has been opened, the request MAY be cancelled
 by either endpoint. Clients cancel requests if the response is no
