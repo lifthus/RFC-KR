@@ -16,7 +16,7 @@ Translated by [Lifthus](https://github.com/lifthus)
 Hypertext Transfer Protocol (HTTP)는 분산형, 협업형, 하이퍼텍스트 정보 시스템들을 위한 무상태성을 띄는 애플리케이션 레벨의 프로토콜이다. 이 문서는 HTTP의 전반적인 아키텍처를 기술하고, 공통적인 용어를 확립하며, 프로토콜의 모든 버전에서 공유되는 면들을 정의한다. 이 정의에는 핵심 프로토콜 요소들, 확장성 메커니즘, 그리고 "http"와 "https" Uniform Resource Identifier (URI) scheme이 포함된다.
 
 이 문서는 RFC 3864를 갱신하고 RFC 2818, 7231, 7232,
-7233, 7235, 7538, 7615, 7694 문서 전체와 7230 문서의 일부를 대체한다.
+7233, 7235, 7538, 7615, 7694 문서 전체와 7230 문서의 일부를 폐기한다.
 
 ### Status of This Memo
 
@@ -66,7 +66,7 @@ than English.
 [1.1. 목적](#11-목적)
 [1.2. 역사와 발전](#12-역사와-발전)
 [1.3. 핵심 의미체계](#13-핵심-의미체계)
-[1.4. 이 문서에 의해 대체된 사양들](#14-이-문서에-의해-대체된-사양들)
+[1.4. 이 문서에 의해 폐기된 사양들](#14-이-문서에-의해-폐기된-사양들)
 
 ###### [2. 준수 사항](#2-준수-사항)
 
@@ -344,15 +344,16 @@ Resources 9. Methods
 19.2. Informative References
 Appendix A. Collected ABNF
 Appendix B. Changes from Previous RFCs
-B.1. Changes from RFC 2818
-B.2. Changes from RFC 7230
-B.3. Changes from RFC 7231
-B.4. Changes from RFC 7232
-B.5. Changes from RFC 7233
-B.6. Changes from RFC 7235
-B.7. Changes from RFC 7538
-B.8. Changes from RFC 7615
-B.9. Changes from RFC 7694
+
+[B.1. RFC 2818로 부터의 변화](#B1-RFC-2818로-부터의-변화)
+[B.2. RFC 7230로 부터의 변화](#B2-RFC-7230로-부터의-변화)
+[B.3. RFC 7231로 부터의 변화](#B3-RFC-7231로-부터의-변화)
+[B.4. RFC 7232로 부터의 변화](#B4-RFC-7232로-부터의-변화)
+[B.5. RFC 7233로 부터의 변화](#B5-RFC-7233로-부터의-변화)
+[B.6. RFC 7235로 부터의 변화](#B6-RFC-7235로-부터의-변화)
+[B.7. RFC 7538로 부터의 변화](#B7-RFC-7538로-부터의-변화)
+[B.8. RFC 7615로 부터의 변화](#B8-RFC-7615로-부터의-변화)
+[B.9. RFC 7694로 부터의 변화](#B9-RFC-7694로-부터의-변화)
 Acknowledgements
 Index
 Authors' Addresses
@@ -371,111 +372,51 @@ HTTP는 또한 중개 프로토콜로 사용될 수 있도록 설계됐는데, �
 
 ### 1.2. 역사와 발전
 
-HTTP has been the primary information transfer protocol for the World
-Wide Web since its introduction in 1990. It began as a trivial
-mechanism for low-latency requests, with a single method (GET) to
-request transfer of a presumed hypertext document identified by a
-given pathname. As the Web grew, HTTP was extended to enclose
-requests and responses within messages, transfer arbitrary data
-formats using MIME-like media types, and route requests through
-intermediaries. These protocols were eventually defined as HTTP/0.9
-and HTTP/1.0 (see [HTTP/1.0]).
+HTTP는 1990년에 등장한 이후로 World Wide Web에서 주요한 정보 전송 프로토콜로 사용되고 있다. 처음에는 단 하나의 메소드 (GET)로 주어진 경로명에 의해 식별되며 해당 경로에 있을 것을 것으로 추정되는 하이퍼텍스트 문서의 전송을 요청하는 짧은 지연시간의 요청을 위한 단순한 메커니즘으로 시작됐다. 웹이 성장하면서, HTTP는 요청과 응답을 메시지에 포함시키고, MIME 같은 미디어 타입을 사용해 임의의 데이터 포맷을 전송하고, 중개자를 통해 요청을 라우팅할 수 있도록 확장됐다. 이러한 프로토콜들은 결국 HTTP/0.9와 HTTP/1.0으로 정의됐다. ([RFC1945](https://datatracker.ietf.org/doc/html/rfc1945) 참조)
 
-HTTP/1.1 was designed to refine the protocol's features while
-retaining compatibility with the existing text-based messaging
-syntax, improving its interoperability, scalability, and robustness
-across the Internet. This included length-based data delimiters for
-both fixed and dynamic (chunked) content, a consistent framework for
-content negotiation, opaque validators for conditional requests,
-cache controls for better cache consistency, range requests for
-partial updates, and default persistent connections. HTTP/1.1 was
-introduced in 1995 and published on the Standards Track in 1997
-[RFC2068], revised in 1999 [RFC2616], and revised again in 2014
-([RFC7230] through [RFC7235]).
+HTTP/1.1은 원래의 텍스트 기반 메시지 문법과의 호환성을 유지하고, 상호운용성과 황장성, 인터넷에서의 견고함은 더 강화시키면서 위 프로토콜의 기능들을 다듬도록 설계됐다. 여기에는 고정된, 그리고 동적인 (어떤 단위로 묶인) 콘텐츠 데이터를 길이에 기반해 구분하는 것, 콘텐츠 협상을 위한 일관적인 프레임워크, 조건부 요청을 위한 불투명한 유효성 검사, 더 나은 캐시 일관성을 위한 캐시 제어, 부분 갱신을 위한 범위 요청, 그리고 기본적으로 지속되는 연결이 포함된다. HTTP/1.1은 1995년에 처음 소개되어 1997년에 표준 트랙(Standards Track)으로 발표됐고[[RFC2068](https://datatracker.ietf.org/doc/html/rfc2068)], 1999년에 개정됐으며[[RFC2616](https://datatracker.ietf.org/doc/html/rfc2616)], 2014년에 재개정됐다([[RFC7230](https://datatracker.ietf.org/doc/html/rfc7230)] 에서 [[RFC7235](https://datatracker.ietf.org/doc/html/rfc7235)])
 
-HTTP/2 ([HTTP/2]) introduced a multiplexed session layer on top of
-the existing TLS and TCP protocols for exchanging concurrent HTTP
-messages with efficient field compression and server push. HTTP/3
-([HTTP/3]) provides greater independence for concurrent messages by
-using QUIC as a secure multiplexed transport over UDP instead of TCP.
+HTTP/2([RFC7540](https://datatracker.ietf.org/doc/html/rfc7540))에서는 충분한 필드 압축 및 서버 푸시 기능과 함께 동시에 발생하는 HTTP 메시지들을 교환하기 위해 기존의 TLS와 TCP 프로토콜 위에 다중화된 세션 레이어가 도입됐다. HTTP/3([RFC9114](https://datatracker.ietf.org/doc/html/rfc9114))는 다중화된 보안 전송을 위해 TCP 대신 UDP 기반의 QUIC을 사용함으로써 동시 메시지들의 더욱 큰 독립성을 제공한다.
 
-All three major versions of HTTP rely on the semantics defined by
-this document. They have not obsoleted each other because each one
-has specific benefits and limitations depending on the context of
-use. Implementations are expected to choose the most appropriate
-transport and messaging syntax for their particular context.
+HTTP의 세가지 모든 major 버전들은 이 문서에서 정의된 의미체계에 의존한다. 이들은 사용하는 상황에 따라 각각 이점과 한계점이 있기 때문에 서로를 완전히 폐기하지는 않는다. 이들의 구현에 대해서는 각각의 특정한 상황에 따라 가장 적합한 전송 방식과 메시지 문법이 선택되기를 기대된다.
 
-This revision of HTTP separates the definition of semantics (this
-document) and caching ([CACHING]) from the current HTTP/1.1 messaging
-syntax ([HTTP/1.1]) to allow each major protocol version to progress
-independently while referring to the same core semantics.
+이 HTTP에 대한 개정은 각 major 프로토콜 버전들이 같은 핵심적인 의미체계를 공유하며 독립적으로 진행하도록 하기 위해 의미체계 정의 (이 문서)와 캐싱([RFC7234](https://datatracker.ietf.org/doc/html/rfc7234))을 현재 HTTP/1.1 메시지 문법([RFC7231](https://datatracker.ietf.org/doc/html/rfc7231))에서 분리한다.
 
 ### 1.3. 핵심 의미체계
 
-HTTP provides a uniform interface for interacting with a resource
-(Section 3.1) -- regardless of its type, nature, or implementation --
-by sending messages that manipulate or transfer representations
-(Section 3.2).
+HTTP는 -- 리소스의 타입, 성질이나 구현과 관계 없이 -- 리소스와의 상호작용을 위한 통일적인 인터페이스를 제공하고(3.1절), 이는 표현을 조작하거나 전송하는 메시지를 보내는 것으로 이루어진다(3.2절).
 
-Each message is either a request or a response. A client constructs
-request messages that communicate its intentions and routes those
-messages toward an identified origin server. A server listens for
-requests, parses each message received, interprets the message
-semantics in relation to the identified target resource, and responds
-to that request with one or more response messages. The client
-examines received responses to see if its intentions were carried
-out, determining what to do next based on the status codes and
-content received.
+각 메시지는 요청 아니면 응답이다. 클라이언트는 의도를 전달하는 요청 메시지를 구성하고, 그 메시지들을 식별된 오리진 서버로 라우팅한다. 서버는 요청을 기다리며, 수신한 각 메시지를 파싱하고, 메시지의 의미체계를 식별된 타겟 리소스와 관련해 해석하며, 하나 이상의 응답 메시지로 해당 요청에 응답한다. 클라이언트는 의도대로 잘 수행됐는지 보기 위해 수신한 응답 메시지들을 검사하고, 수신한 상태 코드와 콘텐츠에 기반해 다음에 무엇을 할지 결정한다.
 
-HTTP semantics include the intentions defined by each request method
-(Section 9), extensions to those semantics that might be described in
-request header fields, status codes that describe the response
-(Section 15), and other control data and resource metadata that might
-be given in response fields.
+HTTP 의미체계는 각 요청 메소드에 정의된 의도(9절), 요청 헤더 필드에 기술될 수 있는 의미체계의 확장, 응답을 기술하는 상태 코드(15절), 그리고 응답 필드에 주어질 수 있는 다른 제어 데이터와 리소스 메타데이터를 포함한다.
 
-Semantics also include representation metadata that describe how
-content is intended to be interpreted by a recipient, request header
-fields that might influence content selection, and the various
-selection algorithms that are collectively referred to as "content
-negotiation" (Section 12).
+의미체계는 또한 수신자가 어떻게 콘텐츠를 해석하도록 의도됐는지를 설명하는 표현 메타데이터, 콘텐츠 선택에 영향을 줄 수 있는 요청 헤더 필드, 그리고 총칭하여 "content negotiatoin"이라고 불리는 다양한 선택 알고리즘들을 포함한다(12절).
 
-1.4. Specifications Obsoleted by This Document
+### 1.4. 이 문서에 의해 폐기된 사양들
 
-```
-+============================================+===========+=====+
-| Title | Reference | See |
-+============================================+===========+=====+
-| HTTP Over TLS | [RFC2818] | B.1 |
-+--------------------------------------------+-----------+-----+
-| HTTP/1.1 Message Syntax and Routing [*] | [RFC7230] | B.2 |
-+--------------------------------------------+-----------+-----+
-| HTTP/1.1 Semantics and Content | [RFC7231] | B.3 |
-+--------------------------------------------+-----------+-----+
-| HTTP/1.1 Conditional Requests | [RFC7232] | B.4 |
-+--------------------------------------------+-----------+-----+
-| HTTP/1.1 Range Requests | [RFC7233] | B.5 |
-+--------------------------------------------+-----------+-----+
-| HTTP/1.1 Authentication | [RFC7235] | B.6 |
-+--------------------------------------------+-----------+-----+
-| HTTP Status Code 308 (Permanent Redirect) | [RFC7538] | B.7 |
-+--------------------------------------------+-----------+-----+
-| HTTP Authentication-Info and Proxy- | [RFC7615] | B.8 |
-| Authentication-Info Response Header Fields | | |
-+--------------------------------------------+-----------+-----+
-| HTTP Client-Initiated Content-Encoding | [RFC7694] | B.9 |
-+--------------------------------------------+-----------+-----+
+<center>
 
-                               Table 1
-```
+| Title                                                                         | Reference                                                | See                               |
+| ----------------------------------------------------------------------------- | -------------------------------------------------------- | --------------------------------- |
+| HTTP Over TLS                                                                 | [RFC2818](https://datatracker.ietf.org/doc/html/rfc2818) | [B.1](#B1-RFC-2818로-부터의-변화) |
+| HTTP/1.1 Message Syntax and Routing [*]                                       | [RFC7230](https://datatracker.ietf.org/doc/html/rfc7230) | [B.2](#B1-RFC-7230로-부터의-변화) |
+| HTTP/1.1 Semantics and Content                                                | [RFC7231](https://datatracker.ietf.org/doc/html/rfc7231) | [B.3](#B1-RFC-7231로-부터의-변화) |
+| HTTP/1.1 Conditional Requests                                                 | [RFC7232](https://datatracker.ietf.org/doc/html/rfc7232) | [B.4](#B1-RFC-7232로-부터의-변화) |
+| HTTP/1.1 Range Requests                                                       | [RFC7233](https://datatracker.ietf.org/doc/html/rfc7233) | [B.5](#B1-RFC-7233로-부터의-변화) |
+| HTTP/1.1 Authentication                                                       | [RFC7235](https://datatracker.ietf.org/doc/html/rfc7235) | [B.6](#B1-RFC-7235로-부터의-변화) |
+| HTTP Status Code 308 (Permanent Redirect)                                     | [RFC7538](https://datatracker.ietf.org/doc/html/rfc7538) | [B.7](#B1-RFC-7538로-부터의-변화) |
+| HTTP Authentication-Info and Proxy-Authentication-Info Response Header Fields | [RFC7615](https://datatracker.ietf.org/doc/html/rfc7615) | [B.8](#B8-RFC-7615로-부터의-변화) |
+| HTTP Client-Initiated Content-Encoding                                        | [RFC7694](https://datatracker.ietf.org/doc/html/rfc7694) | [B.9](#B9-RFC-7694로-부터의-변화) |
 
-[*] This document only obsoletes the portions of RFC 7230 that are
-independent of the HTTP/1.1 messaging syntax and connection
-management; the remaining bits of RFC 7230 are obsoleted by
-"HTTP/1.1" [HTTP/1.1].
+Table 1
 
-2.  Conformance
+</center>
 
-2.1. Syntax Notation
+이 문서는 오직 HTTP/1.1 메시지 문법 및 연결 관리와 독립적인 RFC7230의 일부만을 폐기한다; RFC7230의 나머지 부분은 "[HTTP/1.1](https://datatracker.ietf.org/doc/html/rfc7231)"에 의해 폐기된다.
+
+## 2. 준수사항
+
+### 2.1. 문법 표기
 
 This specification uses the Augmented Backus-Naur Form (ABNF)
 notation of [RFC5234], extended with the notation for case-
