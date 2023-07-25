@@ -383,32 +383,13 @@ HTTP의 세가지 모든 major 버전들은 이 문서에서 정의된 의미체
 
 ### 1.3. 핵심 의미체계
 
-HTTP provides a uniform interface for interacting with a resource
-(Section 3.1) -- regardless of its type, nature, or implementation --
-by sending messages that manipulate or transfer representations
-(Section 3.2).
+HTTP는 -- 리소스의 타입, 성질이나 구현과 관계 없이 -- 리소스와의 상호작용을 위한 통일적인 인터페이스를 제공하고(3.1절), 이는 표현을 조작하거나 전송하는 메시지를 보내는 것으로 이루어진다(3.2절).
 
-Each message is either a request or a response. A client constructs
-request messages that communicate its intentions and routes those
-messages toward an identified origin server. A server listens for
-requests, parses each message received, interprets the message
-semantics in relation to the identified target resource, and responds
-to that request with one or more response messages. The client
-examines received responses to see if its intentions were carried
-out, determining what to do next based on the status codes and
-content received.
+각 메시지는 요청 아니면 응답이다. 클라이언트는 의도를 전달하는 요청 메시지를 구성하고, 그 메시지들을 식별된 오리진 서버로 라우팅한다. 서버는 요청을 기다리며, 수신한 각 메시지를 파싱하고, 메시지의 의미체계를 식별된 타겟 리소스와 관련해 해석하며, 하나 이상의 응답 메시지로 해당 요청에 응답한다. 클라이언트는 의도대로 잘 수행됐는지 보기 위해 수신한 응답 메시지들을 검사하고, 수신한 상태 코드와 콘텐츠에 기반해 다음에 무엇을 할지 결정한다.
 
-HTTP semantics include the intentions defined by each request method
-(Section 9), extensions to those semantics that might be described in
-request header fields, status codes that describe the response
-(Section 15), and other control data and resource metadata that might
-be given in response fields.
+HTTP 의미체계는 각 요청 메소드에 정의된 의도(9절), 요청 헤더 필드에 기술될 수 있는 의미체계의 확장, 응답을 기술하는 상태 코드(15절), 그리고 응답 필드에 주어질 수 있는 다른 제어 데이터와 리소스 메타데이터를 포함한다.
 
-Semantics also include representation metadata that describe how
-content is intended to be interpreted by a recipient, request header
-fields that might influence content selection, and the various
-selection algorithms that are collectively referred to as "content
-negotiation" (Section 12).
+의미체계는 또한 수신자가 어떻게 콘텐츠를 해석하도록 의도됐는지를 설명하는 표현 메타데이터, 콘텐츠 선택에 영향을 줄 수 있는 요청 헤더 필드, 그리고 총칭하여 "content negotiatoin"이라고 불리는 다양한 선택 알고리즘들을 포함한다(12절).
 
 1.4. Specifications Obsoleted by This Document
 
