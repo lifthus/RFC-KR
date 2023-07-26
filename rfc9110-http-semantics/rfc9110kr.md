@@ -418,40 +418,21 @@ Table 1
 
 ### 2.1. 문법 표기
 
-This specification uses the Augmented Backus-Naur Form (ABNF)
-notation of [RFC5234], extended with the notation for case-
-sensitivity in strings defined in [RFC7405].
+이 사양은 [RFC5234](https://www.rfc-editor.org/rfc/rfc5234)의 Augmented Backus-Naur Form (ABNF) 표기법을 사용하며, [RFC7405](https://datatracker.ietf.org/doc/html/rfc7405)에 정의된 문자열의 대소문자 구분을 위한 표기법을 적용한다.
 
-It also uses a list extension, defined in Section 5.6.1, that allows
-for compact definition of comma-separated lists using a "#" operator
-(similar to how the "\*" operator indicates repetition). Appendix A
-shows the collected grammar with all list operators expanded to
-standard ABNF notation.
+또한 5.6.1절에 정의된 "#" 연산자를 이용해 간결하게 콤마로 구분되는 리스트를 정의할 수 있도록 하는 리스트 확장도 사용한다("/\*" 연산자가 반복을 나타내는 것과 비슷하게). 부록 A는 표준 ABNF 표기법으로 확장된 모든 리스트 연산자의 문법 모음을 보여준다.
 
-As a convention, ABNF rule names prefixed with "obs-" denote obsolete
-grammar rules that appear for historical reasons.
+관행적으로, "obs-"로 시작하는 ABNF 규칙명들은 역사와 관련된 이유로 나타나는 폐기된 문법 규칙들을 나타낸다.
 
-The following core rules are included by reference, as defined in
-Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return),
-CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double
-quote), HEXDIG (hexadecimal 0-9/A-F/a-f), HTAB (horizontal tab), LF
-(line feed), OCTET (any 8-bit sequence of data), SP (space), and
-VCHAR (any visible US-ASCII character).
+다음의 핵심 규칙들은 [RFC5234 부록 B.1](https://www.rfc-editor.org/rfc/rfc5234#appendix-B.1)에 정의된 대로 참조하여 포함한다: ALPHA (문자), CR (캐리지 리턴), CRLF (CR LF), CTL (컨트롤), DIGIT (십진 0-9), DQUOTE (큰 따옴표), HEXDIG (십육진 0-9/A-F/a-f), HTAB (수평 탭), LF (라인 피드), OCTET (임의의 8비트 길이 데이터), SP (스페이스), 그리고 VCHAR (임의의 가시적인 US-ASCII 문자).
 
-Section 5.6 defines some generic syntactic components for field
-values.
+5.6절은 필드 값들을 위한 몇몇 일반적인 구문 구성요소를 정의한다.
 
-This specification uses the terms "character", "character encoding
-scheme", "charset", and "protocol element" as they are defined in
-[RFC6365].
+이 사양은 [RFC6365](https://www.rfc-editor.org/rfc/rfc6365)의 정의를 따라 "문자", "문자 인코딩 체계", "문자 집합", 그리고 "프로토콜 요소"라는 용어들을 사용한다.
 
-2.2. Requirements Notation
+### 2.2. 요구사항 표기
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-"SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-"OPTIONAL" in this document are to be interpreted as described in
-BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
-capitals, as shown here.
+원본 영어 문서의 키워드 "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL"은 보여진 바와 같이 모두 대문자로 나타날 때 [BCP 14](https://www.rfc-editor.org/info/bcp14) [[RFC2119](https://datatracker.ietf.org/doc/html/rfc2119)] [[RFC8174](https://datatracker.ietf.org/doc/html/rfc8174)]에 기술된 대로 해석돼야 한다.
 
 This specification targets conformance criteria according to the role
 of a participant in HTTP communication. Hence, requirements are
