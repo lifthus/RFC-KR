@@ -448,34 +448,15 @@ HTTP를 준수한다는 것은 해당 프로토콜의 특정 메시징 문법을
 
 ### 2.3. 길이 요구사항
 
-A recipient SHOULD parse a received protocol element defensively,
-with only marginal expectations that the element will conform to its
-ABNF grammar and fit within a reasonable buffer size.
+수신자는 웬만하면(SHOULD) 수신한 프로토콜 요소가 해당하는 ABNF 문법을 준수하고 합리적인 버퍼 사이즈를 맞출 것이라는 최소한의 기대만 가지고 방어적으로 파싱해야 한다.
 
-HTTP does not have specific length limitations for many of its
-protocol elements because the lengths that might be appropriate will
-vary widely, depending on the deployment context and purpose of the
-implementation. Hence, interoperability between senders and
-recipients depends on shared expectations regarding what is a
-reasonable length for each protocol element. Furthermore, what is
-commonly understood to be a reasonable length for some protocol
-elements has changed over the course of the past three decades of
-HTTP use and is expected to continue changing in the future.
+HTTP에 속하는 많은 프로토콜 요소들의 적절한 길이라 하면, 배포 컨텍스트나 구현 목적에 따라 넓은 범위에서 다양할 것이기 때문에 프로토콜 요소들에 특정된 길이 제한은 없다. 이리하여, 발신자와 수신자 사이의 상호운영성은 각 프로토콜 요소의 길이가 어느정도면 합리적인지에 대한 공유되는 기대치에 의존한다. 게다가, 일부 프로토콜 요소들에 대해 합리적인 길이라고 생각돼 왔던 것은 HTTP를 사용해온 지난 30년간 계속 바뀌어 왔고 앞으로도 계속 바뀔 것이다.
 
-At a minimum, a recipient MUST be able to parse and process protocol
-element lengths that are at least as long as the values that it
-generates for those same protocol elements in other messages. For
-example, an origin server that publishes very long URI references to
-its own resources needs to be able to parse and process those same
-references when received as a target URI.
+최소한, 수신자는 반드시(MUST) 프로토콜 요소들을 자신이 다른 메시지에서 같은 프로토콜로 생성하는 값들의 길이만큼은 파싱하고 처리할 수 있어야 한다. 예를 들어, 자신의 리소스에 대해 아주 긴 URI 참조를 발행하는 오리진 서버는 해당 참조를 타겟 URI로 받았을 때 그걸 파싱하고 처리할 수 있어야겠다.
 
-Many received protocol elements are only parsed to the extent
-necessary to identify and forward that element downstream. For
-example, an intermediary might parse a received field into its field
-name and field value components, but then forward the field without
-further parsing inside the field value.
+수신된 많은 프로토콜 요소들은 오직 식별하고 다운스트림으로 포워딩하기 위해 필요한 정도까지만 파싱된다. 예를 들어, 중개자들은 수신한 필드를 필드 명과 필드 값 컴포넌트로 파싱하고, 거기서 필드 값을 더 파싱하지 않고 필드를 포워딩할 수 있을 것이다.
 
-2.4. Error Handling
+### 2.4. 에러 핸들링
 
 A recipient MUST interpret a received protocol element according to
 the semantics defined for it by this specification, including
