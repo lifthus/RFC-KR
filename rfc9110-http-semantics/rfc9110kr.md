@@ -458,30 +458,13 @@ HTTP에 속하는 많은 프로토콜 요소들의 적절한 길이라 하면, �
 
 ### 2.4. 에러 핸들링
 
-A recipient MUST interpret a received protocol element according to
-the semantics defined for it by this specification, including
-extensions to this specification, unless the recipient has determined
-(through experience or configuration) that the sender incorrectly
-implements what is implied by those semantics. For example, an
-origin server might disregard the contents of a received
-Accept-Encoding header field if inspection of the User-Agent header
-field indicates a specific implementation version that is known to
-fail on receipt of certain content codings.
+수신자는 (경험이나 설정을 통해) 발신자가 그 의미체계에서 내포하는 것들을 잘못 구현하고 있다고 판단하지 않은 이상에는 반드시(MUST) 수신한 프로토콜 요소를 이 문서의 확장과 이 문서에 정의된 의미체계에 따라 해석해야 한다. 예를 들어, 오리진 서버는 User-Agent 헤더가 특정 콘텐츠 코딩 수신을 실패한다고 알려진 특정한 구현 버전을 가리키고 있을 때 수신된 Accept-Encoding 헤더 필드의 내용을 무시할 수 있을 것이다.
 
-Unless noted otherwise, a recipient MAY attempt to recover a usable
-protocol element from an invalid construct. HTTP does not define
-specific error handling mechanisms except when they have a direct
-impact on security, since different applications of the protocol
-require different error handling strategies. For example, a Web
-browser might wish to transparently recover from a response where the
-Location header field doesn't parse according to the ABNF, whereas a
-systems control client might consider any form of error recovery to
-be dangerous.
+별도의 언급이 없는한, 수신자는 아마(MAY) 사용 가능한 프로토콜 요소를 잘못된 구조로 부터 복원하는 것을 시도할 수 있을 것이다. HTTP는 보안에 직접적인 영향을 줄 때를 제외하고는 특정한 에러 핸들링 메커니즘을 정의하지 않는다. 예를 들어, 웹 브라우저는 Location 헤더 필드가 ABNF에 따라 파싱되지 않는 응답을 투명하게 복원하길 원할 수 있는 반면, 시스템 제어 클라이언트는 에러 복원은 어떠한 형태든지 위험하다고 여길 수 있을 것이다.
 
-Some requests can be automatically retried by a client in the event
-of an underlying connection failure, as described in Section 9.2.2.
+9.2.2절에 기술된대로, 일부 요청들은 기반이 되는 연결의 실패 상황에서 클라이언트에 의해 자동으로 재시도될 수 있다.
 
-2.5. Protocol Version
+### 2.5. 프로토콜 버전
 
 HTTP's version number consists of two decimal digits separated by a
 "." (period or decimal point). The first digit (major version)
