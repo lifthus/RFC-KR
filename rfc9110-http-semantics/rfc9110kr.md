@@ -374,13 +374,13 @@ HTTP는 또한 중개 프로토콜로 사용될 수 있도록 설계됐는데, �
 
 HTTP는 1990년에 등장한 이후로 World Wide Web에서 주요한 정보 전송 프로토콜로 사용되고 있다. 처음에는 단 하나의 메소드 (GET)로 주어진 경로명에 의해 식별되며 해당 경로에 있을 것을 것으로 추정되는 하이퍼텍스트 문서의 전송을 요청하는 짧은 지연시간의 요청을 위한 단순한 메커니즘으로 시작됐다. 웹이 성장하면서, HTTP는 요청과 응답을 메시지에 포함시키고, MIME 같은 미디어 타입을 사용해 임의의 데이터 포맷을 전송하고, 중개자를 통해 요청을 라우팅할 수 있도록 확장됐다. 이러한 프로토콜들은 결국 HTTP/0.9와 HTTP/1.0으로 정의됐다. ([RFC1945](https://datatracker.ietf.org/doc/html/rfc1945) 참조)
 
-HTTP/1.1은 원래의 텍스트 기반 메시지 문법과의 호환성을 유지하고, 상호운용성과 황장성, 인터넷에서의 견고함은 더 강화시키면서 위 프로토콜의 기능들을 다듬도록 설계됐다. 여기에는 고정된, 그리고 동적인 (어떤 단위로 묶인) 콘텐츠 데이터를 길이에 기반해 구분하는 것, 콘텐츠 협상을 위한 일관적인 프레임워크, 조건부 요청을 위한 불투명한 유효성 검사, 더 나은 캐시 일관성을 위한 캐시 제어, 부분 갱신을 위한 범위 요청, 그리고 기본적으로 지속되는 연결이 포함된다. HTTP/1.1은 1995년에 처음 소개되어 1997년에 표준 트랙(Standards Track)으로 발표됐고[[RFC2068](https://datatracker.ietf.org/doc/html/rfc2068)], 1999년에 개정됐으며[[RFC2616](https://datatracker.ietf.org/doc/html/rfc2616)], 2014년에 재개정됐다([[RFC7230](https://datatracker.ietf.org/doc/html/rfc7230)] 에서 [[RFC7235](https://datatracker.ietf.org/doc/html/rfc7235)])
+HTTP/1.1은 원래의 텍스트 기반 메시징 구문과의 호환성을 유지하고, 상호운용성과 황장성, 인터넷에서의 견고함은 더 강화시키면서 위 프로토콜의 기능들을 다듬도록 설계됐다. 여기에는 고정된, 그리고 동적인 (어떤 단위로 묶인) 콘텐츠 데이터를 길이에 기반해 구분하는 것, 콘텐츠 협상을 위한 일관적인 프레임워크, 조건부 요청을 위한 불투명한 유효성 검사, 더 나은 캐시 일관성을 위한 캐시 제어, 부분 갱신을 위한 범위 요청, 그리고 기본적으로 지속되는 연결이 포함된다. HTTP/1.1은 1995년에 처음 소개되어 1997년에 표준 트랙(Standards Track)으로 발표됐고[[RFC2068](https://datatracker.ietf.org/doc/html/rfc2068)], 1999년에 개정됐으며[[RFC2616](https://datatracker.ietf.org/doc/html/rfc2616)], 2014년에 재개정됐다([[RFC7230](https://datatracker.ietf.org/doc/html/rfc7230)] 에서 [[RFC7235](https://datatracker.ietf.org/doc/html/rfc7235)])
 
 HTTP/2([RFC7540](https://datatracker.ietf.org/doc/html/rfc7540))에서는 충분한 필드 압축 및 서버 푸시 기능과 함께 동시에 발생하는 HTTP 메시지들을 교환하기 위해 기존의 TLS와 TCP 프로토콜 위에 다중화된 세션 레이어가 도입됐다. HTTP/3([RFC9114](https://datatracker.ietf.org/doc/html/rfc9114))는 다중화된 보안 전송을 위해 TCP 대신 UDP 기반의 QUIC을 사용함으로써 동시 메시지들의 더욱 큰 독립성을 제공한다.
 
-HTTP의 세가지 모든 major 버전들은 이 문서에서 정의된 의미체계에 의존한다. 이들은 사용하는 상황에 따라 각각 이점과 한계점이 있기 때문에 서로를 완전히 폐기하지는 않는다. 이들의 구현에 대해서는 각각의 특정한 상황에 따라 가장 적합한 전송 방식과 메시지 문법이 선택되기를 기대된다.
+HTTP의 세가지 모든 major 버전들은 이 문서에서 정의된 의미체계에 의존한다. 이들은 사용하는 상황에 따라 각각 이점과 한계점이 있기 때문에 서로를 완전히 폐기하지는 않는다. 이들의 구현에 대해서는 각각의 특정한 상황에 따라 가장 적합한 전송 방식과 메시징 구문이 선택되기를 기대된다.
 
-이 HTTP에 대한 개정은 각 major 프로토콜 버전들이 같은 핵심적인 의미체계를 공유하며 독립적으로 진행하도록 하기 위해 의미체계 정의 (이 문서)와 캐싱([RFC7234](https://datatracker.ietf.org/doc/html/rfc7234))을 현재 HTTP/1.1 메시지 문법([RFC7231](https://datatracker.ietf.org/doc/html/rfc7231))에서 분리한다.
+이 HTTP에 대한 개정은 각 major 프로토콜 버전들이 같은 핵심적인 의미체계를 공유하며 독립적으로 진행하도록 하기 위해 의미체계 정의 (이 문서)와 캐싱([RFC7234](https://datatracker.ietf.org/doc/html/rfc7234))을 현재 HTTP/1.1 메시징 구문([RFC7231](https://datatracker.ietf.org/doc/html/rfc7231))에서 분리한다.
 
 ### 1.3. 핵심 의미체계
 
@@ -412,181 +412,71 @@ Table 1
 
 </center>
 
-이 문서는 오직 HTTP/1.1 메시지 문법 및 연결 관리와 독립적인 RFC7230의 일부만을 폐기한다; RFC7230의 나머지 부분은 "[HTTP/1.1](https://datatracker.ietf.org/doc/html/rfc7231)"에 의해 폐기된다.
+이 문서는 오직 HTTP/1.1 메시징 구문 및 연결 관리와 독립적인 RFC7230의 일부만을 폐기한다; RFC7230의 나머지 부분은 "[HTTP/1.1](https://datatracker.ietf.org/doc/html/rfc7231)"에 의해 폐기된다.
 
 ## 2. 준수사항
 
 ### 2.1. 문법 표기
 
-This specification uses the Augmented Backus-Naur Form (ABNF)
-notation of [RFC5234], extended with the notation for case-
-sensitivity in strings defined in [RFC7405].
+이 사양은 [RFC5234](https://www.rfc-editor.org/rfc/rfc5234)의 Augmented Backus-Naur Form (ABNF) 표기법을 사용하며, [RFC7405](https://datatracker.ietf.org/doc/html/rfc7405)에 정의된 문자열의 대소문자 구분을 위한 표기법을 적용한다.
 
-It also uses a list extension, defined in Section 5.6.1, that allows
-for compact definition of comma-separated lists using a "#" operator
-(similar to how the "\*" operator indicates repetition). Appendix A
-shows the collected grammar with all list operators expanded to
-standard ABNF notation.
+또한 5.6.1절에 정의된 "#" 연산자를 이용해 간결하게 콤마로 구분되는 리스트를 정의할 수 있도록 하는 리스트 확장도 사용한다("/\*" 연산자가 반복을 나타내는 것과 비슷하게). 부록 A는 표준 ABNF 표기법으로 확장된 모든 리스트 연산자의 문법 모음을 보여준다.
 
-As a convention, ABNF rule names prefixed with "obs-" denote obsolete
-grammar rules that appear for historical reasons.
+관행적으로, "obs-"로 시작하는 ABNF 규칙명들은 역사와 관련된 이유로 나타나는 폐기된 문법 규칙들을 나타낸다.
 
-The following core rules are included by reference, as defined in
-Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return),
-CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double
-quote), HEXDIG (hexadecimal 0-9/A-F/a-f), HTAB (horizontal tab), LF
-(line feed), OCTET (any 8-bit sequence of data), SP (space), and
-VCHAR (any visible US-ASCII character).
+다음의 핵심 규칙들은 [RFC5234 부록 B.1](https://www.rfc-editor.org/rfc/rfc5234#appendix-B.1)에 정의된 대로 참조하여 포함한다: ALPHA (문자), CR (캐리지 리턴), CRLF (CR LF), CTL (컨트롤), DIGIT (십진 0-9), DQUOTE (큰 따옴표), HEXDIG (십육진 0-9/A-F/a-f), HTAB (수평 탭), LF (라인 피드), OCTET (임의의 8비트 길이 데이터), SP (스페이스), 그리고 VCHAR (임의의 가시적인 US-ASCII 문자).
 
-Section 5.6 defines some generic syntactic components for field
-values.
+5.6절은 필드 값들을 위한 몇몇 일반적인 구문 구성요소를 정의한다.
 
-This specification uses the terms "character", "character encoding
-scheme", "charset", and "protocol element" as they are defined in
-[RFC6365].
+이 사양은 [RFC6365](https://www.rfc-editor.org/rfc/rfc6365)의 정의를 따라 "문자", "문자 인코딩 체계", "문자 집합", 그리고 "프로토콜 요소"라는 용어들을 사용한다.
 
-2.2. Requirements Notation
+### 2.2. 요구사항 표기
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-"SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-"OPTIONAL" in this document are to be interpreted as described in
-BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
-capitals, as shown here.
+원본 영어 문서의 키워드 "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL"은 보여진 바와 같이 모두 대문자로 나타날 때 [BCP 14](https://www.rfc-editor.org/info/bcp14) [[RFC2119](https://datatracker.ietf.org/doc/html/rfc2119)] [[RFC8174](https://datatracker.ietf.org/doc/html/rfc8174)]에 기술된 대로 해석돼야 한다.
 
-This specification targets conformance criteria according to the role
-of a participant in HTTP communication. Hence, requirements are
-placed on senders, recipients, clients, servers, user agents,
-intermediaries, origin servers, proxies, gateways, or caches,
-depending on what behavior is being constrained by the requirement.
-Additional requirements are placed on implementations, resource
-owners, and protocol element registrations when they apply beyond the
-scope of a single communication.
+**이 사양은 HTTP 통신의 참여자의 역할에 따른 준수 사항**을 위함이다. 따라서, 요구사항들은 어떤 행동이 제약되냐에 따라 발신자, 수신자, 클라이언트, 서버, 유저 에이전트(브라우저), 중개자, 오리진 서버, 프록시, 게이트웨이, 혹은 캐시에 적용된다. 추가 요구사항은 구현, 리소스 소유자에, 그리고 단일 통신의 범위를 넘어서 새 프로토콜 요소를 등록하는 경우에 적용된다.
 
-The verb "generate" is used instead of "send" where a requirement
-applies only to implementations that create the protocol element,
-rather than an implementation that forwards a received element
-downstream.
+요구사항이 수신된 요소를 다운스트림으로 포워드하는 구현사항이 아니고 오직 프로토콜 요소를 만드는 구현사항인 경우에는 "생성한다"라는 동사를 "보낸다" 대신 사용한다.
 
-An implementation is considered conformant if it complies with all of
-the requirements associated with the roles it partakes in HTTP.
+구현사항이 HTTP에서 하는 역할들과 관련한 요구사항들 모두 준수한다면 해당 구현은 사양을 준수하는 것으로 간주된다.
 
-A sender MUST NOT generate protocol elements that do not match the
-grammar defined by the corresponding ABNF rules. Within a given
-message, a sender MUST NOT generate protocol elements or syntax
-alternatives that are only allowed to be generated by participants in
-other roles (i.e., a role that the sender does not have for that
-message).
+발신자는 절대(MUST NOT) 해당하는 ABNF 규칙에 의해 정의된 문법에 맞지 않는 프로토콜 요소를 생성하면 안된다. 주어진 메시지에서, 발신자는 절대(MUST NOT) 다른 역할의 통신 참여자들만이 생성할 수 있도록 허용된 프로토콜 요소나 구문 대안을 생성해서는 안된다 (즉, 해당 메시지에 대해 발신자가 가지지 않은 역할).
 
-Conformance to HTTP includes both conformance to the particular
-messaging syntax of the protocol version in use and conformance to
-the semantics of protocol elements sent. For example, a client that
-claims conformance to HTTP/1.1 but fails to recognize the features
-required of HTTP/1.1 recipients will fail to interoperate with
-servers that adjust their responses in accordance with those claims.
-Features that reflect user choices, such as content negotiation and
-user-selected extensions, can impact application behavior beyond the
-protocol stream; sending protocol elements that inaccurately reflect
-a user's choices will confuse the user and inhibit choice.
+HTTP를 준수한다는 것은 해당 프로토콜의 특정 메시징 문법을 사용 중에 따르는 것은 물론 보내진 프로토콜 요소들의 의미체계를 따르는 것도 포함한다. 예를 들어, HTTP/1.1을 준수한다고 주장하지만 HTTP/1.1 수신자들에게 요구되는 기능들을 인식하지 못하는 클라이언트는 해당 주장에 따라 응답을 조정하는 서버와 상호운영되지 못할 것이다. 콘텐츠 협상과 유저 선택 확장 같은 유저의 선택을 반영하는 기능들은 프로토콜 스트림을 넘어 애플리케이션 행동에 영향을 줄 수 있다; 유저의 선택을 부정확하게 따르는 프로토콜 요소를 보내는 것은 유저를 혼란스럽게 하고 선택을 억제할 것이다.
 
-When an implementation fails semantic conformance, recipients of that
-implementation's messages will eventually develop workarounds to
-adjust their behavior accordingly. A recipient MAY employ such
-workarounds while remaining conformant to this protocol if the
-workarounds are limited to the implementations at fault. For
-example, servers often scan portions of the User-Agent field value,
-and user agents often scan the Server field value, to adjust their
-own behavior with respect to known bugs or poorly chosen defaults.
+구현이 의미체계를 준수하지 못할 경우, 해당 구현의 메시지를 받은 수신자는 그에 따라 그들의 행동을 조절하기 위해 결국 해결법을 찾으려할 것이다. 만약 해결법의 적용이 잘못된 구현사항에만 제한돼있으면 수신자는 아마(MAY) 그런 해결법을 프로토콜을 준수하면서 사용할 수 있을 것이다. 예컨대, 서버는 종종 유저 에이전트(브라우저) 필드 값의 일부를 스캔하고, 유저 에이전트도 종종 서버의 필드 값을 스캔하는데, 이는 알려진 버그나 잘못 선택된 기본값에 대해 자신들의 행동을 조절하기 위함이다.
 
-2.3. Length Requirements
+### 2.3. 길이 요구사항
 
-A recipient SHOULD parse a received protocol element defensively,
-with only marginal expectations that the element will conform to its
-ABNF grammar and fit within a reasonable buffer size.
+수신자는 웬만하면(SHOULD) 수신한 프로토콜 요소가 해당하는 ABNF 문법을 준수하고 합리적인 버퍼 사이즈를 맞출 것이라는 최소한의 기대만 가지고 방어적으로 파싱해야 한다.
 
-HTTP does not have specific length limitations for many of its
-protocol elements because the lengths that might be appropriate will
-vary widely, depending on the deployment context and purpose of the
-implementation. Hence, interoperability between senders and
-recipients depends on shared expectations regarding what is a
-reasonable length for each protocol element. Furthermore, what is
-commonly understood to be a reasonable length for some protocol
-elements has changed over the course of the past three decades of
-HTTP use and is expected to continue changing in the future.
+HTTP에 속하는 많은 프로토콜 요소들의 적절한 길이라 하면, 배포 컨텍스트나 구현 목적에 따라 넓은 범위에서 다양할 것이기 때문에 프로토콜 요소들에 특정된 길이 제한은 없다. 이리하여, 발신자와 수신자 사이의 상호운영성은 각 프로토콜 요소의 길이가 어느정도면 합리적인지에 대한 공유되는 기대치에 의존한다. 게다가, 일부 프로토콜 요소들에 대해 합리적인 길이라고 생각돼 왔던 것은 HTTP를 사용해온 지난 30년간 계속 바뀌어 왔고 앞으로도 계속 바뀔 것이다.
 
-At a minimum, a recipient MUST be able to parse and process protocol
-element lengths that are at least as long as the values that it
-generates for those same protocol elements in other messages. For
-example, an origin server that publishes very long URI references to
-its own resources needs to be able to parse and process those same
-references when received as a target URI.
+최소한, 수신자는 반드시(MUST) 프로토콜 요소들을 자신이 다른 메시지에서 같은 프로토콜로 생성하는 값들의 길이만큼은 파싱하고 처리할 수 있어야 한다. 예를 들어, 자신의 리소스에 대해 아주 긴 URI 참조를 발행하는 오리진 서버는 해당 참조를 타겟 URI로 받았을 때 그걸 파싱하고 처리할 수 있어야겠다.
 
-Many received protocol elements are only parsed to the extent
-necessary to identify and forward that element downstream. For
-example, an intermediary might parse a received field into its field
-name and field value components, but then forward the field without
-further parsing inside the field value.
+수신된 많은 프로토콜 요소들은 오직 식별하고 다운스트림으로 포워딩하기 위해 필요한 정도까지만 파싱된다. 예를 들어, 중개자들은 수신한 필드를 필드 명과 필드 값 컴포넌트로 파싱하고, 거기서 필드 값을 더 파싱하지 않고 필드를 포워딩할 수 있을 것이다.
 
-2.4. Error Handling
+### 2.4. 에러 핸들링
 
-A recipient MUST interpret a received protocol element according to
-the semantics defined for it by this specification, including
-extensions to this specification, unless the recipient has determined
-(through experience or configuration) that the sender incorrectly
-implements what is implied by those semantics. For example, an
-origin server might disregard the contents of a received
-Accept-Encoding header field if inspection of the User-Agent header
-field indicates a specific implementation version that is known to
-fail on receipt of certain content codings.
+수신자는 (경험이나 설정을 통해) 발신자가 그 의미체계에서 내포하는 것들을 잘못 구현하고 있다고 판단하지 않은 이상에는 반드시(MUST) 수신한 프로토콜 요소를 이 문서의 확장과 이 문서에 정의된 의미체계에 따라 해석해야 한다. 예를 들어, 오리진 서버는 User-Agent 헤더가 특정 콘텐츠 코딩 수신을 실패한다고 알려진 특정한 구현 버전을 가리키고 있을 때 수신된 Accept-Encoding 헤더 필드의 내용을 무시할 수 있을 것이다.
 
-Unless noted otherwise, a recipient MAY attempt to recover a usable
-protocol element from an invalid construct. HTTP does not define
-specific error handling mechanisms except when they have a direct
-impact on security, since different applications of the protocol
-require different error handling strategies. For example, a Web
-browser might wish to transparently recover from a response where the
-Location header field doesn't parse according to the ABNF, whereas a
-systems control client might consider any form of error recovery to
-be dangerous.
+별도의 언급이 없는한, 수신자는 아마(MAY) 사용 가능한 프로토콜 요소를 잘못된 구조로 부터 복원하는 것을 시도할 수 있을 것이다. HTTP는 보안에 직접적인 영향을 줄 때를 제외하고는 특정한 에러 핸들링 메커니즘을 정의하지 않는다. 예를 들어, 웹 브라우저는 Location 헤더 필드가 ABNF에 따라 파싱되지 않는 응답을 투명하게 복원하길 원할 수 있는 반면, 시스템 제어 클라이언트는 에러 복원은 어떠한 형태든지 위험하다고 여길 수 있을 것이다.
 
-Some requests can be automatically retried by a client in the event
-of an underlying connection failure, as described in Section 9.2.2.
+9.2.2절에 기술된대로, 일부 요청들은 기반이 되는 연결의 실패 상황에서 클라이언트에 의해 자동으로 재시도될 수 있다.
 
-2.5. Protocol Version
+### 2.5. 프로토콜 버전
 
-HTTP's version number consists of two decimal digits separated by a
-"." (period or decimal point). The first digit (major version)
-indicates the messaging syntax, whereas the second digit (minor
-version) indicates the highest minor version within that major
-version to which the sender is conformant (able to understand for
-future communication).
+HTTP 버전 넘버는 "."(마침표 혹은 소수점)으로 구분되는 두 십진수로 구성된다. 첫번째 숫자(메이저 버전)는 메시징 구문을 가리키는 반면, 두번째 숫자(마이너 버전)은 발신자가 따르는(이후 통신에서 이해할 수 있는) 메이저 버전에서 가장 높은 마이너 버전을 가리킨다.
 
-While HTTP's core semantics don't change between protocol versions,
-their expression "on the wire" can change, and so the HTTP version
-number changes when incompatible changes are made to the wire format.
-Additionally, HTTP allows incremental, backwards-compatible changes
-to be made to the protocol without changing its version through the
-use of defined extension points (Section 16).
+HTTP 핵심 의미체계가 프로토콜 버전에 따라 바뀌지는 않지만, "통신 선로 상에서" 그 표현은 바뀔 수 있고, 따라서 HTTP 버전 넘버는 연결 형식에 호환되지 않는 변경이 생길 때 바뀐다. 추가로, HTTP는 정의된 확장 포인트들(16절)을 이용해 프로토콜 버전을 바꾸지 않으면서 점진적이고, 이전 버전과 호환 가능한 프로토콜의 변화를 허용한다.
 
-The protocol version as a whole indicates the sender's conformance
-with the set of requirements laid out in that version's corresponding
-specification(s). For example, the version "HTTP/1.1" is defined by
-the combined specifications of this document, "HTTP Caching"
-[CACHING], and "HTTP/1.1" [HTTP/1.1].
+프로토콜 버전 넘버 전체는 발신자가 그 버전에 해당하는 사양에 명시된 요구 사항들을 준수하겠다는 것을 나타낸다. 예를 들어, "HTTP/1.1"은 이 문서, "[RFC7234 HTTP Caching](https://www.rfc-editor.org/rfc/rfc7234)", 그리고 "[RFC7231 HTTP/1.1](https://datatracker.ietf.org/doc/html/rfc7231)"이 조합된 사양에 의해 정의된다.
 
-HTTP's major version number is incremented when an incompatible
-message syntax is introduced. The minor number is incremented when
-changes made to the protocol have the effect of adding to the message
-semantics or implying additional capabilities of the sender.
+HTTP의 메이저 버전 넘버는 호환되지 않는 메시지 구문이 도입됐을 때 올려진다. 마이너 넘버는 프로토콜에 대한 변경이 메시지 의미체계를 추가하거나 발신자의 추가적인 기능을 암시할 때 올려진다.
 
-The minor version advertises the sender's communication capabilities
-even when the sender is only using a backwards-compatible subset of
-the protocol, thereby letting the recipient know that more advanced
-features can be used in response (by servers) or in future requests
-(by clients).
+마이너 버전은 발신자가 프로토콜의 이전 버전과 호환되는 일부만 사용한다고 해도 발신자의 통신 기능들을 알리게 되는데, 이는 수신자가 응답(서버에 의한)이나 이후의 요청(클라이언트에 의한)에서 더 발전된 기능들이 사용될 수 있음을 알게 한다.
 
-When a major version of HTTP does not define any minor versions, the
-minor version "0" is implied. The "0" is used when referring to that
-protocol within elements that require a minor version identifier.
+HTTP의 메이저 버전이 어떤 마이너 버전도 정의하고 있지 않을 때, 마이너 버전은 "0"으로 암시된다. "0"은 마이너 버전 식별자가 필요한 요소들 내에서 해당 프로토콜을 언급할 때 사용된다.
 
 3.  Terminology and Core Concepts
 
