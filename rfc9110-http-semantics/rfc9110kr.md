@@ -478,7 +478,7 @@ HTTP의 메이저 버전 넘버는 호환되지 않는 메시지 구문이 도�
 
 HTTP의 메이저 버전이 어떤 마이너 버전도 정의하고 있지 않을 때, 마이너 버전은 "0"으로 암시된다. "0"은 마이너 버전 식별자가 필요한 요소들 내에서 해당 프로토콜을 언급할 때 사용된다.
 
-3.  Terminology and Core Concepts
+3.  용어와 핵심 개념
 
 HTTP was created for the World Wide Web (WWW) architecture and has
 evolved over time to support the scalability needs of a worldwide
