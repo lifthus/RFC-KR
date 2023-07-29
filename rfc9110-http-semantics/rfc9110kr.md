@@ -78,15 +78,18 @@ than English.
 
 ###### [3. 용어와 핵심 개념들](#3-용어와-핵심-개념들)
 
-3.1. Resources
-3.2. Representations
-3.3. Connections, Clients, and Servers
-3.4. Messages
-3.5. User Agents
-3.6. Origin Server
-3.7. Intermediaries
-3.8. Caches
-3.9. Example Message Exchange 4. Identifiers in HTTP
+[3.1. 리소스](#31-리소스)
+[3.2. 표기법](#32-표기법)
+[3.3. 연결, 클라이언트, 그리고 서버](#33-연결-클라이언트-그리고-서버)
+[3.4. 메시지](#34-메시지)
+[3.5. 유저 에이전트](#35-유저-에이전트)
+[3.6. 오리진 서버](#36-오리진-서버)
+[3.7. 중개자](#37-중개자)
+[3.8. 캐시](#38-캐시)
+[3.9. 예시 메시지 교환](#39-예시-메시지-교환)
+
+###### [4. HTTP의 식별자들](#4-http의-식별자들)
+
 4.1. URI References
 4.2. HTTP-Related URI Schemes
 4.2.1. http URI Scheme
@@ -478,14 +481,16 @@ HTTP의 메이저 버전 넘버는 호환되지 않는 메시지 구문이 도�
 
 HTTP의 메이저 버전이 어떤 마이너 버전도 정의하고 있지 않을 때, 마이너 버전은 "0"으로 암시된다. "0"은 마이너 버전 식별자가 필요한 요소들 내에서 해당 프로토콜을 언급할 때 사용된다.
 
-3.  용어와 핵심 개념
+## 3. 용어와 핵심 개념
 
 HTTP was created for the World Wide Web (WWW) architecture and has
 evolved over time to support the scalability needs of a worldwide
 hypertext system. Much of that architecture is reflected in the
 terminology used to define HTTP.
 
-3.1. Resources
+HTTP는 World Wide Web(WWW) 아키텍처를 위해 만들어졌고 시간이 지남에 따라 전 세계 하이퍼텍스트 시스템의 확장성에 대한 요구를 지원하기 위해 계속 발전해왔다. 이 아키텍처의 많은 부분은 HTTP를 정의하는데 사용된 용어들에 반영되어 있다.
+
+### 3.1. 리소스
 
 The target of an HTTP request is called a "resource". HTTP does not
 limit the nature of a resource; it merely defines an interface that
