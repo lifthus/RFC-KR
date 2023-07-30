@@ -481,38 +481,23 @@ HTTP의 메이저 버전 넘버는 호환되지 않는 메시지 구문이 도�
 
 HTTP의 메이저 버전이 어떤 마이너 버전도 정의하고 있지 않을 때, 마이너 버전은 "0"으로 암시된다. "0"은 마이너 버전 식별자가 필요한 요소들 내에서 해당 프로토콜을 언급할 때 사용된다.
 
-## 3. 용어와 핵심 개념
-
-HTTP was created for the World Wide Web (WWW) architecture and has
-evolved over time to support the scalability needs of a worldwide
-hypertext system. Much of that architecture is reflected in the
-terminology used to define HTTP.
+## 3. 용어와 핵심 개념들
 
 HTTP는 World Wide Web(WWW) 아키텍처를 위해 만들어졌고 시간이 지남에 따라 전 세계 하이퍼텍스트 시스템의 확장성에 대한 요구를 지원하기 위해 계속 발전해왔다. 이 아키텍처의 많은 부분은 HTTP를 정의하는데 사용된 용어들에 반영되어 있다.
 
 ### 3.1. 리소스
 
-The target of an HTTP request is called a "resource". HTTP does not
-limit the nature of a resource; it merely defines an interface that
-might be used to interact with resources. Most resources are
-identified by a Uniform Resource Identifier (URI), as described in
-Section 4.
+HTTP 요청의 타겟은 "리소스"라고 불린다. HTTP는 리소스의 성질을 제한하지 않는다; 단지 리소스와의 상호작용에 사용될 수 있는 인터페이스를 정의한다. 대부분의 리소스들은 Uniform Resource Identifier(URI)에 의해 정의되며, 이에 대해 4절에서 설명한다.
 
-One design goal of HTTP is to separate resource identification from
-request semantics, which is made possible by vesting the request
-semantics in the request method (Section 9) and a few request-
-modifying header fields. A resource cannot treat a request in a
-manner inconsistent with the semantics of the method of the request.
-For example, though the URI of a resource might imply semantics that
-are not safe, a client can expect the resource to avoid actions that
-are unsafe when processing a request with a safe method (see
-Section 9.2.1).
+HTTP의 설계 목적 중 하나는 리소스의 식별을 리소스 의미체계로 부터 분리하는 것인데, 이는 요청 메소드(9절)와 몇몇 요청 수정 헤더 필드에 요청 의미체계를 부여함으로써 가능해진다. 리소스는 요청을 요청의 메소드의 의미체계와 일치하지 않는 방식으로 다룰 수 없다. 예를 들어, 리소스의 URI는 안전하지 않은 의미체계를 내포할 수도 있지만, 클라이언트는 리소스가 안전한 메소드(9.2.1절)의 요청을 처리할 때는 안전하지 않은 행동을 피할 것으로 기대할 수 있다.
 
 HTTP relies upon the Uniform Resource Identifier (URI) standard [URI]
 to indicate the target resource (Section 7.1) and relationships
 between resources.
 
-3.2. Representations
+HTTP는 타겟 리소스(7.1절)와 리소스들 간의 관계를 나타내기 위해 Uniform Resource Identifier([RFC3986](https://datatracker.ietf.org/doc/html/rfc3986)) 표준에 의존한다.
+
+### 3.2. 표기법
 
 A "representation" is information that is intended to reflect a past,
 current, or desired state of a given resource, in a format that can
