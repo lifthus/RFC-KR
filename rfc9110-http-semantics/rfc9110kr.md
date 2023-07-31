@@ -79,7 +79,7 @@ than English.
 ###### [3. 용어와 핵심 개념들](#3-용어와-핵심-개념들)
 
 [3.1. 리소스](#31-리소스)
-[3.2. 표기법](#32-표기법)
+[3.2. 표현](#32-표현)
 [3.3. 연결, 클라이언트, 그리고 서버](#33-연결-클라이언트-그리고-서버)
 [3.4. 메시지](#34-메시지)
 [3.5. 유저 에이전트](#35-유저-에이전트)
@@ -497,21 +497,11 @@ between resources.
 
 HTTP는 타겟 리소스(7.1절)와 리소스들 간의 관계를 나타내기 위해 Uniform Resource Identifier([RFC3986](https://datatracker.ietf.org/doc/html/rfc3986)) 표준에 의존한다.
 
-### 3.2. 표기법
+### 3.2. 표현
 
-A "representation" is information that is intended to reflect a past,
-current, or desired state of a given resource, in a format that can
-be readily communicated via the protocol. A representation consists
-of a set of representation metadata and a potentially unbounded
-stream of representation data (Section 8).
+"표현"은 주어진 리소스의 과거나 현재의 상태, 혹은 바라는 상태를 프로토콜을 통해 손쉽게 통신할 수 있는 형태로 반영하게 돼있는 정보다. 표현은 표현 메타데이터의 집합과 잠재적으로 제한되지 않은 표현 데이터 스트림으로 구성된다 (8절).
 
-HTTP allows "information hiding" behind its uniform interface by
-defining communication with respect to a transferable representation
-of the resource state, rather than transferring the resource itself.
-This allows the resource identified by a URI to be anything,
-including temporal functions like "the current weather in Laguna
-Beach", while potentially providing information that represents that
-resource at the time a message is generated [REST].
+HTTP는 통신을 리소스를 전송하는 것 자체가 아니라 전송 가능한 리소스 상태의 표현에 대한 것으로 정의함으로써 균일한 인터페이스 뒤로 "정보 은닉"할 수 있도록 한다. 이는 잠재적으로 메시지가 생성된 시점의 리소스를 나타내는 정보를 제공하면서, "광안리 해변의 현재 날씨" 같은 일시적인 기능들을 포함해, URI에 의해 식별되는 리소스가 무엇이든 될 수 있게 한다[[REST](https://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm)].
 
 The uniform interface is similar to a window through which one can
 observe and act upon a thing only through the communication of
