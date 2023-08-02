@@ -491,10 +491,6 @@ HTTP 요청의 타겟은 "리소스"라고 불린다. HTTP는 리소스의 성�
 
 HTTP의 설계 목적 중 하나는 리소스의 식별을 리소스 의미체계로 부터 분리하는 것인데, 이는 요청 메소드(9절)와 몇몇 요청 수정 헤더 필드에 요청 의미체계를 부여함으로써 가능해진다. 리소스는 요청을 요청의 메소드의 의미체계와 일치하지 않는 방식으로 다룰 수 없다. 예를 들어, 리소스의 URI는 안전하지 않은 의미체계를 내포할 수도 있지만, 클라이언트는 리소스가 안전한 메소드(9.2.1절)의 요청을 처리할 때는 안전하지 않은 행동을 피할 것으로 기대할 수 있다.
 
-HTTP relies upon the Uniform Resource Identifier (URI) standard [URI]
-to indicate the target resource (Section 7.1) and relationships
-between resources.
-
 HTTP는 타겟 리소스(7.1절)와 리소스들 간의 관계를 나타내기 위해 Uniform Resource Identifier([RFC3986](https://datatracker.ietf.org/doc/html/rfc3986)) 표준에 의존한다.
 
 ### 3.2. 표현
@@ -503,26 +499,11 @@ HTTP는 타겟 리소스(7.1절)와 리소스들 간의 관계를 나타내기 �
 
 HTTP는 통신을 리소스를 전송하는 것 자체가 아니라 전송 가능한 리소스 상태의 표현에 대한 것으로 정의함으로써 균일한 인터페이스 뒤로 "정보 은닉"할 수 있도록 한다. 이는 잠재적으로 메시지가 생성된 시점의 리소스를 나타내는 정보를 제공하면서, "광안리 해변의 현재 날씨" 같은 일시적인 기능들을 포함해, URI에 의해 식별되는 리소스가 무엇이든 될 수 있게 한다[[REST](https://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm)].
 
-The uniform interface is similar to a window through which one can
-observe and act upon a thing only through the communication of
-messages to an independent actor on the other side. A shared
-abstraction is needed to represent ("take the place of") the current
-or desired state of that thing in our communications. When a
-representation is hypertext, it can provide both a representation of
-the resource state and processing instructions that help guide the
-recipient's future interactions.
+균일한 인터페이스라는 것은 통하여 어떤 것을 관찰할 수 있고 그 어떤 것에 대해 오로지 독립적인 반대편 사람과 메시지를 교환하는 통신 방식으로만 무언가 행할 수 있는 창문과 비슷하다. 이 통신에서 현재 혹은 바라는 상태를 나타내기("대신하기") 위해서는 공유된 추상화가 필요하다. 표현이 하이퍼텍스트라면, 리소스 상태의 표현과 수신자의 향후 상호작용을 안내하는 처리 지침 둘 다 제공할 수 있다.
 
-A target resource might be provided with, or be capable of
-generating, multiple representations that are each intended to
-reflect the resource's current state. An algorithm, usually based on
-content negotiation (Section 12), would be used to select one of
-those representations as being most applicable to a given request.
-This "selected representation" provides the data and metadata for
-evaluating conditional requests (Section 13) and constructing the
-content for 200 (OK), 206 (Partial Content), and 304 (Not Modified)
-responses to GET (Section 9.3.1).
+타겟 리소스는 각각이 리소스의 현재 상태를 반영하도록 돼있는 여러 표현들을 제공 받거나, 생성할 수 있을 것이다. 보통은 콘텐츠 협상(섹션 12)에 기반한 한 알고리즘이, 그 표현들 중 요청에 대해 가장 적합한 하나를 선택하는 데 사용될 것이다. 이 "선택된 표현"은 조건부 요청(13절)을 평가하고 GET에 대해 200(OK), 206(Partial Content), 304(Not Modified) 응답 콘텐츠를 구성하기 위한 데이터와 메타데이터를 제공한다(9.3.1절).
 
-3.3. Connections, Clients, and Servers
+### 3.3. 연결, 클라이언트, 그리고 서버
 
 HTTP is a client/server protocol that operates over a reliable
 transport- or session-layer "connection".
