@@ -508,6 +508,8 @@ HTTP는 통신을 리소스를 전송하는 것 자체가 아니라 전송 가�
 HTTP is a client/server protocol that operates over a reliable
 transport- or session-layer "connection".
 
+HTTP는 신뢰할 수 있는 전송 혹은 세션 계
+
 An HTTP "client" is a program that establishes a connection to a
 server for the purpose of sending one or more HTTP requests. An HTTP
 "server" is a program that accepts connections in order to service
