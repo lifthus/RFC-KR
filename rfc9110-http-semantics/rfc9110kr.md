@@ -505,57 +505,23 @@ HTTP는 통신을 리소스를 전송하는 것 자체가 아니라 전송 가�
 
 ### 3.3. 연결, 클라이언트, 그리고 서버
 
-HTTP is a client/server protocol that operates over a reliable
-transport- or session-layer "connection".
+HTTP는 신뢰할 수 있는 전송 혹은 세션 계층의 "연결" 위에서 작동하는 클라이언트/서버 프로토콜이다.
 
-HTTP는 신뢰할 수 있는 전송 혹은 세션 계
+HTTP "클라이언트"라 함은 하나 이상의 HTTP 요청을 보내기 위한 목적으로 서버와의 연결을 수립하는 프로그램이다. HTTP "서버"라 함은 HTTP 응답을 보냄으로써 HTTP 요청을 처리해주기 위해 연결을 수락하는 프로그램이다.
 
-An HTTP "client" is a program that establishes a connection to a
-server for the purpose of sending one or more HTTP requests. An HTTP
-"server" is a program that accepts connections in order to service
-HTTP requests by sending HTTP responses.
+클라이언트와 서버라는 용어는 오로지 이 프로그램들이 특정 연결에 대해서 수행하는 역할 그 자체만을 나타낸다. 즉, 같은 프로그램이 어떤 연결에서는 클라이언트로, 다른 곳에서는 또 서버로 동작할 수도 있다.
 
-The terms client and server refer only to the roles that these
-programs perform for a particular connection. The same program might
-act as a client on some connections and a server on others.
+HTTP는 무상태성 프로토콜로 정의되는데, 이는 각 메시지의 의미체계가 독립적으로 해석될 수 있으며, 연결들과 그 위의 메시지들 간의 관계가 그 메시지들의 해석에 어떠한 영향도 주지 않음을 의미한다. 예를 들어, CONNECT 요청(9.3.6절)이나 Upgrade 헤더 필드(7.8절)를 가진 요청은 연결의 첫번째 메시지에서뿐만 아니라 언제든지 일어날 수 있다. 많은 구현들은 프록시된 연결을 재사용하거나 동적으로 여러 서버들에 걸쳐 요청들을 분산하기 위해서 HTTP의 무상태성 설계에 의존한다.
 
-HTTP is defined as a stateless protocol, meaning that each request
-message's semantics can be understood in isolation, and that the
-relationship between connections and messages on them has no impact
-on the interpretation of those messages. For example, a CONNECT
-request (Section 9.3.6) or a request with the Upgrade header field
-(Section 7.8) can occur at any time, not just in the first message on
-a connection. Many implementations depend on HTTP's stateless design
-in order to reuse proxied connections or dynamically load balance
-requests across multiple servers.
+결과적으로, 서버는 연결이 안전한 동시에 특정 유저 에이전트에게만 고유한 것이 보장되지 않는한 절대(MUST NOT) 같은 연결 상의 두 요청이 같은 유저 에이전트로부터 왔다고 가정해서는 안된다. 일부 비표준 HTTP 확장들([RFC4599](https://datatracker.ietf.org/doc/html/rfc4559) 같은)은 이러한 요구사항들을 위반하는 것으로 알려져있고, 덕분에 보안 문제와 상호운영성 문제를 야기한다.
 
-As a result, a server MUST NOT assume that two requests on the same
-connection are from the same user agent unless the connection is
-secured and specific to that agent. Some non-standard HTTP
-extensions (e.g., [RFC4559]) have been known to violate this
-requirement, resulting in security and interoperability problems.
+### 3.4. 메시지
 
-3.4. Messages
+HTTP는 한 연결에 걸쳐 "메시지들"을 교환하기 위한 무상태성 요청/응답 프로토콜이다. "발신자"와 "수신자"라는 용어는 각각 어떤 형태로든 주어진 메시지를 보내거나 받는 구현을 말한다.
 
-HTTP is a stateless request/response protocol for exchanging
-"messages" across a connection. The terms "sender" and "recipient"
-refer to any implementation that sends or receives a given message,
-respectively.
+클라이언트는 메소드(9절) 그리고 요청 타겟(7.1절)과 함께 "요청" 메시지의 형태로 서버에게 요청들을 보낸다. 요청은 또한 요청 수정자들, 클라이언트 정보, 그리고 표현 메타데이를 위한 헤더 필드들(6.3절), 메소드에 따라 처리하도록 의도된 콘텐츠(6.4절), 그리고 콘텐츠를 전송하는 동안 수집된 정보를 전달하기 위한 트레일러 필드(6.5절)을 포함할 수도 있다.
 
-A client sends requests to a server in the form of a "request"
-message with a method (Section 9) and request target (Section 7.1).
-The request might also contain header fields (Section 6.3) for
-request modifiers, client information, and representation metadata,
-content (Section 6.4) intended for processing in accordance with the
-method, and trailer fields (Section 6.5) to communicate information
-collected while sending the content.
-
-A server responds to a client's request by sending one or more
-"response" messages, each including a status code (Section 15). The
-response might also contain header fields for server information,
-resource metadata, and representation metadata, content to be
-interpreted in accordance with the status code, and trailer fields to
-communicate information collected while sending the content.
+서버는 각각 상태 코드(15절)를 포함하는, 하나 이상의 "응답" 메시지들을 보냄으로써 클라이언트의 요청에 응답한다. 응답은 또한 서버 정보, 리소스 메타데이터, 그리고 표현 메타데이터를 위한 헤더 필드들, 상태 코드에 따라 해석될 콘텐츠, 그리고 콘텐츠를 전송하는 동안 수집된 정보를 전달하기 위한 트레일러 필드들을 포함할 수도 있다.
 
 3.5. User Agents
 
