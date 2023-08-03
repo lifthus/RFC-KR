@@ -78,15 +78,18 @@ than English.
 
 ###### [3. 용어와 핵심 개념들](#3-용어와-핵심-개념들)
 
-3.1. Resources
-3.2. Representations
-3.3. Connections, Clients, and Servers
-3.4. Messages
-3.5. User Agents
-3.6. Origin Server
-3.7. Intermediaries
-3.8. Caches
-3.9. Example Message Exchange 4. Identifiers in HTTP
+[3.1. 리소스](#31-리소스)
+[3.2. 표현](#32-표현)
+[3.3. 연결, 클라이언트, 그리고 서버](#33-연결-클라이언트-그리고-서버)
+[3.4. 메시지](#34-메시지)
+[3.5. 유저 에이전트](#35-유저-에이전트)
+[3.6. 오리진 서버](#36-오리진-서버)
+[3.7. 중개자](#37-중개자)
+[3.8. 캐시](#38-캐시)
+[3.9. 예시 메시지 교환](#39-예시-메시지-교환)
+
+###### [4. HTTP의 식별자들](#4-http의-식별자들)
+
 4.1. URI References
 4.2. HTTP-Related URI Schemes
 4.2.1. http URI Scheme
@@ -478,123 +481,49 @@ HTTP의 메이저 버전 넘버는 호환되지 않는 메시지 구문이 도�
 
 HTTP의 메이저 버전이 어떤 마이너 버전도 정의하고 있지 않을 때, 마이너 버전은 "0"으로 암시된다. "0"은 마이너 버전 식별자가 필요한 요소들 내에서 해당 프로토콜을 언급할 때 사용된다.
 
-3.  용어와 핵심 개념
+## 3. 용어와 핵심 개념들
 
-HTTP was created for the World Wide Web (WWW) architecture and has
-evolved over time to support the scalability needs of a worldwide
-hypertext system. Much of that architecture is reflected in the
-terminology used to define HTTP.
+HTTP는 World Wide Web(WWW) 아키텍처를 위해 만들어졌고 시간이 지남에 따라 전 세계 하이퍼텍스트 시스템의 확장성에 대한 요구를 지원하기 위해 계속 발전해왔다. 이 아키텍처의 많은 부분은 HTTP를 정의하는데 사용된 용어들에 반영되어 있다.
 
-3.1. Resources
+### 3.1. 리소스
 
-The target of an HTTP request is called a "resource". HTTP does not
-limit the nature of a resource; it merely defines an interface that
-might be used to interact with resources. Most resources are
-identified by a Uniform Resource Identifier (URI), as described in
-Section 4.
+HTTP 요청의 타겟은 "리소스"라고 불린다. HTTP는 리소스의 성질을 제한하지 않는다; 단지 리소스와의 상호작용에 사용될 수 있는 인터페이스를 정의한다. 대부분의 리소스들은 Uniform Resource Identifier(URI)에 의해 정의되며, 이에 대해 4절에서 설명한다.
 
-One design goal of HTTP is to separate resource identification from
-request semantics, which is made possible by vesting the request
-semantics in the request method (Section 9) and a few request-
-modifying header fields. A resource cannot treat a request in a
-manner inconsistent with the semantics of the method of the request.
-For example, though the URI of a resource might imply semantics that
-are not safe, a client can expect the resource to avoid actions that
-are unsafe when processing a request with a safe method (see
-Section 9.2.1).
+HTTP의 설계 목적 중 하나는 리소스의 식별을 리소스 의미체계로 부터 분리하는 것인데, 이는 요청 메소드(9절)와 몇몇 요청 수정 헤더 필드에 요청 의미체계를 부여함으로써 가능해진다. 리소스는 요청을 요청의 메소드의 의미체계와 일치하지 않는 방식으로 다룰 수 없다. 예를 들어, 리소스의 URI는 안전하지 않은 의미체계를 내포할 수도 있지만, 클라이언트는 리소스가 안전한 메소드(9.2.1절)의 요청을 처리할 때는 안전하지 않은 행동을 피할 것으로 기대할 수 있다.
 
-HTTP relies upon the Uniform Resource Identifier (URI) standard [URI]
-to indicate the target resource (Section 7.1) and relationships
-between resources.
+HTTP는 타겟 리소스(7.1절)와 리소스들 간의 관계를 나타내기 위해 Uniform Resource Identifier([RFC3986](https://datatracker.ietf.org/doc/html/rfc3986)) 표준에 의존한다.
 
-3.2. Representations
+### 3.2. 표현
 
-A "representation" is information that is intended to reflect a past,
-current, or desired state of a given resource, in a format that can
-be readily communicated via the protocol. A representation consists
-of a set of representation metadata and a potentially unbounded
-stream of representation data (Section 8).
+"표현"은 주어진 리소스의 과거나 현재의 상태, 혹은 바라는 상태를 프로토콜을 통해 손쉽게 통신할 수 있는 형태로 반영하게 돼있는 정보다. 표현은 표현 메타데이터의 집합과 잠재적으로 제한되지 않은 표현 데이터 스트림으로 구성된다 (8절).
 
-HTTP allows "information hiding" behind its uniform interface by
-defining communication with respect to a transferable representation
-of the resource state, rather than transferring the resource itself.
-This allows the resource identified by a URI to be anything,
-including temporal functions like "the current weather in Laguna
-Beach", while potentially providing information that represents that
-resource at the time a message is generated [REST].
+HTTP는 통신을 리소스를 전송하는 것 자체가 아니라 전송 가능한 리소스 상태의 표현에 대한 것으로 정의함으로써 균일한 인터페이스 뒤로 "정보 은닉"할 수 있도록 한다. 이는 잠재적으로 메시지가 생성된 시점의 리소스를 나타내는 정보를 제공하면서, "광안리 해변의 현재 날씨" 같은 일시적인 기능들을 포함해, URI에 의해 식별되는 리소스가 무엇이든 될 수 있게 한다[[REST](https://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm)].
 
-The uniform interface is similar to a window through which one can
-observe and act upon a thing only through the communication of
-messages to an independent actor on the other side. A shared
-abstraction is needed to represent ("take the place of") the current
-or desired state of that thing in our communications. When a
-representation is hypertext, it can provide both a representation of
-the resource state and processing instructions that help guide the
-recipient's future interactions.
+균일한 인터페이스라는 것은 통하여 어떤 것을 관찰할 수 있고 그 어떤 것에 대해 오로지 독립적인 반대편 사람과 메시지를 교환하는 통신 방식으로만 무언가 행할 수 있는 창문과 비슷하다. 이 통신에서 현재 혹은 바라는 상태를 나타내기("대신하기") 위해서는 공유된 추상화가 필요하다. 표현이 하이퍼텍스트라면, 리소스 상태의 표현과 수신자의 향후 상호작용을 안내하는 처리 지침 둘 다 제공할 수 있다.
 
-A target resource might be provided with, or be capable of
-generating, multiple representations that are each intended to
-reflect the resource's current state. An algorithm, usually based on
-content negotiation (Section 12), would be used to select one of
-those representations as being most applicable to a given request.
-This "selected representation" provides the data and metadata for
-evaluating conditional requests (Section 13) and constructing the
-content for 200 (OK), 206 (Partial Content), and 304 (Not Modified)
-responses to GET (Section 9.3.1).
+타겟 리소스는 각각이 리소스의 현재 상태를 반영하도록 돼있는 여러 표현들을 제공 받거나, 생성할 수 있을 것이다. 보통은 콘텐츠 협상(섹션 12)에 기반한 한 알고리즘이, 그 표현들 중 요청에 대해 가장 적합한 하나를 선택하는 데 사용될 것이다. 이 "선택된 표현"은 조건부 요청(13절)을 평가하고 GET에 대해 200(OK), 206(Partial Content), 304(Not Modified) 응답 콘텐츠를 구성하기 위한 데이터와 메타데이터를 제공한다(9.3.1절).
 
-3.3. Connections, Clients, and Servers
+### 3.3. 연결, 클라이언트, 그리고 서버
 
-HTTP is a client/server protocol that operates over a reliable
-transport- or session-layer "connection".
+HTTP는 신뢰할 수 있는 전송 혹은 세션 계층의 "연결" 위에서 작동하는 클라이언트/서버 프로토콜이다.
 
-An HTTP "client" is a program that establishes a connection to a
-server for the purpose of sending one or more HTTP requests. An HTTP
-"server" is a program that accepts connections in order to service
-HTTP requests by sending HTTP responses.
+HTTP "클라이언트"라 함은 하나 이상의 HTTP 요청을 보내기 위한 목적으로 서버와의 연결을 수립하는 프로그램이다. HTTP "서버"라 함은 HTTP 응답을 보냄으로써 HTTP 요청을 처리해주기 위해 연결을 수락하는 프로그램이다.
 
-The terms client and server refer only to the roles that these
-programs perform for a particular connection. The same program might
-act as a client on some connections and a server on others.
+클라이언트와 서버라는 용어는 오로지 이 프로그램들이 특정 연결에 대해서 수행하는 역할 그 자체만을 나타낸다. 즉, 같은 프로그램이 어떤 연결에서는 클라이언트로, 다른 곳에서는 또 서버로 동작할 수도 있다.
 
-HTTP is defined as a stateless protocol, meaning that each request
-message's semantics can be understood in isolation, and that the
-relationship between connections and messages on them has no impact
-on the interpretation of those messages. For example, a CONNECT
-request (Section 9.3.6) or a request with the Upgrade header field
-(Section 7.8) can occur at any time, not just in the first message on
-a connection. Many implementations depend on HTTP's stateless design
-in order to reuse proxied connections or dynamically load balance
-requests across multiple servers.
+HTTP는 무상태성 프로토콜로 정의되는데, 이는 각 메시지의 의미체계가 독립적으로 해석될 수 있으며, 연결들과 그 위의 메시지들 간의 관계가 그 메시지들의 해석에 어떠한 영향도 주지 않음을 의미한다. 예를 들어, CONNECT 요청(9.3.6절)이나 Upgrade 헤더 필드(7.8절)를 가진 요청은 연결의 첫번째 메시지에서뿐만 아니라 언제든지 일어날 수 있다. 많은 구현들은 프록시된 연결을 재사용하거나 동적으로 여러 서버들에 걸쳐 요청들을 분산하기 위해서 HTTP의 무상태성 설계에 의존한다.
 
-As a result, a server MUST NOT assume that two requests on the same
-connection are from the same user agent unless the connection is
-secured and specific to that agent. Some non-standard HTTP
-extensions (e.g., [RFC4559]) have been known to violate this
-requirement, resulting in security and interoperability problems.
+결과적으로, 서버는 연결이 안전한 동시에 특정 유저 에이전트에게만 고유한 것이 보장되지 않는한 절대(MUST NOT) 같은 연결 상의 두 요청이 같은 유저 에이전트로부터 왔다고 가정해서는 안된다. 일부 비표준 HTTP 확장들([RFC4599](https://datatracker.ietf.org/doc/html/rfc4559) 같은)은 이러한 요구사항들을 위반하는 것으로 알려져있고, 덕분에 보안 문제와 상호운영성 문제를 야기한다.
 
-3.4. Messages
+### 3.4. 메시지
 
-HTTP is a stateless request/response protocol for exchanging
-"messages" across a connection. The terms "sender" and "recipient"
-refer to any implementation that sends or receives a given message,
-respectively.
+HTTP는 한 연결에 걸쳐 "메시지들"을 교환하기 위한 무상태성 요청/응답 프로토콜이다. "발신자"와 "수신자"라는 용어는 각각 어떤 형태로든 주어진 메시지를 보내거나 받는 구현을 말한다.
 
-A client sends requests to a server in the form of a "request"
-message with a method (Section 9) and request target (Section 7.1).
-The request might also contain header fields (Section 6.3) for
-request modifiers, client information, and representation metadata,
-content (Section 6.4) intended for processing in accordance with the
-method, and trailer fields (Section 6.5) to communicate information
-collected while sending the content.
+클라이언트는 메소드(9절) 그리고 요청 타겟(7.1절)과 함께 "요청" 메시지의 형태로 서버에게 요청들을 보낸다. 요청은 또한 요청 수정자들, 클라이언트 정보, 그리고 표현 메타데이를 위한 헤더 필드들(6.3절), 메소드에 따라 처리하도록 의도된 콘텐츠(6.4절), 그리고 콘텐츠를 전송하는 동안 수집된 정보를 전달하기 위한 트레일러 필드(6.5절)을 포함할 수도 있다.
 
-A server responds to a client's request by sending one or more
-"response" messages, each including a status code (Section 15). The
-response might also contain header fields for server information,
-resource metadata, and representation metadata, content to be
-interpreted in accordance with the status code, and trailer fields to
-communicate information collected while sending the content.
+서버는 각각 상태 코드(15절)를 포함하는, 하나 이상의 "응답" 메시지들을 보냄으로써 클라이언트의 요청에 응답한다. 응답은 또한 서버 정보, 리소스 메타데이터, 그리고 표현 메타데이터를 위한 헤더 필드들, 상태 코드에 따라 해석될 콘텐츠, 그리고 콘텐츠를 전송하는 동안 수집된 정보를 전달하기 위한 트레일러 필드들을 포함할 수도 있다.
 
-3.5. User Agents
+### 3.5. 유저 에이전트
 
 The term "user agent" refers to any of the various client programs
 that initiate a request.
