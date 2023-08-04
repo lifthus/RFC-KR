@@ -525,37 +525,15 @@ HTTP는 한 연결에 걸쳐 "메시지들"을 교환하기 위한 무상태성 
 
 ### 3.5. 유저 에이전트
 
-The term "user agent" refers to any of the various client programs
-that initiate a request.
+"유저 에이전트"라는 용어는 어느 것이든 요청을 시작하는 다양한 클라이언트 프로그램들 중 하나를 가리킨다.
 
-The most familiar form of user agent is the general-purpose Web
-browser, but that's only a small percentage of implementations.
-Other common user agents include spiders (web-traversing robots),
-command-line tools, billboard screens, household appliances, scales,
-light bulbs, firmware update scripts, mobile apps, and communication
-devices in a multitude of shapes and sizes.
+가장 친숙한 형태의 유저 에이전트는 범용 웹 브라우저이지만, 이는 오직 작은 일부다. 다른 일반적인 유저 에이전트들로는 스파이더(웹 탐색 로봇), 커맨드-라인 도구, 전광판, 가전제품, 저울, 전구, 펌웨어 업데이트 스크립트, 모바일 앱, 그리고 다양한 형태와 크기의 통신 기기들이 포함된다.
 
-Being a user agent does not imply that there is a human user directly
-interacting with the software agent at the time of a request. In
-many cases, a user agent is installed or configured to run in the
-background and save its results for later inspection (or save only a
-subset of those results that might be interesting or erroneous).
-Spiders, for example, are typically given a start URI and configured
-to follow certain behavior while crawling the Web as a hypertext
-graph.
+유저 에이전트라는 것이 꼭 요청 시점에 그 소프트웨어 에이전트와 직접적으로 상호작용하는 인간 사용자가 있다는 것을 의미하지는 않는다. 많은 경우에서, 유저 에이전트는 백그라운드에서 실행되고 나중의 점검을 위해 그 결과들을 저장하도록(혹은 그 결과들 중 흥미롭거나 에러와 관련된 부분만 저장하도록) 설치되거나 설정된다. 예를 들어 스파이더는, 일반적으로 시작 URI가 주어지고 나서 웹을 하이퍼텍스트 그래프로써 크롤링하는 동안 특정한 행동을 따르도록 설정된다.
 
-Many user agents cannot, or choose not to, make interactive
-suggestions to their user or provide adequate warning for security or
-privacy concerns. In the few cases where this specification requires
-reporting of errors to the user, it is acceptable for such reporting
-to only be observable in an error console or log file. Likewise,
-requirements that an automated action be confirmed by the user before
-proceeding might be met via advance configuration choices, run-time
-options, or simple avoidance of the unsafe action; confirmation does
-not imply any specific user interface or interruption of normal
-processing if the user has already made that choice.
+많은 유저 에이전트들은 유저와 상호작용하며 제안을 하거나 보안 혹은 프라이버시 문제들에 관해 적절한 경고를 제공하지 못하거나, 혹은 하지 않는다. 이 사양서에서 유저에게 에러를 보고할 것을 요구하는 극히 일부의 경우에서, 그러한 보고를 오직 에러 콘솔이나 로그 파일에서만 확인할 수 있도록 하는 것도 허용된다. 마찬가지로, 자동화된 행동을 진행하기 전에 유저에게 확인을 받아야 한다는 요구사항들은 고급 설정 선택, 런타임 옵션, 혹은 안전하지 않은 행동에 대한 간단한 회피를 통해 만족시킬 수 있다; 확인이라는 것은 이미 유저가 그 선택을 결정했다면 어떠한 특정 유저 인터페이스나 정상 프로세싱의 인터럽트를 의미하지 않는다.
 
-3.6. Origin Server
+### 3.6. 오리진 서버
 
 The term "origin server" refers to a program that can originate
 authoritative responses for a given target resource.
