@@ -541,19 +541,15 @@ HTTP는 한 연결에 걸쳐 "메시지들"을 교환하기 위한 무상태성 
 
 대부분의 HTTP 요청은 URI로 식별되는 어떤 리소스의 표현에 대한 검색 요청(GET)으로 이루어진다. 가장 단순한 경우에, 이는 유저 에이전트(UA)와 오리진 서버(O) 사이 단 하나의 양방향 연결(===)을 통해 이루어질 수 있다.
 
-            request   >
+            요청   >
        UA ======================================= O
-                                   <   response
+                                   <   응답
 
                                   Figure 1
 
 ### 3.7. 중개자
 
-HTTP enables the use of intermediaries to satisfy requests through a
-chain of connections. There are three common forms of HTTP
-"intermediary": proxy, gateway, and tunnel. In some cases, a single
-intermediary might act as an origin server, proxy, gateway, or
-tunnel, switching behavior based on the nature of each request.
+HTTP는 요청을 충족시키기 위해 연결 체인에 걸쳐 중개자들을 개입시키는 것을 허용한다. 대표적인 세 갖; HTTP "중개자"가 있다: 프록시, 게이트웨이, 그리고 터널. 일부 케이스들에서는, 단 하나의 중개자가 각 요청의 성질에 따라 행동을 스위칭하면서 오리진 서버, 프록시, 게이트웨이나 터널의 역할을 할 수도 있다.
 
             >             >             >             >
        UA =========== A =========== B =========== C =========== O
@@ -561,55 +557,15 @@ tunnel, switching behavior based on the nature of each request.
 
                                   Figure 2
 
-The figure above shows three intermediaries (A, B, and C) between the
-user agent and origin server. A request or response message that
-travels the whole chain will pass through four separate connections.
-Some HTTP communication options might apply only to the connection
-with the nearest, non-tunnel neighbor, only to the endpoints of the
-chain, or to all connections along the chain. Although the diagram
-is linear, each participant might be engaged in multiple,
-simultaneous communications. For example, B might be receiving
-requests from many clients other than A, and/or forwarding requests
-to servers other than C, at the same time that it is handling A's
-request. Likewise, later requests might be sent through a different
-path of connections, often based on dynamic configuration for load
-balancing.
+위의 그림은 유저 에이전트와 오리진 서버 간의 세 중개자들(A, B, 그리고 C)을 보여준다. 전체 체인을 지나가는 한 요청이나 응답은 별개인 네 개의 연결들을 통과할 것이다. 일부 HTTP 통신 옵션들은 오직 가장 가깝고, 터널이 아닌 이웃에, 오직 체인의 엔드포인트들에, 혹은 체인의 모든 연결들에 적용될 수 있다. 위 다이어그램은 선형이지만, 각 참가자들은 동시에 여러 통신들에 참여할 수 있다. 예를 들어, B는 A의 요구를 처리하는 동시에 A가 아닌 다른 많은 클라이언트로 부터 요청을 수신하고 있을 수도 있고, 그와 동시에 / 혹은 그와 별개로 C가 아닌 다른 서버로 요청들을 포워딩하고 있을 수도 있다. 마찬가지로, 나중의 요청들은 연결의 다른 경로를 통해 전송될 수 있는데, 이는 보통 로드 밸런싱을 위한 동적 설정에 기반한다.
 
-The terms "upstream" and "downstream" are used to describe
-directional requirements in relation to the message flow: all
-messages flow from upstream to downstream. The terms "inbound" and
-"outbound" are used to describe directional requirements in relation
-to the request route: inbound means "toward the origin server",
-whereas outbound means "toward the user agent".
+"업스트림"과 "다운스트림"이라는 용어는 메시지 흐름과 관련한 방향에 관한 요구사항을 기술하는데 사용된다: 모든 메시지는 업스트림에서 다운스트림으로 흐른다. "인바운드"와 "아웃바운드"라는 용어는 요청 루트에 관련한 방향에 관한 요구사항을 기술하는데 사용된다: 인바운드는 "오리진 서버를 향해", 반면 아웃바운드는 "유저 에이전트를 향해"를 뜻한다.
 
-A "proxy" is a message-forwarding agent that is chosen by the client,
-usually via local configuration rules, to receive requests for some
-type(s) of absolute URI and attempt to satisfy those requests via
-translation through the HTTP interface. Some translations are
-minimal, such as for proxy requests for "http" URIs, whereas other
-requests might require translation to and from entirely different
-application-level protocols. Proxies are often used to group an
-organization's HTTP requests through a common intermediary for the
-sake of security services, annotation services, or shared caching.
-Some proxies are designed to apply transformations to selected
-messages or content while they are being forwarded, as described in
-Section 7.7.
+"프록시"는 보통 로컬 설정 규칙들에 의해 클라이언트에게 선택된, 절대 URI의 어떤 타입(들)에 대한 요청을 수신하거나 그러한 요청들을 만족시키기 위해 HTTP 인터페이스로 변환하는 메시지-포워딩 에이전트다. "http" URI들에 대한 프록시 요청 같은 변환은 최소한의 수준인 반면, 다른 요청들은 완전히 다른 애플리케이션 레벨 프로토콜로 왔다 갔다하는 수준일 수도 있다. 프록시는 종종 보안 서비스, 어노테이션 서비스, 혹은 공유 캐시를 위해 한 조직의 HTTP 요청들을 공통의 중개자를 통해 그룹화하는데 사용된다. 어떤 프록시들은 7.7절에 설명된대로, 선택된 메시지들이나 콘텐츠가 포워딩되는 동안 변환을 적용하도록 설계되어 있다.
 
-A "gateway" (a.k.a. "reverse proxy") is an intermediary that acts as
-an origin server for the outbound connection but translates received
-requests and forwards them inbound to another server or servers.
-Gateways are often used to encapsulate legacy or untrusted
-information services, to improve server performance through
-"accelerator" caching, and to enable partitioning or load balancing
-of HTTP services across multiple machines.
+"게이트웨이"("리버스 프록시"라고도 알려진)는 아웃바운드 연결에 대한 오리진 서버 처럼 작동하지만 요청들을 수신해서 다른 서버나 서버들로 인바운드 포워딩하는 중개자의 일종이다. 게이트웨이들은 종종 "액셀러레이터" 캐싱을 통해 서버 성능을 향상하기 위해서, 그리고 여러 머신들에 걸친 HTTP 서비스들의 파티셔닝이나 로드 밸런싱을 가능하게 하기 위해서 레거시나 신뢰할 수 없는 정보 서비스들을 캡슐화하는데 사용된다.
 
-All HTTP requirements applicable to an origin server also apply to
-the outbound communication of a gateway. A gateway communicates with
-inbound servers using any protocol that it desires, including private
-extensions to HTTP that are outside the scope of this specification.
-However, an HTTP-to-HTTP gateway that wishes to interoperate with
-third-party HTTP servers needs to conform to user agent requirements
-on the gateway's inbound connection.
+오리진 서버에 적용되는 모든 HTTP 요구사항들은 게이트웨이의 아웃바운드 통신에도 마찬가지로 적용된다. 게이트웨이는 이 사양서를 벗어나는 HTTP에 대한 사설 확장을 포함해, 원하는 어떤 프로토콜로든 인바운드 서버들과 통신한다. 그러나, 써드-파티 HTTP 서버들과 상호운용하길 바라는 HTTP-to-HTTP 게이트웨이는 게이트웨이의 인바운드 연결에서 유저 에이전트 요구사항을 준수할 필요가 있다.
 
 A "tunnel" acts as a blind relay between two connections without
 changing the messages. Once active, a tunnel is not considered a
@@ -639,7 +595,7 @@ enforcing account subscription prior to allowing use of non-local
 Internet services, and within corporate firewalls to enforce network
 usage policies.
 
-3.8. Caches
+### 3.8. 캐시
 
 A "cache" is a local store of previous response messages and the
 subsystem that controls its message storage, retrieval, and deletion.
