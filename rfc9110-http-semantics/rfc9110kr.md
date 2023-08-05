@@ -525,68 +525,31 @@ HTTP는 한 연결에 걸쳐 "메시지들"을 교환하기 위한 무상태성 
 
 ### 3.5. 유저 에이전트
 
-The term "user agent" refers to any of the various client programs
-that initiate a request.
+"유저 에이전트"라는 용어는 어느 것이든 요청을 시작하는 다양한 클라이언트 프로그램들 중 하나를 가리킨다.
 
-The most familiar form of user agent is the general-purpose Web
-browser, but that's only a small percentage of implementations.
-Other common user agents include spiders (web-traversing robots),
-command-line tools, billboard screens, household appliances, scales,
-light bulbs, firmware update scripts, mobile apps, and communication
-devices in a multitude of shapes and sizes.
+가장 친숙한 형태의 유저 에이전트는 범용 웹 브라우저이지만, 이는 오직 작은 일부다. 다른 일반적인 유저 에이전트들로는 스파이더(웹 탐색 로봇), 커맨드-라인 도구, 전광판, 가전제품, 저울, 전구, 펌웨어 업데이트 스크립트, 모바일 앱, 그리고 다양한 형태와 크기의 통신 기기들이 포함된다.
 
-Being a user agent does not imply that there is a human user directly
-interacting with the software agent at the time of a request. In
-many cases, a user agent is installed or configured to run in the
-background and save its results for later inspection (or save only a
-subset of those results that might be interesting or erroneous).
-Spiders, for example, are typically given a start URI and configured
-to follow certain behavior while crawling the Web as a hypertext
-graph.
+유저 에이전트라는 것이 꼭 요청 시점에 그 소프트웨어 에이전트와 직접적으로 상호작용하는 인간 사용자가 있다는 것을 의미하지는 않는다. 많은 경우에서, 유저 에이전트는 백그라운드에서 실행되고 나중의 점검을 위해 그 결과들을 저장하도록(혹은 그 결과들 중 흥미롭거나 에러와 관련된 부분만 저장하도록) 설치되거나 설정된다. 예를 들어 스파이더는, 일반적으로 시작 URI가 주어지고 나서 웹을 하이퍼텍스트 그래프로써 크롤링하는 동안 특정한 행동을 따르도록 설정된다.
 
-Many user agents cannot, or choose not to, make interactive
-suggestions to their user or provide adequate warning for security or
-privacy concerns. In the few cases where this specification requires
-reporting of errors to the user, it is acceptable for such reporting
-to only be observable in an error console or log file. Likewise,
-requirements that an automated action be confirmed by the user before
-proceeding might be met via advance configuration choices, run-time
-options, or simple avoidance of the unsafe action; confirmation does
-not imply any specific user interface or interruption of normal
-processing if the user has already made that choice.
+많은 유저 에이전트들은 유저와 상호작용하며 제안을 하거나 보안 혹은 프라이버시 문제들에 관해 적절한 경고를 제공하지 못하거나, 혹은 하지 않는다. 이 사양서에서 유저에게 에러를 보고할 것을 요구하는 극히 일부의 경우에서, 그러한 보고를 오직 에러 콘솔이나 로그 파일에서만 확인할 수 있도록 하는 것도 허용된다. 마찬가지로, 자동화된 행동을 진행하기 전에 유저에게 확인을 받아야 한다는 요구사항들은 고급 설정 선택, 런타임 옵션, 혹은 안전하지 않은 행동에 대한 간단한 회피를 통해 만족시킬 수 있다; 확인이라는 것은 이미 유저가 그 선택을 결정했다면 어떠한 특정 유저 인터페이스나 정상 프로세싱의 인터럽트를 의미하지 않는다.
 
-3.6. Origin Server
+### 3.6. 오리진 서버
 
-The term "origin server" refers to a program that can originate
-authoritative responses for a given target resource.
+"오리진 서버"라는 용어는 주어진 타겟 리소스에 대해 인가된 응답을 발생시킬 수 있는 프로그램을 말한다.
 
-The most familiar form of origin server are large public websites.
-However, like user agents being equated with browsers, it is easy to
-be misled into thinking that all origin servers are alike. Common
-origin servers also include home automation units, configurable
-networking components, office machines, autonomous robots, news
-feeds, traffic cameras, real-time ad selectors, and video-on-demand
-platforms.
+가장 익숙한 형태의 오리진 서버는 대형 공공 웹사이트들이다. 그러나, 유저 에이전트가 브라우저와 동일시 되는 것 처럼, 모든 오리진 서버들이 같다고 오해하기 쉽다. 일반적인 오리진 서버들은 또한 가정 자동화 유닛, 설정 가능한 네트워킹 컴포넌트, 사무실 기계, 자율 로봇, 뉴스 피드, 교통 카메라, 실시간 광고 선택기, 그리고 비디오-온-디맨드 플랫폼들을 포함한다.
 
-Most HTTP communication consists of a retrieval request (GET) for a
-representation of some resource identified by a URI. In the simplest
-case, this might be accomplished via a single bidirectional
-connection (===) between the user agent (UA) and the origin server
-(O).
+대부분의 HTTP 요청은 URI로 식별되는 어떤 리소스의 표현에 대한 검색 요청(GET)으로 이루어진다. 가장 단순한 경우에, 이는 유저 에이전트(UA)와 오리진 서버(O) 사이 단 하나의 양방향 연결(===)을 통해 이루어질 수 있다.
 
-            request   >
+            요청   >
        UA ======================================= O
-                                   <   response
+                                   <   응답
 
                                   Figure 1
 
-3.7. Intermediaries
+### 3.7. 중개자
 
-HTTP enables the use of intermediaries to satisfy requests through a
-chain of connections. There are three common forms of HTTP
-"intermediary": proxy, gateway, and tunnel. In some cases, a single
-intermediary might act as an origin server, proxy, gateway, or
-tunnel, switching behavior based on the nature of each request.
+HTTP는 요청을 충족시키기 위해 연결 체인에 걸쳐 중개자들을 개입시키는 것을 허용한다. 대표적인 세 갖; HTTP "중개자"가 있다: 프록시, 게이트웨이, 그리고 터널. 일부 케이스들에서는, 단 하나의 중개자가 각 요청의 성질에 따라 행동을 스위칭하면서 오리진 서버, 프록시, 게이트웨이나 터널의 역할을 할 수도 있다.
 
             >             >             >             >
        UA =========== A =========== B =========== C =========== O
@@ -594,55 +557,15 @@ tunnel, switching behavior based on the nature of each request.
 
                                   Figure 2
 
-The figure above shows three intermediaries (A, B, and C) between the
-user agent and origin server. A request or response message that
-travels the whole chain will pass through four separate connections.
-Some HTTP communication options might apply only to the connection
-with the nearest, non-tunnel neighbor, only to the endpoints of the
-chain, or to all connections along the chain. Although the diagram
-is linear, each participant might be engaged in multiple,
-simultaneous communications. For example, B might be receiving
-requests from many clients other than A, and/or forwarding requests
-to servers other than C, at the same time that it is handling A's
-request. Likewise, later requests might be sent through a different
-path of connections, often based on dynamic configuration for load
-balancing.
+위의 그림은 유저 에이전트와 오리진 서버 간의 세 중개자들(A, B, 그리고 C)을 보여준다. 전체 체인을 지나가는 한 요청이나 응답은 별개인 네 개의 연결들을 통과할 것이다. 일부 HTTP 통신 옵션들은 오직 가장 가깝고, 터널이 아닌 이웃에, 오직 체인의 엔드포인트들에, 혹은 체인의 모든 연결들에 적용될 수 있다. 위 다이어그램은 선형이지만, 각 참가자들은 동시에 여러 통신들에 참여할 수 있다. 예를 들어, B는 A의 요구를 처리하는 동시에 A가 아닌 다른 많은 클라이언트로 부터 요청을 수신하고 있을 수도 있고, 그와 동시에 / 혹은 그와 별개로 C가 아닌 다른 서버로 요청들을 포워딩하고 있을 수도 있다. 마찬가지로, 나중의 요청들은 연결의 다른 경로를 통해 전송될 수 있는데, 이는 보통 로드 밸런싱을 위한 동적 설정에 기반한다.
 
-The terms "upstream" and "downstream" are used to describe
-directional requirements in relation to the message flow: all
-messages flow from upstream to downstream. The terms "inbound" and
-"outbound" are used to describe directional requirements in relation
-to the request route: inbound means "toward the origin server",
-whereas outbound means "toward the user agent".
+"업스트림"과 "다운스트림"이라는 용어는 메시지 흐름과 관련한 방향에 관한 요구사항을 기술하는데 사용된다: 모든 메시지는 업스트림에서 다운스트림으로 흐른다. "인바운드"와 "아웃바운드"라는 용어는 요청 루트에 관련한 방향에 관한 요구사항을 기술하는데 사용된다: 인바운드는 "오리진 서버를 향해", 반면 아웃바운드는 "유저 에이전트를 향해"를 뜻한다.
 
-A "proxy" is a message-forwarding agent that is chosen by the client,
-usually via local configuration rules, to receive requests for some
-type(s) of absolute URI and attempt to satisfy those requests via
-translation through the HTTP interface. Some translations are
-minimal, such as for proxy requests for "http" URIs, whereas other
-requests might require translation to and from entirely different
-application-level protocols. Proxies are often used to group an
-organization's HTTP requests through a common intermediary for the
-sake of security services, annotation services, or shared caching.
-Some proxies are designed to apply transformations to selected
-messages or content while they are being forwarded, as described in
-Section 7.7.
+"프록시"는 보통 로컬 설정 규칙들에 의해 클라이언트에게 선택된, 절대 URI의 어떤 타입(들)에 대한 요청을 수신하거나 그러한 요청들을 만족시키기 위해 HTTP 인터페이스로 변환하는 메시지-포워딩 에이전트다. "http" URI들에 대한 프록시 요청 같은 변환은 최소한의 수준인 반면, 다른 요청들은 완전히 다른 애플리케이션 레벨 프로토콜로 왔다 갔다하는 수준일 수도 있다. 프록시는 종종 보안 서비스, 어노테이션 서비스, 혹은 공유 캐시를 위해 한 조직의 HTTP 요청들을 공통의 중개자를 통해 그룹화하는데 사용된다. 어떤 프록시들은 7.7절에 설명된대로, 선택된 메시지들이나 콘텐츠가 포워딩되는 동안 변환을 적용하도록 설계되어 있다.
 
-A "gateway" (a.k.a. "reverse proxy") is an intermediary that acts as
-an origin server for the outbound connection but translates received
-requests and forwards them inbound to another server or servers.
-Gateways are often used to encapsulate legacy or untrusted
-information services, to improve server performance through
-"accelerator" caching, and to enable partitioning or load balancing
-of HTTP services across multiple machines.
+"게이트웨이"("리버스 프록시"라고도 알려진)는 아웃바운드 연결에 대한 오리진 서버 처럼 작동하지만 요청들을 수신해서 다른 서버나 서버들로 인바운드 포워딩하는 중개자의 일종이다. 게이트웨이들은 종종 "액셀러레이터" 캐싱을 통해 서버 성능을 향상하기 위해서, 그리고 여러 머신들에 걸친 HTTP 서비스들의 파티셔닝이나 로드 밸런싱을 가능하게 하기 위해서 레거시나 신뢰할 수 없는 정보 서비스들을 캡슐화하는데 사용된다.
 
-All HTTP requirements applicable to an origin server also apply to
-the outbound communication of a gateway. A gateway communicates with
-inbound servers using any protocol that it desires, including private
-extensions to HTTP that are outside the scope of this specification.
-However, an HTTP-to-HTTP gateway that wishes to interoperate with
-third-party HTTP servers needs to conform to user agent requirements
-on the gateway's inbound connection.
+오리진 서버에 적용되는 모든 HTTP 요구사항들은 게이트웨이의 아웃바운드 통신에도 마찬가지로 적용된다. 게이트웨이는 이 사양서를 벗어나는 HTTP에 대한 사설 확장을 포함해, 원하는 어떤 프로토콜로든 인바운드 서버들과 통신한다. 그러나, 써드-파티 HTTP 서버들과 상호운용하길 바라는 HTTP-to-HTTP 게이트웨이는 게이트웨이의 인바운드 연결에서 유저 에이전트 요구사항을 준수할 필요가 있다.
 
 A "tunnel" acts as a blind relay between two connections without
 changing the messages. Once active, a tunnel is not considered a
@@ -672,7 +595,7 @@ enforcing account subscription prior to allowing use of non-local
 Internet services, and within corporate firewalls to enforce network
 usage policies.
 
-3.8. Caches
+### 3.8. 캐시
 
 A "cache" is a local store of previous response messages and the
 subsystem that controls its message storage, retrieval, and deletion.
