@@ -535,22 +535,11 @@ HTTP는 한 연결에 걸쳐 "메시지들"을 교환하기 위한 무상태성 
 
 ### 3.6. 오리진 서버
 
-The term "origin server" refers to a program that can originate
-authoritative responses for a given target resource.
+"오리진 서버"라는 용어는 주어진 타겟 리소스에 대해 인가된 응답을 발생시킬 수 있는 프로그램을 말한다.
 
-The most familiar form of origin server are large public websites.
-However, like user agents being equated with browsers, it is easy to
-be misled into thinking that all origin servers are alike. Common
-origin servers also include home automation units, configurable
-networking components, office machines, autonomous robots, news
-feeds, traffic cameras, real-time ad selectors, and video-on-demand
-platforms.
+가장 익숙한 형태의 오리진 서버는 대형 공공 웹사이트들이다. 그러나, 유저 에이전트가 브라우저와 동일시 되는 것 처럼, 모든 오리진 서버들이 같다고 오해하기 쉽다. 일반적인 오리진 서버들은 또한 가정 자동화 유닛, 설정 가능한 네트워킹 컴포넌트, 사무실 기계, 자율 로봇, 뉴스 피드, 교통 카메라, 실시간 광고 선택기, 그리고 비디오-온-디맨드 플랫폼들을 포함한다.
 
-Most HTTP communication consists of a retrieval request (GET) for a
-representation of some resource identified by a URI. In the simplest
-case, this might be accomplished via a single bidirectional
-connection (===) between the user agent (UA) and the origin server
-(O).
+대부분의 HTTP 요청은 URI로 식별되는 어떤 리소스의 표현에 대한 검색 요청(GET)으로 이루어진다. 가장 단순한 경우에, 이는 유저 에이전트(UA)와 오리진 서버(O) 사이 단 하나의 양방향 연결(===)을 통해 이루어질 수 있다.
 
             request   >
        UA ======================================= O
@@ -558,7 +547,7 @@ connection (===) between the user agent (UA) and the origin server
 
                                   Figure 1
 
-3.7. Intermediaries
+### 3.7. 중개자
 
 HTTP enables the use of intermediaries to satisfy requests through a
 chain of connections. There are three common forms of HTTP
