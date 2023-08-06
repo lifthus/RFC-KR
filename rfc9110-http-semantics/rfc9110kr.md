@@ -86,7 +86,7 @@ than English.
 [3.6. 오리진 서버](#36-오리진-서버)
 [3.7. 중개자](#37-중개자)
 [3.8. 캐시](#38-캐시)
-[3.9. 예시 메시지 교환](#39-예시-메시지-교환)
+[3.9. 메시지 교환 예시](#39-메시지-교환-예시)
 
 ###### [4. HTTP의 식별자들](#4-http의-식별자들)
 
@@ -575,42 +575,21 @@ HTTP는 요청을 충족시키기 위해 연결 체인에 걸쳐 중개자들을
 
 ### 3.8. 캐시
 
-A "cache" is a local store of previous response messages and the
-subsystem that controls its message storage, retrieval, and deletion.
-A cache stores cacheable responses in order to reduce the response
-time and network bandwidth consumption on future, equivalent
-requests. Any client or server MAY employ a cache, though a cache
-cannot be used while acting as a tunnel.
+"캐시"는 이전 응답 메시지들의 로컬 저장소이고 그 메시지 저장소, 검색, 그리고 삭제를 제어하는 서브시스템이다. 캐시는 향후, 같은 요청들에서 응답 시간과 네트워크 대역폭 소모를 줄이기 위해 캐시가능한 응답들을 저장한다. 터널로 작동하는 동안은 캐시가 사용될 수 없지만, 어느 클라이언트나 서버든 아마(MAY) 캐시를 도입할 수 있을 것이다.
 
-The effect of a cache is that the request/response chain is shortened
-if one of the participants along the chain has a cached response
-applicable to that request. The following illustrates the resulting
-chain if B has a cached copy of an earlier response from O (via C)
-for a request that has not been cached by UA or A.
+캐시의 효과는 체인 상의 참가자들 중 하나가 어떤 요청에 대해 적용가능한 응답을 캐시해놓았다면 요청/응답 체인이 짧아지는 것이다. 다음은 B가 UA나 A가 캐시하지 않은 요청에 대한 O(C를 통한)로부터의 이전 응답의 캐시 복사본을 가지고 있는 경우의 결과 체인을 묘사한다.
 
-               >             >
-          UA =========== A =========== B - - - - - - C - - - - - - O
-                     <             <
+          >             >
+     UA =========== A =========== B - - - - - - C - - - - - - O
+                    <             <
 
-                                  Figure 3
+                              Figure 3
 
-A response is "cacheable" if a cache is allowed to store a copy of
-the response message for use in answering subsequent requests. Even
-when a response is cacheable, there might be additional constraints
-placed by the client or by the origin server on when that cached
-response can be used for a particular request. HTTP requirements for
-cache behavior and cacheable responses are defined in [CACHING].
+응답은 후속 요청들에 답변하기 위한 용도로 응답 메시지의 복사본이 캐시에 저장되는 것이 허용될 때 "캐시 가능"하다. 응답이 캐시 가능하더라도, 그 캐시된 응답이 특정 요청에 대해 사용될 때에 대한 클라이언트나 오리진 서버의 추가적인 제약이 있을 수 있다. 캐시 동작과 캐시 응답들을 위한 HTTP 사양은 [RFC7234](https://datatracker.ietf.org/doc/html/rfc7234)에 정의돼 있다.
 
-There is a wide variety of architectures and configurations of caches
-deployed across the World Wide Web and inside large organizations.
-These include national hierarchies of proxy caches to save bandwidth
-and reduce latency, content delivery networks that use gateway
-caching to optimize regional and global distribution of popular
-sites, collaborative systems that broadcast or multicast cache
-entries, archives of pre-fetched cache entries for use in off-line or
-high-latency environments, and so on.
+World Wide Web과 여러 대형 조직들 내부에 걸쳐 배치된 아주 다양한 아키텍처와 설정의 캐시들이 존재한다. 여기에는 대역폭을 절약하고 지연시간을 줄이기 위한 프록시 캐시들의 국가 단위 계층들, 인기있는 사이트들의 지역별의 그리고 세계적인 분산을 최적화하기 위해 게이트웨이 캐싱을 사용하는 content delivery network들, 캐시 엔트리들을 브로드캐스트 혹은 멀티캐스트하는 협업 시스템들, 오프라인 혹은 고지연시간 환경에서 사용하기 위해 미리 페치된 캐시 엔트리들의 아카이브들, 등등이 포함된다.
 
-3.9. Example Message Exchange
+### 3.9. 메시지 교환 예시
 
 The following example illustrates a typical HTTP/1.1 message exchange
 for a GET request (Section 9.3.1) on the URI "http://www.example.com/
