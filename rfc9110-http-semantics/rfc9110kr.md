@@ -591,32 +591,30 @@ World Wide Web과 여러 대형 조직들 내부에 걸쳐 배치된 아주 다�
 
 ### 3.9. 메시지 교환 예시
 
-The following example illustrates a typical HTTP/1.1 message exchange
-for a GET request (Section 9.3.1) on the URI "http://www.example.com/
-hello.txt":
+다음의 예시는 "http://www.example.com/hellot.txt" URI에 대한 GET 요청(9.3.1절)을 위한 전형적인 HTTP/1.1 메시지 교환을 묘사한다:
 
-Client request:
+클라이언트 요청:
 
-GET /hello.txt HTTP/1.1
-User-Agent: curl/7.64.1
-Host: www.example.com
-Accept-Language: en, mi
+     GET /hello.txt HTTP/1.1
+     User-Agent: curl/7.64.1
+     Host: www.example.com
+     Accept-Language: en, mi
 
-Server response:
+서버 응답:
 
-HTTP/1.1 200 OK
-Date: Mon, 27 Jul 2009 12:28:53 GMT
-Server: Apache
-Last-Modified: Wed, 22 Jul 2009 19:15:56 GMT
-ETag: "34aa387-d-1568eb00"
-Accept-Ranges: bytes
-Content-Length: 51
-Vary: Accept-Encoding
-Content-Type: text/plain
+     HTTP/1.1 200 OK
+     Date: Mon, 27 Jul 2009 12:28:53 GMT
+     Server: Apache
+     Last-Modified: Wed, 22 Jul 2009 19:15:56 GMT
+     ETag: "34aa387-d-1568eb00"
+     Accept-Ranges: bytes
+     Content-Length: 51
+     Vary: Accept-Encoding
+     Content-Type: text/plain
 
-Hello World! My content includes a trailing CRLF.
+     Hello World! My content includes a trailing CRLF.
 
-4.  Identifiers in HTTP
+## 4. HTTP의 식별자들
 
 Uniform Resource Identifiers (URIs) [URI] are used throughout HTTP as
 the means for identifying resources (Section 3.1).
