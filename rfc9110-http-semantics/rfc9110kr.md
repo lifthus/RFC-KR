@@ -86,7 +86,7 @@ than English.
 [3.6. 오리진 서버](#36-오리진-서버)
 [3.7. 중개자](#37-중개자)
 [3.8. 캐시](#38-캐시)
-[3.9. 예시 메시지 교환](#39-예시-메시지-교환)
+[3.9. 메시지 교환 예시](#39-메시지-교환-예시)
 
 ###### [4. HTTP의 식별자들](#4-http의-식별자들)
 
@@ -537,7 +537,7 @@ HTTP는 한 연결에 걸쳐 "메시지들"을 교환하기 위한 무상태성 
 
 "오리진 서버"라는 용어는 주어진 타겟 리소스에 대해 인가된 응답을 발생시킬 수 있는 프로그램을 말한다.
 
-가장 익숙한 형태의 오리진 서버는 대형 공공 웹사이트들이다. 그러나, 유저 에이전트가 브라우저와 동일시 되는 것 처럼, 모든 오리진 서버들이 같다고 오해하기 쉽다. 일반적인 오리진 서버들은 또한 가정 자동화 유닛, 설정 가능한 네트워킹 컴포넌트, 사무실 기계, 자율 로봇, 뉴스 피드, 교통 카메라, 실시간 광고 선택기, 그리고 비디오-온-디맨드 플랫폼들을 포함한다.
+가장 익숙한 형태의 오리진 서버는 대형 퍼블릭 웹사이트들이다. 그러나, 유저 에이전트가 브라우저와 동일시 되는 것 처럼, 모든 오리진 서버들이 같다고 오해하기 쉽다. 일반적인 오리진 서버들은 또한 가정 자동화 유닛, 설정 가능한 네트워킹 컴포넌트, 사무실 기계, 자율 로봇, 뉴스 피드, 교통 카메라, 실시간 광고 선택기, 그리고 비디오-온-디맨드 플랫폼들을 포함한다.
 
 대부분의 HTTP 요청은 URI로 식별되는 어떤 리소스의 표현에 대한 검색 요청(GET)으로 이루어진다. 가장 단순한 경우에, 이는 유저 에이전트(UA)와 오리진 서버(O) 사이 단 하나의 양방향 연결(===)을 통해 이루어질 수 있다.
 
@@ -567,99 +567,54 @@ HTTP는 요청을 충족시키기 위해 연결 체인에 걸쳐 중개자들을
 
 오리진 서버에 적용되는 모든 HTTP 요구사항들은 게이트웨이의 아웃바운드 통신에도 마찬가지로 적용된다. 게이트웨이는 이 사양서를 벗어나는 HTTP에 대한 사설 확장을 포함해, 원하는 어떤 프로토콜로든 인바운드 서버들과 통신한다. 그러나, 써드-파티 HTTP 서버들과 상호운용하길 바라는 HTTP-to-HTTP 게이트웨이는 게이트웨이의 인바운드 연결에서 유저 에이전트 요구사항을 준수할 필요가 있다.
 
-A "tunnel" acts as a blind relay between two connections without
-changing the messages. Once active, a tunnel is not considered a
-party to the HTTP communication, though the tunnel might have been
-initiated by an HTTP request. A tunnel ceases to exist when both
-ends of the relayed connection are closed. Tunnels are used to
-extend a virtual connection through an intermediary, such as when
-Transport Layer Security (TLS, [TLS13]) is used to establish
-confidential communication through a shared firewall proxy.
+"터널"은 두 연결 사이에서 메시지를 변경하거나 해석하지 않고 그저 중개하는 역할을 수행한다. 일단 활성화되면, 터널은 비록 HTTP 요청에 의해 초기화되었다고 해도 HTTP 통신의 참가자로 간주되지 않는다. 터널은 중개되던 양쪽 연결이 모두 닫히면 사라진다. 터널은 공유된 방화벽 프록시를 통해 비밀 통신울 수립하는데 Transport Layer Security(TLS, [RFC8446](https://datatracker.ietf.org/doc/html/rfc8446))가 사용될 때 처럼, 중개자를 통해 가상 연결을 확장하는데 사용된다.
 
-The above categories for intermediary only consider those acting as
-participants in the HTTP communication. There are also
-intermediaries that can act on lower layers of the network protocol
-stack, filtering or redirecting HTTP traffic without the knowledge or
-permission of message senders. Network intermediaries are
-indistinguishable (at a protocol level) from an on-path attacker,
-often introducing security flaws or interoperability problems due to
-mistakenly violating HTTP semantics.
+위에 나오는 중개자의 범주들은 오직 HTTP 통신의 참가자들만 고려한다. 메시지 발신자에 대한 지식이나 허가 없이 HTTP 트래픽을 필터링하거나 리다이렉션하는, 네트워크 프로토콜 스택의 더 낮은 계층에서 작동하는 중개자들 또한 존재한다. 네트워크 중개자들은 경로상의 공격자와 구분할 수 없는데(프로토콜 레벨에서), 종종 의도치 않게 HTTP 의미체계를 위반함으로써 보안 결함이나 상호운용 문제들 야기하기도 한다.
 
-For example, an "interception proxy" [RFC3040] (also commonly known
-as a "transparent proxy" [RFC1919]) differs from an HTTP proxy
-because it is not chosen by the client. Instead, an interception
-proxy filters or redirects outgoing TCP port 80 packets (and
-occasionally other common port traffic). Interception proxies are
-commonly found on public network access points, as a means of
-enforcing account subscription prior to allowing use of non-local
-Internet services, and within corporate firewalls to enforce network
-usage policies.
+예를 들어, "인터셉션 프록시"[[RFC3040](https://datatracker.ietf.org/doc/html/rfc3040)](흔히 "투명 프록시"[[RFC1919](https://datatracker.ietf.org/doc/html/rfc1919)]라고 알려져 있기도 한)는 클라이언트에게 선택된 것이 아니기 때문에 HTTP 프록시와는 다르다. 대신에, 인터셉션 프록시는 밖으로 나가는 TCP 80 포트 패킷들(그리고 가끔 이 외의 일반적인 포트 트래픽)을 필터링하거나 리다이렉트 한다. 인터셉션 프록시들은 비-로컬 인터넷 서비스 사용을 허용하기 전에 계정 구독을 강제하기 위해, 그리고 회사 방화벽과 함께 네트워크 사용 정책을 강제하기 위한 수단으로써, 흔히 퍼블릭 네트워크 액세스 포인트에서 찾을 수 있다.
 
 ### 3.8. 캐시
 
-A "cache" is a local store of previous response messages and the
-subsystem that controls its message storage, retrieval, and deletion.
-A cache stores cacheable responses in order to reduce the response
-time and network bandwidth consumption on future, equivalent
-requests. Any client or server MAY employ a cache, though a cache
-cannot be used while acting as a tunnel.
+"캐시"는 이전 응답 메시지들의 로컬 저장소이고 그 메시지 저장소, 검색, 그리고 삭제를 제어하는 서브시스템이다. 캐시는 향후, 같은 요청들에서 응답 시간과 네트워크 대역폭 소모를 줄이기 위해 캐시가능한 응답들을 저장한다. 터널로 작동하는 동안은 캐시가 사용될 수 없지만, 어느 클라이언트나 서버든 아마(MAY) 캐시를 도입할 수 있을 것이다.
 
-The effect of a cache is that the request/response chain is shortened
-if one of the participants along the chain has a cached response
-applicable to that request. The following illustrates the resulting
-chain if B has a cached copy of an earlier response from O (via C)
-for a request that has not been cached by UA or A.
+캐시의 효과는 체인 상의 참가자들 중 하나가 어떤 요청에 대해 적용가능한 응답을 캐시해놓았다면 요청/응답 체인이 짧아지는 것이다. 다음은 B가 UA나 A가 캐시하지 않은 요청에 대한 O(C를 통한)로부터의 이전 응답의 캐시 복사본을 가지고 있는 경우의 결과 체인을 묘사한다.
 
-               >             >
-          UA =========== A =========== B - - - - - - C - - - - - - O
-                     <             <
+          >             >
+     UA =========== A =========== B - - - - - - C - - - - - - O
+                    <             <
 
-                                  Figure 3
+                              Figure 3
 
-A response is "cacheable" if a cache is allowed to store a copy of
-the response message for use in answering subsequent requests. Even
-when a response is cacheable, there might be additional constraints
-placed by the client or by the origin server on when that cached
-response can be used for a particular request. HTTP requirements for
-cache behavior and cacheable responses are defined in [CACHING].
+응답은 후속 요청들에 답변하기 위한 용도로 응답 메시지의 복사본이 캐시에 저장되는 것이 허용될 때 "캐시 가능"하다. 응답이 캐시 가능하더라도, 그 캐시된 응답이 특정 요청에 대해 사용될 때에 대한 클라이언트나 오리진 서버의 추가적인 제약이 있을 수 있다. 캐시 동작과 캐시 응답들을 위한 HTTP 사양은 [RFC7234](https://datatracker.ietf.org/doc/html/rfc7234)에 정의돼 있다.
 
-There is a wide variety of architectures and configurations of caches
-deployed across the World Wide Web and inside large organizations.
-These include national hierarchies of proxy caches to save bandwidth
-and reduce latency, content delivery networks that use gateway
-caching to optimize regional and global distribution of popular
-sites, collaborative systems that broadcast or multicast cache
-entries, archives of pre-fetched cache entries for use in off-line or
-high-latency environments, and so on.
+World Wide Web과 여러 대형 조직들 내부에 걸쳐 배치된 아주 다양한 아키텍처와 설정의 캐시들이 존재한다. 여기에는 대역폭을 절약하고 지연시간을 줄이기 위한 프록시 캐시들의 국가 단위 계층들, 인기있는 사이트들의 지역별의 그리고 세계적인 분산을 최적화하기 위해 게이트웨이 캐싱을 사용하는 content delivery network들, 캐시 엔트리들을 브로드캐스트 혹은 멀티캐스트하는 협업 시스템들, 오프라인 혹은 고지연시간 환경에서 사용하기 위해 미리 페치된 캐시 엔트리들의 아카이브들, 등등이 포함된다.
 
-3.9. Example Message Exchange
+### 3.9. 메시지 교환 예시
 
-The following example illustrates a typical HTTP/1.1 message exchange
-for a GET request (Section 9.3.1) on the URI "http://www.example.com/
-hello.txt":
+다음의 예시는 "http://www.example.com/hellot.txt" URI에 대한 GET 요청(9.3.1절)을 위한 전형적인 HTTP/1.1 메시지 교환을 묘사한다:
 
-Client request:
+클라이언트 요청:
 
-GET /hello.txt HTTP/1.1
-User-Agent: curl/7.64.1
-Host: www.example.com
-Accept-Language: en, mi
+     GET /hello.txt HTTP/1.1
+     User-Agent: curl/7.64.1
+     Host: www.example.com
+     Accept-Language: en, mi
 
-Server response:
+서버 응답:
 
-HTTP/1.1 200 OK
-Date: Mon, 27 Jul 2009 12:28:53 GMT
-Server: Apache
-Last-Modified: Wed, 22 Jul 2009 19:15:56 GMT
-ETag: "34aa387-d-1568eb00"
-Accept-Ranges: bytes
-Content-Length: 51
-Vary: Accept-Encoding
-Content-Type: text/plain
+     HTTP/1.1 200 OK
+     Date: Mon, 27 Jul 2009 12:28:53 GMT
+     Server: Apache
+     Last-Modified: Wed, 22 Jul 2009 19:15:56 GMT
+     ETag: "34aa387-d-1568eb00"
+     Accept-Ranges: bytes
+     Content-Length: 51
+     Vary: Accept-Encoding
+     Content-Type: text/plain
 
-Hello World! My content includes a trailing CRLF.
+     Hello World! My content includes a trailing CRLF.
 
-4.  Identifiers in HTTP
+## 4. HTTP의 식별자들
 
 Uniform Resource Identifiers (URIs) [URI] are used throughout HTTP as
 the means for identifying resources (Section 3.1).
