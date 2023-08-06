@@ -537,7 +537,7 @@ HTTP는 한 연결에 걸쳐 "메시지들"을 교환하기 위한 무상태성 
 
 "오리진 서버"라는 용어는 주어진 타겟 리소스에 대해 인가된 응답을 발생시킬 수 있는 프로그램을 말한다.
 
-가장 익숙한 형태의 오리진 서버는 대형 공공 웹사이트들이다. 그러나, 유저 에이전트가 브라우저와 동일시 되는 것 처럼, 모든 오리진 서버들이 같다고 오해하기 쉽다. 일반적인 오리진 서버들은 또한 가정 자동화 유닛, 설정 가능한 네트워킹 컴포넌트, 사무실 기계, 자율 로봇, 뉴스 피드, 교통 카메라, 실시간 광고 선택기, 그리고 비디오-온-디맨드 플랫폼들을 포함한다.
+가장 익숙한 형태의 오리진 서버는 대형 퍼블릭 웹사이트들이다. 그러나, 유저 에이전트가 브라우저와 동일시 되는 것 처럼, 모든 오리진 서버들이 같다고 오해하기 쉽다. 일반적인 오리진 서버들은 또한 가정 자동화 유닛, 설정 가능한 네트워킹 컴포넌트, 사무실 기계, 자율 로봇, 뉴스 피드, 교통 카메라, 실시간 광고 선택기, 그리고 비디오-온-디맨드 플랫폼들을 포함한다.
 
 대부분의 HTTP 요청은 URI로 식별되는 어떤 리소스의 표현에 대한 검색 요청(GET)으로 이루어진다. 가장 단순한 경우에, 이는 유저 에이전트(UA)와 오리진 서버(O) 사이 단 하나의 양방향 연결(===)을 통해 이루어질 수 있다.
 
@@ -567,33 +567,11 @@ HTTP는 요청을 충족시키기 위해 연결 체인에 걸쳐 중개자들을
 
 오리진 서버에 적용되는 모든 HTTP 요구사항들은 게이트웨이의 아웃바운드 통신에도 마찬가지로 적용된다. 게이트웨이는 이 사양서를 벗어나는 HTTP에 대한 사설 확장을 포함해, 원하는 어떤 프로토콜로든 인바운드 서버들과 통신한다. 그러나, 써드-파티 HTTP 서버들과 상호운용하길 바라는 HTTP-to-HTTP 게이트웨이는 게이트웨이의 인바운드 연결에서 유저 에이전트 요구사항을 준수할 필요가 있다.
 
-A "tunnel" acts as a blind relay between two connections without
-changing the messages. Once active, a tunnel is not considered a
-party to the HTTP communication, though the tunnel might have been
-initiated by an HTTP request. A tunnel ceases to exist when both
-ends of the relayed connection are closed. Tunnels are used to
-extend a virtual connection through an intermediary, such as when
-Transport Layer Security (TLS, [TLS13]) is used to establish
-confidential communication through a shared firewall proxy.
+"터널"은 두 연결 사이에서 메시지를 변경하거나 해석하지 않고 그저 중개하는 역할을 수행한다. 일단 활성화되면, 터널은 비록 HTTP 요청에 의해 초기화되었다고 해도 HTTP 통신의 참가자로 간주되지 않는다. 터널은 중개되던 양쪽 연결이 모두 닫히면 사라진다. 터널은 공유된 방화벽 프록시를 통해 비밀 통신울 수립하는데 Transport Layer Security(TLS, [RFC8446](https://datatracker.ietf.org/doc/html/rfc8446))가 사용될 때 처럼, 중개자를 통해 가상 연결을 확장하는데 사용된다.
 
-The above categories for intermediary only consider those acting as
-participants in the HTTP communication. There are also
-intermediaries that can act on lower layers of the network protocol
-stack, filtering or redirecting HTTP traffic without the knowledge or
-permission of message senders. Network intermediaries are
-indistinguishable (at a protocol level) from an on-path attacker,
-often introducing security flaws or interoperability problems due to
-mistakenly violating HTTP semantics.
+위에 나오는 중개자의 범주들은 오직 HTTP 통신의 참가자들만 고려한다. 메시지 발신자에 대한 지식이나 허가 없이 HTTP 트래픽을 필터링하거나 리다이렉션하는, 네트워크 프로토콜 스택의 더 낮은 계층에서 작동하는 중개자들 또한 존재한다. 네트워크 중개자들은 경로상의 공격자와 구분할 수 없는데(프로토콜 레벨에서), 종종 의도치 않게 HTTP 의미체계를 위반함으로써 보안 결함이나 상호운용 문제들 야기하기도 한다.
 
-For example, an "interception proxy" [RFC3040] (also commonly known
-as a "transparent proxy" [RFC1919]) differs from an HTTP proxy
-because it is not chosen by the client. Instead, an interception
-proxy filters or redirects outgoing TCP port 80 packets (and
-occasionally other common port traffic). Interception proxies are
-commonly found on public network access points, as a means of
-enforcing account subscription prior to allowing use of non-local
-Internet services, and within corporate firewalls to enforce network
-usage policies.
+예를 들어, "인터셉션 프록시"[[RFC3040](https://datatracker.ietf.org/doc/html/rfc3040)](흔히 "투명 프록시"[[RFC1919](https://datatracker.ietf.org/doc/html/rfc1919)]라고 알려져 있기도 한)는 클라이언트에게 선택된 것이 아니기 때문에 HTTP 프록시와는 다르다. 대신에, 인터셉션 프록시는 밖으로 나가는 TCP 80 포트 패킷들(그리고 가끔 이 외의 일반적인 포트 트래픽)을 필터링하거나 리다이렉트 한다. 인터셉션 프록시들은 비-로컬 인터넷 서비스 사용을 허용하기 전에 계정 구독을 강제하기 위해, 그리고 회사 방화벽과 함께 네트워크 사용 정책을 강제하기 위한 수단으로써, 흔히 퍼블릭 네트워크 액세스 포인트에서 찾을 수 있다.
 
 ### 3.8. 캐시
 
