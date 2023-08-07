@@ -91,18 +91,21 @@ than English.
 ###### [4. HTTP의 식별자들](#4-http의-식별자들)
 
 [4.1. URI 레퍼런스](#41-uri-레퍼런스)
-4.2. HTTP-Related URI Schemes
-4.2.1. http URI Scheme
-4.2.2. https URI Scheme
-4.2.3. http(s) Normalization and Comparison
-4.2.4. Deprecation of userinfo in http(s) URIs
-4.2.5. http(s) References with Fragment Identifiers
-4.3. Authoritative Access
-4.3.1. URI Origin
-4.3.2. http Origins
-4.3.3. https Origins
-4.3.4. https Certificate Verification
-4.3.5. IP-ID Reference Identity 5. Fields
+[4.2. HTTP와 연관된 URI 체계들](#42-http와-연관된-uri-체계들)
+ㄴ [4.2.1. http URI 체계](#421)
+ㄴ [4.2.2. https URI 체계](#422)
+ㄴ [4.2.3. http(s) 정규화와 비교](#423)
+ㄴ [4.2.4. http(s) URI에서의 userinfo 지원 중단](#424)
+ㄴ [4.2.5. 프래그먼트 식별자들과 http(s) 레퍼런스들](#425)
+[4.3. 권한있는 접근](#43-권한있는-접근)
+ㄴ [4.3.1. URI 오리진](#431)
+ㄴ [4.3.2. http 오리진들](#432)
+ㄴ [4.3.3. https 오리진들](#433)
+ㄴ [4.3.4. https 자격 증명](#434)
+ㄴ [4.3.5. IP-ID 레퍼런스 신원](#435)
+
+###### [5. 필드](#5-필드)
+
 5.1. Field Names
 5.2. Field Lines and Combined Field Value
 5.3. Field Order
@@ -641,7 +644,7 @@ URI 레퍼런스를 허용하는 HTTP의 각 프로토콜 요소는 자체적인
 
 모든 발신자들과 수신자들을, 최소한, 프로토콜 요소들에서 8000 옥텟 이상의 길이를 지원하도록 권장된다(RECOMMENDED). 이는 어떤 구조들과 on-wire 표현들(예를 들어, HTTP/1.1의 요청 라인)이 어떤 경우들에서는 반드시 더 클 것이라는 의미를 내포한다.
 
-4.2. HTTP-Related URI Schemes
+### 4.2. HTTP와 연관된 URI 체계들
 
 IANA maintains the registry of URI Schemes [BCP35] at
 <https://www.iana.org/assignments/uri-schemes/>. Although requests
