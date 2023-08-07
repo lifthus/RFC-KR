@@ -618,48 +618,28 @@ World Wide Web과 여러 대형 조직들 내부에 걸쳐 배치된 아주 다�
 
 Uniform Resource Identifiers(URI, [RFC3986](https://datatracker.ietf.org/doc/html/rfc3986))는 HTTP 전반에 걸쳐 리소스를 식별하는 수단으로 사용된다 (3.1절).
 
-4.1. URI References
-
 ### 4.1 URI 레퍼런스
 
-URI references are used to target requests, indicate redirects, and
-define relationships.
+URI 레퍼런스는 요청들을 타게팅하는데, 리다이렉트를 나타내는데, 그리고 관계들을 정의하는데 사용된다.
 
-The definitions of "URI-reference", "absolute-URI", "relative-part",
-"authority", "port", "host", "path-abempty", "segment", and "query"
-are adopted from the URI generic syntax. An "absolute-path" rule is
-defined for protocol elements that can contain a non-empty path
-component. (This rule differs slightly from the path-abempty rule of
-RFC 3986, which allows for an empty path, and path-absolute rule,
-which does not allow paths that begin with "//".) A "partial-URI"
-rule is defined for protocol elements that can contain a relative URI
-but not a fragment component.
+"URI-레퍼런스", "절대-URI", "상대-파트", "권한", "포트", "호스트", "path-abempty", "세그먼트", 그리고 "쿼리"의 정의들은 일반 URI 구문으로부터 채택됐다. "절대-경로" 규칙은 비어있지 않은 경로 구성요소를 포함할 수 있는 프로토콜 요소들을 위해 정의됐다. (이 규칙은 RFC 3986의 path-abempty 규칙과 살짝 다른데, 그 규칙은 빈 경로를 허용하고, "//"로 시작하는 경로를 허용하지 않는 절대 경로 규칙도 허용한다.) "부분 URI" 규칙은 상대 경로를 포함할 수 있지만 프레그먼트 구성요소는 포함할 수 없는 프로토콜 요소들을 위해 정의됐다.
 
-     URI-reference = <URI-reference, see [URI], Section 4.1>
-     absolute-URI  = <absolute-URI, see [URI], Section 4.3>
-     relative-part = <relative-part, see [URI], Section 4.2>
-     authority     = <authority, see [URI], Section 3.2>
-     uri-host      = <host, see [URI], Section 3.2.2>
-     port          = <port, see [URI], Section 3.2.3>
-     path-abempty  = <path-abempty, see [URI], Section 3.3>
-     segment       = <segment, see [URI], Section 3.3>
-     query         = <query, see [URI], Section 3.4>
+     URI-reference = <URI-레퍼런스, RFC 3976 4.1절 참조.>
+     absolute-URI  = <절대-URI, RFC 3976 4.3절 참조>
+     relative-part = <상대-경로, RFC 3976 4.2절 참조>
+     authority     = <권한, RFC 3976 3.2절 참조>
+     uri-host      = <호스트, RFC 3976 3.2.2절 참조>
+     port          = <포트, RFC 3976 3.2.3절 참조>
+     path-abempty  = <path-abempty, RFC 3976 3.3절 참조>
+     segment       = <세그먼트, RFC 3976 3.3절 참조>
+     query         = <쿼리, RFC 3976 3.4절 참조>
 
      absolute-path = 1*( "/" segment )
      partial-URI   = relative-part [ "?" query ]
 
-Each protocol element in HTTP that allows a URI reference will
-indicate in its ABNF production whether the element allows any form
-of reference (URI-reference), only a URI in absolute form (absolute-
-URI), only the path and optional query components (partial-URI), or
-some combination of the above. Unless otherwise indicated, URI
-references are parsed relative to the target URI (Section 7.1).
+URI 레퍼런스를 허용하는 HTTP의 각 프로토콜 요소는 자체적인 ABNF 프로덕션 안에서 엘리먼트가 레퍼런스(URI-레퍼런스)의 어떤 형태라도 허용하는지, 절대적 형태(절대-URI)의 URI만 허용하는지, 경로와 선택적 쿼리 구성요소들(partial-URI)만 허용하는지, 혹은 위의 것들의 어떤 조합을 허용하는지 나타낼 것이다. 만약 그렇지 않으면, URI 레퍼런스들은 타겟 URI에 대해 상대적으로 파싱된다(7.1절).
 
-It is RECOMMENDED that all senders and recipients support, at a
-minimum, URIs with lengths of 8000 octets in protocol elements. Note
-that this implies some structures and on-wire representations (for
-example, the request line in HTTP/1.1) will necessarily be larger in
-some cases.
+모든 발신자들과 수신자들을, 최소한, 프로토콜 요소들에서 8000 옥텟 이상의 길이를 지원하도록 권장된다(RECOMMENDED). 이는 어떤 구조들과 on-wire 표현들(예를 들어, HTTP/1.1의 요청 라인)이 어떤 경우들에서는 반드시 더 클 것이라는 의미를 내포한다.
 
 4.2. HTTP-Related URI Schemes
 
