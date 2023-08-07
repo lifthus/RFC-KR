@@ -90,7 +90,7 @@ than English.
 
 ###### [4. HTTP의 식별자들](#4-http의-식별자들)
 
-4.1. URI References
+[4.1. URI 레퍼런스](#41-uri-레퍼런스)
 4.2. HTTP-Related URI Schemes
 4.2.1. http URI Scheme
 4.2.2. https URI Scheme
@@ -616,10 +616,11 @@ World Wide Web과 여러 대형 조직들 내부에 걸쳐 배치된 아주 다�
 
 ## 4. HTTP의 식별자들
 
-Uniform Resource Identifiers (URIs) [URI] are used throughout HTTP as
-the means for identifying resources (Section 3.1).
+Uniform Resource Identifiers(URI, [RFC3986](https://datatracker.ietf.org/doc/html/rfc3986))는 HTTP 전반에 걸쳐 리소스를 식별하는 수단으로 사용된다 (3.1절).
 
 4.1. URI References
+
+### 4.1 URI 레퍼런스
 
 URI references are used to target requests, indicate redirects, and
 define relationships.
