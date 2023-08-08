@@ -92,11 +92,11 @@ than English.
 
 [4.1. URI 레퍼런스](#41-uri-레퍼런스)
 [4.2. HTTP와 연관된 URI 체계들](#42-http와-연관된-uri-체계들)
-ㄴ [4.2.1. http URI 체계](#421)
-ㄴ [4.2.2. https URI 체계](#422)
-ㄴ [4.2.3. http(s) 정규화와 비교](#423)
-ㄴ [4.2.4. http(s) URI에서의 userinfo 지원 중단](#424)
-ㄴ [4.2.5. 프래그먼트 식별자들과 http(s) 레퍼런스들](#425)
+ㄴ [4.2.1. http URI 체계](#421-http-uri-체계)
+ㄴ [4.2.2. https URI 체계](#422-https-uri-체계)
+ㄴ [4.2.3. http(s) 정규화와 비교](<#423-http(s)-정규화와-비교>)
+ㄴ [4.2.4. http(s) URI에서의 userinfo 지원 중단](<#424-http(s)-uri에서의-userinfo-지원-중단>)
+ㄴ [4.2.5. 프래그먼트 식별자들과 http(s) 레퍼런스들](<#425-프래그먼트-식별자들과-http(s)-레퍼런스들>)
 [4.3. 권한있는 접근](#43-권한있는-접근)
 ㄴ [4.3.1. URI 오리진](#431)
 ㄴ [4.3.2. http 오리진들](#432)
@@ -651,13 +651,15 @@ IANA maintains the registry of URI Schemes [BCP35] at
 might target any URI scheme, the following schemes are inherent to
 HTTP servers:
 
-+============+====================================+=========+
-| URI Scheme | Description | Section |
-+============+====================================+=========+
-| http | Hypertext Transfer Protocol | 4.2.1 |
-+------------+------------------------------------+---------+
-| https | Hypertext Transfer Protocol Secure | 4.2.2 |
-+------------+------------------------------------+---------+
+IANA는 URI 체계의 등록[[BCP35](https://www.rfc-editor.org/info/bcp35)]을 유지 관리한다.
+
+     +============+====================================+=========+
+     | URI Scheme | Description | Section |
+     +============+====================================+=========+
+     | http | Hypertext Transfer Protocol | 4.2.1 |
+     +------------+------------------------------------+---------+
+     | https | Hypertext Transfer Protocol Secure | 4.2.2 |
+     +------------+------------------------------------+---------+
 
                               Table 2
 
@@ -669,7 +671,7 @@ identifier to a resource. The delegated nature of registered names
 and IP addresses creates a federated namespace whether or not an HTTP
 server is present.
 
-4.2.1. http URI Scheme
+##### 4.2.1. http URI 체계
 
 The "http" URI scheme is hereby defined for minting identifiers
 within the hierarchical namespace governed by a potential HTTP origin
