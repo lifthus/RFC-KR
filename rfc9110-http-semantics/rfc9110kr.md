@@ -92,11 +92,11 @@ than English.
 
 [4.1. URI 레퍼런스](#41-uri-레퍼런스)
 [4.2. HTTP와 연관된 URI 체계들](#42-http와-연관된-uri-체계들)
-ㄴ [4.2.1. http URI 체계](#421)
-ㄴ [4.2.2. https URI 체계](#422)
-ㄴ [4.2.3. http(s) 정규화와 비교](#423)
-ㄴ [4.2.4. http(s) URI에서의 userinfo 지원 중단](#424)
-ㄴ [4.2.5. 프래그먼트 식별자들과 http(s) 레퍼런스들](#425)
+ㄴ [4.2.1. http URI 체계](#421-http-uri-체계)
+ㄴ [4.2.2. https URI 체계](#422-https-uri-체계)
+ㄴ [4.2.3. http(s) 정규화와 비교](#423-https-정규화와-비교)
+ㄴ [4.2.4. http(s) URI에서의 userinfo 지원 중단](#424-https-uri에서의-userinfo-지원-중단)
+ㄴ [4.2.5. 프래그먼트 식별자들과 http(s) 레퍼런스들](#425-프래그먼트-식별자들과-https-레퍼런스들)
 [4.3. 권한있는 접근](#43-권한있는-접근)
 ㄴ [4.3.1. URI 오리진](#431)
 ㄴ [4.3.2. http 오리진들](#432)
@@ -651,48 +651,33 @@ IANA maintains the registry of URI Schemes [BCP35] at
 might target any URI scheme, the following schemes are inherent to
 HTTP servers:
 
-+============+====================================+=========+
-| URI Scheme | Description | Section |
-+============+====================================+=========+
-| http | Hypertext Transfer Protocol | 4.2.1 |
-+------------+------------------------------------+---------+
-| https | Hypertext Transfer Protocol Secure | 4.2.2 |
-+------------+------------------------------------+---------+
+IANA는 <<https://www.iana.org/assignments/uri-schemes/>>에서 URI 체계 등록[[BCP35](https://www.rfc-editor.org/info/bcp35)]을 유지 관리한다. 비록 어느 URI 체계든 요청이 목표로 삼을 수 있지만, 다음의 체계들은 HTTP 서버에게는 내재적이다.
+
+     +============+====================================+=========+
+     | URI Scheme | Description | Section |
+     +============+====================================+=========+
+     | http | Hypertext Transfer Protocol | 4.2.1 |
+     +------------+------------------------------------+---------+
+     | https | Hypertext Transfer Protocol Secure | 4.2.2 |
+     +------------+------------------------------------+---------+
 
                               Table 2
 
-Note that the presence of an "http" or "https" URI does not imply
-that there is always an HTTP server at the identified origin
-listening for connections. Anyone can mint a URI, whether or not a
-server exists and whether or not that server currently maps that
-identifier to a resource. The delegated nature of registered names
-and IP addresses creates a federated namespace whether or not an HTTP
-server is present.
+"http"나 "https" URI의 존재가 연결을 기다리고 있는 식별된 오리진에 항상 HTTP 서버가 있다는 것을 의미하지는 않는다는 것을 명심하라. 누구든 URI를 만들 수 있으며, 서버의 존재유무와 서버가 현재 해당 식별자를 리소스로 매핑하고 있는지 여부와는 상관없다. 등록된 이름과 IP 주소들의 위임된 성질은 HTTP 서버의 존재와 관계없이 연합된 네임스페이스를 만들어낸다.
 
-4.2.1. http URI Scheme
+#### 4.2.1. http URI 체계
 
-The "http" URI scheme is hereby defined for minting identifiers
-within the hierarchical namespace governed by a potential HTTP origin
-server listening for TCP ([TCP]) connections on a given port.
+"http" URI 체계는 이로써 주어진 포트에서 TCP([RFC9293, TCP](https://www.rfc-editor.org/rfc/rfc9293)) 연결을 대기하는 잠재적인 HTTP 오리진 서버가 관리하는 계층적 네임스페이스 내에서 식별자를 만들어내기 위해 정의된다.
 
      http-URI = "http" "://" authority path-abempty [ "?" query ]
 
-The origin server for an "http" URI is identified by the authority
-component, which includes a host identifier ([URI], Section 3.2.2)
-and optional port number ([URI], Section 3.2.3). If the port
-subcomponent is empty or not given, TCP port 80 (the reserved port
-for WWW services) is the default. The origin determines who has the
-right to respond authoritatively to requests that target the
-identified resource, as defined in Section 4.3.2.
+"http" URI의 오리진 서버는 권한 요소에 의해 식별되는데, 이것은 호스트 식별자([RFC3986](https://datatracker.ietf.org/doc/html/rfc3986), 3.2.2절)와 선택적 포트 넘버([RFC3986](https://datatracker.ietf.org/doc/html/rfc3986), 3.2.2절)를 포함한다. 만약 포트 하위구성요소가 비었거나 주어지지 않으면, TCP 80 포트(WWW 서비스들에 예약된 것)가 기본이다. 오리진은 4.3.2절에 정의된 대로, 식별된 리소스를 목표로 하는 요청들에 대해 누가 정식으로 응답할 권리를 가지는지 결정한다.
 
-A sender MUST NOT generate an "http" URI with an empty host
-identifier. A recipient that processes such a URI reference MUST
-reject it as invalid.
+발신자는 절대(MUST NOT) 호스트 식별자 부분이 비어있는 "http" URI를 생성해서는 안된다. 그런 URI 레퍼런스를 처리하는 수신자는 반드시(MUST) 무효로 거부해야 한다.
 
-The hierarchical path component and optional query component identify
-the target resource within that origin server's namespace.
+계층적 경로 구성요소와 선택적 쿼리 구성요소는 해당 오리진 서버의 네임스페이스 내에서 타겟 리소스를 식별한다.
 
-4.2.2. https URI Scheme
+#### 4.2.2. https URI 체계
 
 The "https" URI scheme is hereby defined for minting identifiers
 within the hierarchical namespace governed by a potential origin
@@ -737,7 +722,7 @@ domains. Such extensions ought to be designed with great care to
 prevent information obtained from a secured connection being
 inadvertently exchanged within an unsecured context.
 
-4.2.3. http(s) Normalization and Comparison
+#### 4.2.3. http(s) 정규화와 비교
 
 URIs with an "http" or "https" scheme are normalized and compared
 according to the methods defined in Section 6 of [URI], using the
@@ -778,7 +763,7 @@ component MAY perform normalization. As a result, distinct resources
 SHOULD NOT be identified by HTTP URIs that are equivalent after
 normalization (using any method defined in Section 6.2 of [URI]).
 
-4.2.4. Deprecation of userinfo in http(s) URIs
+#### 4.2.4. http(s) URI에서의 userinfo 지원 중단
 
 The URI generic syntax for authority also includes a userinfo
 subcomponent ([URI], Section 3.2.1) for including user authentication
@@ -799,7 +784,7 @@ an untrusted source, a recipient SHOULD parse for userinfo and treat
 its presence as an error; it is likely being used to obscure the
 authority for the sake of phishing attacks.
 
-4.2.5. http(s) References with Fragment Identifiers
+### 4.2.5. 프래그먼트 식별자들과 http(s) 레퍼런스들
 
 Fragment identifiers allow for indirect identification of a secondary
 resource, independent of the URI scheme, as defined in Section 3.5 of
