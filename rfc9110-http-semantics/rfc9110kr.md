@@ -345,7 +345,10 @@ Resources 9. Methods
 18.7. Range Unit Registration
 18.8. Media Type Registration
 18.9. Port Registration
-18.10. Upgrade Token Registration 19. References
+18.10. Upgrade Token Registration
+
+###### [19. 레퍼런스](#19-레퍼런스)
+
 19.1. Normative References
 19.2. Informative References
 Appendix A. Collected ABNF
@@ -671,7 +674,7 @@ IANA는 <<https://www.iana.org/assignments/uri-schemes/>>에서 URI 체계 등�
 
      http-URI = "http" "://" authority path-abempty [ "?" query ]
 
-"http" URI의 오리진 서버는 권한 요소에 의해 식별되는데, 이것은 호스트 식별자([RFC3986](https://datatracker.ietf.org/doc/html/rfc3986), 3.2.2절)와 선택적 포트 넘버([RFC3986](https://datatracker.ietf.org/doc/html/rfc3986), 3.2.2절)를 포함한다. 만약 포트 하위구성요소가 비었거나 주어지지 않으면, TCP 80 포트(WWW 서비스들에 예약된 것)가 기본이다. 오리진은 4.3.2절에 정의된 대로, 식별된 리소스를 목표로 하는 요청들에 대해 누가 정식으로 응답할 권리를 가지는지 결정한다.
+"http" URI의 오리진 서버는 권한 요소에 의해 식별되는데, 이것은 호스트 식별자([[URI](https://www.rfc-editor.org/info/rfc3986)], 3.2.2절)와 선택적 포트 넘버([[URI](https://www.rfc-editor.org/info/rfc3986)], 3.2.3절)를 포함한다. 만약 포트 하위구성요소가 비었거나 주어지지 않으면, TCP 80 포트(WWW 서비스들에 예약된 것)가 기본이다. 오리진은 4.3.2절에 정의된 대로, 식별된 리소스를 목표로 하는 요청들에 대해 누가 정식으로 응답할 권리를 가지는지 결정한다.
 
 발신자는 절대(MUST NOT) 호스트 식별자 부분이 비어있는 "http" URI를 생성해서는 안된다. 그런 URI 레퍼런스를 처리하는 수신자는 반드시(MUST) 무효로 거부해야 한다.
 
@@ -679,48 +682,19 @@ IANA는 <<https://www.iana.org/assignments/uri-schemes/>>에서 URI 체계 등�
 
 #### 4.2.2. https URI 체계
 
-The "https" URI scheme is hereby defined for minting identifiers
-within the hierarchical namespace governed by a potential origin
-server listening for TCP connections on a given port and capable of
-establishing a TLS ([TLS13]) connection that has been secured for
-HTTP communication. In this context, "secured" specifically means
-that the server has been authenticated as acting on behalf of the
-identified authority and all HTTP communication with that server has
-confidentiality and integrity protection that is acceptable to both
-client and server.
+"https" URI 체계는 이로써 주어진 포트에서 TCP 연결을 대기하고 있으면서 HTTP 통신의 보안을 설정하는 TLS([[TLS13](https://www.rfc-editor.org/info/rfc8446)) 연결을 수립할 수 있는 잠재적인 오리진 서버에 의해 관리되는 계층적 네임스페이스 내에서 식별자를 만들어내기 위해 정의된다. 이 문맥에서, "보안을 설정"한다는 말은 구체적으로 서버가 식별된 권한을 대신하여 작동하도록 인증됐고 해당 서버의 모든 HTTP 통신이 비밀성과 클라이언트 서버 양쪽에서 받아들일 수 있는 무결성 보호를 가진다는 말이다.
 
      https-URI = "https" "://" authority path-abempty [ "?" query ]
 
-The origin server for an "https" URI is identified by the authority
-component, which includes a host identifier ([URI], Section 3.2.2)
-and optional port number ([URI], Section 3.2.3). If the port
-subcomponent is empty or not given, TCP port 443 (the reserved port
-for HTTP over TLS) is the default. The origin determines who has the
-right to respond authoritatively to requests that target the
-identified resource, as defined in Section 4.3.3.
+"https" URI의 오리진 서버는 호스트 식별자([[URI](https://www.rfc-editor.org/info/rfc3986)], 3.2.2절)와 선택적 포트 넘버([[URI](https://www.rfc-editor.org/info/rfc3986)], 3.2.3절)를 포함하는, 권한 요소에 의해 식별된다. 만약 포트 하위 요소가 비었거나 주어지지 않으면, TCP 443 포트(HTTP over TLS를 위해 예약된 포트)가 기본이다. 오리진은 4.3.3절에 정의된대로, 식별된 리소스를 목표로 하는 요청들에 대해 누가 정식으로 응답할 권리를 가지는지 결정한다.
 
-A sender MUST NOT generate an "https" URI with an empty host
-identifier. A recipient that processes such a URI reference MUST
-reject it as invalid.
+발신자는 절대(MUST NOT) 호스트 식별자 부분이 빈 "https" URI를 생성해서는 안된다. 그러한 URI 레퍼런스를 처리하는 수신자는 반드시(MUST) 무효로 거부해야 한다.
 
-The hierarchical path component and optional query component identify
-the target resource within that origin server's namespace.
+계층적 경로 요소와 선택적 쿼리 요소는 해당 오리진 서버의 네임스페이스 내에서 타겟 리소스를 식별한다.
 
-A client MUST ensure that its HTTP requests for an "https" resource
-are secured, prior to being communicated, and that it only accepts
-secured responses to those requests. Note that the definition of
-what cryptographic mechanisms are acceptable to client and server are
-usually negotiated and can change over time.
+클라이언트는 반드시(MUST) "https" 리소스에 대한 자신의 HTTP 요청들에 보안이 설정됐다는 것, 통신되기 전에, 그 요청들에 대해 오직 보안 설정된 응답들만 받아들일 것이라는 것을 확실히 해야한다. 어떤 암호학 매커니즘이 클라이언트와 서버에게 받아들여지는가는 보통 둘 사이에 협상되고 시간이 지남에 따라 변할 수 있음에 주의하라.
 
-Resources made available via the "https" scheme have no shared
-identity with the "http" scheme. They are distinct origins with
-separate namespaces. However, extensions to HTTP that are defined as
-applying to all origins with the same host, such as the Cookie
-protocol [COOKIE], allow information set by one service to impact
-communication with other services within a matching group of host
-domains. Such extensions ought to be designed with great care to
-prevent information obtained from a secured connection being
-inadvertently exchanged within an unsecured context.
+"https" 체계를 통해 가용 가능한 리소스들은 "http" 체계와 공유하는 아이덴티티를 가지지 않는다. 그들은 분리된 네임스페이스들을 가진 별개의 오리진들이다. 그러나, 쿠키 프로토콜[[COOKIE]()]과 같이 같은 호스트를 가진 모든 오리진들에게 적용되는 것으로 정의된 HTTP 확장들은, 한 서비스에 의해 설정된 정보가 호스트 도메인들의 매칭 그룹 내의 다른 서비스들과의 통신에 영향을 주는 것을 허용한다. 그러한 확장들은 보안 설정된 연결이 실수로 안전하지 않은 콘텍스트에서 교환될 때 정보를 얻어가는 것을 방지하기 위해 매우 주의하여 설계되야 한다.
 
 #### 4.2.3. http(s) 정규화와 비교
 
@@ -8919,7 +8893,7 @@ the upgrade token names summarized in the following table.
 
                                Table 12
 
-19. References
+## 19. 레퍼런스
 
 19.1. Normative References
 
