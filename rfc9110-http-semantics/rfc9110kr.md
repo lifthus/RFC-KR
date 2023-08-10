@@ -694,48 +694,31 @@ IANA는 <<https://www.iana.org/assignments/uri-schemes/>>에서 URI 체계 등�
 
 클라이언트는 반드시(MUST) "https" 리소스에 대한 자신의 HTTP 요청들에 보안이 설정됐다는 것, 통신되기 전에, 그 요청들에 대해 오직 보안 설정된 응답들만 받아들일 것이라는 것을 확실히 해야한다. 어떤 암호학 매커니즘이 클라이언트와 서버에게 받아들여지는가는 보통 둘 사이에 협상되고 시간이 지남에 따라 변할 수 있음에 주의하라.
 
-"https" 체계를 통해 가용 가능한 리소스들은 "http" 체계와 공유하는 아이덴티티를 가지지 않는다. 그들은 분리된 네임스페이스들을 가진 별개의 오리진들이다. 그러나, 쿠키 프로토콜[[COOKIE]()]과 같이 같은 호스트를 가진 모든 오리진들에게 적용되는 것으로 정의된 HTTP 확장들은, 한 서비스에 의해 설정된 정보가 호스트 도메인들의 매칭 그룹 내의 다른 서비스들과의 통신에 영향을 주는 것을 허용한다. 그러한 확장들은 보안 설정된 연결이 실수로 안전하지 않은 콘텍스트에서 교환될 때 정보를 얻어가는 것을 방지하기 위해 매우 주의하여 설계되야 한다.
+"https" 체계를 통해 가용 가능한 리소스들은 "http" 체계와 공유하는 아이덴티티를 가지지 않는다. 그들은 분리된 네임스페이스들을 가진 별개의 오리진들이다. 그러나, 쿠키 프로토콜[[COOKIE](https://www.rfc-editor.org/info/rfc6265)]과 같이 같은 호스트를 가진 모든 오리진들에게 적용되는 것으로 정의된 HTTP 확장들은, 한 서비스에 의해 설정된 정보가 호스트 도메인들의 매칭 그룹 내의 다른 서비스들과의 통신에 영향을 주는 것을 허용한다. 그러한 확장들은 보안 설정된 연결이 실수로 안전하지 않은 콘텍스트에서 교환될 때 정보를 얻어가는 것을 방지하기 위해 매우 주의하여 설계되야 한다.
 
 #### 4.2.3. http(s) 정규화와 비교
 
-URIs with an "http" or "https" scheme are normalized and compared
-according to the methods defined in Section 6 of [URI], using the
-defaults described above for each scheme.
+"http"나 "https" 체계의 URI들은 [[URI](https://www.rfc-editor.org/info/rfc3986)]의 6절에 정의된 방법들에 따라, 상술한 각 체계에 대한 기본값들을 이용해 정규화되고 비교된다.
 
-HTTP does not require the use of a specific method for determining
-equivalence. For example, a cache key might be compared as a simple
-string, after syntax-based normalization, or after scheme-based
-normalization.
+HTTP는 동등함을 결정하기 위해 특별한 메소드를 사용하는 것을 요구하지 않는다. 예를 들어, 캐시 키는, 문법 기반 정규화 후나, 체계 기반 정규화 후에, 단순한 문자열로써 비교될 수 있을 것이다.
 
-Scheme-based normalization (Section 6.2.3 of [URI]) of "http" and
-"https" URIs involves the following additional rules:
+"http"와 "https" URI들의 체계 기반 정규화 ([[URI](https://www.rfc-editor.org/info/rfc3986)]의 6.2.3절)는 다음의 추가적인 규칙들을 포함한다:
 
-- If the port is equal to the default port for a scheme, the normal
-  form is to omit the port subcomponent.
+- 만약 포트가 해당 체계의 기본 포트와 일치한다면, 정규적 형태는 포트 하위 요소를 생략하는 것이다.
 
-- When not being used as the target of an OPTIONS request, an empty
-  path component is equivalent to an absolute path of "/", so the
-  normal form is to provide a path of "/" instead.
+- OPTIONS 요청의 타겟으로 사용되지 않을 때, 빈 경로 구성요소는 절대 경로 "/"와 동등하고, 그래서 정규적 형태는 대신 "/" 경로를 제공하는 것이다.
 
-- The scheme and host are case-insensitive and normally provided in
-  lowercase; all other components are compared in a case-sensitive
-  manner.
+- 체계와 호스트는 대소문자를 구분하지 않고 보통 소문자로 제공된다; 모든 다른 구성요소들은 대소문자를 구분하여 비교한다.
 
-- Characters other than those in the "reserved" set are equivalent
-  to their percent-encoded octets: the normal form is to not encode
-  them (see Sections 2.1 and 2.2 of [URI]).
+- "예약된" 문자 집합에 속하지 않는 다른 문자들은 그들의 퍼센트 인코딩된 8비트 옥텟들과 동등하다: 정규적 형태는 그들을 인코딩하지 않는 것이다([[URI](https://www.rfc-editor.org/info/rfc3986)]의 2.1절과 2.2절 참조).
 
-For example, the following three URIs are equivalent:
+예를 들어, 다음의 세 URI들은 동등하다:
 
       http://example.com:80/~smith/home.html
       http://EXAMPLE.com/%7Esmith/home.html
       http://EXAMPLE.com:/%7esmith/home.html
 
-Two HTTP URIs that are equivalent after normalization (using any
-method) can be assumed to identify the same resource, and any HTTP
-component MAY perform normalization. As a result, distinct resources
-SHOULD NOT be identified by HTTP URIs that are equivalent after
-normalization (using any method defined in Section 6.2 of [URI]).
+정규화 후에 (어떤 방법이든) 동등한 두 HTTP URI는 같은 리소스를 식별한다고 가정할 수 있고, 어떤 HTTP 구성요소든 아마 (MAY) 정규화를 수행할 수 있을 것이다. 결과적으로, 구분되는 리소스들은 웬만하면(SHOULD NOT) 정규화 후에([[URI](https://www.rfc-editor.org/info/rfc3986)]의 6.2절에 정의된 어떤 방법을 사용하든) 동등한 URI들을 통해 식별되지 않도록 해야 한다.
 
 #### 4.2.4. http(s) URI에서의 userinfo 지원 중단
 
