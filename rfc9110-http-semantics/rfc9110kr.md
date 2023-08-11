@@ -718,28 +718,17 @@ HTTP는 동등함을 결정하기 위해 특별한 메소드를 사용하는 것
       http://EXAMPLE.com/%7Esmith/home.html
       http://EXAMPLE.com:/%7esmith/home.html
 
-정규화 후에 (어떤 방법이든) 동등한 두 HTTP URI는 같은 리소스를 식별한다고 가정할 수 있고, 어떤 HTTP 구성요소든 아마 (MAY) 정규화를 수행할 수 있을 것이다. 결과적으로, 구분되는 리소스들은 웬만하면(SHOULD NOT) 정규화 후에([[URI](https://www.rfc-editor.org/info/rfc3986)]의 6.2절에 정의된 어떤 방법을 사용하든) 동등한 URI들을 통해 식별되지 않도록 해야 한다.
+정규화 후에 (어떤 방법이든) 동등한 두 HTTP URI는 같은 리소스를 식별한다고 가정할 수 있고, 어떤 HTTP 구성요소든 아마 (MAY) 정규화를 수행할 수 있을 것이다. 결과적으로, 구분되는 리소스들은 웬만하면(SHOULD NOT) 정규화 후에([[URI](https://www.rfc-editor.org/info/rfc3986)])의 6.2절에 정의된 어떤 방법을 사용하든) 동등한 URI들을 통해 식별되지 않도록 해야 한다.
 
 #### 4.2.4. http(s) URI에서의 userinfo 지원 중단
 
-The URI generic syntax for authority also includes a userinfo
-subcomponent ([URI], Section 3.2.1) for including user authentication
-information in the URI. In that subcomponent, the use of the format
-"user:password" is deprecated.
+권한을 위한 URI 일반 구문은 URI에 유저 인증 정보를 포함하기 위해 유저 정보 하위 구성요소(([[URI](https://www.rfc-editor.org/info/rfc3986)]), 3.2.1절) 또한 포함한다. 해당 하위 구성요소에서, "user:password" 형식의 사용은 더 이상 지원되지 않는다.
 
-Some implementations make use of the userinfo component for internal
-configuration of authentication information, such as within command
-invocation options, configuration files, or bookmark lists, even
-though such usage might expose a user identifier or password.
+일부 구현들은 커맨드 호출 옵션, 설정 파일, 혹은 북마크 리스트 내에서 처럼, 유저 정보 구성 요소를, 이로 인해 유저 아이디와 비밀번호가 노출될 수 있다해도 내부적인 인증 정보의 설정을 위해 사용한다.
 
-A sender MUST NOT generate the userinfo subcomponent (and its "@"
-delimiter) when an "http" or "https" URI reference is generated
-within a message as a target URI or field value.
+발신자는 "http"나 "https" URI 레퍼런스가 타겟 URI로서의 메시지나 필드 값 내에서  생성될 때에는 절대(MUST NOT) 유저 정보 하위 구성요소(그리고 그것의 "@" 구분자)를 생성해서는 안된다.
 
-Before making use of an "http" or "https" URI reference received from
-an untrusted source, a recipient SHOULD parse for userinfo and treat
-its presence as an error; it is likely being used to obscure the
-authority for the sake of phishing attacks.
+신뢰할 수 없는 소스로부터 수신한 "http"나 "https" URI 레퍼런스를 사용하기 전에, 수신자는 웬만하면(SHOULD) 유저 정보를 파싱하고 그 존재를 에러로 취급해야 한다; 그것은 피싱 공격을 위해 권한을 흐려놨을 가능성이 크다.
 
 ### 4.2.5. 프래그먼트 식별자들과 http(s) 레퍼런스들
 
