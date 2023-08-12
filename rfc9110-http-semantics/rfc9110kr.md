@@ -97,12 +97,12 @@ than English.
 ㄴ [4.2.3. http(s) 정규화와 비교](#423-https-정규화와-비교)
 ㄴ [4.2.4. http(s) URI에서의 userinfo 지원 중단](#424-https-uri에서의-userinfo-지원-중단)
 ㄴ [4.2.5. 프래그먼트 식별자들과 http(s) 레퍼런스들](#425-프래그먼트-식별자들과-https-레퍼런스들)
-[4.3. 권한있는 접근](#43-권한있는-접근)
-ㄴ [4.3.1. URI 오리진](#431)
-ㄴ [4.3.2. http 오리진들](#432)
-ㄴ [4.3.3. https 오리진들](#433)
-ㄴ [4.3.4. https 자격 증명](#434)
-ㄴ [4.3.5. IP-ID 레퍼런스 신원](#435)
+[4.3. 권한 있는 접근](#43-권한-있는-접근)
+ㄴ [4.3.1. URI 오리진](#431-uri-오리진)
+ㄴ [4.3.2. http 오리진들](#432-http-오리진들)
+ㄴ [4.3.3. https 오리진들](#433-https-오리진들)
+ㄴ [4.3.4. https 자격 증명](#434-https-자격-증명)
+ㄴ [4.3.5. IP-ID 레퍼런스 신원](#435-ip-id-레퍼런스-신원)
 
 ###### [5. 필드](#5-필드)
 
@@ -345,7 +345,10 @@ Resources 9. Methods
 18.7. Range Unit Registration
 18.8. Media Type Registration
 18.9. Port Registration
-18.10. Upgrade Token Registration 19. References
+18.10. Upgrade Token Registration
+
+###### [19. 레퍼런스](#19-레퍼런스)
+
 19.1. Normative References
 19.2. Informative References
 Appendix A. Collected ABNF
@@ -671,7 +674,7 @@ IANA는 <<https://www.iana.org/assignments/uri-schemes/>>에서 URI 체계 등�
 
      http-URI = "http" "://" authority path-abempty [ "?" query ]
 
-"http" URI의 오리진 서버는 권한 요소에 의해 식별되는데, 이것은 호스트 식별자([RFC3986](https://datatracker.ietf.org/doc/html/rfc3986), 3.2.2절)와 선택적 포트 넘버([RFC3986](https://datatracker.ietf.org/doc/html/rfc3986), 3.2.2절)를 포함한다. 만약 포트 하위구성요소가 비었거나 주어지지 않으면, TCP 80 포트(WWW 서비스들에 예약된 것)가 기본이다. 오리진은 4.3.2절에 정의된 대로, 식별된 리소스를 목표로 하는 요청들에 대해 누가 정식으로 응답할 권리를 가지는지 결정한다.
+"http" URI의 오리진 서버는 권한 요소에 의해 식별되는데, 이것은 호스트 식별자([[URI](https://www.rfc-editor.org/info/rfc3986)], 3.2.2절)와 선택적 포트 넘버([[URI](https://www.rfc-editor.org/info/rfc3986)], 3.2.3절)를 포함한다. 만약 포트 하위구성요소가 비었거나 주어지지 않으면, TCP 80 포트(WWW 서비스들에 예약된 것)가 기본이다. 오리진은 4.3.2절에 정의된 대로, 식별된 리소스를 목표로 하는 요청들에 대해 누가 정식으로 응답할 권리를 가지는지 결정한다.
 
 발신자는 절대(MUST NOT) 호스트 식별자 부분이 비어있는 "http" URI를 생성해서는 안된다. 그런 URI 레퍼런스를 처리하는 수신자는 반드시(MUST) 무효로 거부해야 한다.
 
@@ -679,177 +682,92 @@ IANA는 <<https://www.iana.org/assignments/uri-schemes/>>에서 URI 체계 등�
 
 #### 4.2.2. https URI 체계
 
-The "https" URI scheme is hereby defined for minting identifiers
-within the hierarchical namespace governed by a potential origin
-server listening for TCP connections on a given port and capable of
-establishing a TLS ([TLS13]) connection that has been secured for
-HTTP communication. In this context, "secured" specifically means
-that the server has been authenticated as acting on behalf of the
-identified authority and all HTTP communication with that server has
-confidentiality and integrity protection that is acceptable to both
-client and server.
+"https" URI 체계는 이로써 주어진 포트에서 TCP 연결을 대기하고 있으면서 HTTP 통신의 보안을 설정하는 TLS([[TLS13](https://www.rfc-editor.org/info/rfc8446)) 연결을 수립할 수 있는 잠재적인 오리진 서버에 의해 관리되는 계층적 네임스페이스 내에서 식별자를 만들어내기 위해 정의된다. 이 문맥에서, "보안을 설정"한다는 말은 구체적으로 서버가 식별된 권한을 대신하여 작동하도록 인증됐고 해당 서버의 모든 HTTP 통신이 비밀성과 클라이언트 서버 양쪽에서 받아들일 수 있는 무결성 보호를 가진다는 말이다.
 
      https-URI = "https" "://" authority path-abempty [ "?" query ]
 
-The origin server for an "https" URI is identified by the authority
-component, which includes a host identifier ([URI], Section 3.2.2)
-and optional port number ([URI], Section 3.2.3). If the port
-subcomponent is empty or not given, TCP port 443 (the reserved port
-for HTTP over TLS) is the default. The origin determines who has the
-right to respond authoritatively to requests that target the
-identified resource, as defined in Section 4.3.3.
+"https" URI의 오리진 서버는 호스트 식별자([[URI](https://www.rfc-editor.org/info/rfc3986)], 3.2.2절)와 선택적 포트 넘버([[URI](https://www.rfc-editor.org/info/rfc3986)], 3.2.3절)를 포함하는, 권한 요소에 의해 식별된다. 만약 포트 하위 요소가 비었거나 주어지지 않으면, TCP 443 포트(HTTP over TLS를 위해 예약된 포트)가 기본이다. 오리진은 4.3.3절에 정의된대로, 식별된 리소스를 목표로 하는 요청들에 대해 누가 정식으로 응답할 권리를 가지는지 결정한다.
 
-A sender MUST NOT generate an "https" URI with an empty host
-identifier. A recipient that processes such a URI reference MUST
-reject it as invalid.
+발신자는 절대(MUST NOT) 호스트 식별자 부분이 빈 "https" URI를 생성해서는 안된다. 그러한 URI 레퍼런스를 처리하는 수신자는 반드시(MUST) 무효로 거부해야 한다.
 
-The hierarchical path component and optional query component identify
-the target resource within that origin server's namespace.
+계층적 경로 요소와 선택적 쿼리 요소는 해당 오리진 서버의 네임스페이스 내에서 타겟 리소스를 식별한다.
 
-A client MUST ensure that its HTTP requests for an "https" resource
-are secured, prior to being communicated, and that it only accepts
-secured responses to those requests. Note that the definition of
-what cryptographic mechanisms are acceptable to client and server are
-usually negotiated and can change over time.
+클라이언트는 반드시(MUST) "https" 리소스에 대한 자신의 HTTP 요청들에 보안이 설정됐다는 것, 통신되기 전에, 그 요청들에 대해 오직 보안 설정된 응답들만 받아들일 것이라는 것을 확실히 해야한다. 어떤 암호학 매커니즘이 클라이언트와 서버에게 받아들여지는가는 보통 둘 사이에 협상되고 시간이 지남에 따라 변할 수 있음에 주의하라.
 
-Resources made available via the "https" scheme have no shared
-identity with the "http" scheme. They are distinct origins with
-separate namespaces. However, extensions to HTTP that are defined as
-applying to all origins with the same host, such as the Cookie
-protocol [COOKIE], allow information set by one service to impact
-communication with other services within a matching group of host
-domains. Such extensions ought to be designed with great care to
-prevent information obtained from a secured connection being
-inadvertently exchanged within an unsecured context.
+"https" 체계를 통해 가용 가능한 리소스들은 "http" 체계와 공유하는 아이덴티티를 가지지 않는다. 그들은 분리된 네임스페이스들을 가진 별개의 오리진들이다. 그러나, 쿠키 프로토콜[[COOKIE](https://www.rfc-editor.org/info/rfc6265)]과 같이 같은 호스트를 가진 모든 오리진들에게 적용되는 것으로 정의된 HTTP 확장들은, 한 서비스에 의해 설정된 정보가 호스트 도메인들의 매칭 그룹 내의 다른 서비스들과의 통신에 영향을 주는 것을 허용한다. 그러한 확장들은 보안 설정된 연결이 실수로 안전하지 않은 콘텍스트에서 교환될 때 정보를 얻어가는 것을 방지하기 위해 매우 주의하여 설계되야 한다.
 
 #### 4.2.3. http(s) 정규화와 비교
 
-URIs with an "http" or "https" scheme are normalized and compared
-according to the methods defined in Section 6 of [URI], using the
-defaults described above for each scheme.
+"http"나 "https" 체계의 URI들은 [[URI](https://www.rfc-editor.org/info/rfc3986)]의 6절에 정의된 방법들에 따라, 상술한 각 체계에 대한 기본값들을 이용해 정규화되고 비교된다.
 
-HTTP does not require the use of a specific method for determining
-equivalence. For example, a cache key might be compared as a simple
-string, after syntax-based normalization, or after scheme-based
-normalization.
+HTTP는 동등함을 결정하기 위해 특별한 메소드를 사용하는 것을 요구하지 않는다. 예를 들어, 캐시 키는, 문법 기반 정규화 후나, 체계 기반 정규화 후에, 단순한 문자열로써 비교될 수 있을 것이다.
 
-Scheme-based normalization (Section 6.2.3 of [URI]) of "http" and
-"https" URIs involves the following additional rules:
+"http"와 "https" URI들의 체계 기반 정규화 ([[URI](https://www.rfc-editor.org/info/rfc3986)]의 6.2.3절)는 다음의 추가적인 규칙들을 포함한다:
 
-- If the port is equal to the default port for a scheme, the normal
-  form is to omit the port subcomponent.
+- 만약 포트가 해당 체계의 기본 포트와 일치한다면, 정규적 형태는 포트 하위 요소를 생략하는 것이다.
 
-- When not being used as the target of an OPTIONS request, an empty
-  path component is equivalent to an absolute path of "/", so the
-  normal form is to provide a path of "/" instead.
+- OPTIONS 요청의 타겟으로 사용되지 않을 때, 빈 경로 구성요소는 절대 경로 "/"와 동등하고, 그래서 정규적 형태는 대신 "/" 경로를 제공하는 것이다.
 
-- The scheme and host are case-insensitive and normally provided in
-  lowercase; all other components are compared in a case-sensitive
-  manner.
+- 체계와 호스트는 대소문자를 구분하지 않고 보통 소문자로 제공된다; 모든 다른 구성요소들은 대소문자를 구분하여 비교한다.
 
-- Characters other than those in the "reserved" set are equivalent
-  to their percent-encoded octets: the normal form is to not encode
-  them (see Sections 2.1 and 2.2 of [URI]).
+- "예약된" 문자 집합에 속하지 않는 다른 문자들은 그들의 퍼센트 인코딩된 8비트 옥텟들과 동등하다: 정규적 형태는 그들을 인코딩하지 않는 것이다([[URI](https://www.rfc-editor.org/info/rfc3986)]의 2.1절과 2.2절 참조).
 
-For example, the following three URIs are equivalent:
+예를 들어, 다음의 세 URI들은 동등하다:
 
       http://example.com:80/~smith/home.html
       http://EXAMPLE.com/%7Esmith/home.html
       http://EXAMPLE.com:/%7esmith/home.html
 
-Two HTTP URIs that are equivalent after normalization (using any
-method) can be assumed to identify the same resource, and any HTTP
-component MAY perform normalization. As a result, distinct resources
-SHOULD NOT be identified by HTTP URIs that are equivalent after
-normalization (using any method defined in Section 6.2 of [URI]).
+정규화 후에 (어떤 방법이든) 동등한 두 HTTP URI는 같은 리소스를 식별한다고 가정할 수 있고, 어떤 HTTP 구성요소든 아마 (MAY) 정규화를 수행할 수 있을 것이다. 결과적으로, 구분되는 리소스들은 웬만하면(SHOULD NOT) 정규화 후에([[URI](https://www.rfc-editor.org/info/rfc3986)])의 6.2절에 정의된 어떤 방법을 사용하든) 동등한 URI들을 통해 식별되지 않도록 해야 한다.
 
 #### 4.2.4. http(s) URI에서의 userinfo 지원 중단
 
-The URI generic syntax for authority also includes a userinfo
-subcomponent ([URI], Section 3.2.1) for including user authentication
-information in the URI. In that subcomponent, the use of the format
-"user:password" is deprecated.
+권한을 위한 URI 일반 구문은 URI에 유저 인증 정보를 포함하기 위해 유저 정보 하위 구성요소([[URI](https://www.rfc-editor.org/info/rfc3986)], 3.2.1절) 또한 포함한다. 해당 하위 구성요소에서, "user:password" 형식의 사용은 더 이상 지원되지 않는다.
 
-Some implementations make use of the userinfo component for internal
-configuration of authentication information, such as within command
-invocation options, configuration files, or bookmark lists, even
-though such usage might expose a user identifier or password.
+일부 구현들은 커맨드 호출 옵션, 설정 파일, 혹은 북마크 리스트 내에서 처럼, 유저 정보 구성 요소를, 이로 인해 유저 아이디와 비밀번호가 노출될 수 있다해도 내부적인 인증 정보의 설정을 위해 사용한다.
 
-A sender MUST NOT generate the userinfo subcomponent (and its "@"
-delimiter) when an "http" or "https" URI reference is generated
-within a message as a target URI or field value.
+발신자는 "http"나 "https" URI 레퍼런스가 타겟 URI로서의 메시지나 필드 값 내에서 생성될 때에는 절대(MUST NOT) 유저 정보 하위 구성요소(그리고 그것의 "@" 구분자)를 생성해서는 안된다.
 
-Before making use of an "http" or "https" URI reference received from
-an untrusted source, a recipient SHOULD parse for userinfo and treat
-its presence as an error; it is likely being used to obscure the
-authority for the sake of phishing attacks.
+신뢰할 수 없는 소스로부터 수신한 "http"나 "https" URI 레퍼런스를 사용하기 전에, 수신자는 웬만하면(SHOULD) 유저 정보를 파싱하고 그 존재를 에러로 취급해야 한다; 그것은 피싱 공격을 위해 권한을 흐려놨을 가능성이 크다.
 
 ### 4.2.5. 프래그먼트 식별자들과 http(s) 레퍼런스들
 
-Fragment identifiers allow for indirect identification of a secondary
-resource, independent of the URI scheme, as defined in Section 3.5 of
-[URI]. Some protocol elements that refer to a URI allow inclusion of
-a fragment, while others do not. They are distinguished by use of
-the ABNF rule for elements where fragment is allowed; otherwise, a
-specific rule that excludes fragments is used.
+프래그먼트 식별자들은, [[URI](https://www.rfc-editor.org/info/rfc3986)] 3.5절에 정의된대로, URI 체계와 관계 없이, 2차 리소스를 간접 식별하는 것을 허용한다. URI를 참조하는 일부 프로토콜 요소들은 프래그먼트의 포함을 허용하는 반면, 다른 것들은 허용하지 않는다. 그것들은 프래그먼트가 허용되는 요소들을 위한 ABNF 규칙의 사용으로 구분된다; 그게 아니면, 프래그먼트들을 제외하는 특정 룰이 사용된다.
 
-      |  *Note:* The fragment identifier component is not part of the
-      |  scheme definition for a URI scheme (see Section 4.3 of [URI]),
-      |  thus does not appear in the ABNF definitions for the "http" and
-      |  "https" URI schemes above.
+- 주의: 프래그먼트 식별자 구성요소는 URI 체계 정의의 일부가 아니며( [URI] 4.3절 참조), 이리하여 위의 "http"와 "https" 체계를 위한 ABNF 정의에 나타나지 않는다.
 
-4.3. Authoritative Access
+### 4.3. 권한 있는 접근
 
-Authoritative access refers to dereferencing a given identifier, for
-the sake of access to the identified resource, in a way that the
-client believes is authoritative (controlled by the resource owner).
-The process for determining whether access is granted is defined by
-the URI scheme and often uses data within the URI components, such as
-the authority component when the generic syntax is used. However,
-authoritative access is not limited to the identified mechanism.
+권한 있는 접근이라 함은, 식별된 리소스에 대한 접근을 위해, 클라이언트가 권한 있다고 믿을 수 있는(리소스 오너에게 제어되는) 방식으로의 주어진 식별자에 대한 역참조를 가리킨다. 접근이 허가됐는지 여부를 결정하는 프로세스는 URI 체계에 의해 정의되고 일반적인 구문이 사용될 때 종종 권한 구성요소 같은, URI 구성요소들 내의 데이터를 이용한다. 그러나, 권한 있는 접근은 식별된 메커니즘으로 제한되지는 않는다.
 
-Section 4.3.1 defines the concept of an origin as an aid to such
-uses, and the subsequent subsections explain how to establish that a
-peer has the authority to represent an origin.
+4.3.1절은 그런 용도에 대해 도움이 되도록 오리진 개념을 정의하고, 이어지는 하위 절들은 통신 상대가 오리진을 대표하는 권한을 가졌는지를 확인하는 방법에 대해 설명한다.
 
-See Section 17.1 for security considerations related to establishing
-authority.
+권한 확인과 관련한 보안 고려사항들에 관해서는 17.1절을 참조하라.
 
-4.3.1. URI Origin
+### 4.3.1. URI 오리진
 
-The "origin" for a given URI is the triple of scheme, host, and port
-after normalizing the scheme and host to lowercase and normalizing
-the port to remove any leading zeros. If port is elided from the
-URI, the default port for that scheme is used. For example, the URI
+주어지는 URI에 대한 "오리진"은 사용 체계와 호스트를 소문자로 정규화하고 포트 번호 앞의 0들을 제거하고난 후의 체계, 호스트, 그리고 포트의 삼중 결합으로 이루어진다. 만약 포트가 URI에서 제거됐다면, 사용 체계에 대한 기본 포트가 사용된다. 예를 들어, 다음 URI는
 
-      https://Example.Com/happy.js
+     https://Example.Com/happy.js
 
-would have the origin
+다음 오리진을 가질 것이다.
 
-      { "https", "example.com", "443" }
+     { "https", "example.com", "443" }
 
-which can also be described as the normalized URI prefix with port
-always present:
+또한 포트가 항상 표시되는 정규화된 URI 접두사로서 기술될 수 있다.
 
-      https://example.com:443
+     https://example.com:443
 
-Each origin defines its own namespace and controls how identifiers
-within that namespace are mapped to resources. In turn, how the
-origin responds to valid requests, consistently over time, determines
-the semantics that users will associate with a URI, and the
-usefulness of those semantics is what ultimately transforms these
-mechanisms into a resource for users to reference and access in the
-future.
+각 오리진은 자신만의 네임스페이스를 정의하고 그 네임스페이스 내의 식별자들이 리소스들로 어떻게 매핑되냐를 제어한다. 차례 차례, 시간이 지남에도 일관적으로, 오리진이 유효한 요청들에 응답하는 방식은, 유저들 URI와 연관지을 의미체계를 결정하고, 해당 의미체계의 유용성은 궁극적으로 이러한 매커니즘들을 유저가 이후에 참조하고 접근할 리소스로 변형시킨다.
 
-Two origins are distinct if they differ in scheme, host, or port.
-Even when it can be verified that the same entity controls two
-distinct origins, the two namespaces under those origins are distinct
-unless explicitly aliased by a server authoritative for that origin.
+두 오리진은 그들이 사용하는 체계, 호스트, 또는 포트가 다르면 구분된다. 구별되는 두 오리진이 같은 개체에 의해 제어되는게 확실할 때 조차, 오리진들 아래의 두 네임스페이스들은 해당 오리진에 대해 권한있는 서버에 의해 명시적으로 별칭이 지정되지 않은 한 구별된다.
 
 Origin is also used within HTML and related Web protocols, beyond the
 scope of this document, as described in [RFC6454].
 
-4.3.2. http Origins
+오리진은 또한, 이 문서의 범위를 넘어, [[RFC6454](https://datatracker.ietf.org/doc/html/rfc6454)]에 서술된대로, HTML 그리고 그와 관련된 웹 프로토콜에서도 사용된다.
+
+### 4.3.2. http 오리진들
 
 Although HTTP is independent of the transport protocol, the "http"
 scheme (Section 4.2.1) is specific to associating authority with
@@ -887,7 +805,7 @@ services that are also authoritative for that origin. Access to
 "http" identified resources might also be provided by protocols
 outside the scope of this document.
 
-4.3.3. https Origins
+### 4.3.3. https 오리진들
 
 The "https" scheme (Section 4.2.2) associates authority based on the
 ability of a server to use the private key corresponding to a
@@ -956,7 +874,7 @@ Note, however, that the above is not the only means for obtaining an
 authoritative response, nor does it imply that an authoritative
 response is always necessary (see [CACHING]).
 
-4.3.4. https Certificate Verification
+### 4.3.4. https 자격 증명
 
 To establish a secured connection to dereference a URI, a client MUST
 verify that the service's identity is an acceptable match for the
@@ -996,7 +914,7 @@ certificate error). Automated clients MAY provide a configuration
 setting that disables this check, but MUST provide a setting which
 enables it.
 
-4.3.5. IP-ID Reference Identity
+### 4.3.5. IP-ID 레퍼런스 신원
 
 A server that is identified using an IP address literal in the "host"
 field of an "https" URI has a reference identity of type IP-ID. An
@@ -8919,7 +8837,7 @@ the upgrade token names summarized in the following table.
 
                                Table 12
 
-19. References
+## 19. 레퍼런스
 
 19.1. Normative References
 
