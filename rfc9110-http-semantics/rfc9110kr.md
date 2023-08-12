@@ -736,7 +736,7 @@ HTTP는 동등함을 결정하기 위해 특별한 메소드를 사용하는 것
 
 - 주의: 프래그먼트 식별자 구성요소는 URI 체계 정의의 일부가 아니며( [URI] 4.3절 참조), 이리하여 위의 "http"와 "https" 체계를 위한 ABNF 정의에 나타나지 않는다.
 
-  4.3. Authoritative Access
+### 4.3. 권한있는 접근
 
 Authoritative access refers to dereferencing a given identifier, for
 the sake of access to the identified resource, in a way that the
@@ -753,7 +753,7 @@ peer has the authority to represent an origin.
 See Section 17.1 for security considerations related to establishing
 authority.
 
-4.3.1. URI Origin
+### 4.3.1. URI 오리진
 
 The "origin" for a given URI is the triple of scheme, host, and port
 after normalizing the scheme and host to lowercase and normalizing
@@ -787,7 +787,7 @@ unless explicitly aliased by a server authoritative for that origin.
 Origin is also used within HTML and related Web protocols, beyond the
 scope of this document, as described in [RFC6454].
 
-4.3.2. http Origins
+### 4.3.2. http 오리진들
 
 Although HTTP is independent of the transport protocol, the "http"
 scheme (Section 4.2.1) is specific to associating authority with
@@ -825,7 +825,7 @@ services that are also authoritative for that origin. Access to
 "http" identified resources might also be provided by protocols
 outside the scope of this document.
 
-4.3.3. https Origins
+### 4.3.3. https 오리진들
 
 The "https" scheme (Section 4.2.2) associates authority based on the
 ability of a server to use the private key corresponding to a
@@ -894,7 +894,7 @@ Note, however, that the above is not the only means for obtaining an
 authoritative response, nor does it imply that an authoritative
 response is always necessary (see [CACHING]).
 
-4.3.4. https Certificate Verification
+### 4.3.4. https 자격 증명
 
 To establish a secured connection to dereference a URI, a client MUST
 verify that the service's identity is an acceptable match for the
@@ -934,7 +934,7 @@ certificate error). Automated clients MAY provide a configuration
 setting that disables this check, but MUST provide a setting which
 enables it.
 
-4.3.5. IP-ID Reference Identity
+### 4.3.5. IP-ID 레퍼런스 신원
 
 A server that is identified using an IP address literal in the "host"
 field of an "https" URI has a reference identity of type IP-ID. An
