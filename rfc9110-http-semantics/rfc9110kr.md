@@ -722,29 +722,21 @@ HTTP는 동등함을 결정하기 위해 특별한 메소드를 사용하는 것
 
 #### 4.2.4. http(s) URI에서의 userinfo 지원 중단
 
-권한을 위한 URI 일반 구문은 URI에 유저 인증 정보를 포함하기 위해 유저 정보 하위 구성요소(([[URI](https://www.rfc-editor.org/info/rfc3986)]), 3.2.1절) 또한 포함한다. 해당 하위 구성요소에서, "user:password" 형식의 사용은 더 이상 지원되지 않는다.
+권한을 위한 URI 일반 구문은 URI에 유저 인증 정보를 포함하기 위해 유저 정보 하위 구성요소([[URI](https://www.rfc-editor.org/info/rfc3986)], 3.2.1절) 또한 포함한다. 해당 하위 구성요소에서, "user:password" 형식의 사용은 더 이상 지원되지 않는다.
 
 일부 구현들은 커맨드 호출 옵션, 설정 파일, 혹은 북마크 리스트 내에서 처럼, 유저 정보 구성 요소를, 이로 인해 유저 아이디와 비밀번호가 노출될 수 있다해도 내부적인 인증 정보의 설정을 위해 사용한다.
 
-발신자는 "http"나 "https" URI 레퍼런스가 타겟 URI로서의 메시지나 필드 값 내에서  생성될 때에는 절대(MUST NOT) 유저 정보 하위 구성요소(그리고 그것의 "@" 구분자)를 생성해서는 안된다.
+발신자는 "http"나 "https" URI 레퍼런스가 타겟 URI로서의 메시지나 필드 값 내에서 생성될 때에는 절대(MUST NOT) 유저 정보 하위 구성요소(그리고 그것의 "@" 구분자)를 생성해서는 안된다.
 
 신뢰할 수 없는 소스로부터 수신한 "http"나 "https" URI 레퍼런스를 사용하기 전에, 수신자는 웬만하면(SHOULD) 유저 정보를 파싱하고 그 존재를 에러로 취급해야 한다; 그것은 피싱 공격을 위해 권한을 흐려놨을 가능성이 크다.
 
 ### 4.2.5. 프래그먼트 식별자들과 http(s) 레퍼런스들
 
-Fragment identifiers allow for indirect identification of a secondary
-resource, independent of the URI scheme, as defined in Section 3.5 of
-[URI]. Some protocol elements that refer to a URI allow inclusion of
-a fragment, while others do not. They are distinguished by use of
-the ABNF rule for elements where fragment is allowed; otherwise, a
-specific rule that excludes fragments is used.
+프래그먼트 식별자들은, [[URI](https://www.rfc-editor.org/info/rfc3986)] 3.5절에 정의된대로, URI 체계와 관계 없이, 2차 리소스를 간접 식별하는 것을 허용한다. URI를 참조하는 일부 프로토콜 요소들은 프래그먼트의 포함을 허용하는 반면, 다른 것들은 허용하지 않는다. 그것들은 프래그먼트가 허용되는 요소들을 위한 ABNF 규칙의 사용으로 구분된다; 그게 아니면, 프래그먼트들을 제외하는 특정 룰이 사용된다.
 
-      |  *Note:* The fragment identifier component is not part of the
-      |  scheme definition for a URI scheme (see Section 4.3 of [URI]),
-      |  thus does not appear in the ABNF definitions for the "http" and
-      |  "https" URI schemes above.
+- 주의: 프래그먼트 식별자 구성요소는 URI 체계 정의의 일부가 아니며( [URI] 4.3절 참조), 이리하여 위의 "http"와 "https" 체계를 위한 ABNF 정의에 나타나지 않는다.
 
-4.3. Authoritative Access
+  4.3. Authoritative Access
 
 Authoritative access refers to dereferencing a given identifier, for
 the sake of access to the identified resource, in a way that the
