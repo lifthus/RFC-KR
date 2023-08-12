@@ -97,7 +97,7 @@ than English.
 ㄴ [4.2.3. http(s) 정규화와 비교](#423-https-정규화와-비교)
 ㄴ [4.2.4. http(s) URI에서의 userinfo 지원 중단](#424-https-uri에서의-userinfo-지원-중단)
 ㄴ [4.2.5. 프래그먼트 식별자들과 http(s) 레퍼런스들](#425-프래그먼트-식별자들과-https-레퍼런스들)
-[4.3. 권한있는 접근](#43-권한있는-접근)
+[4.3. 권한 있는 접근](#43-권한-있는-접근)
 ㄴ [4.3.1. URI 오리진](#431-uri-오리진)
 ㄴ [4.3.2. http 오리진들](#432-http-오리진들)
 ㄴ [4.3.3. https 오리진들](#433-https-오리진들)
@@ -736,22 +736,13 @@ HTTP는 동등함을 결정하기 위해 특별한 메소드를 사용하는 것
 
 - 주의: 프래그먼트 식별자 구성요소는 URI 체계 정의의 일부가 아니며( [URI] 4.3절 참조), 이리하여 위의 "http"와 "https" 체계를 위한 ABNF 정의에 나타나지 않는다.
 
-### 4.3. 권한있는 접근
+### 4.3. 권한 있는 접근
 
-Authoritative access refers to dereferencing a given identifier, for
-the sake of access to the identified resource, in a way that the
-client believes is authoritative (controlled by the resource owner).
-The process for determining whether access is granted is defined by
-the URI scheme and often uses data within the URI components, such as
-the authority component when the generic syntax is used. However,
-authoritative access is not limited to the identified mechanism.
+권한 있는 접근이라 함은, 식별된 리소스에 대한 접근을 위해, 클라이언트가 권한 있다고 믿을 수 있는(리소스 오너에게 제어되는) 방식으로의 주어진 식별자에 대한 역참조를 가리킨다. 접근이 허가됐는지 여부를 결정하는 프로세스는 URI 체계에 의해 정의되고 일반적인 구문이 사용될 때 종종 권한 구성요소 같은, URI 구성요소들 내의 데이터를 이용한다. 그러나, 권한 있는 접근은 식별된 메커니즘으로 제한되지는 않는다.
 
-Section 4.3.1 defines the concept of an origin as an aid to such
-uses, and the subsequent subsections explain how to establish that a
-peer has the authority to represent an origin.
+4.3.1절은 그런 용도에 대해 도움이 되도록 오리진 개념을 정의하고, 이어지는 하위 절들은 통신 상대가 오리진을 대표하는 권한을 가졌는지를 확인하는 방법에 대해 설명한다.
 
-See Section 17.1 for security considerations related to establishing
-authority.
+권한 확인과 관련한 보안 고려사항들에 관해서는 17.1절을 참조하라.
 
 ### 4.3.1. URI 오리진
 
