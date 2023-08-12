@@ -98,11 +98,11 @@ than English.
 ㄴ [4.2.4. http(s) URI에서의 userinfo 지원 중단](#424-https-uri에서의-userinfo-지원-중단)
 ㄴ [4.2.5. 프래그먼트 식별자들과 http(s) 레퍼런스들](#425-프래그먼트-식별자들과-https-레퍼런스들)
 [4.3. 권한있는 접근](#43-권한있는-접근)
-ㄴ [4.3.1. URI 오리진](#431)
-ㄴ [4.3.2. http 오리진들](#432)
-ㄴ [4.3.3. https 오리진들](#433)
-ㄴ [4.3.4. https 자격 증명](#434)
-ㄴ [4.3.5. IP-ID 레퍼런스 신원](#435)
+ㄴ [4.3.1. URI 오리진](#431-uri-오리진)
+ㄴ [4.3.2. http 오리진들](#432-http-오리진들)
+ㄴ [4.3.3. https 오리진들](#433-https-오리진들)
+ㄴ [4.3.4. https 자격 증명](#434-https-자격-증명)
+ㄴ [4.3.5. IP-ID 레퍼런스 신원](#435-ip-id-레퍼런스-신원)
 
 ###### [5. 필드](#5-필드)
 
@@ -755,37 +755,26 @@ authority.
 
 ### 4.3.1. URI 오리진
 
-The "origin" for a given URI is the triple of scheme, host, and port
-after normalizing the scheme and host to lowercase and normalizing
-the port to remove any leading zeros. If port is elided from the
-URI, the default port for that scheme is used. For example, the URI
+주어지는 URI에 대한 "오리진"은 사용 체계와 호스트를 소문자로 정규화하고 포트 번호 앞의 0들을 제거하고난 후의 체계, 호스트, 그리고 포트의 삼중 결합으로 이루어진다. 만약 포트가 URI에서 제거됐다면, 사용 체계에 대한 기본 포트가 사용된다. 예를 들어, 다음 URI는
 
-      https://Example.Com/happy.js
+     https://Example.Com/happy.js
 
-would have the origin
+다음 오리진을 가질 것이다.
 
-      { "https", "example.com", "443" }
+     { "https", "example.com", "443" }
 
-which can also be described as the normalized URI prefix with port
-always present:
+또한 포트가 항상 표시되는 정규화된 URI 접두사로서 기술될 수 있다.
 
-      https://example.com:443
+     https://example.com:443
 
-Each origin defines its own namespace and controls how identifiers
-within that namespace are mapped to resources. In turn, how the
-origin responds to valid requests, consistently over time, determines
-the semantics that users will associate with a URI, and the
-usefulness of those semantics is what ultimately transforms these
-mechanisms into a resource for users to reference and access in the
-future.
+각 오리진은 자신만의 네임스페이스를 정의하고 그 네임스페이스 내의 식별자들이 리소스들로 어떻게 매핑되냐를 제어한다. 차례 차례, 시간이 지남에도 일관적으로, 오리진이 유효한 요청들에 응답하는 방식은, 유저들 URI와 연관지을 의미체계를 결정하고, 해당 의미체계의 유용성은 궁극적으로 이러한 매커니즘들을 유저가 이후에 참조하고 접근할 리소스로 변형시킨다.
 
-Two origins are distinct if they differ in scheme, host, or port.
-Even when it can be verified that the same entity controls two
-distinct origins, the two namespaces under those origins are distinct
-unless explicitly aliased by a server authoritative for that origin.
+두 오리진은 그들이 사용하는 체계, 호스트, 또는 포트가 다르면 구분된다. 구별되는 두 오리진이 같은 개체에 의해 제어되는게 확실할 때 조차, 오리진들 아래의 두 네임스페이스들은 해당 오리진에 대해 권한있는 서버에 의해 명시적으로 별칭이 지정되지 않은 한 구별된다.
 
 Origin is also used within HTML and related Web protocols, beyond the
 scope of this document, as described in [RFC6454].
+
+오리진은 또한, 이 문서의 범위를 넘어, [[RFC6454](https://datatracker.ietf.org/doc/html/rfc6454)]에 서술된대로, HTML 그리고 그와 관련된 웹 프로토콜에서도 사용된다.
 
 ### 4.3.2. http 오리진들
 
