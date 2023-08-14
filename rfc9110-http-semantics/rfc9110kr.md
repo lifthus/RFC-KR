@@ -769,41 +769,15 @@ scope of this document, as described in [RFC6454].
 
 ### 4.3.2. http 오리진들
 
-Although HTTP is independent of the transport protocol, the "http"
-scheme (Section 4.2.1) is specific to associating authority with
-whomever controls the origin server listening for TCP connections on
-the indicated port of whatever host is identified within the
-authority component. This is a very weak sense of authority because
-it depends on both client-specific name resolution mechanisms and
-communication that might not be secured from an on-path attacker.
-Nevertheless, it is a sufficient minimum for binding "http"
-identifiers to an origin server for consistent resolution within a
-trusted environment.
+HTTP가 전송 프로토콜과는 별개이긴 하지만, "http" 체계(4.2.1절)는 권한 요소 내에서 식별된 모든 종류의 호스트의 지정된 포트에서 TCP 연결을 대기하고 있는 오리진 서버를 제어하고 있다면 그게 누구든 상관없이 권한과 연관짓는데 특화돼있다. 이는 권한에 관해 매우 취약한 의식이라할 수 있는데, 이것이 on-path 공격자에게서 안전하지 않을지 모르는 클라이언트 지정 이름 결정 메커니즘과 통신에 의존하기 때문이다. 그럼에도 불구하고, 이는 신뢰되는 환경 내의 일관적인 결정을 위해 "http" 식별자들을 한 오리진 서버에 바인딩하기에는 충분한 최소치다.
 
-If the host identifier is provided as an IP address, the origin
-server is the listener (if any) on the indicated TCP port at that IP
-address. If host is a registered name, the registered name is an
-indirect identifier for use with a name resolution service, such as
-DNS, to find an address for an appropriate origin server.
+만약 호스트 식별자가 IP 주소로 제공된다면, 오리진 서버는 (만약 있다면) 해당 IP 주소의 지정된 TCP 포트의 수신대기자다. 만약 호스트가 등록된 이름이라면, 등록된 이름은, DNS 같은, 적절한 오리진 서버의 주소를 찾기 위해 이름 결정 서비스와 함께 사용되기 위한 간접 식별자다.
 
-When an "http" URI is used within a context that calls for access to
-the indicated resource, a client MAY attempt access by resolving the
-host identifier to an IP address, establishing a TCP connection to
-that address on the indicated port, and sending over that connection
-an HTTP request message containing a request target that matches the
-client's target URI (Section 7.1).
+"http" URI가 지정된 리소스로의 접근을 요청하는 용도로 사용될 때, 클라이언트는 아마(MAY) 호스트 식별자를 IP 주소로 결정하여, 해당 주소의 지정된 포트로 TCP 연결을 수립하고, 해당 연결을 통해 클랑이언트의 타겟 URI와 매치되는 요청 타겟을 담은 HTTP 요청 메시지를 보내며 접근을 시도할 수도 있을 것이다(7.1절).
 
-If the server responds to such a request with a non-interim HTTP
-response message, as described in Section 15, then that response is
-considered an authoritative answer to the client's request.
+만약 서버가 15절에 서술된대로, 그러한 요청에 non-interim HTTP 응답 메시지로 응답한다면, 해당 응답은 클라이언트의 요청에 대해 권위있는 답변으로 간주된다.
 
-Note, however, that the above is not the only means for obtaining an
-authoritative response, nor does it imply that an authoritative
-response is always necessary (see [CACHING]). For example, the Alt-
-Svc header field [ALTSVC] allows an origin server to identify other
-services that are also authoritative for that origin. Access to
-"http" identified resources might also be provided by protocols
-outside the scope of this document.
+그러나, 위 내용이 권위있는 대답을 얻기위한 유일한 방법은 아니고, 권위있는 응답이 항상 필수인 것을 의미하지는 않는다는 것을 명심하라 ([[CACHING](https://www.rfc-editor.org/info/rfc9111)] 참조). 예를 들어, Alt-Svc 헤더 필드 [[ALTSVC](https://www.rfc-editor.org/info/rfc7838)]는 오리진 서버가 마찬가지로 해당 오리진에 대해 권위있는 다른 서비스들을 식별하도록 허용한다. "http"로 식별된 자원들에 대한 접근은 또한 이 문서의 범위를 벗어나는 프로토콜들에 의해서도 제공된다.
 
 ### 4.3.3. https 오리진들
 
