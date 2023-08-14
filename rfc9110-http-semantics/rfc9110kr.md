@@ -769,16 +769,7 @@ scope of this document, as described in [RFC6454].
 
 ### 4.3.2. http 오리진들
 
-Although HTTP is independent of the transport protocol, the "http"
-scheme (Section 4.2.1) is specific to associating authority with
-whomever controls the origin server listening for TCP connections on
-the indicated port of whatever host is identified within the
-authority component. This is a very weak sense of authority because
-it depends on both client-specific name resolution mechanisms and
-communication that might not be secured from an on-path attacker.
-Nevertheless, it is a sufficient minimum for binding "http"
-identifiers to an origin server for consistent resolution within a
-trusted environment.
+HTTP가 전송 프로토콜과는 별개이긴 하지만, "http" 체계(4.2.1절)는 권한 요소 내에서 식별된 모든 종류의 호스트의 지정된 포트에서 TCP 연결을 대기하고 있는 오리진 서버를 제어하고 있다면 그게 누구든 상관없이 권한과 연관짓는데 특화돼있다. 이는 권한에 관해 매우 취약한 의식이라할 수 있는데, 이것이 on-path 공격자에게서 안전하지 않을지 모르는 클라이언트 지정 이름 결정 메커니즘과 통신에 의존하기 때문이다. 그럼에도 불구하고, 이는 신뢰되는 환경 내의 일관적인 결정을 위해 "http" 식별자들을 한 오리진 서버에 바인딩하기에는 충분한 최소치다.
 
 If the host identifier is provided as an IP address, the origin
 server is the listener (if any) on the indicated TCP port at that IP
