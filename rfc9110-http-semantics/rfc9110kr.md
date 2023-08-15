@@ -354,15 +354,15 @@ Resources 9. Methods
 Appendix A. Collected ABNF
 Appendix B. Changes from Previous RFCs
 
-[B.1. RFC 2818로 부터의 변화](#B1-RFC-2818로-부터의-변화)
-[B.2. RFC 7230로 부터의 변화](#B2-RFC-7230로-부터의-변화)
-[B.3. RFC 7231로 부터의 변화](#B3-RFC-7231로-부터의-변화)
-[B.4. RFC 7232로 부터의 변화](#B4-RFC-7232로-부터의-변화)
-[B.5. RFC 7233로 부터의 변화](#B5-RFC-7233로-부터의-변화)
-[B.6. RFC 7235로 부터의 변화](#B6-RFC-7235로-부터의-변화)
-[B.7. RFC 7538로 부터의 변화](#B7-RFC-7538로-부터의-변화)
-[B.8. RFC 7615로 부터의 변화](#B8-RFC-7615로-부터의-변화)
-[B.9. RFC 7694로 부터의 변화](#B9-RFC-7694로-부터의-변화)
+[B.1. RFC 2818로부터의 변화](#B1-RFC-2818로-부터의-변화)
+[B.2. RFC 7230로부터의 변화](#B2-RFC-7230로-부터의-변화)
+[B.3. RFC 7231로부터의 변화](#B3-RFC-7231로-부터의-변화)
+[B.4. RFC 7232로부터의 변화](#B4-RFC-7232로-부터의-변화)
+[B.5. RFC 7233로부터의 변화](#B5-RFC-7233로-부터의-변화)
+[B.6. RFC 7235로부터의 변화](#B6-RFC-7235로-부터의-변화)
+[B.7. RFC 7538로부터의 변화](#B7-RFC-7538로-부터의-변화)
+[B.8. RFC 7615로부터의 변화](#B8-RFC-7615로-부터의-변화)
+[B.9. RFC 7694로부터의 변화](#B9-RFC-7694로-부터의-변화)
 Acknowledgements
 Index
 Authors' Addresses
@@ -469,7 +469,7 @@ HTTP에 속하는 많은 프로토콜 요소들의 적절한 길이라 하면, �
 
 수신자는 (경험이나 설정을 통해) 발신자가 그 의미체계에서 내포하는 것들을 잘못 구현하고 있다고 판단하지 않은 이상에는 반드시(MUST) 수신한 프로토콜 요소를 이 문서의 확장과 이 문서에 정의된 의미체계에 따라 해석해야 한다. 예를 들어, 오리진 서버는 User-Agent 헤더가 특정 콘텐츠 코딩 수신을 실패한다고 알려진 특정한 구현 버전을 가리키고 있을 때 수신된 Accept-Encoding 헤더 필드의 내용을 무시할 수 있을 것이다.
 
-별도의 언급이 없는한, 수신자는 아마(MAY) 사용 가능한 프로토콜 요소를 잘못된 구조로 부터 복원하는 것을 시도할 수 있을 것이다. HTTP는 보안에 직접적인 영향을 줄 때를 제외하고는 특정한 에러 핸들링 메커니즘을 정의하지 않는다. 예를 들어, 웹 브라우저는 Location 헤더 필드가 ABNF에 따라 파싱되지 않는 응답을 투명하게 복원하길 원할 수 있는 반면, 시스템 제어 클라이언트는 에러 복원은 어떠한 형태든지 위험하다고 여길 수 있을 것이다.
+별도의 언급이 없는한, 수신자는 아마(MAY) 사용 가능한 프로토콜 요소를 잘못된 구조로부터 복원하는 것을 시도할 수 있을 것이다. HTTP는 보안에 직접적인 영향을 줄 때를 제외하고는 특정한 에러 핸들링 메커니즘을 정의하지 않는다. 예를 들어, 웹 브라우저는 Location 헤더 필드가 ABNF에 따라 파싱되지 않는 응답을 투명하게 복원하길 원할 수 있는 반면, 시스템 제어 클라이언트는 에러 복원은 어떠한 형태든지 위험하다고 여길 수 있을 것이다.
 
 9.2.2절에 기술된대로, 일부 요청들은 기반이 되는 연결의 실패 상황에서 클라이언트에 의해 자동으로 재시도될 수 있다.
 
@@ -495,7 +495,7 @@ HTTP는 World Wide Web(WWW) 아키텍처를 위해 만들어졌고 시간이 지
 
 HTTP 요청의 타겟은 "리소스"라고 불린다. HTTP는 리소스의 성질을 제한하지 않는다; 단지 리소스와의 상호작용에 사용될 수 있는 인터페이스를 정의한다. 대부분의 리소스들은 Uniform Resource Identifier(URI)에 의해 정의되며, 이에 대해 4절에서 설명한다.
 
-HTTP의 설계 목적 중 하나는 리소스의 식별을 리소스 의미체계로 부터 분리하는 것인데, 이는 요청 메소드(9절)와 몇몇 요청 수정 헤더 필드에 요청 의미체계를 부여함으로써 가능해진다. 리소스는 요청을 요청의 메소드의 의미체계와 일치하지 않는 방식으로 다룰 수 없다. 예를 들어, 리소스의 URI는 안전하지 않은 의미체계를 내포할 수도 있지만, 클라이언트는 리소스가 안전한 메소드(9.2.1절)의 요청을 처리할 때는 안전하지 않은 행동을 피할 것으로 기대할 수 있다.
+HTTP의 설계 목적 중 하나는 리소스의 식별을 리소스 의미체계로부터 분리하는 것인데, 이는 요청 메소드(9절)와 몇몇 요청 수정 헤더 필드에 요청 의미체계를 부여함으로써 가능해진다. 리소스는 요청을 요청의 메소드의 의미체계와 일치하지 않는 방식으로 다룰 수 없다. 예를 들어, 리소스의 URI는 안전하지 않은 의미체계를 내포할 수도 있지만, 클라이언트는 리소스가 안전한 메소드(9.2.1절)의 요청을 처리할 때는 안전하지 않은 행동을 피할 것으로 기대할 수 있다.
 
 HTTP는 타겟 리소스(7.1절)와 리소스들 간의 관계를 나타내기 위해 Uniform Resource Identifier([RFC3986](https://datatracker.ietf.org/doc/html/rfc3986)) 표준에 의존한다.
 
@@ -563,7 +563,7 @@ HTTP는 요청을 충족시키기 위해 연결 체인에 걸쳐 중개자들을
 
                                   Figure 2
 
-위의 그림은 유저 에이전트와 오리진 서버 간의 세 중개자들(A, B, 그리고 C)을 보여준다. 전체 체인을 지나가는 한 요청이나 응답은 별개인 네 개의 연결들을 통과할 것이다. 일부 HTTP 통신 옵션들은 오직 가장 가깝고, 터널이 아닌 이웃에, 오직 체인의 엔드포인트들에, 혹은 체인의 모든 연결들에 적용될 수 있다. 위 다이어그램은 선형이지만, 각 참가자들은 동시에 여러 통신들에 참여할 수 있다. 예를 들어, B는 A의 요구를 처리하는 동시에 A가 아닌 다른 많은 클라이언트로 부터 요청을 수신하고 있을 수도 있고, 그와 동시에 / 혹은 그와 별개로 C가 아닌 다른 서버로 요청들을 포워딩하고 있을 수도 있다. 마찬가지로, 나중의 요청들은 연결의 다른 경로를 통해 전송될 수 있는데, 이는 보통 로드 밸런싱을 위한 동적 설정에 기반한다.
+위의 그림은 유저 에이전트와 오리진 서버 간의 세 중개자들(A, B, 그리고 C)을 보여준다. 전체 체인을 지나가는 한 요청이나 응답은 별개인 네 개의 연결들을 통과할 것이다. 일부 HTTP 통신 옵션들은 오직 가장 가깝고, 터널이 아닌 이웃에, 오직 체인의 엔드포인트들에, 혹은 체인의 모든 연결들에 적용될 수 있다. 위 다이어그램은 선형이지만, 각 참가자들은 동시에 여러 통신들에 참여할 수 있다. 예를 들어, B는 A의 요구를 처리하는 동시에 A가 아닌 다른 많은 클라이언트로부터 요청을 수신하고 있을 수도 있고, 그와 동시에 / 혹은 그와 별개로 C가 아닌 다른 서버로 요청들을 포워딩하고 있을 수도 있다. 마찬가지로, 나중의 요청들은 연결의 다른 경로를 통해 전송될 수 있는데, 이는 보통 로드 밸런싱을 위한 동적 설정에 기반한다.
 
 "업스트림"과 "다운스트림"이라는 용어는 메시지 흐름과 관련한 방향에 관한 요구사항을 기술하는데 사용된다: 모든 메시지는 업스트림에서 다운스트림으로 흐른다. "인바운드"와 "아웃바운드"라는 용어는 요청 루트에 관련한 방향에 관한 요구사항을 기술하는데 사용된다: 인바운드는 "오리진 서버를 향해", 반면 아웃바운드는 "유저 에이전트를 향해"를 뜻한다.
 
@@ -781,72 +781,23 @@ HTTP가 전송 프로토콜과는 별개이긴 하지만, "http" 체계(4.2.1절
 
 ### 4.3.3. https 오리진들
 
-The "https" scheme (Section 4.2.2) associates authority based on the
-ability of a server to use the private key corresponding to a
-certificate that the client considers to be trustworthy for the
-identified origin server. The client usually relies upon a chain of
-trust, conveyed from some prearranged or configured trust anchor, to
-deem a certificate trustworthy (Section 4.3.4).
+"https" 체계(4.2.2절)는 권한을 서버가 식별된 오리진에 대해 클라이언트가 신뢰할 수 있는 것으로 간주하는 자격증명에 해당하는 개인 키를 사용할 수 있는가에 기반해 연관짓는다. 클라이언트는 한 자격증명을 신뢰가능하다고 간주하기 위해 보통, 미리 준비되거나 설정된 트러스트 앵커로부터 전달되는, 트러스트 체인에 의존한다(4.3.4절).
 
-In HTTP/1.1 and earlier, a client will only attribute authority to a
-server when they are communicating over a successfully established
-and secured connection specifically to that URI origin's host. The
-connection establishment and certificate verification are used as
-proof of authority.
+HTTP/1.1 이하 버전에서는, 클라이언트는 오직 성공적으로 수립된 보안 연결 상에서 통신하고 있을 때만 서버, 구체적으로는 해당 URI 오리진의 호스트에게 권한을 부여한다. 연결 수립과 자격 증명은 권한의 증거로 사용된다.
 
-In HTTP/2 and HTTP/3, a client will attribute authority to a server
-when they are communicating over a successfully established and
-secured connection if the URI origin's host matches any of the hosts
-present in the server's certificate and the client believes that it
-could open a connection to that host for that URI. In practice, a
-client will make a DNS query to check that the origin's host contains
-the same server IP address as the established connection. This
-restriction can be removed by the origin server sending an equivalent
-ORIGIN frame [RFC8336].
+HTTP/2와 HTTP/3에서는, 클라이언트는 URI 오리진의 호스트가 서버의 자격 증명에 나타나는 호스트들 중 어느 하나라도 매치되고 클라이언트가 해당 URI에 대한 해당 호스트에 대해 연결을 열 수 있겠다고 믿는다면 성공적으로 수립된 보안 연결 상에서 통신할 때 권한을 서버에게 부여한다. 실용적으로는, 클라이언트는 해당 오리진의 호스트가 수립된 연결과 같은 서버 IP 주소를 포함하고 있는지 확인하기 위해 DNS 쿼리를 할 것이다. 이 규약은 오리진 서버가 동등한 ORIGIN 프레임을 보냄으로써 제거될 수 있다[[RFC8336](https://datatracker.ietf.org/doc/html/rfc8336)].
 
-The request target's host and port value are passed within each HTTP
-request, identifying the origin and distinguishing it from other
-namespaces that might be controlled by the same server (Section 7.2).
-It is the origin's responsibility to ensure that any services
-provided with control over its certificate's private key are equally
-responsible for managing the corresponding "https" namespaces or at
-least prepared to reject requests that appear to have been
-misdirected (Section 7.4).
+요청 타겟의 호스트와 포트 값은 각 HTTP 요청 내에서 전달되고, 오리진을 식별하며 이를 같은 서버에 의해 통제되고 있을 수도 있는 다른 네임스페이스들로부터 구분한다(7.2절). 오리진 자격증명 개인 키 상의 통제와 함께 제공되는 어떠한 서비스든 그들이 해당 "https" 네임스페이스들을 관리하는데 있어 동등한 책임을 갖는 것 또는 최소한 잘못 전달된 것으로 나타나는 요청들을 거부할 준비가 되어있는 것을 확실히 하는 것은 오리진의 책임이다(7.4절).
 
-An origin server might be unwilling to process requests for certain
-target URIs even when they have the authority to do so. For example,
-when a host operates distinct services on different ports (e.g., 443
-and 8000), checking the target URI at the origin server is necessary
-(even after the connection has been secured) because a network
-attacker might cause connections for one port to be received at some
-other port. Failing to check the target URI might allow such an
-attacker to replace a response to one target URI (e.g.,
-"https://example.com/foo") with a seemingly authoritative response
-from the other port (e.g., "https://example.com:8000/foo").
+오리진 서버는 처리할 권한을 가지고 있음에도 특정 타겟 URI들에 대한 요청들은 처리하고 싶지 않을 수도 있다. 예를 들어, 호스트가 다른 포트들에서 별도의 서비스들을 구동할 때(443과 8000 같이), 오리진 서버에서 타겟 URI를 확인하는 것은 필수고(연결에 보안 설정이 된 경우에도) 이는 네트워크 공격자가 한 포트에 대한 연결들을 다른 포트에서 수신되도록 할 수도 있기 때문이다. 타겟 URI 체크의 실패는 그러한 공격자가 한 타겟 URI에 대한 응답("https://example.com/foo"에 대한 응답을)을 겉보기에는 권한을 가진 다른 포트로부터의 응답("https://example.com:8000/foo"의 응답으로)과 교체해버릴 수 있도록 한다.
 
-Note that the "https" scheme does not rely on TCP and the connected
-port number for associating authority, since both are outside the
-secured communication and thus cannot be trusted as definitive.
-Hence, the HTTP communication might take place over any channel that
-has been secured, as defined in Section 4.2.2, including protocols
-that don't use TCP.
+"https" 체계는 권한을 연관짓기 위해 TCP 그리고 연결된 포트 번호에 의존하지 않는다는 것을 명심하라, 이는 이 둘이 모두 보안 통신의 외부에 있고 그리하여 결정적인 것으로 신뢰될 수 없기 때문이다. 이렇게 해서, HTTP 통신은 TCP를 사용하지 않는 프로토콜들을 포함해, 어떠한 채널이든, 4.2.2절에 정의된대로, 보안 설정이 됐다면 이루어질 수 있다.
 
-When an "https" URI is used within a context that calls for access to
-the indicated resource, a client MAY attempt access by resolving the
-host identifier to an IP address, establishing a TCP connection to
-that address on the indicated port, securing the connection end-to-
-end by successfully initiating TLS over TCP with confidentiality and
-integrity protection, and sending over that connection an HTTP
-request message containing a request target that matches the client's
-target URI (Section 7.1).
+"https" URI가 지정된 리소스에 대한 접근을 요청하는 용도로 사용될 때, 클라이언트는 아마(MAY) 호스트 식별자를 IP 주소로 결정하여, 지정된 포트의 해당 주소로 TCP 연결을 수립하고, 성공적으로 비밀성과 무결성 보호를 제공하는 TLS over TCP 연결을 초기화함으로써 end-to-end 연결에 보안을 설정 후, 그 연결 상으로 클라이언트의 타겟 URI와 매치되는 요청 타겟을 포함하는 HTTP 요청 메시지를 보내며 접근을 시도할 수 있을 것이다(7.1절).
 
-If the server responds to such a request with a non-interim HTTP
-response message, as described in Section 15, then that response is
-considered an authoritative answer to the client's request.
+만약 서버가, 15절에 정의된대로, 그러한 요청에 non-interim HTTP 응답 메시지로 응답한다면, 해당 응답은 해당 클라이언트의 요청에 대해 권한 있는 응답으로 간주된다.
 
-Note, however, that the above is not the only means for obtaining an
-authoritative response, nor does it imply that an authoritative
-response is always necessary (see [CACHING]).
+그러나, 위의 내용이 권한 있는 응답을 얻거나, 권한 있는 응답이 항상 필수라는 것을 의미하지 않음을 명심하라([[CACHING](https://www.rfc-editor.org/info/rfc9111)] 참조).
 
 ### 4.3.4. https 자격 증명
 
