@@ -817,7 +817,7 @@ CN-ID 타입의 참조 신원을 절대(MUST NOT) 클라이언트에 의해 사�
 
 "https" URI의 "host" 필드에 IP 주소를 그대로 사용해 식별되는 서버는 IP-ID 타입의 참조 신원을 가진다. IP 버전 4 주소는 "IPv4address" ABNF 규칙을 사용하고, IP 버전 6 주소는 "IP-literal" 프로덕션을 "IPv6address" 옵션과 함께 사용한다; [[URI](https://www.rfc-editor.org/info/rfc3986)]의 3.2.2절을 참조하라. IP-ID의 참조 신원은 IP 주소의 디코딩된 바이트들을 포함한다.
 
-IP 버전 4 주소는 4 옥텟이고, IP 버전 6의 주소는 16 옥텟이다. IP-ID의 사용은 어떠한 다른 IP 버전들에 대해서도 정의되어 있지 않다. certificate subjectAltname 확장의 iPAddress choice는 명시적으로 IP 버전을 포함하지 않고 그래서 버전들을 구분하기 위해 주소의 길이에 의존한다; [[RFC5280](https://datatracker.ietf.org/doc/html/rfc5280)]의 4.2.1.6절을 참조하라.
+IP 버전 4 주소는 4 옥텟이고, IP 버전 6의 주소는 16 옥텟이다. IP-ID의 사용은 어떠한 다른 IP 버전들에 대해서도 정의되어 있지 않다. 인증서 subjectAltname 확장의 iPAddress choice는 명시적으로 IP 버전을 포함하지 않고 그래서 버전들을 구분하기 위해 주소의 길이에 의존한다; [[RFC5280](https://datatracker.ietf.org/doc/html/rfc5280)]의 4.2.1.6절을 참조하라.
 
 IP-ID 타입의 참조 신원은 주소가 인증서의 subjectAltName 확장의 iPAddress 값과 동일하면 매치된다.
 
