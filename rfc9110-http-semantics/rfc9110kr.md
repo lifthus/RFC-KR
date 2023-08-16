@@ -801,45 +801,17 @@ HTTP/2와 HTTP/3에서는, 클라이언트는 URI 오리진의 호스트가 서�
 
 ### 4.3.4. https 인증서 검증
 
-To establish a secured connection to dereference a URI, a client MUST
-verify that the service's identity is an acceptable match for the
-URI's origin server. Certificate verification is used to prevent
-server impersonation by an on-path attacker or by an attacker that
-controls name resolution. This process requires that a client be
-configured with a set of trust anchors.
+한 URI를 역참조하기 위해 보안 연결을 수립하려면, 클라이언트는 반드시(MUST) 서비스의 신원이 해당 URI의 오리진 서버와 매치되는지를 확인해야 한다. 인증서 검증은 on-path 공격자나 이름 결정 시스템을 제어하는 공격자가 서버로 가장하는 것을 방지하기 위해 행해진다. 이 프로세스는 클라이언트가 트러스트 앵커들의 집합으로 구성될 것을 요구한다.
 
-한 URI를 역참조하기 위해 보안 연결을 수립하려면, 클라이언트는 반드시(MUST) 서비스의 신원이 해당 URI의 오리진 서버와 매치되는지를 확인해야 한다.
+일반적으로, 클라이언트는 반드시(MUST) [[RFC6125](https://datatracker.ietf.org/doc/html/rfc6125)]의 6절에 정의된 검증 프로세스를 사용해 서비스의 신원을 검증해야 한다. 클라이언트는 반드시(MUST) 서비스의 호스트로부터 참조 신원을 구성해야 한다: 만약 호스트가 IP 주소 그대로라면(4.3.5절), 참조 신원은 IP-ID이고, 그렇지 않다면 호스트는 이름이고 참조 신원은 DNS-ID이다.
 
-In general, a client MUST verify the service identity using the
-verification process defined in Section 6 of [RFC6125]. The client
-MUST construct a reference identity from the service's host: if the
-host is a literal IP address (Section 4.3.5), the reference identity
-is an IP-ID, otherwise the host is a name and the reference identity
-is a DNS-ID.
+CN-ID 타입의 참조 신원을 절대(MUST NOT) 클라이언트에 의해 사용되어서는 안된다. [[RFC6125](https://datatracker.ietf.org/doc/html/rfc6125)]의 6.2.1절에 나와있는대로, CN-ID 타입의 참조 신원은 더 오래된 클라이언트들에 의해 사용될지 모른다.
 
-A reference identity of type CN-ID MUST NOT be used by clients. As
-noted in Section 6.2.1 of [RFC6125], a reference identity of type CN-
-ID might be used by older clients.
+클라이언트는 특별히 대체된 형태의 서버 신원 검증을 받도록 설정될 수도 있다. 예를 들어, 클라이언트는 서비스가 타겟 URI의 오리진에 매치되는 대신 다른 형태의 특정한 인증서(혹은 외부적으로 정의된 참조 신원과 매칭되는 인증서)를 제시할 것이라는 기대와 함께, 주소와 호스트명이 동적인 서버에 연결하려 할 수도 있다.
 
-A client might be specially configured to accept an alternative form
-of server identity verification. For example, a client might be
-connecting to a server whose address and hostname are dynamic, with
-an expectation that the service will present a specific certificate
-(or a certificate matching some externally defined reference
-identity) rather than one matching the target URI's origin.
+특별한 경우들에서, 클라이언트가 간단히 서버의 신원을 무시해버리는게 적절할 수도 있지만, 이는 연결을 액티브 어택에 노출시킨다는 사실이 반드시 이해되어야 한다.
 
-In special cases, it might be appropriate for a client to simply
-ignore the server's identity, but it must be understood that this
-leaves a connection open to active attack.
-
-If the certificate is not valid for the target URI's origin, a user
-agent MUST either obtain confirmation from the user before proceeding
-(see Section 3.5) or terminate the connection with a bad certificate
-error. Automated clients MUST log the error to an appropriate audit
-log (if available) and SHOULD terminate the connection (with a bad
-certificate error). Automated clients MAY provide a configuration
-setting that disables this check, but MUST provide a setting which
-enables it.
+만약 인증서가 타겟 URI의 오리진에 대해 유효하지 않다면, 유저 에이전트는 반드시(MUST) 더 진행하기 전에 유저에게 확인을 받거나(3.5절 차조) bad certificate 에러와 함께 연결을 종료해야 한다. 자동화된 클라이언트들은 반드시(MUST) 적절한 감사 로그(가용하다면)에 에러 로그를 남겨하고 웬만하면(SHOULD) 해당 연결을 종료해야한다(bad certificate 에러와 함께). 자동화된 클라이언트들은 아마(MAY) 이 체크를 비활성화하는 설정을 제공할 수도 있지만, 반드시(MUST) 이를 활성화하는 설정을 제공해야 한다.
 
 ### 4.3.5. IP-ID 레퍼런스 신원
 
