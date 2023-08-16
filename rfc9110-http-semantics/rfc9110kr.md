@@ -102,7 +102,7 @@ than English.
 ㄴ [4.3.2. http 오리진들](#432-http-오리진들)
 ㄴ [4.3.3. https 오리진들](#433-https-오리진들)
 ㄴ [4.3.4. https 인증서 검증](#434-https-인증서-검증)
-ㄴ [4.3.5. IP-ID 레퍼런스 신원](#435-ip-id-레퍼런스-신원)
+ㄴ [4.3.5. IP-ID 참조 신원](#435-ip-id-참조-신원)
 
 ###### [5. 필드](#5-필드)
 
@@ -813,25 +813,13 @@ CN-ID 타입의 참조 신원을 절대(MUST NOT) 클라이언트에 의해 사�
 
 만약 인증서가 타겟 URI의 오리진에 대해 유효하지 않다면, 유저 에이전트는 반드시(MUST) 더 진행하기 전에 유저에게 확인을 받거나(3.5절 차조) bad certificate 에러와 함께 연결을 종료해야 한다. 자동화된 클라이언트들은 반드시(MUST) 적절한 감사 로그(가용하다면)에 에러 로그를 남겨하고 웬만하면(SHOULD) 해당 연결을 종료해야한다(bad certificate 에러와 함께). 자동화된 클라이언트들은 아마(MAY) 이 체크를 비활성화하는 설정을 제공할 수도 있지만, 반드시(MUST) 이를 활성화하는 설정을 제공해야 한다.
 
-### 4.3.5. IP-ID 레퍼런스 신원
+### 4.3.5. IP-ID 참조 신원
 
-A server that is identified using an IP address literal in the "host"
-field of an "https" URI has a reference identity of type IP-ID. An
-IP version 4 address uses the "IPv4address" ABNF rule, and an IP
-version 6 address uses the "IP-literal" production with the
-"IPv6address" option; see Section 3.2.2 of [URI]. A reference
-identity of IP-ID contains the decoded bytes of the IP address.
+"https" URI의 "host" 필드에 IP 주소를 그대로 사용해 식별되는 서버는 IP-ID 타입의 참조 신원을 가진다. IP 버전 4 주소는 "IPv4address" ABNF 규칙을 사용하고, IP 버전 6 주소는 "IP-literal" 프로덕션을 "IPv6address" 옵션과 함께 사용한다; [[URI](https://www.rfc-editor.org/info/rfc3986)]의 3.2.2절을 참조하라. IP-ID의 참조 신원은 IP 주소의 디코딩된 바이트들을 포함한다.
 
-An IP version 4 address is 4 octets, and an IP version 6 address is
-16 octets. Use of IP-ID is not defined for any other IP version.
-The iPAddress choice in the certificate subjectAltName extension does
-not explicitly include the IP version and so relies on the length of
-the address to distinguish versions; see Section 4.2.1.6 of
-[RFC5280].
+IP 버전 4 주소는 4 옥텟이고, IP 버전 6의 주소는 16 옥텟이다. IP-ID의 사용은 어떠한 다른 IP 버전들에 대해서도 정의되어 있지 않다. certificate subjectAltname 확장의 iPAddress choice는 명시적으로 IP 버전을 포함하지 않고 그래서 버전들을 구분하기 위해 주소의 길이에 의존한다; [[RFC5280](https://datatracker.ietf.org/doc/html/rfc5280)]의 4.2.1.6절을 참조하라.
 
-A reference identity of type IP-ID matches if the address is
-identical to an iPAddress value of the subjectAltName extension of
-the certificate.
+IP-ID 타입의 참조 신원은 주소가 인증서의 subjectAltName 확장의 iPAddress 값과 동일하면 매치된다.
 
 5.  Fields
 
