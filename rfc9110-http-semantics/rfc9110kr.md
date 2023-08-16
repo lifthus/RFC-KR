@@ -821,7 +821,7 @@ IP 버전 4 주소는 4 옥텟이고, IP 버전 6의 주소는 16 옥텟이다. 
 
 IP-ID 타입의 참조 신원은 주소가 인증서의 subjectAltName 확장의 iPAddress 값과 동일하면 매치된다.
 
-5.  Fields
+## 5. 필드
 
 HTTP uses "fields" to provide data in the form of extensible name/
 value pairs with a registered key namespace. Fields are sent and
