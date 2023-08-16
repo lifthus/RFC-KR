@@ -101,8 +101,8 @@ than English.
 ㄴ [4.3.1. URI 오리진](#431-uri-오리진)
 ㄴ [4.3.2. http 오리진들](#432-http-오리진들)
 ㄴ [4.3.3. https 오리진들](#433-https-오리진들)
-ㄴ [4.3.4. https 자격 증명](#434-https-자격-증명)
-ㄴ [4.3.5. IP-ID 레퍼런스 신원](#435-ip-id-레퍼런스-신원)
+ㄴ [4.3.4. https 인증서 검증](#434-https-인증서-검증)
+ㄴ [4.3.5. IP-ID 참조 신원](#435-ip-id-참조-신원)
 
 ###### [5. 필드](#5-필드)
 
@@ -781,13 +781,13 @@ HTTP가 전송 프로토콜과는 별개이긴 하지만, "http" 체계(4.2.1절
 
 ### 4.3.3. https 오리진들
 
-"https" 체계(4.2.2절)는 권한을 서버가 식별된 오리진에 대해 클라이언트가 신뢰할 수 있는 것으로 간주하는 자격증명에 해당하는 개인 키를 사용할 수 있는가에 기반해 연관짓는다. 클라이언트는 한 자격증명을 신뢰가능하다고 간주하기 위해 보통, 미리 준비되거나 설정된 트러스트 앵커로부터 전달되는, 트러스트 체인에 의존한다(4.3.4절).
+"https" 체계(4.2.2절)는 권한을 서버가 식별된 오리진에 대해 클라이언트가 신뢰할 수 있는 것으로 간주하는 인증서에 해당하는 개인 키를 사용할 수 있는가에 기반해 연관짓는다. 클라이언트는 한 인증서를 신뢰가능하다고 간주하기 위해 보통, 미리 준비되거나 설정된 트러스트 앵커로부터 전달되는, 트러스트 체인에 의존한다(4.3.4절).
 
-HTTP/1.1 이하 버전에서는, 클라이언트는 오직 성공적으로 수립된 보안 연결 상에서 통신하고 있을 때만 서버, 구체적으로는 해당 URI 오리진의 호스트에게 권한을 부여한다. 연결 수립과 자격 증명은 권한의 증거로 사용된다.
+HTTP/1.1 이하 버전에서는, 클라이언트는 오직 성공적으로 수립된 보안 연결 상에서 통신하고 있을 때만 서버, 구체적으로는 해당 URI 오리진의 호스트에게 권한을 부여한다. 연결 수립과 인증서 검증은 권한의 증거로 사용된다.
 
-HTTP/2와 HTTP/3에서는, 클라이언트는 URI 오리진의 호스트가 서버의 자격 증명에 나타나는 호스트들 중 어느 하나라도 매치되고 클라이언트가 해당 URI에 대한 해당 호스트에 대해 연결을 열 수 있겠다고 믿는다면 성공적으로 수립된 보안 연결 상에서 통신할 때 권한을 서버에게 부여한다. 실용적으로는, 클라이언트는 해당 오리진의 호스트가 수립된 연결과 같은 서버 IP 주소를 포함하고 있는지 확인하기 위해 DNS 쿼리를 할 것이다. 이 규약은 오리진 서버가 동등한 ORIGIN 프레임을 보냄으로써 제거될 수 있다[[RFC8336](https://datatracker.ietf.org/doc/html/rfc8336)].
+HTTP/2와 HTTP/3에서는, 클라이언트는 URI 오리진의 호스트가 서버의 인증서에 나타나는 호스트들 중 어느 하나라도 매치되고 클라이언트가 해당 URI에 대한 해당 호스트에 대해 연결을 열 수 있겠다고 믿는다면 성공적으로 수립된 보안 연결 상에서 통신할 때 권한을 서버에게 부여한다. 실용적으로는, 클라이언트는 해당 오리진의 호스트가 수립된 연결과 같은 서버 IP 주소를 포함하고 있는지 확인하기 위해 DNS 쿼리를 할 것이다. 이 규약은 오리진 서버가 동등한 ORIGIN 프레임을 보냄으로써 제거될 수 있다[[RFC8336](https://datatracker.ietf.org/doc/html/rfc8336)].
 
-요청 타겟의 호스트와 포트 값은 각 HTTP 요청 내에서 전달되고, 오리진을 식별하며 이를 같은 서버에 의해 통제되고 있을 수도 있는 다른 네임스페이스들로부터 구분한다(7.2절). 오리진 자격증명 개인 키 상의 통제와 함께 제공되는 어떠한 서비스든 그들이 해당 "https" 네임스페이스들을 관리하는데 있어 동등한 책임을 갖는 것 또는 최소한 잘못 전달된 것으로 나타나는 요청들을 거부할 준비가 되어있는 것을 확실히 하는 것은 오리진의 책임이다(7.4절).
+요청 타겟의 호스트와 포트 값은 각 HTTP 요청 내에서 전달되고, 오리진을 식별하며 이를 같은 서버에 의해 통제되고 있을 수도 있는 다른 네임스페이스들로부터 구분한다(7.2절). 오리진 인증서의 개인 키 상의 통제와 함께 제공되는 어떠한 서비스든 그들이 해당 "https" 네임스페이스들을 관리하는데 있어 동등한 책임을 갖는 것 또는 최소한 잘못 전달된 것으로 나타나는 요청들을 거부할 준비가 되어있는 것을 확실히 하는 것은 오리진의 책임이다(7.4절).
 
 오리진 서버는 처리할 권한을 가지고 있음에도 특정 타겟 URI들에 대한 요청들은 처리하고 싶지 않을 수도 있다. 예를 들어, 호스트가 다른 포트들에서 별도의 서비스들을 구동할 때(443과 8000 같이), 오리진 서버에서 타겟 URI를 확인하는 것은 필수고(연결에 보안 설정이 된 경우에도) 이는 네트워크 공격자가 한 포트에 대한 연결들을 다른 포트에서 수신되도록 할 수도 있기 때문이다. 타겟 URI 체크의 실패는 그러한 공격자가 한 타겟 URI에 대한 응답("https://example.com/foo"에 대한 응답을)을 겉보기에는 권한을 가진 다른 포트로부터의 응답("https://example.com:8000/foo"의 응답으로)과 교체해버릴 수 있도록 한다.
 
@@ -799,65 +799,27 @@ HTTP/2와 HTTP/3에서는, 클라이언트는 URI 오리진의 호스트가 서�
 
 그러나, 위의 내용이 권한 있는 응답을 얻거나, 권한 있는 응답이 항상 필수라는 것을 의미하지 않음을 명심하라([[CACHING](https://www.rfc-editor.org/info/rfc9111)] 참조).
 
-### 4.3.4. https 자격 증명
+### 4.3.4. https 인증서 검증
 
-To establish a secured connection to dereference a URI, a client MUST
-verify that the service's identity is an acceptable match for the
-URI's origin server. Certificate verification is used to prevent
-server impersonation by an on-path attacker or by an attacker that
-controls name resolution. This process requires that a client be
-configured with a set of trust anchors.
+한 URI를 역참조하기 위해 보안 연결을 수립하려면, 클라이언트는 반드시(MUST) 서비스의 신원이 해당 URI의 오리진 서버와 매치되는지를 확인해야 한다. 인증서 검증은 on-path 공격자나 이름 결정 시스템을 제어하는 공격자가 서버로 가장하는 것을 방지하기 위해 행해진다. 이 프로세스는 클라이언트가 트러스트 앵커들의 집합으로 구성될 것을 요구한다.
 
-In general, a client MUST verify the service identity using the
-verification process defined in Section 6 of [RFC6125]. The client
-MUST construct a reference identity from the service's host: if the
-host is a literal IP address (Section 4.3.5), the reference identity
-is an IP-ID, otherwise the host is a name and the reference identity
-is a DNS-ID.
+일반적으로, 클라이언트는 반드시(MUST) [[RFC6125](https://datatracker.ietf.org/doc/html/rfc6125)]의 6절에 정의된 검증 프로세스를 사용해 서비스의 신원을 검증해야 한다. 클라이언트는 반드시(MUST) 서비스의 호스트로부터 참조 신원을 구성해야 한다: 만약 호스트가 IP 주소 그대로라면(4.3.5절), 참조 신원은 IP-ID이고, 그렇지 않다면 호스트는 이름이고 참조 신원은 DNS-ID이다.
 
-A reference identity of type CN-ID MUST NOT be used by clients. As
-noted in Section 6.2.1 of [RFC6125], a reference identity of type CN-
-ID might be used by older clients.
+CN-ID 타입의 참조 신원을 절대(MUST NOT) 클라이언트에 의해 사용되어서는 안된다. [[RFC6125](https://datatracker.ietf.org/doc/html/rfc6125)]의 6.2.1절에 나와있는대로, CN-ID 타입의 참조 신원은 더 오래된 클라이언트들에 의해 사용될지 모른다.
 
-A client might be specially configured to accept an alternative form
-of server identity verification. For example, a client might be
-connecting to a server whose address and hostname are dynamic, with
-an expectation that the service will present a specific certificate
-(or a certificate matching some externally defined reference
-identity) rather than one matching the target URI's origin.
+클라이언트는 특별히 대체된 형태의 서버 신원 검증을 받도록 설정될 수도 있다. 예를 들어, 클라이언트는 서비스가 타겟 URI의 오리진에 매치되는 대신 다른 형태의 특정한 인증서(혹은 외부적으로 정의된 참조 신원과 매칭되는 인증서)를 제시할 것이라는 기대와 함께, 주소와 호스트명이 동적인 서버에 연결하려 할 수도 있다.
 
-In special cases, it might be appropriate for a client to simply
-ignore the server's identity, but it must be understood that this
-leaves a connection open to active attack.
+특별한 경우들에서, 클라이언트가 간단히 서버의 신원을 무시해버리는게 적절할 수도 있지만, 이는 연결을 액티브 어택에 노출시킨다는 사실이 반드시 이해되어야 한다.
 
-If the certificate is not valid for the target URI's origin, a user
-agent MUST either obtain confirmation from the user before proceeding
-(see Section 3.5) or terminate the connection with a bad certificate
-error. Automated clients MUST log the error to an appropriate audit
-log (if available) and SHOULD terminate the connection (with a bad
-certificate error). Automated clients MAY provide a configuration
-setting that disables this check, but MUST provide a setting which
-enables it.
+만약 인증서가 타겟 URI의 오리진에 대해 유효하지 않다면, 유저 에이전트는 반드시(MUST) 더 진행하기 전에 유저에게 확인을 받거나(3.5절 차조) bad certificate 에러와 함께 연결을 종료해야 한다. 자동화된 클라이언트들은 반드시(MUST) 적절한 감사 로그(가용하다면)에 에러 로그를 남겨하고 웬만하면(SHOULD) 해당 연결을 종료해야한다(bad certificate 에러와 함께). 자동화된 클라이언트들은 아마(MAY) 이 체크를 비활성화하는 설정을 제공할 수도 있지만, 반드시(MUST) 이를 활성화하는 설정을 제공해야 한다.
 
-### 4.3.5. IP-ID 레퍼런스 신원
+### 4.3.5. IP-ID 참조 신원
 
-A server that is identified using an IP address literal in the "host"
-field of an "https" URI has a reference identity of type IP-ID. An
-IP version 4 address uses the "IPv4address" ABNF rule, and an IP
-version 6 address uses the "IP-literal" production with the
-"IPv6address" option; see Section 3.2.2 of [URI]. A reference
-identity of IP-ID contains the decoded bytes of the IP address.
+"https" URI의 "host" 필드에 IP 주소를 그대로 사용해 식별되는 서버는 IP-ID 타입의 참조 신원을 가진다. IP 버전 4 주소는 "IPv4address" ABNF 규칙을 사용하고, IP 버전 6 주소는 "IP-literal" 프로덕션을 "IPv6address" 옵션과 함께 사용한다; [[URI](https://www.rfc-editor.org/info/rfc3986)]의 3.2.2절을 참조하라. IP-ID의 참조 신원은 IP 주소의 디코딩된 바이트들을 포함한다.
 
-An IP version 4 address is 4 octets, and an IP version 6 address is
-16 octets. Use of IP-ID is not defined for any other IP version.
-The iPAddress choice in the certificate subjectAltName extension does
-not explicitly include the IP version and so relies on the length of
-the address to distinguish versions; see Section 4.2.1.6 of
-[RFC5280].
+IP 버전 4 주소는 4 옥텟이고, IP 버전 6의 주소는 16 옥텟이다. IP-ID의 사용은 어떠한 다른 IP 버전들에 대해서도 정의되어 있지 않다. 인증서 subjectAltname 확장의 iPAddress choice는 명시적으로 IP 버전을 포함하지 않고 그래서 버전들을 구분하기 위해 주소의 길이에 의존한다; [[RFC5280](https://datatracker.ietf.org/doc/html/rfc5280)]의 4.2.1.6절을 참조하라.
 
-A reference identity of type IP-ID matches if the address is
-identical to an iPAddress value of the subjectAltName extension of
-the certificate.
+IP-ID 타입의 참조 신원은 주소가 인증서의 subjectAltName 확장의 iPAddress 값과 동일하면 매치된다.
 
 5.  Fields
 
