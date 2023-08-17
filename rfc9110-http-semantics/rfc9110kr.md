@@ -823,10 +823,7 @@ IP-ID 타입의 참조 신원은 주소가 인증서의 subjectAltName 확장의
 
 ## 5. 필드
 
-HTTP uses "fields" to provide data in the form of extensible name/
-value pairs with a registered key namespace. Fields are sent and
-received within the header and trailer sections of messages
-(Section 6).
+HTTP는 미리 등록된 키 네임스페이스와 함께 확장 가능한 이름/값 쌍 형태의 데이터를 제공하기 위해 "필드"를 사용한다. 필드는 메시지의 헤더와 트레일러 섹션 내에서 보내지고 수신된다(6절).
 
 5.1. Field Names
 
