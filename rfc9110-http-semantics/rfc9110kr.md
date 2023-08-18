@@ -852,7 +852,7 @@ HTTP는 미리 등록된 키 네임스페이스와 함께 확장 가능한 이�
 
 두 필드 라인을 포함하며, 둘 다 필드 이름이 "Example-Field"이다. 첫번째 필드 라인은 필드 라인 값으로 "Foo, Bar"를 가진 반면, 두번째 필드 라인 값은 "Baz"다. "Example-Field"의 필드 값은 리스트 "Foo, Bar, Baz"가 된다.
 
-5.3. Field Order
+### 5.3. 필드 순서
 
 A recipient MAY combine multiple field lines within a field section
 that have the same field name into one field line, without changing
