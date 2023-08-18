@@ -841,26 +841,16 @@ HTTP는 미리 등록된 키 네임스페이스와 함께 확장 가능한 이�
 
 ### 5.2. 필드 라인들과 조합된 필드 값
 
-Field sections are composed of any number of "field lines", each with
-a "field name" (see Section 5.1) identifying the field, and a "field
-line value" that conveys data for that instance of the field.
+필드 섹션들은 아무 개수의 "필드 라인"들로 구성되고, 각각은 해당 필드를 식별하는 "필드 이름"(5.1절 참조), 그리고 필드의 해당 인스턴스에 대한 데이터를 전달하는 "필드 라인 값"과 함께 한다.
 
-When a field name is only present once in a section, the combined
-"field value" for that field consists of the corresponding field line
-value. When a field name is repeated within a section, its combined
-field value consists of the list of corresponding field line values
-within that section, concatenated in order, with each field line
-value separated by a comma.
+필드 이름이 한 섹션에서 오직 한번만 등장할 때, 해당 필드를 위한 조합된 "필드 값"은 해당하는 필드 라인 값으로 이루어진다. 필드 이름이 한 섹션 내에서 반복될 때는, 그것의 조합된 필드 값은 섹션 내의 해당하는 필드 라인 값들로 이루어지며, 순서에 따라 연결되고, 각 필드 라인 값은 콤마로 구분된다.
 
-For example, this section:
+예를 들어, 다음 섹션은:
 
-Example-Field: Foo, Bar
-Example-Field: Baz
+     Example-Field: Foo, Bar
+     Example-Field: Baz
 
-contains two field lines, both with the field name "Example-Field".
-The first field line has a field line value of "Foo, Bar", while the
-second field line value is "Baz". The field value for "Example-
-Field" is the list "Foo, Bar, Baz".
+두 필드 라인을 포함하며, 둘 다 필드 이름이 "Example-Field"이다. 첫번째 필드 라인은 필드 라인 값으로 "Foo, Bar"를 가진 반면, 두번째 필드 라인 값은 "Baz"다. "Example-Field"의 필드 값은 리스트 "Foo, Bar, Baz"가 된다.
 
 5.3. Field Order
 
