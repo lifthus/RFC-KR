@@ -854,50 +854,25 @@ HTTP는 미리 등록된 키 네임스페이스와 함께 확장 가능한 이�
 
 ### 5.3. 필드 순서
 
-A recipient MAY combine multiple field lines within a field section
-that have the same field name into one field line, without changing
-the semantics of the message, by appending each subsequent field line
-value to the initial field line value in order, separated by a comma
-(",") and optional whitespace (OWS, defined in Section 5.6.3). For
-consistency, use comma SP.
+수신자는 아마(MAY), 메시지의 의미를 바꾸는 일 없이, 후속 필드 라인 값을 첫번째 필드 라인 값에 순서대로 덧붙이고, 콤마(",")와 선택적공백(OWS, 5.6.3절에 정의)에 의해 분리되도록 하여 같은 필드 이름을 가진 필드 섹션 내의 여러 필드 라인들을 하나의 필드라인으로 조합하려 할 수도 있을 것이다. 일관성을 위해, 콤마 SP를 사용하라.
 
-The order in which field lines with the same name are received is
-therefore significant to the interpretation of the field value; a
-proxy MUST NOT change the order of these field line values when
-forwarding a message.
+수신한 같은 이름의 필드 라인들의 순서는 이리하여 필드 값 해석에 아주 중요하다; 프록시는 절대(MUST NOT) 이 필드 라인 값들의 순서를 메시지를 포워딩할 때 변경해서는 안된다.
 
-This means that, aside from the well-known exception noted below, a
-sender MUST NOT generate multiple field lines with the same name in a
-message (whether in the headers or trailers) or append a field line
-when a field line of the same name already exists in the message,
-unless that field's definition allows multiple field line values to
-be recombined as a comma-separated list (i.e., at least one
-alternative of the field's definition allows a comma-separated list,
-such as an ABNF rule of #(values) defined in Section 5.6.1).
+이는, 아래의 잘 알려진 예외는 별개로, 발신자는 해당 필드의 정의에서 다중 필드 라인 값이 콤마로 구분되는 리스트로 재조합되도록 허용되지 않는다면(즉, 최소 하나의 필드 정의의 대안이 5.6.1절에 정의된 #(values)의 ABNF룰과 같은, 콤마로 구분되는 리스트를 허용하지 않으면), 절대(MUST NOT) 메시지 내에서 같은 이름의 여러 필드 라인들을 생성하거나 같은 이름이 이미 존재할 때 그 이름의 필드 라인을 덧붙여서는 안됨을 의미한다.
 
-      |  *Note:* In practice, the "Set-Cookie" header field ([COOKIE])
-      |  often appears in a response message across multiple field lines
-      |  and does not use the list syntax, violating the above
-      |  requirements on multiple field lines with the same field name.
-      |  Since it cannot be combined into a single field value,
-      |  recipients ought to handle "Set-Cookie" as a special case while
-      |  processing fields.  (See Appendix A.2.3 of [Kri2001] for
-      |  details.)
+| _Note:_ 실무적으로, "Set-Cookie" 헤더 필드 ([[COOKIE](https://www.rfc-editor.org/info/rfc6265)])
+| 종종 응답 메시지에서 여러 필드 라인에거쳐 나타나고,
+| 리스트 구문을 사용하지 않고, 위의 같은 필드 이름의
+| 여러 필드 라인들에 대한 요구사항들을 위반한다.
+| 그것이 하나의 필드 값으로 조합될 수 없기 때문에, 수신자들은
+| "Set-Cookie"를 필드들을 처리하며 특별한 케이스로 다뤄야 한다.
+| (자세한 건 [[Kri2001](http://arxiv.org/abs/cs.SE/0105018)의 부록 A.2.3을 참조하라)
 
-The order in which field lines with differing field names are
-received in a section is not significant. However, it is good
-practice to send header fields that contain additional control data
-first, such as Host on requests and Date on responses, so that
-implementations can decide when not to handle a message as early as
-possible.
+한 섹션에서 수신한 다른 이름을 가진 필드 라인들의 순서는 그리 중요하지 않다. 그러나, 구현체들이 가능한 빨리 메시지를 핸들링할지 말지 결정할 수 있도록, 요청의 Host나 응답의 Date 같은, 추가적인 제어 데이터를 포함하는 헤더 필드들을 먼저 보내는 것이 좋은 관행이다.
 
-A server MUST NOT apply a request to the target resource until it
-receives the entire request header section, since later header field
-lines might include conditionals, authentication credentials, or
-deliberately misleading duplicate header fields that could impact
-request processing.
+서버는 전체 요청 헤더 섹션을 수신할 때 까지 절대(MUST NOT) 요청을 타겟 리소스에 적용해서는 안되는데, 이는 나중의 헤더 필드 라인들이 조건부이거나, 인증 자격증명이거나, 혹은 고의로 요청을 처리하는데 영향을 줄 수 있는 중복 헤더 필드들을 오도한 것일 수 있기 때문이다.
 
-5.4. Field Limits
+### 5.4. 필드 제한
 
 HTTP does not place a predefined limit on the length of each field
 line, field value, or on the length of a header or trailer section as
