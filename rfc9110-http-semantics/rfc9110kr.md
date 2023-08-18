@@ -106,7 +106,7 @@ than English.
 
 ###### [5. 필드](#5-필드)
 
-[5.1. 필드 명](#51-필드-명)
+[5.1. 필드 이름](#51-필드-이름)
 [5.2. 필드 라인들과 조합된 필드 값](#52-필드-라인들과-조합된-필드-값)
 [5.3. 필드 순서](#53-필드-순서)
 [5.4. 필드 제한](#54-필드-제한)
@@ -823,68 +823,36 @@ IP-ID 타입의 참조 신원은 주소가 인증서의 subjectAltName 확장의
 
 ## 5. 필드
 
-HTTP uses "fields" to provide data in the form of extensible name/
-value pairs with a registered key namespace. Fields are sent and
-received within the header and trailer sections of messages
-(Section 6).
+HTTP는 미리 등록된 키 네임스페이스와 함께 확장 가능한 이름/값 쌍 형태의 데이터를 제공하기 위해 "필드"를 사용한다. 필드는 메시지의 헤더와 트레일러 섹션 내에서 보내지고 수신된다(6절).
 
-5.1. Field Names
+### 5.1. 필드 이름
 
-A field name labels the corresponding field value as having the
-semantics defined by that name. For example, the Date header field
-is defined in Section 6.6.1 as containing the origination timestamp
-for the message in which it appears.
+필드 이름은 그 이름에 의해 정의되는 의미를 갖도록 해당하는 필드 값을 라벨링한다. 예를 들어, Date 헤더 필드는 6.6.1절에 그것이 나타나는 메시지의 발생 시각 타임스탬프를 포함한다고 정의돼있다.
 
      field-name     = token
 
-Field names are case-insensitive and ought to be registered within
-the "Hypertext Transfer Protocol (HTTP) Field Name Registry"; see
-Section 16.3.1.
+필드 이름들은 대소문자를 구분하지 않고 "Hypertext Transfer Protocol (HTTP) Field Name Registry" 내에 등록되어 있어야 한다; 16.3.1절을 참조하라.
 
-The interpretation of a field does not change between minor versions
-of the same major HTTP version, though the default behavior of a
-recipient in the absence of such a field can change. Unless
-specified otherwise, fields are defined for all versions of HTTP. In
-particular, the Host and Connection fields ought to be recognized by
-all HTTP implementations whether or not they advertise conformance
-with HTTP/1.1.
+필드의 해석은 같은 HTTP 버전의 마이너 버전 사이에서는 바뀌지 않지만, 그러한 필드가 없는 경우 수신자의 기본 행동은 바뀔 수 있다. 따로 명시되지 않는 한, 필드들은 모든 HTTP 버전들에 대해 정의된다. 특히, Host와 Connection 필드는 HTTP/1.1을 준수한다고 알리는지 여부와 관계없이 모든 HTTP 구현체들에 의해 인식돼야 한다.
 
-New fields can be introduced without changing the protocol version if
-their defined semantics allow them to be safely ignored by recipients
-that do not recognize them; see Section 16.3.
+만약 정의된 의미가 그들을 인식하지 못한 수신자들에 의해 안전하게 무시될 수 있도록 되어있다면 새로운 필드들은 프로토콜 버전을 수정하지 않고도 도입될 수 있다; 16.3절 참조.
 
-A proxy MUST forward unrecognized header fields unless the field name
-is listed in the Connection header field (Section 7.6.1) or the proxy
-is specifically configured to block, or otherwise transform, such
-fields. Other recipients SHOULD ignore unrecognized header and
-trailer fields. Adhering to these requirements allows HTTP's
-functionality to be extended without updating or removing deployed
-intermediaries.
+필드 이름이 Connection 헤더 필드에 나열되어 있거나(7.6.1절) 프록시가 그런 필드들을 특별히 블락하도록, 그렇지 않으면 변형하도록 설정되어 있지 않다면 프록시는 반드시(MUST) 인식되지 않은 헤더 필드들을 포워딩해야 한다. 다른 수신자들은 웬만하면(SHOULD) 인식되지 않은 헤더와 트레일러 필드들을 무시하는게 좋다. 이 요구사항을 준수하는 것은 HTTP의 기능이 배포된 중개자들을 업데이트 하거나 삭제할 필요 없이 확장되는 것을 허용한다.
 
-5.2. Field Lines and Combined Field Value
+### 5.2. 필드 라인들과 조합된 필드 값
 
-Field sections are composed of any number of "field lines", each with
-a "field name" (see Section 5.1) identifying the field, and a "field
-line value" that conveys data for that instance of the field.
+필드 섹션들은 아무 개수의 "필드 라인"들로 구성되고, 각각은 해당 필드를 식별하는 "필드 이름"(5.1절 참조), 그리고 필드의 해당 인스턴스에 대한 데이터를 전달하는 "필드 라인 값"과 함께 한다.
 
-When a field name is only present once in a section, the combined
-"field value" for that field consists of the corresponding field line
-value. When a field name is repeated within a section, its combined
-field value consists of the list of corresponding field line values
-within that section, concatenated in order, with each field line
-value separated by a comma.
+필드 이름이 한 섹션에서 오직 한번만 등장할 때, 해당 필드를 위한 조합된 "필드 값"은 해당하는 필드 라인 값으로 이루어진다. 필드 이름이 한 섹션 내에서 반복될 때는, 그것의 조합된 필드 값은 섹션 내의 해당하는 필드 라인 값들로 이루어지며, 순서에 따라 연결되고, 각 필드 라인 값은 콤마로 구분된다.
 
-For example, this section:
+예를 들어, 다음 섹션은:
 
-Example-Field: Foo, Bar
-Example-Field: Baz
+     Example-Field: Foo, Bar
+     Example-Field: Baz
 
-contains two field lines, both with the field name "Example-Field".
-The first field line has a field line value of "Foo, Bar", while the
-second field line value is "Baz". The field value for "Example-
-Field" is the list "Foo, Bar, Baz".
+두 필드 라인을 포함하며, 둘 다 필드 이름이 "Example-Field"이다. 첫번째 필드 라인은 필드 라인 값으로 "Foo, Bar"를 가진 반면, 두번째 필드 라인 값은 "Baz"다. "Example-Field"의 필드 값은 리스트 "Foo, Bar, Baz"가 된다.
 
-5.3. Field Order
+### 5.3. 필드 순서
 
 A recipient MAY combine multiple field lines within a field section
 that have the same field name into one field line, without changing
