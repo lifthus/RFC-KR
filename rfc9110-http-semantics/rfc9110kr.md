@@ -111,7 +111,7 @@ than English.
 [5.3. 필드 순서](#53-필드-순서)
 [5.4. 필드 제한](#54-필드-제한)
 [5.5. 필드 값들](#55-필드-값들)
-[5.6. 필드 값들을 정의하기 위한 공통적인 규칙들](#56-필드-값들을-정의하기-위한-공통적인-규칙들)
+[5.6. 필드 값들을 정의하기 위한 공통 규칙들](#56-필드-값들을-정의하기-위한-공통-규칙들)
 ㄴ [5.6.1. Lists (#rule ABNF Extension)](#561-lists-rule-abnf-extension)
 ㄴㄴ [5.6.1.1. 발신자 요구사항들](#5611-발신자-요구사항들)
 ㄴㄴ [5.6.1.2. 수신자 요구사항들](#5612-수신자-요구사항들)
@@ -854,73 +854,35 @@ HTTP는 미리 등록된 키 네임스페이스와 함께 확장 가능한 이�
 
 ### 5.3. 필드 순서
 
-A recipient MAY combine multiple field lines within a field section
-that have the same field name into one field line, without changing
-the semantics of the message, by appending each subsequent field line
-value to the initial field line value in order, separated by a comma
-(",") and optional whitespace (OWS, defined in Section 5.6.3). For
-consistency, use comma SP.
+수신자는 아마(MAY), 메시지의 의미를 바꾸는 일 없이, 후속 필드 라인 값을 첫번째 필드 라인 값에 순서대로 덧붙이고, 콤마(",")와 선택적공백(OWS, 5.6.3절에 정의)에 의해 분리되도록 하여 같은 필드 이름을 가진 필드 섹션 내의 여러 필드 라인들을 하나의 필드라인으로 조합하려 할 수도 있을 것이다. 일관성을 위해, 콤마 SP를 사용하라.
 
-The order in which field lines with the same name are received is
-therefore significant to the interpretation of the field value; a
-proxy MUST NOT change the order of these field line values when
-forwarding a message.
+수신한 같은 이름의 필드 라인들의 순서는 이리하여 필드 값 해석에 아주 중요하다; 프록시는 절대(MUST NOT) 이 필드 라인 값들의 순서를 메시지를 포워딩할 때 변경해서는 안된다.
 
-This means that, aside from the well-known exception noted below, a
-sender MUST NOT generate multiple field lines with the same name in a
-message (whether in the headers or trailers) or append a field line
-when a field line of the same name already exists in the message,
-unless that field's definition allows multiple field line values to
-be recombined as a comma-separated list (i.e., at least one
-alternative of the field's definition allows a comma-separated list,
-such as an ABNF rule of #(values) defined in Section 5.6.1).
+이는, 아래의 잘 알려진 예외는 별개로, 발신자는 해당 필드의 정의에서 다중 필드 라인 값이 콤마로 구분되는 리스트로 재조합되도록 허용되지 않는다면(즉, 최소 하나의 필드 정의의 대안이 5.6.1절에 정의된 #(values)의 ABNF룰과 같은, 콤마로 구분되는 리스트를 허용하지 않으면), 절대(MUST NOT) 메시지 내에서 같은 이름의 여러 필드 라인들을 생성하거나 같은 이름이 이미 존재할 때 그 이름의 필드 라인을 덧붙여서는 안됨을 의미한다.
 
-      |  *Note:* In practice, the "Set-Cookie" header field ([COOKIE])
-      |  often appears in a response message across multiple field lines
-      |  and does not use the list syntax, violating the above
-      |  requirements on multiple field lines with the same field name.
-      |  Since it cannot be combined into a single field value,
-      |  recipients ought to handle "Set-Cookie" as a special case while
-      |  processing fields.  (See Appendix A.2.3 of [Kri2001] for
-      |  details.)
+| _Note:_ 실무적으로, "Set-Cookie" 헤더 필드 ([[COOKIE](https://www.rfc-editor.org/info/rfc6265)])
+| 종종 응답 메시지에서 여러 필드 라인에거쳐 나타나고,
+| 리스트 구문을 사용하지 않고, 위의 같은 필드 이름의
+| 여러 필드 라인들에 대한 요구사항들을 위반한다.
+| 그것이 하나의 필드 값으로 조합될 수 없기 때문에, 수신자들은
+| "Set-Cookie"를 필드들을 처리하며 특별한 케이스로 다뤄야 한다.
+| (자세한 건 [[Kri2001](http://arxiv.org/abs/cs.SE/0105018)의 부록 A.2.3을 참조하라)
 
-The order in which field lines with differing field names are
-received in a section is not significant. However, it is good
-practice to send header fields that contain additional control data
-first, such as Host on requests and Date on responses, so that
-implementations can decide when not to handle a message as early as
-possible.
+한 섹션에서 수신한 다른 이름을 가진 필드 라인들의 순서는 그리 중요하지 않다. 그러나, 구현체들이 가능한 빨리 메시지를 핸들링할지 말지 결정할 수 있도록, 요청의 Host나 응답의 Date 같은, 추가적인 제어 데이터를 포함하는 헤더 필드들을 먼저 보내는 것이 좋은 관행이다.
 
-A server MUST NOT apply a request to the target resource until it
-receives the entire request header section, since later header field
-lines might include conditionals, authentication credentials, or
-deliberately misleading duplicate header fields that could impact
-request processing.
+서버는 전체 요청 헤더 섹션을 수신할 때 까지 절대(MUST NOT) 요청을 타겟 리소스에 적용해서는 안되는데, 이는 나중의 헤더 필드 라인들이 조건부이거나, 인증 자격증명이거나, 혹은 고의로 요청을 처리하는데 영향을 줄 수 있는 중복 헤더 필드들을 오도한 것일 수 있기 때문이다.
 
-5.4. Field Limits
+### 5.4. 필드 제한
 
-HTTP does not place a predefined limit on the length of each field
-line, field value, or on the length of a header or trailer section as
-a whole, as described in Section 2. Various ad hoc limitations on
-individual lengths are found in practice, often depending on the
-specific field's semantics.
+HTTP 자체는 2절에 정의된대로, 필드 라인, 필드 값의 길이, 혹은 헤더나 트레일러 섹션 전체의 길이에 대해 미리 정의된 제한을 두지 않는다. 개별적인 길이들에 대한 다양한 애드 혹 제한들은 실무에서 찾아볼 수 있는데, 종종 특정 필드의 의미체계에 의존한다.
 
-A server that receives a request header field line, field value, or
-set of fields larger than it wishes to process MUST respond with an
-appropriate 4xx (Client Error) status code. Ignoring such header
-fields would increase the server's vulnerability to request smuggling
-attacks (Section 11.2 of [HTTP/1.1]).
+처리하기에 기대보다 큰 헤더 필드 라인, 필드 값, 혹은 필드들의 집합을 수신한 서버는 반드시(MUST) 적절한 4xx(클라이언트 에러) 상태 코드로 응답해야 한다. 그런 헤더 필드들을 무시하는 행위는 요청 스머글링 공격에 대한 서버의 취약성을 증가시킬 것이다([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)] 11.2절).
 
-A client MAY discard or truncate received field lines that are larger
-than the client wishes to process if the field semantics are such
-that the dropped value(s) can be safely ignored without changing the
-message framing or response semantics.
+클라이언트는 아마(MAY) 클라이언트가 처리하길 바라는 것보다 큰 필드 라인들을 수신할 경우 필드 의미체계가 버려진 값(들)을 메시지 프레이밍이나 응답 의미체계를 바꾸지 않고 안전하게 무시할 수 있다면 버리거나 자를 수 있을 것이다.
 
-5.5. Field Values
+### 5.5. 필드 값들
 
-HTTP field values consist of a sequence of characters in a format
-defined by the field's grammar. Each field's grammar is usually
-defined using ABNF ([RFC5234]).
+HTTP 필드 값들은 해당 필드의 문법 규칙에 의해 정의된 형태의 문자들의 시퀀스로 구성된다. 각 필드의 문법 규칙은 보통 ABNF([[RFC5234](https://datatracker.ietf.org/doc/html/rfc5234)])를 사용해 정의된다.
 
      field-value    = *field-content
      field-content  = field-vchar
@@ -928,20 +890,9 @@ defined using ABNF ([RFC5234]).
      field-vchar    = VCHAR / obs-text
      obs-text       = %x80-FF
 
-A field value does not include leading or trailing whitespace. When
-a specific version of HTTP allows such whitespace to appear in a
-message, a field parsing implementation MUST exclude such whitespace
-prior to evaluating the field value.
+필드 값은 선행하거나 후행하는 공백을 포함하지 않는다. 특정 HTTP 버전이 그러한 공백이 메시지에 나타나도록 허용할 때는, 필드 파싱 구현체는 반드시(MUST) 필드 값을 평가하기 전에 그러한 공백을 제외해야 한다.
 
-Field values are usually constrained to the range of US-ASCII
-characters [USASCII]. Fields needing a greater range of characters
-can use an encoding, such as the one defined in [RFC8187].
-Historically, HTTP allowed field content with text in the ISO-8859-1
-charset [ISO-8859-1], supporting other charsets only through use of
-[RFC2047] encoding. Specifications for newly defined fields SHOULD
-limit their values to visible US-ASCII octets (VCHAR), SP, and HTAB.
-A recipient SHOULD treat other allowed octets in field content (i.e.,
-obs-text) as opaque data.
+필드 값들은 보통 [US-ASCII] 문자들의 범위로 제약된다. 더 큰 범위의 문자들을 필요로 하는 필드들은 [[RFC8187](https://www.rfc-editor.org/info/rfc8187)]에 정의된 것과 같이, 인코딩을 활용할 수 있다. 역사적으로, HTTP는 [ISO-8859-1] 캐릭터셋의 텍스트를 필드 콘텐츠로 허용했고, 다른 캐릭터셋들은 오직 [[RFC2047](ttps://www.rfc-editor.org/info/rfc2047)] 인코딩의 사용을 통해서만 지원했다. 새롭게 정의된 필드들을 위한 사양들은 웬만하면(SHOULD) 그것들의 값들을 가시적인 US-ASCII 옥텟(VCHAR), SP, 그리고 HTAB으로 제한해야 한다. 수신자는 웬만하면(SHOULD) 필드 콘텐츠의 다른 허용된 옥텟들(즉, obs-text)을 불투명한 데이터로 다뤄야 한다.
 
 Field values containing CR, LF, or NUL characters are invalid and
 dangerous, due to the varying ways that implementations might parse
@@ -998,9 +949,9 @@ quoted string.
       |  been extracted from the underlying messaging syntax and
       |  multiple instances combined into a list).
 
-5.6. Common Rules for Defining Field Values
+### 5.6. 필드 값들을 정의하기 위한 공통 규칙들
 
-5.6.1. Lists (#rule ABNF Extension)
+#### 5.6.1. Lists (#rule ABNF Extension)
 
 A #rule extension to the ABNF rules of [RFC5234] is used to improve
 readability in the definitions of some list-based field values.
@@ -1011,7 +962,7 @@ indicating at least <n> and at most <m> elements, each separated by a
 single comma (",") and optional whitespace (OWS, defined in
 Section 5.6.3).
 
-5.6.1.1. Sender Requirements
+##### 5.6.1.1. 발신자 요구사항들
 
 In any production that uses the list construct, a sender MUST NOT
 generate empty list elements. In other words, a sender has to
@@ -1030,7 +981,7 @@ and for n >= 1 and m > 1:
 Appendix A shows the collected ABNF for senders after the list
 constructs have been expanded.
 
-5.6.1.2. Recipient Requirements
+##### 5.6.1.2. 수신자 요구사항들
 
 Empty elements do not contribute to the count of elements present. A
 recipient MUST parse and ignore a reasonable number of empty list
@@ -1065,7 +1016,7 @@ one non-empty element is required by the example-list production:
      ","
      ",   ,"
 
-5.6.2. Tokens
+#### 5.6.2. 토큰
 
 Tokens are short textual identifiers that do not include whitespace
 or delimiters.
