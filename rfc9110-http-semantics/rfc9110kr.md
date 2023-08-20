@@ -874,24 +874,13 @@ HTTP는 미리 등록된 키 네임스페이스와 함께 확장 가능한 이�
 
 ### 5.4. 필드 제한
 
-HTTP does not place a predefined limit on the length of each field
-line, field value, or on the length of a header or trailer section as
-a whole, as described in Section 2. Various ad hoc limitations on
-individual lengths are found in practice, often depending on the
-specific field's semantics.
+HTTP 자체는 2절에 정의된대로, 필드 라인, 필드 값의 길이, 혹은 헤더나 트레일러 섹션 전체의 길이에 대해 미리 정의된 제한을 두지 않는다. 개별적인 길이들에 대한 다양한 애드 혹 제한들은 실무에서 찾아볼 수 있는데, 종종 특정 필드의 의미체계에 의존한다.
 
-A server that receives a request header field line, field value, or
-set of fields larger than it wishes to process MUST respond with an
-appropriate 4xx (Client Error) status code. Ignoring such header
-fields would increase the server's vulnerability to request smuggling
-attacks (Section 11.2 of [HTTP/1.1]).
+처리하기에 기대보다 큰 헤더 필드 라인, 필드 값, 혹은 필드들의 집합을 수신한 서버는 반드시(MUST) 적절한 4xx(클라이언트 에러) 상태 코드로 응답해야 한다. 그런 헤더 필드들을 무시하는 행위는 요청 스머글링 공격에 대한 서버의 취약성을 증가시킬 것이다([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)] 11.2절).
 
-A client MAY discard or truncate received field lines that are larger
-than the client wishes to process if the field semantics are such
-that the dropped value(s) can be safely ignored without changing the
-message framing or response semantics.
+클라이언트는 아마(MAY) 클라이언트가 처리하길 바라는 것보다 큰 필드 라인들을 수신할 경우 필드 의미체계가 버려진 값(들)을 메시지 프레이밍이나 응답 의미체계를 바꾸지 않고 안전하게 무시할 수 있다면 버리거나 자를 수 있을 것이다.
 
-5.5. Field Values
+### 5.5. 필드 값들
 
 HTTP field values consist of a sequence of characters in a format
 defined by the field's grammar. Each field's grammar is usually
