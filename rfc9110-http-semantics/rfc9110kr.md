@@ -111,7 +111,7 @@ than English.
 [5.3. 필드 순서](#53-필드-순서)
 [5.4. 필드 제한](#54-필드-제한)
 [5.5. 필드 값들](#55-필드-값들)
-[5.6. 필드 값들을 정의하기 위한 공통적인 규칙들](#56-필드-값들을-정의하기-위한-공통적인-규칙들)
+[5.6. 필드 값들을 정의하기 위한 공통 규칙들](#56-필드-값들을-정의하기-위한-공통-규칙들)
 ㄴ [5.6.1. Lists (#rule ABNF Extension)](#561-lists-rule-abnf-extension)
 ㄴㄴ [5.6.1.1. 발신자 요구사항들](#5611-발신자-요구사항들)
 ㄴㄴ [5.6.1.2. 수신자 요구사항들](#5612-수신자-요구사항들)
@@ -882,9 +882,7 @@ HTTP 자체는 2절에 정의된대로, 필드 라인, 필드 값의 길이, 혹
 
 ### 5.5. 필드 값들
 
-HTTP field values consist of a sequence of characters in a format
-defined by the field's grammar. Each field's grammar is usually
-defined using ABNF ([RFC5234]).
+HTTP 필드 값들은 해당 필드의 문법 규칙에 의해 정의된 형태의 문자들의 시퀀스로 구성된다. 각 필드의 문법 규칙은 보통 ABNF([[RFC5234](https://datatracker.ietf.org/doc/html/rfc5234)])를 사용해 정의된다.
 
      field-value    = *field-content
      field-content  = field-vchar
@@ -892,20 +890,9 @@ defined using ABNF ([RFC5234]).
      field-vchar    = VCHAR / obs-text
      obs-text       = %x80-FF
 
-A field value does not include leading or trailing whitespace. When
-a specific version of HTTP allows such whitespace to appear in a
-message, a field parsing implementation MUST exclude such whitespace
-prior to evaluating the field value.
+필드 값은 선행하거나 후행하는 공백을 포함하지 않는다. 특정 HTTP 버전이 그러한 공백이 메시지에 나타나도록 허용할 때는, 필드 파싱 구현체는 반드시(MUST) 필드 값을 평가하기 전에 그러한 공백을 제외해야 한다.
 
-Field values are usually constrained to the range of US-ASCII
-characters [USASCII]. Fields needing a greater range of characters
-can use an encoding, such as the one defined in [RFC8187].
-Historically, HTTP allowed field content with text in the ISO-8859-1
-charset [ISO-8859-1], supporting other charsets only through use of
-[RFC2047] encoding. Specifications for newly defined fields SHOULD
-limit their values to visible US-ASCII octets (VCHAR), SP, and HTAB.
-A recipient SHOULD treat other allowed octets in field content (i.e.,
-obs-text) as opaque data.
+필드 값들은 보통 [US-ASCII] 문자들의 범위로 제약된다. 더 큰 범위의 문자들을 필요로 하는 필드들은 [[RFC8187](https://www.rfc-editor.org/info/rfc8187)]에 정의된 것과 같이, 인코딩을 활용할 수 있다. 역사적으로, HTTP는 [ISO-8859-1] 캐릭터셋의 텍스트를 필드 콘텐츠로 허용했고, 다른 캐릭터셋들은 오직 [[RFC2047](ttps://www.rfc-editor.org/info/rfc2047)] 인코딩의 사용을 통해서만 지원했다. 새롭게 정의된 필드들을 위한 사양들은 웬만하면(SHOULD) 그것들의 값들을 가시적인 US-ASCII 옥텟(VCHAR), SP, 그리고 HTAB으로 제한해야 한다. 수신자는 웬만하면(SHOULD) 필드 콘텐츠의 다른 허용된 옥텟들(즉, obs-text)을 불투명한 데이터로 다뤄야 한다.
 
 Field values containing CR, LF, or NUL characters are invalid and
 dangerous, due to the varying ways that implementations might parse
@@ -962,9 +949,9 @@ quoted string.
       |  been extracted from the underlying messaging syntax and
       |  multiple instances combined into a list).
 
-5.6. Common Rules for Defining Field Values
+### 5.6. 필드 값들을 정의하기 위한 공통 규칙들
 
-5.6.1. Lists (#rule ABNF Extension)
+#### 5.6.1. Lists (#rule ABNF Extension)
 
 A #rule extension to the ABNF rules of [RFC5234] is used to improve
 readability in the definitions of some list-based field values.
@@ -975,7 +962,7 @@ indicating at least <n> and at most <m> elements, each separated by a
 single comma (",") and optional whitespace (OWS, defined in
 Section 5.6.3).
 
-5.6.1.1. Sender Requirements
+##### 5.6.1.1. 발신자 요구사항들
 
 In any production that uses the list construct, a sender MUST NOT
 generate empty list elements. In other words, a sender has to
@@ -994,7 +981,7 @@ and for n >= 1 and m > 1:
 Appendix A shows the collected ABNF for senders after the list
 constructs have been expanded.
 
-5.6.1.2. Recipient Requirements
+##### 5.6.1.2. 수신자 요구사항들
 
 Empty elements do not contribute to the count of elements present. A
 recipient MUST parse and ignore a reasonable number of empty list
@@ -1029,7 +1016,7 @@ one non-empty element is required by the example-list production:
      ","
      ",   ,"
 
-5.6.2. Tokens
+#### 5.6.2. 토큰
 
 Tokens are short textual identifiers that do not include whitespace
 or delimiters.
