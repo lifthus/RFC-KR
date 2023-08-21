@@ -860,13 +860,7 @@ HTTP는 미리 등록된 키 네임스페이스와 함께 확장 가능한 이�
 
 이는, 아래의 잘 알려진 예외는 별개로, 발신자는 해당 필드의 정의에서 다중 필드 라인 값이 콤마로 구분되는 리스트로 재조합되도록 허용되지 않는다면(즉, 최소 하나의 필드 정의의 대안이 5.6.1절에 정의된 #(values)의 ABNF룰과 같은, 콤마로 구분되는 리스트를 허용하지 않으면), 절대(MUST NOT) 메시지 내에서 같은 이름의 여러 필드 라인들을 생성하거나 같은 이름이 이미 존재할 때 그 이름의 필드 라인을 덧붙여서는 안됨을 의미한다.
 
-| _Note:_ 실무적으로, "Set-Cookie" 헤더 필드 ([[COOKIE](https://www.rfc-editor.org/info/rfc6265)])
-| 종종 응답 메시지에서 여러 필드 라인에거쳐 나타나고,
-| 리스트 구문을 사용하지 않고, 위의 같은 필드 이름의
-| 여러 필드 라인들에 대한 요구사항들을 위반한다.
-| 그것이 하나의 필드 값으로 조합될 수 없기 때문에, 수신자들은
-| "Set-Cookie"를 필드들을 처리하며 특별한 케이스로 다뤄야 한다.
-| (자세한 건 [[Kri2001](http://arxiv.org/abs/cs.SE/0105018)의 부록 A.2.3을 참조하라)
+_Note:_ 실무적으로, "Set-Cookie" 헤더 필드 ([[COOKIE](https://www.rfc-editor.org/info/rfc6265)]) 종종 응답 메시지에서 여러 필드 라인에거쳐 나타나고, 리스트 구문을 사용하지 않고, 위의 같은 필드 이름의 여러 필드 라인들에 대한 요구사항들을 위반한다. 그것이 하나의 필드 값으로 조합될 수 없기 때문에, 수신자들은 "Set-Cookie"를 필드들을 처리하며 특별한 케이스로 다뤄야 한다. (자세한 건 [[Kri2001](http://arxiv.org/abs/cs.SE/0105018)의 부록 A.2.3을 참조하라)
 
 한 섹션에서 수신한 다른 이름을 가진 필드 라인들의 순서는 그리 중요하지 않다. 그러나, 구현체들이 가능한 빨리 메시지를 핸들링할지 말지 결정할 수 있도록, 요청의 Host나 응답의 Date 같은, 추가적인 제어 데이터를 포함하는 헤더 필드들을 먼저 보내는 것이 좋은 관행이다.
 
@@ -894,60 +888,25 @@ HTTP 필드 값들은 해당 필드의 문법 규칙에 의해 정의된 형태�
 
 필드 값들은 보통 [US-ASCII] 문자들의 범위로 제약된다. 더 큰 범위의 문자들을 필요로 하는 필드들은 [[RFC8187](https://www.rfc-editor.org/info/rfc8187)]에 정의된 것과 같이, 인코딩을 활용할 수 있다. 역사적으로, HTTP는 [ISO-8859-1] 캐릭터셋의 텍스트를 필드 콘텐츠로 허용했고, 다른 캐릭터셋들은 오직 [[RFC2047](ttps://www.rfc-editor.org/info/rfc2047)] 인코딩의 사용을 통해서만 지원했다. 새롭게 정의된 필드들을 위한 사양들은 웬만하면(SHOULD) 그것들의 값들을 가시적인 US-ASCII 옥텟(VCHAR), SP, 그리고 HTAB으로 제한해야 한다. 수신자는 웬만하면(SHOULD) 필드 콘텐츠의 다른 허용된 옥텟들(즉, obs-text)을 불투명한 데이터로 다뤄야 한다.
 
-Field values containing CR, LF, or NUL characters are invalid and
-dangerous, due to the varying ways that implementations might parse
-and interpret those characters; a recipient of CR, LF, or NUL within
-a field value MUST either reject the message or replace each of those
-characters with SP before further processing or forwarding of that
-message. Field values containing other CTL characters are also
-invalid; however, recipients MAY retain such characters for the sake
-of robustness when they appear within a safe context (e.g., an
-application-specific quoted string that will not be processed by any
-downstream HTTP parser).
+CR, LF, 혹은 NUL 문자들을 포함하는 필드 값들은 유효하지 않고 위험한데, 구현체들이 그 문자들을 다양한 방식으로 파싱하고 해석할 수 있기 때문이다; 필드 값 내에 CR, LF, 혹은 NUL을 수신한 자는 반드시(MUST) 해당 메시지에 대한 추가적인 처리나 포워딩을 하기 전에 메시지를 거부하거나 그 문자들 각각을 SP로 대체해야 한다. 다른 CTL 문자들을 포함하는 필드 값들 또한 유효하지 않다; 그러나, 수신자들은 아마(MAY) 그것들이 안전한 콘텍스트 내에서 등장할 때에는 견고성을 위해 그러한 문자들을 유지할 수도 있을 것이다(예를 들어, 어떠한 다운스트림 HTTP 파서에 의해서도 처리되지 않을 애플리케이션 특화 인용 문자열).
 
-Fields that only anticipate a single member as the field value are
-referred to as "singleton fields".
+필드 값으로 오직 하나의 단독 멤버만을 허용하는 필드들은 "싱글톤 필드"라고 불린다.
 
-Fields that allow multiple members as the field value are referred to
-as "list-based fields". The list operator extension of Section 5.6.1
-is used as a common notation for defining field values that can
-contain multiple members.
+필드 값으로 여러 멤버들을 허용하는 필드들은 "리스트-기반 필드"라고 불린다. 5.6.1절의 리스트 연산자 확장은 여러 멤버들을 포함할 수 있는 필드 값들을 정의하기 위한 공통적인 표기법으로 사용된다.
 
-Because commas (",") are used as the delimiter between members, they
-need to be treated with care if they are allowed as data within a
-member. This is true for both list-based and singleton fields, since
-a singleton field might be erroneously sent with multiple members and
-detecting such errors improves interoperability. Fields that expect
-to contain a comma within a member, such as within an HTTP-date or
-URI-reference element, ought to be defined with delimiters around
-that element to distinguish any comma within that data from potential
-list separators.
+콤마(",")는 멤버들 간의 구분자로 쓰이기 때문에, 그것들이 멤버 내의 데이터로 허용되는 경우에는 주의하여 다뤄져야 한다. 이는 리스트-기반과 싱글톤 필드 양쪽 모두에 해당되는데, 이는 싱글톤 필드가 잘못되어 여러 멤버들과 함께 보내질 수 있기 때문이고 그러한 에러를 탐지하는 것은 상호운영성을 향상시킨다. HTTP-date나 URI-reference 요소 내에서와 같이, 멤버 내에 콤마가 포함될 것으로 예상되는 필드들은 잠재적인 리스트 구분자로부터 데이터 내의 어떤 콤마든 구분하기 위해 해당 요소 주변에서 구분자와 함께 정의돼야 한다.
 
-For example, a textual date and a URI (either of which might contain
-a comma) could be safely carried in list-based field values like
-these:
+예를 들어, 텍스트로 된 날짜와 URI(둘 다 콤마를 포함할 수도 있는)는 리스트-기반 필드 값들 내에서 다음과 같이 안전하게 운반될 수 있다:
 
-Example-URIs: "http://example.com/a.html,foo",
-"http://without-a-comma.example.com/"
-Example-Dates: "Sat, 04 May 1996", "Wed, 14 Sep 2005"
+     Example-URIs: "http://example.com/a.html,foo",
+     "http://without-a-comma.example.com/"
+     Example-Dates: "Sat, 04 May 1996", "Wed, 14 Sep 2005"
 
-Note that double-quote delimiters are almost always used with the
-quoted-string production (Section 5.6.4); using a different syntax
-inside double-quotes will likely cause unnecessary confusion.
+쌍따옴표 구분자는 거의 항상 quoted-string 프로덕션(5.6.4절)과 함께 사용된다는 것을 주목하라; 쌍따옴표들 내에서 다른 구문을 사용하는 것은 불필요한 혼동을 일으킬 가능성이 높다.
 
-Many fields (such as Content-Type, defined in Section 8.3) use a
-common syntax for parameters that allows both unquoted (token) and
-quoted (quoted-string) syntax for a parameter value (Section 5.6.6).
-Use of common syntax allows recipients to reuse existing parser
-components. When allowing both forms, the meaning of a parameter
-value ought to be the same whether it was received as a token or a
-quoted string.
+많은 필드들(8.3절에 정의된, Content-Type 같은)은 파라미터 값으로 따옴표 없는 경우(token) 그리고 따옴표 있는 경우(quoted-string)의 구문을 허용하는 파라미터들을 위해 공통적인 구문을 사용한다(5.6.6절). 공통적인 구문의 사용은 수신자들로 하여금 기존의 파서 구성 요소들을 재사용할 수 있도록 한다. 두 형태 모두 허용할 때는, 파라미터 값의 의미는 token으로 받았든 quoted string으로 받았든 동일해야 한다.
 
-      |  *Note:* For defining field value syntax, this specification
-      |  uses an ABNF rule named after the field name to define the
-      |  allowed grammar for that field's value (after said value has
-      |  been extracted from the underlying messaging syntax and
-      |  multiple instances combined into a list).
+_Note:_ 필드 값 구문을 정의하기 위해, 이 사양서는 해당 필드의 값에 허용된 문법을 정의하기 위해 해당 필드 이름을 따른 ABNF 룰을 사용한다(해당 값이 기반 메시지 구문에서 추출되고 여러 인스턴스들이 list로 조합된 후).
 
 ### 5.6. 필드 값들을 정의하기 위한 공통 규칙들
 
