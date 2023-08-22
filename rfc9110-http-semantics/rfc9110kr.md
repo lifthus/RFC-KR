@@ -721,7 +721,7 @@ HTTP는 동등함을 결정하기 위해 특별한 메소드를 사용하는 것
       http://EXAMPLE.com/%7Esmith/home.html
       http://EXAMPLE.com:/%7esmith/home.html
 
-정규화 후에 (어떤 방법이든) 동등한 두 HTTP URI는 같은 리소스를 식별한다고 가정할 수 있고, 어떤 HTTP 구성요소든 아마 (MAY) 정규화를 수행할 수 있을 것이다. 결과적으로, 구분되는 리소스들은 웬만하면(SHOULD NOT) 정규화 후에([[URI](https://www.rfc-editor.org/info/rfc3986)])의 6.2절에 정의된 어떤 방법을 사용하든) 동등한 URI들을 통해 식별되지 않도록 해야 한다.
+정규화 후에 (어떤 방법이든) 동등한 두 HTTP URI는 같은 리소스를 식별한다고 가정할 수 있고, 어떤 HTTP 구성요소든 아마 (MAY) 정규화를 수행할 수 있을 것이다. 결과적으로, 구분되는 리소스들은 웬만해서는(SHOULD NOT) 정규화 후에([[URI](https://www.rfc-editor.org/info/rfc3986)])의 6.2절에 정의된 어떤 방법을 사용하든) 동등한 URI들을 통해 식별되지 않도록 해야 한다.
 
 #### 4.2.4. http(s) URI에서의 userinfo 지원 중단
 
@@ -978,32 +978,20 @@ the double quotes, which are present for delimitation only):
 
 #### 5.6.3. 공백
 
-This specification uses three rules to denote the use of linear
-whitespace: OWS (optional whitespace), RWS (required whitespace), and
-BWS ("bad" whitespace).
+이 사양서는 ㅅ헤 가지 규칙을 사용해 선형 공백의 사용을 나타낸다: OWS(선택적 공백), RWS(필수 공백), 그리고 BWS("나쁜" 공백).
 
-The OWS rule is used where zero or more linear whitespace octets
-might appear. For protocol elements where optional whitespace is
-preferred to improve readability, a sender SHOULD generate the
-optional whitespace as a single SP; otherwise, a sender SHOULD NOT
-generate optional whitespace except as needed to overwrite invalid or
-unwanted protocol elements during in-place message filtering.
+OWS 규칙은 0개 이상의 선형 공백 옥텟이 나타날지 모르는 곳에서 사용된다. 선택적 공백이 가독성 향상을 위해 선호되는 프로토콜 요소들에 대해서, 발신자는 웬만하면(SHOULD) 선택적 공백을 단일 SP로 생성해야 한다; 그게 아니면, 발신자는 내부의 메시지 필터링 중에 유효하지 않거나 원하지 않는 프로토콜 요소들을 덮어쓸 필요가 있을 때를 제외하고는 웬만해서는(SHOULD NOT) 선택적 공백을 생성해서는 안된다.
 
-The RWS rule is used when at least one linear whitespace octet is
-required to separate field tokens. A sender SHOULD generate RWS as a
-single SP.
+RWS 규칙은 하나 이상의 선형 공백 옥텟이 필드 토콘들을 구분하기 위해 요구될 때 사용된다. 발신자는 웬만하면(SHOULD) RWS를 단일 SP로 생성해야 한다.
 
-OWS and RWS have the same semantics as a single SP. Any content
-known to be defined as OWS or RWS MAY be replaced with a single SP
-before interpreting it or forwarding the message downstream.
+OWS와 RWS는 단일 SP로써 동일한 의미를 가진다. OWS나 RWS로 정의된 것으로 알려진 콘텐츠는 아마(MAY) 어느 것이든 해석되기 전이나 메시지를 다운스트림으로 포워딩 하기 전에 단일 SP로 대체될 수 있을 것이다.
 
-The BWS rule is used where the grammar allows optional whitespace
-only for historical reasons. A sender MUST NOT generate BWS in
-messages. A recipient MUST parse for such bad whitespace and remove
-it before interpreting the protocol element.
+BWS 규칙은 구문이 선택적 공백을 오직 역사적 이유에서만 허용할 때 사용된다. 발신자는 절대(MUST NOT) 메시지에 BWS를 생성해서는 안된다. 수신자는 해당 프로토콜 요소를 해석하기 전 반드시(MUST) 그러한 나쁜 공백을 파싱하고 삭제해야 한다.
 
 BWS has no semantics. Any content known to be defined as BWS MAY be
 removed before interpreting it or forwarding the message downstream.
+
+BWS는 의미가 없다. BWS로 정의된 것으로 알려진 어떤 콘텐츠든 아마(MAY) 해석되거나 메시지를 다운스트림으로 포워딩 하기 전 삭제될 수 있을 것이다.
 
      OWS            = *( SP / HTAB )
                     ; optional whitespace
