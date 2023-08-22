@@ -918,22 +918,19 @@ _Note:_ 필드 값 구문을 정의하기 위해, 이 사양서는 해당 필드
 
 ##### 5.6.1.1. 발신자 요구사항들
 
-In any production that uses the list construct, a sender MUST NOT
-generate empty list elements. In other words, a sender has to
-generate lists that satisfy the following syntax:
+리스트 구문을 사용하는 어떠한 프로덕션에서든, 발신자는 절대(MUST NOT) 빈 리스트 요소들을 생성해서는 안된다. 다시 말해, 발신자는 다음 구문을 만족하는 리스트들을 생성해야만 한다:
 
      1#element => element *( OWS "," OWS element )
 
-and:
+그리고:
 
      #element => [ 1#element ]
 
-and for n >= 1 and m > 1:
+그리고 n >= 1 과 m > 1의 경우:
 
      <n>#<m>element => element <n-1>*<m-1>( OWS "," OWS element )
 
-Appendix A shows the collected ABNF for senders after the list
-constructs have been expanded.
+부록 A는 리스트 구문이 확장된 후의 발신자들을 위한 ABNF 모음을 보여준다.
 
 ##### 5.6.1.2. 수신자 요구사항들
 
