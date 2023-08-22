@@ -912,14 +912,9 @@ _Note:_ 필드 값 구문을 정의하기 위해, 이 사양서는 해당 필드
 
 #### 5.6.1. Lists (#rule ABNF Extension)
 
-A #rule extension to the ABNF rules of [RFC5234] is used to improve
-readability in the definitions of some list-based field values.
+[[RFC5234](https://www.rfc-editor.org/info/rfc5234)]의 ABNF 규칙들에대한 #rule 확장은 몇몇 리스트-기반 필드 값들의 정의들에서 가독성을 향상시키기 위해 사용된다.
 
-A construct "#" is defined, similar to "\*", for defining comma-
-delimited lists of elements. The full form is "<n>#<m>element"
-indicating at least <n> and at most <m> elements, each separated by a
-single comma (",") and optional whitespace (OWS, defined in
-Section 5.6.3).
+"#"이라는 구문은, "\*"와 비슷하게, 요소들의 콤마로 구분된 리스트들을 정의하기 위해 정의됐다. 전체 형태는 최소 <n>과 최대 <m> 개의, 각각이 하나의 콤마(",") 그리고 선택적 공백(5.6.3절에 정의된, OWS)에 의해 구분되는 요소들을 나타내는 "<n>#<m>element" 가 된다.
 
 ##### 5.6.1.1. 발신자 요구사항들
 
