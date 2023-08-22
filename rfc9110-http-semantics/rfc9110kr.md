@@ -934,21 +934,13 @@ _Note:_ 필드 값 구문을 정의하기 위해, 이 사양서는 해당 필드
 
 ##### 5.6.1.2. 수신자 요구사항들
 
-Empty elements do not contribute to the count of elements present. A
-recipient MUST parse and ignore a reasonable number of empty list
-elements: enough to handle common mistakes by senders that merge
-values, but not so much that they could be used as a denial-of-
-service mechanism. In other words, a recipient MUST accept lists
-that satisfy the following syntax:
+빈 요소들은 존재하는 요소들의 수를 세는데 포함되지 않는다. 수신자는 반드시(MUST) 합리적인 수의 빈 리스트 요소들을 파싱하고 무시해야 한다: 발신자들이 값들을 합치는 흔한 실수들을 처리하는 것으로 충분하지만, 그것들이 denial-of-service 메커니즘으로 사용될 수 있을 정도로 많아서는 안된다. 다시 말해, 수신자는 반드시(MUST) 다음 구문을 만족하는 리스트들을 받아들어야 한다:
 
      #element => [ element ] *( OWS "," OWS [ element ] )
 
-Note that because of the potential presence of empty list elements,
-the RFC 5234 ABNF cannot enforce the cardinality of list elements,
-and consequently all cases are mapped as if there was no cardinality
-specified.
+빈 리스트 요소들의 잠재적인 존재 가능성 때문에, RFC 5234 ABNF는 리스트 요소들의 카디널리티를 강제할 수 없고, 결과적으로 모든 케이스들은 카디널리티가 지정되지 않은 것처럼 매핑된다는 것을 명심하라.
 
-For example, given these ABNF productions:
+예를 들어, 주어진 이러한 ABNF 프로덕션들이 있다:
 
      example-list      = 1#example-list-elmt
      example-list-elmt = token ; see Section 5.6.2
@@ -956,12 +948,13 @@ For example, given these ABNF productions:
 Then the following are valid values for example-list (not including
 the double quotes, which are present for delimitation only):
 
+또 다음은 example-list에 대해 유효한 값들이다(쌍따옴표들은 오로지 구분을 위해서 존재하니까 제외하고):
+
      "foo,bar"
      "foo ,bar,"
      "foo , ,bar,charlie"
 
-In contrast, the following values would be invalid, since at least
-one non-empty element is required by the example-list production:
+반대로, 다음 값들은, 최소 하나의 비어이씾 않은 요소가 example-list 프로덕션에 의해 요구되기 때문에, 유효하지 않다:
 
      ""
      ","
