@@ -1078,7 +1078,7 @@ that string. A sender SHOULD NOT generate a quoted-pair in a comment
 except where necessary to quote parentheses ["(" and ")"] and
 backslash octets occurring within that comment.
 
-5.6.5. Comments
+#### 5.6.5. 코멘트
 
 Comments can be included in some HTTP fields by surrounding the
 comment text with parentheses. Comments are only allowed in fields
@@ -1087,7 +1087,7 @@ containing "comment" as part of their field value definition.
      comment        = "(" *( ctext / quoted-pair / comment ) ")"
      ctext          = HTAB / SP / %x21-27 / %x2A-5B / %x5D-7E / obs-text
 
-5.6.6. Parameters
+#### 5.6.6. 파라미터
 
 Parameters are instances of name/value pairs; they are often used in
 field values as a common syntax for appending auxiliary information
@@ -1112,7 +1112,7 @@ and unquoted values are equivalent.
       |  *Note:* Parameters do not allow whitespace (not even "bad"
       |  whitespace) around the "=" character.
 
-5.6.7. Date/Time Formats
+#### 5.6.7. Date/Time 포맷
 
 Prior to 1995, there were three different formats commonly used by
 servers to communicate timestamps. For compatibility with old
