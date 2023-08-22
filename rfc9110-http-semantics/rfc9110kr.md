@@ -61,66 +61,110 @@ than English.
 
 ## 목차
 
-###### [1. 소개](#1-소개)
+### [1. 소개](#1-소개)
 
-[1.1. 목적](#11-목적)
-[1.2. 역사와 발전](#12-역사와-발전)
-[1.3. 핵심 의미체계](#13-핵심-의미체계)
-[1.4. 이 문서에 의해 폐기된 사양들](#14-이-문서에-의해-폐기된-사양들)
+#### [1.1. 목적](#11-목적)
 
-###### [2. 준수 사항](#2-준수-사항)
+#### [1.2. 역사와 발전](#12-역사와-발전)
 
-[2.1. 문법 표기](#21-문법-표기)
-[2.2. 요구사항 표기](#22-요구사항-표기)
-[2.3. 길이 요구사항](#23-길이-요구사항)
-[2.4. 에러 핸들링](#24-에러-핸들링)
-[2.5. 프로토콜 버전](#25-프로토콜-버전)
+#### [1.3. 핵심 의미체계](#13-핵심-의미체계)
+
+#### [1.4. 이 문서에 의해 폐기된 사양들](#14-이-문서에-의해-폐기된-사양들)
+
+### [2. 준수 사항](#2-준수-사항)
+
+#### [2.1. 문법 표기](#21-문법-표기)
+
+#### [2.2. 요구사항 표기](#22-요구사항-표기)
+
+#### [2.3. 길이 요구사항](#23-길이-요구사항)
+
+#### [2.4. 에러 핸들링](#24-에러-핸들링)
+
+#### [2.5. 프로토콜 버전](#25-프로토콜-버전)
 
 ###### [3. 용어와 핵심 개념들](#3-용어와-핵심-개념들)
 
-[3.1. 리소스](#31-리소스)
-[3.2. 표현](#32-표현)
-[3.3. 연결, 클라이언트, 그리고 서버](#33-연결-클라이언트-그리고-서버)
-[3.4. 메시지](#34-메시지)
-[3.5. 유저 에이전트](#35-유저-에이전트)
-[3.6. 오리진 서버](#36-오리진-서버)
-[3.7. 중개자](#37-중개자)
-[3.8. 캐시](#38-캐시)
-[3.9. 메시지 교환 예시](#39-메시지-교환-예시)
+#### [3.1. 리소스](#31-리소스)
 
-###### [4. HTTP의 식별자들](#4-http의-식별자들)
+#### [3.2. 표현](#32-표현)
 
-[4.1. URI 레퍼런스](#41-uri-레퍼런스)
-[4.2. HTTP와 연관된 URI 체계들](#42-http와-연관된-uri-체계들)
-ㄴ [4.2.1. http URI 체계](#421-http-uri-체계)
-ㄴ [4.2.2. https URI 체계](#422-https-uri-체계)
-ㄴ [4.2.3. http(s) 정규화와 비교](#423-https-정규화와-비교)
-ㄴ [4.2.4. http(s) URI에서의 userinfo 지원 중단](#424-https-uri에서의-userinfo-지원-중단)
-ㄴ [4.2.5. 프래그먼트 식별자들과 http(s) 레퍼런스들](#425-프래그먼트-식별자들과-https-레퍼런스들)
-[4.3. 권한 있는 접근](#43-권한-있는-접근)
-ㄴ [4.3.1. URI 오리진](#431-uri-오리진)
-ㄴ [4.3.2. http 오리진들](#432-http-오리진들)
-ㄴ [4.3.3. https 오리진들](#433-https-오리진들)
-ㄴ [4.3.4. https 인증서 검증](#434-https-인증서-검증)
-ㄴ [4.3.5. IP-ID 참조 신원](#435-ip-id-참조-신원)
+#### [3.3. 연결, 클라이언트, 그리고 서버](#33-연결-클라이언트-그리고-서버)
 
-###### [5. 필드](#5-필드)
+#### [3.4. 메시지](#34-메시지)
 
-[5.1. 필드 이름](#51-필드-이름)
-[5.2. 필드 라인들과 조합된 필드 값](#52-필드-라인들과-조합된-필드-값)
-[5.3. 필드 순서](#53-필드-순서)
-[5.4. 필드 제한](#54-필드-제한)
-[5.5. 필드 값들](#55-필드-값들)
-[5.6. 필드 값들을 정의하기 위한 공통 규칙들](#56-필드-값들을-정의하기-위한-공통-규칙들)
-ㄴ [5.6.1. Lists (#rule ABNF Extension)](#561-lists-rule-abnf-extension)
-ㄴㄴ [5.6.1.1. 발신자 요구사항들](#5611-발신자-요구사항들)
-ㄴㄴ [5.6.1.2. 수신자 요구사항들](#5612-수신자-요구사항들)
-ㄴ [5.6.2. 토큰](#562-토큰)
-ㄴ [5.6.3. 공백](#563-공백)
-ㄴ [5.6.4. 인용 문자열](#564-인용-문자열)
-ㄴ [5.6.5. 코멘트](#565-코멘트)
-ㄴ [5.6.6. 파라미터](#566-파라미터)
-ㄴ [5.6.7. Date/Time 포맷](#567-datetime-포맷) 6. Message Abstraction
+#### [3.5. 유저 에이전트](#35-유저-에이전트)
+
+#### [3.6. 오리진 서버](#36-오리진-서버)
+
+#### [3.7. 중개자](#37-중개자)
+
+#### [3.8. 캐시](#38-캐시)
+
+#### [3.9. 메시지 교환 예시](#39-메시지-교환-예시)
+
+### [4. HTTP의 식별자들](#4-http의-식별자들)
+
+#### [4.1. URI 레퍼런스](#41-uri-레퍼런스)
+
+#### [4.2. HTTP와 연관된 URI 체계들](#42-http와-연관된-uri-체계들)
+
+##### [4.2.1. http URI 체계](#421-http-uri-체계)
+
+##### [4.2.2. https URI 체계](#422-https-uri-체계)
+
+##### [4.2.3. http(s) 정규화와 비교](#423-https-정규화와-비교)
+
+##### [4.2.4. http(s) URI에서의 userinfo 지원 중단](#424-https-uri에서의-userinfo-지원-중단)
+
+##### [4.2.5. 프래그먼트 식별자들과 http(s) 레퍼런스들](#425-프래그먼트-식별자들과-https-레퍼런스들)
+
+#### [4.3. 권한 있는 접근](#43-권한-있는-접근)
+
+##### [4.3.1. URI 오리진](#431-uri-오리진)
+
+##### [4.3.2. http 오리진들](#432-http-오리진들)
+
+##### [4.3.3. https 오리진들](#433-https-오리진들)
+
+##### [4.3.4. https 인증서 검증](#434-https-인증서-검증)
+
+##### [4.3.5. IP-ID 참조 신원](#435-ip-id-참조-신원)
+
+### [5. 필드](#5-필드)
+
+#### [5.1. 필드 이름](#51-필드-이름)
+
+#### [5.2. 필드 라인들과 조합된 필드 값](#52-필드-라인들과-조합된-필드-값)
+
+#### [5.3. 필드 순서](#53-필드-순서)
+
+#### [5.4. 필드 제한](#54-필드-제한)
+
+#### [5.5. 필드 값들](#55-필드-값들)
+
+#### [5.6. 필드 값들을 정의하기 위한 공통 규칙들](#56-필드-값들을-정의하기-위한-공통-규칙들)
+
+##### [5.6.1. Lists (#rule ABNF Extension)](#561-lists-rule-abnf-extension)
+
+###### [5.6.1.1. 발신자 요구사항들](#5611-발신자-요구사항들)
+
+###### [5.6.1.2. 수신자 요구사항들](#5612-수신자-요구사항들)
+
+##### [5.6.2. 토큰](#562-토큰)
+
+##### [5.6.3. 공백](#563-공백)
+
+##### [5.6.4. 따옴표로 둘러싸인 문자열](#564-따옴표로-둘러싸인-문자열)
+
+##### [5.6.5. 코멘트](#565-코멘트)
+
+##### [5.6.6. 파라미터](#566-파라미터)
+
+##### [5.6.7. Date/Time 포맷](#567-datetime-포맷)
+
+##### [6. 메시지 추상화](#6-메시지-추상화)
+
 6.1. Framing and Completeness
 6.2. Control Data
 6.3. Header Fields
@@ -912,51 +956,35 @@ _Note:_ 필드 값 구문을 정의하기 위해, 이 사양서는 해당 필드
 
 #### 5.6.1. Lists (#rule ABNF Extension)
 
-A #rule extension to the ABNF rules of [RFC5234] is used to improve
-readability in the definitions of some list-based field values.
+[[RFC5234](https://www.rfc-editor.org/info/rfc5234)]의 ABNF 규칙들에대한 #rule 확장은 몇몇 리스트-기반 필드 값들의 정의들에서 가독성을 향상시키기 위해 사용된다.
 
-A construct "#" is defined, similar to "\*", for defining comma-
-delimited lists of elements. The full form is "<n>#<m>element"
-indicating at least <n> and at most <m> elements, each separated by a
-single comma (",") and optional whitespace (OWS, defined in
-Section 5.6.3).
+"#"이라는 구문은, "\*"와 비슷하게, 요소들의 콤마로 구분된 리스트들을 정의하기 위해 정의됐다. 전체 형태는 최소 <n>과 최대 <m> 개의, 각각이 하나의 콤마(",") 그리고 선택적 공백(5.6.3절에 정의된, OWS)에 의해 구분되는 요소들을 나타내는 "<n>#<m>element" 가 된다.
 
 ##### 5.6.1.1. 발신자 요구사항들
 
-In any production that uses the list construct, a sender MUST NOT
-generate empty list elements. In other words, a sender has to
-generate lists that satisfy the following syntax:
+리스트 구문을 사용하는 어떠한 프로덕션에서든, 발신자는 절대(MUST NOT) 빈 리스트 요소들을 생성해서는 안된다. 다시 말해, 발신자는 다음 구문을 만족하는 리스트들을 생성해야만 한다:
 
      1#element => element *( OWS "," OWS element )
 
-and:
+그리고:
 
      #element => [ 1#element ]
 
-and for n >= 1 and m > 1:
+그리고 n >= 1 과 m > 1의 경우:
 
      <n>#<m>element => element <n-1>*<m-1>( OWS "," OWS element )
 
-Appendix A shows the collected ABNF for senders after the list
-constructs have been expanded.
+부록 A는 리스트 구문이 확장된 후의 발신자들을 위한 ABNF 모음을 보여준다.
 
 ##### 5.6.1.2. 수신자 요구사항들
 
-Empty elements do not contribute to the count of elements present. A
-recipient MUST parse and ignore a reasonable number of empty list
-elements: enough to handle common mistakes by senders that merge
-values, but not so much that they could be used as a denial-of-
-service mechanism. In other words, a recipient MUST accept lists
-that satisfy the following syntax:
+빈 요소들은 존재하는 요소들의 수를 세는데 포함되지 않는다. 수신자는 반드시(MUST) 합리적인 수의 빈 리스트 요소들을 파싱하고 무시해야 한다: 발신자들이 값들을 합치는 흔한 실수들을 처리하는 것으로 충분하지만, 그것들이 denial-of-service 메커니즘으로 사용될 수 있을 정도로 많아서는 안된다. 다시 말해, 수신자는 반드시(MUST) 다음 구문을 만족하는 리스트들을 받아들어야 한다:
 
      #element => [ element ] *( OWS "," OWS [ element ] )
 
-Note that because of the potential presence of empty list elements,
-the RFC 5234 ABNF cannot enforce the cardinality of list elements,
-and consequently all cases are mapped as if there was no cardinality
-specified.
+빈 리스트 요소들의 잠재적인 존재 가능성 때문에, RFC 5234 ABNF는 리스트 요소들의 카디널리티를 강제할 수 없고, 결과적으로 모든 케이스들은 카디널리티가 지정되지 않은 것처럼 매핑된다는 것을 명심하라.
 
-For example, given these ABNF productions:
+예를 들어, 주어진 이러한 ABNF 프로덕션들이 있다:
 
      example-list      = 1#example-list-elmt
      example-list-elmt = token ; see Section 5.6.2
@@ -964,12 +992,13 @@ For example, given these ABNF productions:
 Then the following are valid values for example-list (not including
 the double quotes, which are present for delimitation only):
 
+또 다음은 example-list에 대해 유효한 값들이다(쌍따옴표들은 오로지 구분을 위해서 존재하니까 제외하고):
+
      "foo,bar"
      "foo ,bar,"
      "foo , ,bar,charlie"
 
-In contrast, the following values would be invalid, since at least
-one non-empty element is required by the example-list production:
+반대로, 다음 값들은, 최소 하나의 비어이씾 않은 요소가 example-list 프로덕션에 의해 요구되기 때문에, 유효하지 않다:
 
      ""
      ","
@@ -992,7 +1021,7 @@ separated by whitespace or specific delimiting characters.
 Delimiters are chosen from the set of US-ASCII visual characters not
 allowed in a token (DQUOTE and "(),/:;<=>?@[\]{}").
 
-5.6.3. Whitespace
+#### 5.6.3. 공백
 
 This specification uses three rules to denote the use of linear
 whitespace: OWS (optional whitespace), RWS (required whitespace), and
@@ -1028,7 +1057,7 @@ removed before interpreting it or forwarding the message downstream.
      BWS            = OWS
                     ; "bad" whitespace
 
-5.6.4. Quoted Strings
+#### 5.6.4. 따옴표로 둘러싸인 문자열
 
 A string of text is parsed as a single value if it is quoted using
 double-quote marks.
@@ -1049,7 +1078,7 @@ that string. A sender SHOULD NOT generate a quoted-pair in a comment
 except where necessary to quote parentheses ["(" and ")"] and
 backslash octets occurring within that comment.
 
-5.6.5. Comments
+#### 5.6.5. 코멘트
 
 Comments can be included in some HTTP fields by surrounding the
 comment text with parentheses. Comments are only allowed in fields
@@ -1058,7 +1087,7 @@ containing "comment" as part of their field value definition.
      comment        = "(" *( ctext / quoted-pair / comment ) ")"
      ctext          = HTAB / SP / %x21-27 / %x2A-5B / %x5D-7E / obs-text
 
-5.6.6. Parameters
+#### 5.6.6. 파라미터
 
 Parameters are instances of name/value pairs; they are often used in
 field values as a common syntax for appending auxiliary information
@@ -1083,7 +1112,7 @@ and unquoted values are equivalent.
       |  *Note:* Parameters do not allow whitespace (not even "bad"
       |  whitespace) around the "=" character.
 
-5.6.7. Date/Time Formats
+#### 5.6.7. Date/Time 포맷
 
 Prior to 1995, there were three different formats commonly used by
 servers to communicate timestamps. For compatibility with old
@@ -1186,7 +1215,7 @@ specifications defined by the Internet Message Format.
       |  not required to use these formats for user presentation,
       |  request logging, etc.
 
-6.  Message Abstraction
+## 6. 메시지 추상화
 
 Each major version of HTTP defines its own syntax for communicating
 messages. This section defines an abstract data type for HTTP
