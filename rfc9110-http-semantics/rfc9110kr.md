@@ -965,8 +965,7 @@ the double quotes, which are present for delimitation only):
 
 #### 5.6.2. 토큰
 
-Tokens are short textual identifiers that do not include whitespace
-or delimiters.
+토큰은 공백이나 구분자를 포함하지 않는 짧은 텍스트 형식의 식별자를 가리킨다.
 
      token          = 1*tchar
 
@@ -975,10 +974,7 @@ or delimiters.
                     / DIGIT / ALPHA
                     ; any VCHAR, except delimiters
 
-Many HTTP field values are defined using common syntax components,
-separated by whitespace or specific delimiting characters.
-Delimiters are chosen from the set of US-ASCII visual characters not
-allowed in a token (DQUOTE and "(),/:;<=>?@[\]{}").
+많은 HTTP 필드 값들은 공백이나 특정 구분 문자들에 의해 구분되는, 공통적인 구문 구성 요소들을 사용해 정의된다. 구분자들은 US-ASCII의 가시적 문자들의 집합에서 토큰 내에 허용되지 않는 것들(DQUOTE 그리고 "(),/:;<=>?@[\]{}:) 중 선택된다.
 
 #### 5.6.3. 공백
 
