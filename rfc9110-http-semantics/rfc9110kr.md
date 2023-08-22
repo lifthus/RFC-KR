@@ -117,7 +117,7 @@ than English.
 - - - [5.6.1.2. 수신자 요구사항들](#5612-수신자-요구사항들)
 - - [5.6.2. 토큰](#562-토큰)
 - - [5.6.3. 공백](#563-공백)
-- - [5.6.4. 따옴표로 둘러싸인 문자열](#564-따옴표로-둘러싸인-문자열)
+- - [5.6.4. 인용된 문자열](#564-인용된-문자열)
 - - [5.6.5. 코멘트](#565-코멘트)
 - - [5.6.6. 파라미터](#566-파라미터)
 - - [5.6.7. Date/Time 포맷](#567-datetime-포맷)
@@ -997,26 +997,18 @@ BWS는 의미가 없다. BWS로 정의된 것으로 알려진 어떤 콘텐츠�
      BWS            = OWS
                     ; "bad" whitespace
 
-#### 5.6.4. 따옴표로 둘러싸인 문자열
+#### 5.6.4. 인용된 문자열
 
-A string of text is parsed as a single value if it is quoted using
-double-quote marks.
+한 텍스트 문자열이 인용 부홀호 묶여 있으면 그것은 단일 값으로 파싱된다.
 
      quoted-string  = DQUOTE *( qdtext / quoted-pair ) DQUOTE
      qdtext         = HTAB / SP / %x21 / %x23-5B / %x5D-7E / obs-text
 
-The backslash octet ("\") can be used as a single-octet quoting
-mechanism within quoted-string and comment constructs. Recipients
-that process the value of a quoted-string MUST handle a quoted-pair
-as if it were replaced by the octet following the backslash.
+역슬래시 옥텟("\")은 quoted-string과 comment 구조 내에서 단일-옥텟 인용 메커니즘으로 사용될 수 있다. quoted-string 값을 처리하는 수신자들은 반드시(MUST) quoted-pair가 역슬래시를 따르는 옥텟으로 대체된 것 처럼 처리해야 한다.
 
      quoted-pair    = "\" ( HTAB / SP / VCHAR / obs-text )
 
-A sender SHOULD NOT generate a quoted-pair in a quoted-string except
-where necessary to quote DQUOTE and backslash octets occurring within
-that string. A sender SHOULD NOT generate a quoted-pair in a comment
-except where necessary to quote parentheses ["(" and ")"] and
-backslash octets occurring within that comment.
+발신자는 해당 문자열 내에 있는 DQUOTE와 역슬래시 옥텟들을 인용해야 하는 경우를 제외하고는 웬만해서는(SHOULD NOT) quoted-string 내에 quoted-pair를 생성해서는 안된다. 발신자는 코멘트 내에 있는 괄호 ["(" 와 ")"]와 역슬래시 옥텟들을 인용해야 하는 경우를 제외하고는 웬만해서는(SHOULD NOT) 코멘트 내에 quoted-pair를 생성해서는 안된다.
 
 #### 5.6.5. 코멘트
 
