@@ -988,9 +988,6 @@ OWS와 RWS는 단일 SP로써 동일한 의미를 가진다. OWS나 RWS로 정�
 
 BWS 규칙은 구문이 선택적 공백을 오직 역사적 이유에서만 허용할 때 사용된다. 발신자는 절대(MUST NOT) 메시지에 BWS를 생성해서는 안된다. 수신자는 해당 프로토콜 요소를 해석하기 전 반드시(MUST) 그러한 나쁜 공백을 파싱하고 삭제해야 한다.
 
-BWS has no semantics. Any content known to be defined as BWS MAY be
-removed before interpreting it or forwarding the message downstream.
-
 BWS는 의미가 없다. BWS로 정의된 것으로 알려진 어떤 콘텐츠든 아마(MAY) 해석되거나 메시지를 다운스트림으로 포워딩 하기 전 삭제될 수 있을 것이다.
 
      OWS            = *( SP / HTAB )
