@@ -117,7 +117,7 @@ than English.
 - - - [5.6.1.2. 수신자 요구사항들](#5612-수신자-요구사항들)
 - - [5.6.2. 토큰](#562-토큰)
 - - [5.6.3. 공백](#563-공백)
-- - [5.6.4. 따옴표로 둘러싸인 문자열](#564-따옴표로-둘러싸인-문자열)
+- - [5.6.4. 인용된 문자열](#564-인용된-문자열)
 - - [5.6.5. 코멘트](#565-코멘트)
 - - [5.6.6. 파라미터](#566-파라미터)
 - - [5.6.7. Date/Time 포맷](#567-datetime-포맷)
@@ -721,7 +721,7 @@ HTTP는 동등함을 결정하기 위해 특별한 메소드를 사용하는 것
       http://EXAMPLE.com/%7Esmith/home.html
       http://EXAMPLE.com:/%7esmith/home.html
 
-정규화 후에 (어떤 방법이든) 동등한 두 HTTP URI는 같은 리소스를 식별한다고 가정할 수 있고, 어떤 HTTP 구성요소든 아마 (MAY) 정규화를 수행할 수 있을 것이다. 결과적으로, 구분되는 리소스들은 웬만하면(SHOULD NOT) 정규화 후에([[URI](https://www.rfc-editor.org/info/rfc3986)])의 6.2절에 정의된 어떤 방법을 사용하든) 동등한 URI들을 통해 식별되지 않도록 해야 한다.
+정규화 후에 (어떤 방법이든) 동등한 두 HTTP URI는 같은 리소스를 식별한다고 가정할 수 있고, 어떤 HTTP 구성요소든 아마 (MAY) 정규화를 수행할 수 있을 것이다. 결과적으로, 구분되는 리소스들은 웬만해서는(SHOULD NOT) 정규화 후에([[URI](https://www.rfc-editor.org/info/rfc3986)])의 6.2절에 정의된 어떤 방법을 사용하든) 동등한 URI들을 통해 식별되지 않도록 해야 한다.
 
 #### 4.2.4. http(s) URI에서의 userinfo 지원 중단
 
@@ -965,8 +965,7 @@ the double quotes, which are present for delimitation only):
 
 #### 5.6.2. 토큰
 
-Tokens are short textual identifiers that do not include whitespace
-or delimiters.
+토큰은 공백이나 구분자를 포함하지 않는 짧은 텍스트 형식의 식별자를 가리킨다.
 
      token          = 1*tchar
 
@@ -975,39 +974,21 @@ or delimiters.
                     / DIGIT / ALPHA
                     ; any VCHAR, except delimiters
 
-Many HTTP field values are defined using common syntax components,
-separated by whitespace or specific delimiting characters.
-Delimiters are chosen from the set of US-ASCII visual characters not
-allowed in a token (DQUOTE and "(),/:;<=>?@[\]{}").
+많은 HTTP 필드 값들은 공백이나 특정 구분 문자들에 의해 구분되는, 공통적인 구문 구성 요소들을 사용해 정의된다. 구분자들은 US-ASCII의 가시적 문자들의 집합에서 토큰 내에 허용되지 않는 것들(DQUOTE 그리고 "(),/:;<=>?@[\]{}:) 중 선택된다.
 
 #### 5.6.3. 공백
 
-This specification uses three rules to denote the use of linear
-whitespace: OWS (optional whitespace), RWS (required whitespace), and
-BWS ("bad" whitespace).
+이 사양서는 ㅅ헤 가지 규칙을 사용해 선형 공백의 사용을 나타낸다: OWS(선택적 공백), RWS(필수 공백), 그리고 BWS("나쁜" 공백).
 
-The OWS rule is used where zero or more linear whitespace octets
-might appear. For protocol elements where optional whitespace is
-preferred to improve readability, a sender SHOULD generate the
-optional whitespace as a single SP; otherwise, a sender SHOULD NOT
-generate optional whitespace except as needed to overwrite invalid or
-unwanted protocol elements during in-place message filtering.
+OWS 규칙은 0개 이상의 선형 공백 옥텟이 나타날지 모르는 곳에서 사용된다. 선택적 공백이 가독성 향상을 위해 선호되는 프로토콜 요소들에 대해서, 발신자는 웬만하면(SHOULD) 선택적 공백을 단일 SP로 생성해야 한다; 그게 아니면, 발신자는 내부의 메시지 필터링 중에 유효하지 않거나 원하지 않는 프로토콜 요소들을 덮어쓸 필요가 있을 때를 제외하고는 웬만해서는(SHOULD NOT) 선택적 공백을 생성해서는 안된다.
 
-The RWS rule is used when at least one linear whitespace octet is
-required to separate field tokens. A sender SHOULD generate RWS as a
-single SP.
+RWS 규칙은 하나 이상의 선형 공백 옥텟이 필드 토콘들을 구분하기 위해 요구될 때 사용된다. 발신자는 웬만하면(SHOULD) RWS를 단일 SP로 생성해야 한다.
 
-OWS and RWS have the same semantics as a single SP. Any content
-known to be defined as OWS or RWS MAY be replaced with a single SP
-before interpreting it or forwarding the message downstream.
+OWS와 RWS는 단일 SP로써 동일한 의미를 가진다. OWS나 RWS로 정의된 것으로 알려진 콘텐츠는 아마(MAY) 어느 것이든 해석되기 전이나 메시지를 다운스트림으로 포워딩 하기 전에 단일 SP로 대체될 수 있을 것이다.
 
-The BWS rule is used where the grammar allows optional whitespace
-only for historical reasons. A sender MUST NOT generate BWS in
-messages. A recipient MUST parse for such bad whitespace and remove
-it before interpreting the protocol element.
+BWS 규칙은 구문이 선택적 공백을 오직 역사적 이유에서만 허용할 때 사용된다. 발신자는 절대(MUST NOT) 메시지에 BWS를 생성해서는 안된다. 수신자는 해당 프로토콜 요소를 해석하기 전 반드시(MUST) 그러한 나쁜 공백을 파싱하고 삭제해야 한다.
 
-BWS has no semantics. Any content known to be defined as BWS MAY be
-removed before interpreting it or forwarding the message downstream.
+BWS는 의미가 없다. BWS로 정의된 것으로 알려진 어떤 콘텐츠든 아마(MAY) 해석되거나 메시지를 다운스트림으로 포워딩 하기 전 삭제될 수 있을 것이다.
 
      OWS            = *( SP / HTAB )
                     ; optional whitespace
@@ -1016,32 +997,22 @@ removed before interpreting it or forwarding the message downstream.
      BWS            = OWS
                     ; "bad" whitespace
 
-#### 5.6.4. 따옴표로 둘러싸인 문자열
+#### 5.6.4. 인용된 문자열
 
-A string of text is parsed as a single value if it is quoted using
-double-quote marks.
+한 텍스트 문자열이 인용 부홀호 묶여 있으면 그것은 단일 값으로 파싱된다.
 
      quoted-string  = DQUOTE *( qdtext / quoted-pair ) DQUOTE
      qdtext         = HTAB / SP / %x21 / %x23-5B / %x5D-7E / obs-text
 
-The backslash octet ("\") can be used as a single-octet quoting
-mechanism within quoted-string and comment constructs. Recipients
-that process the value of a quoted-string MUST handle a quoted-pair
-as if it were replaced by the octet following the backslash.
+역슬래시 옥텟("\")은 quoted-string과 comment 구조 내에서 단일-옥텟 인용 메커니즘으로 사용될 수 있다. quoted-string 값을 처리하는 수신자들은 반드시(MUST) quoted-pair가 역슬래시를 따르는 옥텟으로 대체된 것 처럼 처리해야 한다.
 
      quoted-pair    = "\" ( HTAB / SP / VCHAR / obs-text )
 
-A sender SHOULD NOT generate a quoted-pair in a quoted-string except
-where necessary to quote DQUOTE and backslash octets occurring within
-that string. A sender SHOULD NOT generate a quoted-pair in a comment
-except where necessary to quote parentheses ["(" and ")"] and
-backslash octets occurring within that comment.
+발신자는 해당 문자열 내에 있는 DQUOTE와 역슬래시 옥텟들을 인용해야 하는 경우를 제외하고는 웬만해서는(SHOULD NOT) quoted-string 내에 quoted-pair를 생성해서는 안된다. 발신자는 코멘트 내에 있는 괄호 ["(" 와 ")"]와 역슬래시 옥텟들을 인용해야 하는 경우를 제외하고는 웬만해서는(SHOULD NOT) 코멘트 내에 quoted-pair를 생성해서는 안된다.
 
 #### 5.6.5. 코멘트
 
-Comments can be included in some HTTP fields by surrounding the
-comment text with parentheses. Comments are only allowed in fields
-containing "comment" as part of their field value definition.
+코멘트는 일부 HTTP 필드에 코멘트 텍스트를 괄호로 감싸므로써 포함될 수 있다. 코멘트들은 "comment"를 그 필드 값 정의로 포함하고 있는 필드들에만 허용된다.
 
      comment        = "(" *( ctext / quoted-pair / comment ) ")"
      ctext          = HTAB / SP / %x21-27 / %x2A-5B / %x5D-7E / obs-text
