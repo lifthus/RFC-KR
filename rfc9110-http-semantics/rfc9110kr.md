@@ -1012,9 +1012,7 @@ BWS는 의미가 없다. BWS로 정의된 것으로 알려진 어떤 콘텐츠�
 
 #### 5.6.5. 코멘트
 
-Comments can be included in some HTTP fields by surrounding the
-comment text with parentheses. Comments are only allowed in fields
-containing "comment" as part of their field value definition.
+코멘트는 일부 HTTP 필드에 코멘트 텍스트를 괄호로 감싸므로써 포함될 수 있다. 코멘트들은 "comment"를 그 필드 값 정의로 포함하고 있는 필드들에만 허용된다.
 
      comment        = "(" *( ctext / quoted-pair / comment ) ")"
      ctext          = HTAB / SP / %x21-27 / %x2A-5B / %x5D-7E / obs-text
