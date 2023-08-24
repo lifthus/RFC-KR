@@ -138,20 +138,24 @@ than English.
 - - [6.6.2 Trailer](#662-trailer)
 
 [7. HTTP 메시지 라우팅](#7-http-메시지-라우팅)
-7.1. Determining the Target Resource
-7.2. Host and :authority
-7.3. Routing Inbound Requests
-7.3.1. To a Cache
-7.3.2. To a Proxy
-7.3.3. To the Origin
-7.4. Rejecting Misdirected Requests
-7.5. Response Correlation
-7.6. Message Forwarding
-7.6.1. Connection
-7.6.2. Max-Forwards
-7.6.3. Via
-7.7. Message Transformations
-7.8. Upgrade 8. Representation Data and Metadata
+
+- [7.1 타겟 리소스 결정](#71-타겟-리소스-결정)
+- [7.2 Host와 :authority](#72-host와-authority)
+- [7.3 인바운드 요청 라우팅](#73-인바운드-요청-라우팅)
+- - [7.3.1 캐시로](#731-캐시로)
+- - [7.3.2 프록시로](#732-프록시로)
+- - [7.3.3 오리진으로](#733-오리진으로)
+- [7.4 잘못 도달한 요청 거부](#74-잘못-도달한-요청-거부)
+- [7.5 응답 상관관계](#75-응답-상관관계)
+- [7.6 메시지 포워딩](#76-메시지-포워딩)
+- - [7.6.1 연결](#761-연결)
+- - [7.6.2 최대 포워드](#762-최대-포워드)
+- - [7.6.3 통하기](#763-통하기)
+- [7.7 메시지 변환](#77-메시지-변환)
+- [7.8 업그레이드](#78-업그레이드)
+
+[8. 데이터와 메타데이터 표기](#8-데이터와-메타데이터-표기)
+
 8.1. Representation Data
 8.2. Representation Metadata
 8.3. Content-Type
