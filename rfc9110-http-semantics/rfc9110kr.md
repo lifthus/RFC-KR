@@ -124,18 +124,20 @@ than English.
 
 [6. 메시지 추상화](#6-메시지-추상화)
 
-6.1. Framing and Completeness
-6.2. Control Data
-6.3. Header Fields
-6.4. Content
-6.4.1. Content Semantics
-6.4.2. Identifying Content
-6.5. Trailer Fields
-6.5.1. Limitations on Use of Trailers
-6.5.2. Processing Trailer Fields
-6.6. Message Metadata
-6.6.1. Date
-6.6.2. Trailer 7. Routing HTTP Messages
+- [6.1 프레이밍과 완전성](#61-프레이밍과-완전성)
+- [6.2 제어 데이터](#62-제어-데이터)
+- [6.3 헤더 필드](#63-헤더-필드)
+- [6.4 콘텐츠](#64-콘텐츠)
+- - [6.4.1 콘텐츠 의미체계](#641-콘텐츠-의미체계)
+- - [6.4.2 콘텐츠 식별](#642-콘텐츠-식별)
+- [6.5 트레일러 필드](#65-트레일러-필드)
+- - [6.5.1 트레일러 사용에 대한 제한](#651-트레일러-사용에-대한-제한)
+- - [6.5.2 트레일러 필드 처리](#652-트레일러-필드-처리)
+- [6.6 메시지 메타데이터](#66-메시지-메타데이터)
+- - [6.6.1 Date](#661-date)
+- - [6.6.2 Trailer](#662-trailer)
+
+[7. HTTP 메시지 라우팅](#7-http-메시지-라우팅)
 7.1. Determining the Target Resource
 7.2. Host and :authority
 7.3. Routing Inbound Requests
