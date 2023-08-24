@@ -1019,28 +1019,18 @@ BWS는 의미가 없다. BWS로 정의된 것으로 알려진 어떤 콘텐츠�
 
 #### 5.6.6. 파라미터
 
-Parameters are instances of name/value pairs; they are often used in
-field values as a common syntax for appending auxiliary information
-to an item. Each parameter is usually delimited by an immediately
-preceding semicolon.
+파라미터는 이름/값 쌍의 인스턴스들이다; 그것들은 종종 필드 값들에서 아이템에 보조 정보를 추가하기 위한 공통 구문으로 사용된다. 각 파라미터는 직전의 세미콜론에 의해 구분된다.
 
      parameters      = *( OWS ";" OWS [ parameter ] )
      parameter       = parameter-name "=" parameter-value
      parameter-name  = token
      parameter-value = ( token / quoted-string )
 
-Parameter names are case-insensitive. Parameter values might or
-might not be case-sensitive, depending on the semantics of the
-parameter name. Examples of parameters and some equivalent forms can
-be seen in media types (Section 8.3.1) and the Accept header field
-(Section 12.5.1).
+파라미터 이름은 대소문자를 구분하지 않는다. 파라미터 값은 파라미터 이름의 의미에 따라, 대소문자를 구분할 수도 안 할 수도 있다. 파라미터 그리고 일부 동등한 형태에 대한 예시는 미디어 타입(8.3.1절)과 Accept 헤더 필드(12.5.1절)에서 볼 수 있다.
 
-A parameter value that matches the token production can be
-transmitted either as a token or within a quoted-string. The quoted
-and unquoted values are equivalent.
+토큰 프로덕션과 매치되는 한 파라미터 값은 토큰으로써 혹은 quoted-string 내에서 전송될 수 있다. 인용된 것과 안된 값들은 동등하다.
 
-      |  *Note:* Parameters do not allow whitespace (not even "bad"
-      |  whitespace) around the "=" character.
+*Note:* 파라미터는 "=" 문자 주변에 공백("나쁜" 공백 조차)을 허용하지 않는다.
 
 #### 5.6.7. Date/Time 포맷
 
