@@ -1019,65 +1019,41 @@ BWS는 의미가 없다. BWS로 정의된 것으로 알려진 어떤 콘텐츠�
 
 #### 5.6.6. 파라미터
 
-Parameters are instances of name/value pairs; they are often used in
-field values as a common syntax for appending auxiliary information
-to an item. Each parameter is usually delimited by an immediately
-preceding semicolon.
+파라미터는 이름/값 쌍의 인스턴스들이다; 그것들은 종종 필드 값들에서 아이템에 보조 정보를 추가하기 위한 공통 구문으로 사용된다. 각 파라미터는 직전의 세미콜론에 의해 구분된다.
 
      parameters      = *( OWS ";" OWS [ parameter ] )
      parameter       = parameter-name "=" parameter-value
      parameter-name  = token
      parameter-value = ( token / quoted-string )
 
-Parameter names are case-insensitive. Parameter values might or
-might not be case-sensitive, depending on the semantics of the
-parameter name. Examples of parameters and some equivalent forms can
-be seen in media types (Section 8.3.1) and the Accept header field
-(Section 12.5.1).
+파라미터 이름은 대소문자를 구분하지 않는다. 파라미터 값은 파라미터 이름의 의미에 따라, 대소문자를 구분할 수도 안 할 수도 있다. 파라미터 그리고 일부 동등한 형태에 대한 예시는 미디어 타입(8.3.1절)과 Accept 헤더 필드(12.5.1절)에서 볼 수 있다.
 
-A parameter value that matches the token production can be
-transmitted either as a token or within a quoted-string. The quoted
-and unquoted values are equivalent.
+토큰 프로덕션과 매치되는 한 파라미터 값은 토큰으로써 혹은 quoted-string 내에서 전송될 수 있다. 인용된 것과 안된 값들은 동등하다.
 
-      |  *Note:* Parameters do not allow whitespace (not even "bad"
-      |  whitespace) around the "=" character.
+_Note:_ 파라미터는 "=" 문자 주변에 공백("나쁜" 공백 조차)을 허용하지 않는다.
 
 #### 5.6.7. Date/Time 포맷
 
-Prior to 1995, there were three different formats commonly used by
-servers to communicate timestamps. For compatibility with old
-implementations, all three are defined here. The preferred format is
-a fixed-length and single-zone subset of the date and time
-specification used by the Internet Message Format [RFC5322].
+1995년 이전에는, 타임스탬프를 전달하기 위해 서버들에 의해 사용되던 세 가지 다른 형태들이 존재했었다. 옛 구현들과의 호환성을 위해, 세 가지 모두 여기 정의돼 있다. 선호되는 형태는 Internet Message Format[[RFC5322](https://datatracker.ietf.org/doc/html/rfc5322)]에서 사용된 날짜와 시간에 관한 사양의 고정-길이와 싱글-존 서브셋이다.
 
      HTTP-date    = IMF-fixdate / obs-date
 
-An example of the preferred format is
+선호되는 형태의 예시
 
      Sun, 06 Nov 1994 08:49:37 GMT    ; IMF-fixdate
 
-Examples of the two obsolete formats are
+나머지 두 구식 형태의 예시
 
      Sunday, 06-Nov-94 08:49:37 GMT   ; obsolete RFC 850 format
      Sun Nov  6 08:49:37 1994         ; ANSI C's asctime() format
 
-A recipient that parses a timestamp value in an HTTP field MUST
-accept all three HTTP-date formats. When a sender generates a field
-that contains one or more timestamps defined as HTTP-date, the sender
-MUST generate those timestamps in the IMF-fixdate format.
+HTTP 필드의 타임스탬프 값을 파싱하는 수신자는 반드시(MUST) 세 가지 모든 HTTP-date 포맷들을 받아들여야 한다. 발신자가 HTTP-data로 정의된 타임스탬프를 하나 이상 포함하는 필드를 생성할 때, 발신자는 반드시(MUST) IMF-fixadate 형태로 그 타임스탬프들을 생성해야 한다.
 
-An HTTP-date value represents time as an instance of Coordinated
-Universal Time (UTC). The first two formats indicate UTC by the
-three-letter abbreviation for Greenwich Mean Time, "GMT", a
-predecessor of the UTC name; values in the asctime format are assumed
-to be in UTC.
+HTTP-data 값은 시간을 Coordinated Universal Time(UTC)의 인스턴스로 표현한다. 처음 두 가지 포맷들은 UTC를 Greenwich Mean Time의 세-글자 약자, "GMT"로 표현하고, 이는 UTC라는 이름의 전신이다; asctime 포맷의 값들은 UTC 형태로 가정된다.
 
-A "clock" is an implementation capable of providing a reasonable
-approximation of the current instant in UTC. A clock implementation
-ought to use NTP ([RFC5905]), or some similar protocol, to
-synchronize with UTC.
+"clock"은 현재 순간에 대한 합리적인 UTC 근사를 제공할 수 있는 구현체를 말한다. clock 구현체는 NTP([[RFC5905](https://www.rfc-editor.org/rfc/rfc5905.html)]), 혹은 어떤 유사한 프로토콜을 사용해, UTC와 동기화되어야 한다.
 
-Preferred format:
+선호되는 형태:
 
      IMF-fixdate  = day-name "," SP date1 SP time-of-day SP GMT
      ; fixed length/zone/capitalization subset of the format
@@ -1104,7 +1080,7 @@ Preferred format:
      minute       = 2DIGIT
      second       = 2DIGIT
 
-Obsolete formats:
+폐기된 형태:
 
      obs-date     = rfc850-date / asctime-date
 
@@ -1120,30 +1096,15 @@ Obsolete formats:
      date3        = month SP ( 2DIGIT / ( SP 1DIGIT ))
                   ; e.g., Jun  2
 
-HTTP-date is case sensitive. Note that Section 4.2 of [CACHING]
-relaxes this for cache recipients.
+HTTP-date는 대소문자를 구분한다. [[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 4.2절은 캐시 수신자들을 위해 이를 완화한다는 것을 주목하라.
 
-A sender MUST NOT generate additional whitespace in an HTTP-date
-beyond that specifically included as SP in the grammar. The
-semantics of day-name, day, month, year, and time-of-day are the same
-as those defined for the Internet Message Format constructs with the
-corresponding name ([RFC5322], Section 3.3).
+발신자는 절대(MUST NOT) 구문의 SP와 같이 명시적으로 포함된 것을 넘어서 HTTP-data에 추가적인 공백을 생성해서는 안된다. day-name, day, month, year과 time-of-day의 의미는 Internet Message Format 구조들을 위해 각각에 대응되는 이름들로 정의된 것들([[RFC5322](https://datatracker.ietf.org/doc/html/rfc5322)], 3.3절)과 동일하다.
 
-Recipients of a timestamp value in rfc850-date format, which uses a
-two-digit year, MUST interpret a timestamp that appears to be more
-than 50 years in the future as representing the most recent year in
-the past that had the same last two digits.
+rfc850-date 포맷, 즉 숫자 두 개로 연도를 표현하는 형태의 타임스탬프 값의 수신자들은, 반드시(MUST) 50년 보다 미래를 가리키는 것으로 보이는 타임스탬프를 가장 최근 과거 연도 중 마지막 두 수가 같은 연도를 표현하는 것으로 해석해야 한다.
 
-Recipients of timestamp values are encouraged to be robust in parsing
-timestamps unless otherwise restricted by the field definition. For
-example, messages are occasionally forwarded over HTTP from a non-
-HTTP source that might generate any of the date and time
-specifications defined by the Internet Message Format.
+타임스탬프 값의 수신자들은 필드 정의에 의해 딱히 제한된 게 아니라면 타임스탬프를 파싱하는데 있어 강력하게 하도록 권장된다. 예를 들어, 메시지들은 종종 Internet Message Format에 의해 정의된 어떤 날짜와 시간 사양이든 생설할 수도 있는 HTTP가 아닌 소스로 부터 HTTP를 통해 포워딩된다.
 
-      |  *Note:* HTTP requirements for timestamp formats apply only to
-      |  their usage within the protocol stream.  Implementations are
-      |  not required to use these formats for user presentation,
-      |  request logging, etc.
+_Note:_ 타임스탬프 포맷들을 위한 HTTP 요구사항들은 그것들이 프로토콜 스트림 내에서 사용될 때만 적용된다. 구현체들까지 사용자에게 보여주거나, 요청 로깅 등등을 위해 그러한 포맷들을 사용할 필요는 없다.
 
 ## 6. 메시지 추상화
 
