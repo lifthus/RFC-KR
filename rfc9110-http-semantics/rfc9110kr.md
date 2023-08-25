@@ -1114,62 +1114,27 @@ _Note:_ 타임스탬프 포맷들을 위한 HTTP 요구사항들은 그것들이
 
 ## 6. 메시지 추상화
 
-Each major version of HTTP defines its own syntax for communicating
-messages. This section defines an abstract data type for HTTP
-messages based on a generalization of those message characteristics,
-common structure, and capacity for conveying semantics. This
-abstraction is used to define requirements on senders and recipients
-that are independent of the HTTP version, such that a message in one
-version can be relayed through other versions without changing its
-meaning.
+HTTP의 각 메이저 버전은 메시지 통신을 위해 자체적인 구문을 정의한다. 이 절은 HTTP 메시지들의 특징, 공통 구조, 그리고 의미를 전달하기 위한 수용능력에 대한 일반화에 기반한 HTTP 메시지의 추상 데이터 타입을 정의한다. 이 추상화는 HTTP 버전과 관계없이 발신자들과 수신자들에 대한 요구사항을 정의하기 위해 사용되며, 그렇게해서 한 메시지는 자체적인 의미를 바꿀 필요 없이 다른 버전들을 통해서도 전달될 수 있게 된다.
 
-A "message" consists of the following:
+"메시지"는 다음의 것들로 구성된다:
 
-- control data to describe and route the message,
+- 메시지를 설명하고 라우팅하기 위한 제어 데이터,
 
-- a headers lookup table of name/value pairs for extending that
-  control data and conveying additional information about the
-  sender, message, content, or context,
+- 해당 제어 데이터를 확장하고 발신자, 메시지, 콘텐츠, 혹은 콘텍스트에 관한 추가적인 정보를 전달하기 위한 이름/값 쌍의 헤더 룩업 테이블,
 
-- a potentially unbounded stream of content, and
+- 잠재적으로 무한한 콘텐츠 스트림, 그리고
 
-- a trailers lookup table of name/value pairs for communicating
-  information obtained while sending the content.
+- 콘텐츠를 보내는 동안 얻어진 정보를 전달하기 위한 이름 값 쌍의 트레일러 룩업 테이블.
 
-Framing and control data is sent first, followed by a header section
-containing fields for the headers table. When a message includes
-content, the content is sent after the header section, potentially
-followed by a trailer section that might contain fields for the
-trailers table.
+프레이밍과 제어 데이터가 처음 전송되고, 그 뒤를 헤더 테이블을 위한 필드들을 포함하는 헤더 섹션이 뒤따른다. 메시지가 콘텐츠를 포함할 때는, 해당 콘텐츠는 헤더 섹션 이후에 보내진다. 잠재적으로 트레일러 테이블을 위한 필드들을 포함하는 트레일러 섹션이 뒤따를 수 있다.
 
-Messages are expected to be processed as a stream, wherein the
-purpose of that stream and its continued processing is revealed while
-being read. Hence, control data describes what the recipient needs
-to know immediately, header fields describe what needs to be known
-before receiving content, the content (when present) presumably
-contains what the recipient wants or needs to fulfill the message
-semantics, and trailer fields provide optional metadata that was
-unknown prior to sending the content.
+메시지들은 하나의 스트림으로써 처리되기를 기대되는데, 여기서 스트림과 스트림의 계속되는 처리의 목적은 읽어지는 동안 드러난다. 이리하여, 제어 데이터는 수신자가 즉시 알 필요가 있는 것을 기술하고, 헤더 필드들은 콘텐츠를 수신하기 전에 알 필요가 있는 것을 기술하며, 콘텐츠(존재할 때)는 아마 수신자가 메시지 의미를 충족시키기 위해 원하거나 필요로 하는 것을 포함할 것이며, 그리고 트레일러 필드들은 콘텐츠를 보내기 전에는 알 수 없었던 선택적인 메타데이터를 제공한다.
 
-Messages are intended to be "self-descriptive": everything a
-recipient needs to know about the message can be determined by
-looking at the message itself, after decoding or reconstituting parts
-that have been compressed or elided in transit, without requiring an
-understanding of the sender's current application state (established
-via prior messages). However, a client MUST retain knowledge of the
-request when parsing, interpreting, or caching a corresponding
-response. For example, responses to the HEAD method look just like
-the beginning of a response to GET but cannot be parsed in the same
-manner.
+메시지들은 "자기-설명적"이도록 의도된다: 수신자가 메시지에 대해 알아야 할 모든 것은 발신자의 현재 애플리케이션 상태(이전 메시지들에 의해 형성된)에 대한 이해를 요구하지 않으면서도, 전송 중에 압축되거나 생략된 부분들을 디코딩하거나 재구성하고 난 후, 메시지 그 자체를 보는 것만으로 결정될 수 있다. 그러나, 클라이언트는 반드시(MUST) 해당하는 응답을 파싱, 해석, 혹은 캐싱할 때 요청에 대한 지식을 유지해야 한다. 예를 들어, HEAD 메소드에 대한 응답들은 GET에 대한 응답의 시작인 것 처럼 보이지만 같은 방식으로 파싱될 수는 없다.
 
-Note that this message abstraction is a generalization across many
-versions of HTTP, including features that might not be found in some
-versions. For example, trailers were introduced within the HTTP/1.1
-chunked transfer coding as a trailer section after the content. An
-equivalent feature is present in HTTP/2 and HTTP/3 within the header
-block that terminates each stream.
+이 메시지 추상화는 일부 버전들에서는 존재하지 않을지 모르는 많은 HTTP 버전들에 걸친 일반화라는 것을 명심하라. 예를 들어, 트레일러들은 콘텐츠를 따르는 트레일러 섹션으로써 HTTP/1.1 chunked transfer coding 내에서 도입되었다. 그것과 동등한 기능은 HTTP/2와 HTTP/3에서 각 스트림을 종료하는 헤더 블락 내에 존재한다.
 
-6.1. Framing and Completeness
+### 6.1. 프레이밍과 완전성
 
 Message framing indicates how each message begins and ends, such that
 each message can be distinguished from other messages or noise on the
@@ -1191,7 +1156,7 @@ close is considered complete even though it might be
 indistinguishable from an incomplete response, unless a transport-
 level error indicates that it is not complete.
 
-6.2. Control Data
+### 6.2. 제어 데이터
 
 Messages start with control data that describe its primary purpose.
 Request message control data includes a request method (Section 9),
@@ -1244,7 +1209,7 @@ support for that higher version, is sufficiently backwards-compatible
 to be safely processed by any implementation of the same major
 version.
 
-6.3. Header Fields
+### 6.3. 헤더 필드
 
 Fields (Section 5) that are sent or received before the content are
 referred to as "header fields" (or just "headers", colloquially).
