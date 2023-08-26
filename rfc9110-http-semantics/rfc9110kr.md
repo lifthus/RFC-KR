@@ -1136,25 +1136,11 @@ HTTP의 각 메이저 버전은 메시지 통신을 위해 자체적인 구문�
 
 ### 6.1. 프레이밍과 완전성
 
-Message framing indicates how each message begins and ends, such that
-each message can be distinguished from other messages or noise on the
-same connection. Each major version of HTTP defines its own framing
-mechanism.
+메시지 프레이밍은 어떻게 각 메시지들이 시작하고 끝나는지를 나타내고, 각 메시지가 같은 연결 상의 다른 메시지들이나 노이즈로 부터 구분될 수 있도록 한다. HTTP의 각 메이저 버전들은 자체적인 프레이밍 메커니즘을 정의한다.
 
-HTTP/0.9 and early deployments of HTTP/1.0 used closure of the
-underlying connection to end a response. For backwards
-compatibility, this implicit framing is also allowed in HTTP/1.1.
-However, implicit framing can fail to distinguish an incomplete
-response if the connection closes early. For that reason, almost all
-modern implementations use explicit framing in the form of length-
-delimited sequences of message data.
+HTTP/0.9와 HTTP/1.0의 이른 배포들은 응답을 끝내기 위해 기반이 되는 연결을 중단하는 방식을 사용했다. 하위 호환성을 위해, 이러한 암묵적인 프레이밍은 HTTP/1.1에서도 허용됐다. 그러나, 암묵적인 프레이밍은 연결이 일찍 닫히는 경우에 불완전한 응답을 구분하는데 실패할 수 있다. 그러한 이유롸ㅡ 거의 모든 현대 구현체들은 길이가 제한된 메시지 데이터의 시퀀스의 형태로 명시적인 프레이밍을 사용한다.
 
-A message is considered "complete" when all of the octets indicated
-by its framing are available. Note that, when no explicit framing is
-used, a response message that is ended by the underlying connection's
-close is considered complete even though it might be
-indistinguishable from an incomplete response, unless a transport-
-level error indicates that it is not complete.
+한 메시지는 해당 프레이밍에 의해 지정되는 모든 옥텟들이 가용할 때 "완전하다"고 간주된다. 주목할 것은, 명시적 프레이밍이 사용되지 않을 때, 기반 연결의 종료로 인해 끝나는 응답 메시지는 해당 메시지가 불완전한 응답과 구분되지 않을 수 있더라도, 전송 계층 에러가 해당 메시지가 완전하지 않다는 것을 나타내지 않는 한 완전한 것으로 간주된다는 것이다.
 
 ### 6.2. 제어 데이터
 
