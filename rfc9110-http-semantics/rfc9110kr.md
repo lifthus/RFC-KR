@@ -430,7 +430,7 @@ Table 1
 
 </center>
 
-이 문서는 오직 HTTP/1.1 메시징 구문 및 연결 관리와 독립적인 RFC7230의 일부만을 폐기한다; RFC7230의 나머지 부분은 "[HTTP/1.1](https://datatracker.ietf.org/doc/html/rfc7231)"에 의해 폐기된다.
+이 문서는 오직 HTTP/1.1 메시징 구문 및 연결 관리와 독립적인 RFC7230의 일부만을 폐기한다; RFC7230의 나머지 부분은 "[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)"에 의해 폐기된다.
 
 ## 2. 준수사항
 
@@ -1144,56 +1144,21 @@ HTTP/0.9와 HTTP/1.0의 이른 배포들은 응답을 끝내기 위해 기반이
 
 ### 6.2. 제어 데이터
 
-Messages start with control data that describe its primary purpose.
-Request message control data includes a request method (Section 9),
-request target (Section 7.1), and protocol version (Section 2.5).
-Response message control data includes a status code (Section 15),
-optional reason phrase, and protocol version.
+메시지는 스스로의 주된 목적을 기술하는 제어 데이터로 시작한다. 요청 메시지 제어 데이타는 요청 메소드(9절), 요청 타겟(7,1절), 그리고 프로토콜 버전(2.5절)을 포함한다. 응답 메시지 제어 데이터는 상태 코드(15절), 선택적 reason phrase, 그리고 프로토콜 버전을 포함한다.
 
-In HTTP/1.1 ([HTTP/1.1]) and earlier, control data is sent as the
-first line of a message. In HTTP/2 ([HTTP/2]) and HTTP/3 ([HTTP/3]),
-control data is sent as pseudo-header fields with a reserved name
-prefix (e.g., ":authority").
+HTTP/1.1([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)])과 그 이전 버전에서, 제어 데이터는 메시지의 첫번째 라인으로 보내진다. HTTP/2([[HTTP/2](https://www.rfc-editor.org/info/rfc9113)])와 HTTP/3([[HTTP/3](https://www.rfc-editor.org/info/rfc9114)])에서, 제어 데이터는 예약된 이름 접두사(예를 들어, ":authority")와 함께 슈도-헤더 필드들로 보내진다.
 
-Every HTTP message has a protocol version. Depending on the version
-in use, it might be identified within the message explicitly or
-inferred by the connection over which the message is received.
-Recipients use that version information to determine limitations or
-potential for later communication with that sender.
+모든 HTTP 메시지는 프로토콜 버전을 가진다. 사용되고 있는 버전에 따라, 이는 메시지 내에서 명시적으로 식별될 수도 있고 메시지가 수신되는 연결에 의해 추론될 수도 있다. 수신자들은 해당 버전 정보를 제한사항이나 해당 발신자와의 추후 통신에 대한 잠재성을 결정하는데 사용한다.
 
-When a message is forwarded by an intermediary, the protocol version
-is updated to reflect the version used by that intermediary. The Via
-header field (Section 7.6.3) is used to communicate upstream protocol
-information within a forwarded message.
+메시지가 중개자에 의해 포워딩됐을 때, 프로토콜 버전은 중개자에 의해 사용된 버전을 반영하도록 업데이트 된다. Via 헤더 필드(7.6.3절)은 포워드된 메시지 내에서 업스트림 프로토콜 정보를 전달하기 위해 사용된다.
 
-A client SHOULD send a request version equal to the highest version
-to which the client is conformant and whose major version is no
-higher than the highest version supported by the server, if this is
-known. A client MUST NOT send a version to which it is not
-conformant.
+클라이언트는 웬만하면(SHOULD) 클라이언트가 준수하면서, 알고 있다면 서버가 제공하는 가장 높은 버전보다 메이저 버전이 높지 않은 것 중 가장 높은 버전과 동등한 요청 버전을 보내야 한다. 클라이언트는 절대(MUST NOT) 준수하지 않는 버전을 보내서는 안된다.
 
-A client MAY send a lower request version if it is known that the
-server incorrectly implements the HTTP specification, but only after
-the client has attempted at least one normal request and determined
-from the response status code or header fields (e.g., Server) that
-the server improperly handles higher request versions.
+클라이언트는 오직 서버가 더 높은 요청 버전을 부적합하게 처리하는지 최소한 한번은 정상적인 요청을 해보고 응답 상태 코드나 헤더필드(예를 들어, Server)로 부터 결정한 후에, 서버가 HTTP 사양을 부적합하게 구현한 것을 알게 된다면, 아마(MAY) 더 낮은 요청 버전을 보낼 수 있을 것이다.
 
-A server SHOULD send a response version equal to the highest version
-to which the server is conformant that has a major version less than
-or equal to the one received in the request. A server MUST NOT send
-a version to which it is not conformant. A server can send a 505
-(HTTP Version Not Supported) response if it wishes, for any reason,
-to refuse service of the client's major protocol version.
+서버는 웬만하면(SHOULD) 서버가 준수하는 요청에서 수신한 것 이하의 메이저 버전들 중 가장 높은 버전과 동등한 응답 버전을 보내야 한다. 서버는 절대(MUST NOT) 준수하지 않는 버전을 보내서는 안된다. 서버는 원한다면 505(HTTP Version Not Supported) 응답을 보내서, 어떤 이유에서든, 클라이언트의 메이저 프로토콜 버전에 대한 서비스를 거부할 수 있다.
 
-A recipient that receives a message with a major version number that
-it implements and a minor version number higher than what it
-implements SHOULD process the message as if it were in the highest
-minor version within that major version to which the recipient is
-conformant. A recipient can assume that a message with a higher
-minor version, when sent to a recipient that has not yet indicated
-support for that higher version, is sufficiently backwards-compatible
-to be safely processed by any implementation of the same major
-version.
+메이저 버전은 구현됐고 마이너 버전은 구현한 것보다 더 높은 메시지를 수신하는 수신자는 웬만하면(SHOULD) 해당 메시지를 수신자가 준수하는 해당 메이저 버전 내에서 가장 높은 마이너 버전인 것 처럼 처리해야 한다. 수신자는 더 높은 마이너 버전의 메시지가, 더 높은 버전에 대한 지원을 아직 나타내지 않았을 때 보내진 경우, 같은 메이저 버전의 어떤 구현체든 해당 메시작 안전하게 처리되기에 충분히 하위 호환성을 가진다고 가정할 수 있다.
 
 ### 6.3. 헤더 필드
 
