@@ -430,7 +430,7 @@ Table 1
 
 </center>
 
-이 문서는 오직 HTTP/1.1 메시징 구문 및 연결 관리와 독립적인 RFC7230의 일부만을 폐기한다; RFC7230의 나머지 부분은 "[HTTP/1.1](https://datatracker.ietf.org/doc/html/rfc7231)"에 의해 폐기된다.
+이 문서는 오직 HTTP/1.1 메시징 구문 및 연결 관리와 독립적인 RFC7230의 일부만을 폐기한다; RFC7230의 나머지 부분은 "[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)"에 의해 폐기된다.
 
 ## 2. 준수사항
 
@@ -1114,137 +1114,53 @@ _Note:_ 타임스탬프 포맷들을 위한 HTTP 요구사항들은 그것들이
 
 ## 6. 메시지 추상화
 
-Each major version of HTTP defines its own syntax for communicating
-messages. This section defines an abstract data type for HTTP
-messages based on a generalization of those message characteristics,
-common structure, and capacity for conveying semantics. This
-abstraction is used to define requirements on senders and recipients
-that are independent of the HTTP version, such that a message in one
-version can be relayed through other versions without changing its
-meaning.
+HTTP의 각 메이저 버전은 메시지 통신을 위해 자체적인 구문을 정의한다. 이 절은 HTTP 메시지들의 특징, 공통 구조, 그리고 의미를 전달하기 위한 수용능력에 대한 일반화에 기반한 HTTP 메시지의 추상 데이터 타입을 정의한다. 이 추상화는 HTTP 버전과 관계없이 발신자들과 수신자들에 대한 요구사항을 정의하기 위해 사용되며, 그렇게해서 한 메시지는 자체적인 의미를 바꿀 필요 없이 다른 버전들을 통해서도 전달될 수 있게 된다.
 
-A "message" consists of the following:
+"메시지"는 다음의 것들로 구성된다:
 
-- control data to describe and route the message,
+- 메시지를 설명하고 라우팅하기 위한 제어 데이터,
 
-- a headers lookup table of name/value pairs for extending that
-  control data and conveying additional information about the
-  sender, message, content, or context,
+- 해당 제어 데이터를 확장하고 발신자, 메시지, 콘텐츠, 혹은 콘텍스트에 관한 추가적인 정보를 전달하기 위한 이름/값 쌍의 헤더 룩업 테이블,
 
-- a potentially unbounded stream of content, and
+- 잠재적으로 무한한 콘텐츠 스트림, 그리고
 
-- a trailers lookup table of name/value pairs for communicating
-  information obtained while sending the content.
+- 콘텐츠를 보내는 동안 얻어진 정보를 전달하기 위한 이름 값 쌍의 트레일러 룩업 테이블.
 
-Framing and control data is sent first, followed by a header section
-containing fields for the headers table. When a message includes
-content, the content is sent after the header section, potentially
-followed by a trailer section that might contain fields for the
-trailers table.
+프레이밍과 제어 데이터가 처음 전송되고, 그 뒤를 헤더 테이블을 위한 필드들을 포함하는 헤더 섹션이 뒤따른다. 메시지가 콘텐츠를 포함할 때는, 해당 콘텐츠는 헤더 섹션 이후에 보내진다. 잠재적으로 트레일러 테이블을 위한 필드들을 포함하는 트레일러 섹션이 뒤따를 수 있다.
 
-Messages are expected to be processed as a stream, wherein the
-purpose of that stream and its continued processing is revealed while
-being read. Hence, control data describes what the recipient needs
-to know immediately, header fields describe what needs to be known
-before receiving content, the content (when present) presumably
-contains what the recipient wants or needs to fulfill the message
-semantics, and trailer fields provide optional metadata that was
-unknown prior to sending the content.
+메시지들은 하나의 스트림으로써 처리되기를 기대되는데, 여기서 스트림과 스트림의 계속되는 처리의 목적은 읽어지는 동안 드러난다. 이리하여, 제어 데이터는 수신자가 즉시 알 필요가 있는 것을 기술하고, 헤더 필드들은 콘텐츠를 수신하기 전에 알 필요가 있는 것을 기술하며, 콘텐츠(존재할 때)는 아마 수신자가 메시지 의미를 충족시키기 위해 원하거나 필요로 하는 것을 포함할 것이며, 그리고 트레일러 필드들은 콘텐츠를 보내기 전에는 알 수 없었던 선택적인 메타데이터를 제공한다.
 
-Messages are intended to be "self-descriptive": everything a
-recipient needs to know about the message can be determined by
-looking at the message itself, after decoding or reconstituting parts
-that have been compressed or elided in transit, without requiring an
-understanding of the sender's current application state (established
-via prior messages). However, a client MUST retain knowledge of the
-request when parsing, interpreting, or caching a corresponding
-response. For example, responses to the HEAD method look just like
-the beginning of a response to GET but cannot be parsed in the same
-manner.
+메시지들은 "자기-설명적"이도록 의도된다: 수신자가 메시지에 대해 알아야 할 모든 것은 발신자의 현재 애플리케이션 상태(이전 메시지들에 의해 형성된)에 대한 이해를 요구하지 않으면서도, 전송 중에 압축되거나 생략된 부분들을 디코딩하거나 재구성하고 난 후, 메시지 그 자체를 보는 것만으로 결정될 수 있다. 그러나, 클라이언트는 반드시(MUST) 해당하는 응답을 파싱, 해석, 혹은 캐싱할 때 요청에 대한 지식을 유지해야 한다. 예를 들어, HEAD 메소드에 대한 응답들은 GET에 대한 응답의 시작인 것 처럼 보이지만 같은 방식으로 파싱될 수는 없다.
 
-Note that this message abstraction is a generalization across many
-versions of HTTP, including features that might not be found in some
-versions. For example, trailers were introduced within the HTTP/1.1
-chunked transfer coding as a trailer section after the content. An
-equivalent feature is present in HTTP/2 and HTTP/3 within the header
-block that terminates each stream.
+이 메시지 추상화는 일부 버전들에서는 존재하지 않을지 모르는 많은 HTTP 버전들에 걸친 일반화라는 것을 명심하라. 예를 들어, 트레일러들은 콘텐츠를 따르는 트레일러 섹션으로써 HTTP/1.1 chunked transfer coding 내에서 도입되었다. 그것과 동등한 기능은 HTTP/2와 HTTP/3에서 각 스트림을 종료하는 헤더 블락 내에 존재한다.
 
-6.1. Framing and Completeness
+### 6.1. 프레이밍과 완전성
 
-Message framing indicates how each message begins and ends, such that
-each message can be distinguished from other messages or noise on the
-same connection. Each major version of HTTP defines its own framing
-mechanism.
+메시지 프레이밍은 어떻게 각 메시지들이 시작하고 끝나는지를 나타내고, 각 메시지가 같은 연결 상의 다른 메시지들이나 노이즈로 부터 구분될 수 있도록 한다. HTTP의 각 메이저 버전들은 자체적인 프레이밍 메커니즘을 정의한다.
 
-HTTP/0.9 and early deployments of HTTP/1.0 used closure of the
-underlying connection to end a response. For backwards
-compatibility, this implicit framing is also allowed in HTTP/1.1.
-However, implicit framing can fail to distinguish an incomplete
-response if the connection closes early. For that reason, almost all
-modern implementations use explicit framing in the form of length-
-delimited sequences of message data.
+HTTP/0.9와 HTTP/1.0의 이른 배포들은 응답을 끝내기 위해 기반이 되는 연결을 중단하는 방식을 사용했다. 하위 호환성을 위해, 이러한 암묵적인 프레이밍은 HTTP/1.1에서도 허용됐다. 그러나, 암묵적인 프레이밍은 연결이 일찍 닫히는 경우에 불완전한 응답을 구분하는데 실패할 수 있다. 그러한 이유롸ㅡ 거의 모든 현대 구현체들은 길이가 제한된 메시지 데이터의 시퀀스의 형태로 명시적인 프레이밍을 사용한다.
 
-A message is considered "complete" when all of the octets indicated
-by its framing are available. Note that, when no explicit framing is
-used, a response message that is ended by the underlying connection's
-close is considered complete even though it might be
-indistinguishable from an incomplete response, unless a transport-
-level error indicates that it is not complete.
+한 메시지는 해당 프레이밍에 의해 지정되는 모든 옥텟들이 가용할 때 "완전하다"고 간주된다. 주목할 것은, 명시적 프레이밍이 사용되지 않을 때, 기반 연결의 종료로 인해 끝나는 응답 메시지는 해당 메시지가 불완전한 응답과 구분되지 않을 수 있더라도, 전송 계층 에러가 해당 메시지가 완전하지 않다는 것을 나타내지 않는 한 완전한 것으로 간주된다는 것이다.
 
-6.2. Control Data
+### 6.2. 제어 데이터
 
-Messages start with control data that describe its primary purpose.
-Request message control data includes a request method (Section 9),
-request target (Section 7.1), and protocol version (Section 2.5).
-Response message control data includes a status code (Section 15),
-optional reason phrase, and protocol version.
+메시지는 스스로의 주된 목적을 기술하는 제어 데이터로 시작한다. 요청 메시지 제어 데이타는 요청 메소드(9절), 요청 타겟(7,1절), 그리고 프로토콜 버전(2.5절)을 포함한다. 응답 메시지 제어 데이터는 상태 코드(15절), 선택적 reason phrase, 그리고 프로토콜 버전을 포함한다.
 
-In HTTP/1.1 ([HTTP/1.1]) and earlier, control data is sent as the
-first line of a message. In HTTP/2 ([HTTP/2]) and HTTP/3 ([HTTP/3]),
-control data is sent as pseudo-header fields with a reserved name
-prefix (e.g., ":authority").
+HTTP/1.1([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)])과 그 이전 버전에서, 제어 데이터는 메시지의 첫번째 라인으로 보내진다. HTTP/2([[HTTP/2](https://www.rfc-editor.org/info/rfc9113)])와 HTTP/3([[HTTP/3](https://www.rfc-editor.org/info/rfc9114)])에서, 제어 데이터는 예약된 이름 접두사(예를 들어, ":authority")와 함께 슈도-헤더 필드들로 보내진다.
 
-Every HTTP message has a protocol version. Depending on the version
-in use, it might be identified within the message explicitly or
-inferred by the connection over which the message is received.
-Recipients use that version information to determine limitations or
-potential for later communication with that sender.
+모든 HTTP 메시지는 프로토콜 버전을 가진다. 사용되고 있는 버전에 따라, 이는 메시지 내에서 명시적으로 식별될 수도 있고 메시지가 수신되는 연결에 의해 추론될 수도 있다. 수신자들은 해당 버전 정보를 제한사항이나 해당 발신자와의 추후 통신에 대한 잠재성을 결정하는데 사용한다.
 
-When a message is forwarded by an intermediary, the protocol version
-is updated to reflect the version used by that intermediary. The Via
-header field (Section 7.6.3) is used to communicate upstream protocol
-information within a forwarded message.
+메시지가 중개자에 의해 포워딩됐을 때, 프로토콜 버전은 중개자에 의해 사용된 버전을 반영하도록 업데이트 된다. Via 헤더 필드(7.6.3절)은 포워드된 메시지 내에서 업스트림 프로토콜 정보를 전달하기 위해 사용된다.
 
-A client SHOULD send a request version equal to the highest version
-to which the client is conformant and whose major version is no
-higher than the highest version supported by the server, if this is
-known. A client MUST NOT send a version to which it is not
-conformant.
+클라이언트는 웬만하면(SHOULD) 클라이언트가 준수하면서, 알고 있다면 서버가 제공하는 가장 높은 버전보다 메이저 버전이 높지 않은 것 중 가장 높은 버전과 동등한 요청 버전을 보내야 한다. 클라이언트는 절대(MUST NOT) 준수하지 않는 버전을 보내서는 안된다.
 
-A client MAY send a lower request version if it is known that the
-server incorrectly implements the HTTP specification, but only after
-the client has attempted at least one normal request and determined
-from the response status code or header fields (e.g., Server) that
-the server improperly handles higher request versions.
+클라이언트는 오직 서버가 더 높은 요청 버전을 부적합하게 처리하는지 최소한 한번은 정상적인 요청을 해보고 응답 상태 코드나 헤더필드(예를 들어, Server)로 부터 결정한 후에, 서버가 HTTP 사양을 부적합하게 구현한 것을 알게 된다면, 아마(MAY) 더 낮은 요청 버전을 보낼 수 있을 것이다.
 
-A server SHOULD send a response version equal to the highest version
-to which the server is conformant that has a major version less than
-or equal to the one received in the request. A server MUST NOT send
-a version to which it is not conformant. A server can send a 505
-(HTTP Version Not Supported) response if it wishes, for any reason,
-to refuse service of the client's major protocol version.
+서버는 웬만하면(SHOULD) 서버가 준수하는 요청에서 수신한 것 이하의 메이저 버전들 중 가장 높은 버전과 동등한 응답 버전을 보내야 한다. 서버는 절대(MUST NOT) 준수하지 않는 버전을 보내서는 안된다. 서버는 원한다면 505(HTTP Version Not Supported) 응답을 보내서, 어떤 이유에서든, 클라이언트의 메이저 프로토콜 버전에 대한 서비스를 거부할 수 있다.
 
-A recipient that receives a message with a major version number that
-it implements and a minor version number higher than what it
-implements SHOULD process the message as if it were in the highest
-minor version within that major version to which the recipient is
-conformant. A recipient can assume that a message with a higher
-minor version, when sent to a recipient that has not yet indicated
-support for that higher version, is sufficiently backwards-compatible
-to be safely processed by any implementation of the same major
-version.
+메이저 버전은 구현됐고 마이너 버전은 구현한 것보다 더 높은 메시지를 수신하는 수신자는 웬만하면(SHOULD) 해당 메시지를 수신자가 준수하는 해당 메이저 버전 내에서 가장 높은 마이너 버전인 것 처럼 처리해야 한다. 수신자는 더 높은 마이너 버전의 메시지가, 더 높은 버전에 대한 지원을 아직 나타내지 않았을 때 보내진 경우, 같은 메이저 버전의 어떤 구현체든 해당 메시작 안전하게 처리되기에 충분히 하위 호환성을 가진다고 가정할 수 있다.
 
-6.3. Header Fields
+### 6.3. 헤더 필드
 
 Fields (Section 5) that are sent or received before the content are
 referred to as "header fields" (or just "headers", colloquially).
@@ -1258,7 +1174,7 @@ additional context.
       |  field" when they are only allowed to be sent in the header
       |  section.
 
-6.4. Content
+### 6.4. 콘텐츠
 
 HTTP messages often transfer a complete or partial representation as
 the message "content": a stream of octets sent after the header
@@ -1280,7 +1196,7 @@ lengths, chunked framing syntax, nor the trailer fields
       |  the selected representation (Section 3.2).  See the individual
       |  field's definition to disambiguate.
 
-6.4.1. Content Semantics
+#### 6.4.1. 콘텐츠 의미체계
 
 The purpose of content in a request is defined by the method
 semantics (Section 9).
@@ -1324,7 +1240,7 @@ responses do not include content.
 All other responses do include content, although that content might
 be of zero length.
 
-6.4.2. Identifying Content
+#### 6.4.2. 콘텐츠 식별
 
 When a complete or partial representation is transferred as message
 content, it is often desirable for the sender to supply, or the
@@ -1382,7 +1298,7 @@ until a match is found:
 7.  Otherwise, the content is unidentified by HTTP, but a more
     specific identifier might be supplied within the content itself.
 
-6.5. Trailer Fields
+### 6.5. 트레일러 필드
 
 Fields (Section 5) that are located within a "trailer section" are
 referred to as "trailer fields" (or just "trailers", colloquially).
@@ -1398,7 +1314,7 @@ routing or processing of the message as a whole before the trailers
 are received; those choices cannot be unmade by the later discovery
 of trailer fields.
 
-6.5.1. Limitations on Use of Trailers
+#### 6.5.1. 트레일러 사용에 대한 제한
 
 A trailer section is only possible when supported by the version of
 HTTP in use and enabled by an explicit framing mechanism. For
@@ -1437,7 +1353,7 @@ Because of the potential for trailer fields to be discarded in
 transit, a server SHOULD NOT generate trailer fields that it believes
 are necessary for the user agent to receive.
 
-6.5.2. Processing Trailer Fields
+#### 6.5.2. 트레일러 필드 처리
 
 The "Trailer" header field (Section 6.6.2) can be sent to indicate
 fields likely to be sent in the trailer section, which allows
@@ -1460,13 +1376,13 @@ trailer fields as a data structure of name/value pairs, similar to
 expectations, if any, can be defined within the field specification
 for a field intended for use in trailers.
 
-6.6. Message Metadata
+### 6.6. 메시지 메타데이터
 
 Fields that describe the message itself, such as when and how the
 message has been generated, can appear in both requests and
 responses.
 
-6.6.1. Date
+#### 6.6.1. Date
 
 The "Date" header field represents the date and time at which the
 message was originated, having the same semantics as the Origination
@@ -1511,7 +1427,7 @@ might convey a Date if the server is expected to adjust its
 interpretation of the user's request based on differences between the
 user agent and server clocks.
 
-6.6.2. Trailer
+#### 6.6.2. Trailer
 
 The "Trailer" header field provides a list of field names that the
 sender anticipates sending as trailer fields within that message.
@@ -1535,7 +1451,7 @@ Trailer field could provide a hint of what metadata was lost, though
 there is no guarantee that a sender of Trailer will always follow
 through by sending the named fields.
 
-7.  Routing HTTP Messages
+## 7. HTTP 메시지 라우팅
 
 HTTP request message routing is determined by each client based on
 the target resource, the client's proxy configuration, and
