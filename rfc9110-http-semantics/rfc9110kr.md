@@ -1174,7 +1174,7 @@ additional context.
       |  field" when they are only allowed to be sent in the header
       |  section.
 
-6.4. Content
+### 6.4. 콘텐츠
 
 HTTP messages often transfer a complete or partial representation as
 the message "content": a stream of octets sent after the header
@@ -1196,7 +1196,7 @@ lengths, chunked framing syntax, nor the trailer fields
       |  the selected representation (Section 3.2).  See the individual
       |  field's definition to disambiguate.
 
-6.4.1. Content Semantics
+#### 6.4.1. 콘텐츠 의미체계
 
 The purpose of content in a request is defined by the method
 semantics (Section 9).
@@ -1240,7 +1240,7 @@ responses do not include content.
 All other responses do include content, although that content might
 be of zero length.
 
-6.4.2. Identifying Content
+#### 6.4.2. 콘텐츠 식별
 
 When a complete or partial representation is transferred as message
 content, it is often desirable for the sender to supply, or the
@@ -1298,7 +1298,7 @@ until a match is found:
 7.  Otherwise, the content is unidentified by HTTP, but a more
     specific identifier might be supplied within the content itself.
 
-6.5. Trailer Fields
+### 6.5. 트레일러 필드
 
 Fields (Section 5) that are located within a "trailer section" are
 referred to as "trailer fields" (or just "trailers", colloquially).
@@ -1314,7 +1314,7 @@ routing or processing of the message as a whole before the trailers
 are received; those choices cannot be unmade by the later discovery
 of trailer fields.
 
-6.5.1. Limitations on Use of Trailers
+#### 6.5.1. 트레일러 사용에 대한 제한
 
 A trailer section is only possible when supported by the version of
 HTTP in use and enabled by an explicit framing mechanism. For
@@ -1353,7 +1353,7 @@ Because of the potential for trailer fields to be discarded in
 transit, a server SHOULD NOT generate trailer fields that it believes
 are necessary for the user agent to receive.
 
-6.5.2. Processing Trailer Fields
+#### 6.5.2. 트레일러 필드 처리
 
 The "Trailer" header field (Section 6.6.2) can be sent to indicate
 fields likely to be sent in the trailer section, which allows
@@ -1376,13 +1376,13 @@ trailer fields as a data structure of name/value pairs, similar to
 expectations, if any, can be defined within the field specification
 for a field intended for use in trailers.
 
-6.6. Message Metadata
+### 6.6. 메시지 메타데이터
 
 Fields that describe the message itself, such as when and how the
 message has been generated, can appear in both requests and
 responses.
 
-6.6.1. Date
+#### 6.6.1. Date
 
 The "Date" header field represents the date and time at which the
 message was originated, having the same semantics as the Origination
@@ -1427,7 +1427,7 @@ might convey a Date if the server is expected to adjust its
 interpretation of the user's request based on differences between the
 user agent and server clocks.
 
-6.6.2. Trailer
+#### 6.6.2. Trailer
 
 The "Trailer" header field provides a list of field names that the
 sender anticipates sending as trailer fields within that message.
@@ -1451,7 +1451,7 @@ Trailer field could provide a hint of what metadata was lost, though
 there is no guarantee that a sender of Trailer will always follow
 through by sending the named fields.
 
-7.  Routing HTTP Messages
+## 7. HTTP 메시지 라우팅
 
 HTTP request message routing is determined by each client based on
 the target resource, the client's proxy configuration, and
