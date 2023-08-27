@@ -1162,17 +1162,11 @@ HTTP/1.1([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)])과 그 이전 �
 
 ### 6.3. 헤더 필드
 
-Fields (Section 5) that are sent or received before the content are
-referred to as "header fields" (or just "headers", colloquially).
+콘텐츠보다 빨리 발신되거나 수신된 필드들(5절)은 "헤더 필드"라고 불린다(혹은 구어체 적으로 그냥 "헤더").
 
-The "header section" of a message consists of a sequence of header
-field lines. Each header field might modify or extend message
-semantics, describe the sender, define the content, or provide
-additional context.
+메시지의 "헤더 섹션"은 헤더 필드 라인들의 시퀀스로 구성된다. 각 헤더 필드는 메시지 의미를 수정하거나 확장할 수도, 발신자에 대해 기술할 수도, 콘텐츠를 정의할 수도, 혹은 추가적인 콘텍스트를 제공할 수도 있다.
 
-      |  *Note:* We refer to named fields specifically as a "header
-      |  field" when they are only allowed to be sent in the header
-      |  section.
+_Note:_ 우리는 오직 헤더 섹션에서 보내지는 것이 허용됐을 때만 명명된 필드들을 특별히 "헤더 필드"라고 부른다.
 
 ### 6.4. 콘텐츠
 
