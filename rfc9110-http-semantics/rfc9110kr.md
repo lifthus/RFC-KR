@@ -1170,25 +1170,11 @@ _Note:_ 우리는 오직 헤더 섹션에서 보내지는 것이 허용됐을 �
 
 ### 6.4. 콘텐츠
 
-HTTP messages often transfer a complete or partial representation as
-the message "content": a stream of octets sent after the header
-section, as delineated by the message framing.
+HTTP 메시지는 메시지 "콘텐츠"로 종종 완전한 혹은 부분적인 표현을 전송한다: 메시지 프레이밍에 의해 묘사된대로, 헤더 섹션 이후에 보내지는 옥텟들의 스트림.
 
-This abstract definition of content reflects the data after it has
-been extracted from the message framing. For example, an HTTP/1.1
-message body (Section 6 of [HTTP/1.1]) might consist of a stream of
-data encoded with the chunked transfer coding -- a sequence of data
-chunks, one zero-length chunk, and a trailer section -- whereas the
-content of that same message includes only the data stream after the
-transfer coding has been decoded; it does not include the chunk
-lengths, chunked framing syntax, nor the trailer fields
-(Section 6.5).
+콘텐츠에 대한 이 추상적인 정의는 메시지 프레이밍으로부터 추출된 후의 데이터를 반영한다. 예를 들어, HTTP/1.1 메시지 바디([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 6절)는 chunked transfer coding -- 데이터 청크들의 시퀀스, 길이가 0인 하나의 청크, 그리고 트레일러 섹션 -- 으로 인코딩된 데이터 스트림으로 구성될 수 있는 반면 같은 메시지의 콘텐츠는 오직 transfer coding이 디코딩되고 난 후의 데이터 스트림만 포함한다; 청크 길이, 청크 프레이밍 구문, 혹은 트레일러 필드를 포함하지 않는다(6.5절).
 
-      |  *Note:* Some field names have a "Content-" prefix.  This is an
-      |  informal convention; while some of these fields refer to the
-      |  content of the message, as defined above, others are scoped to
-      |  the selected representation (Section 3.2).  See the individual
-      |  field's definition to disambiguate.
+_Note:_ 일부 필드 이름들은 "Content-"라는 접두사를 가진다. 이는 비공식적인 관행이다; 이 필드들 중 일부가, 위에 정의된 것 처럼 메시지의 콘텐츠를 가리키는 반면, 이외의 것들은 선택된 표현(3.2절)으로 범위가 지정된다. 명확히 하기 위해 각 필드의 정의를 참고해라.
 
 #### 6.4.1. 콘텐츠 의미체계
 
