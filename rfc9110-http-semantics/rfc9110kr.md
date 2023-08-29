@@ -1198,61 +1198,29 @@ CONNECT 요청 메소드(9.3.6절)에 대한 2xx(Successful) 응답들은 콘텐
 
 #### 6.4.2. 콘텐츠 식별
 
-When a complete or partial representation is transferred as message
-content, it is often desirable for the sender to supply, or the
-recipient to determine, an identifier for a resource corresponding to
-that specific representation. For example, a client making a GET
-request on a resource for "the current weather report" might want an
-identifier specific to the content returned (e.g., "weather report
-for Laguna Beach at 20210720T1711"). This can be useful for sharing
-or bookmarking content from resources that are expected to have
-changing representations over time.
+완전한 혹은 부분적인 표현이 메시지로 전달될 때, 종종 특정된 표현에 해당하는 리소스에 대한 식별자를, 발신자가 제공하거나, 혹은 수신자가 결정하도록 기대된다. 예를 들어, "현재 날씨 리포트"에 관한 리소스에 대해 GET 요청을 하고 있는 한 클라이언트는 반환된 콘텐츠에 특정된 식별자를 원할 수 있다(예를 들어, 20210720T1711의 광안리 해변 날씨 리포트"). 이는 시간에 따라 표현이 변할 것으로 예상되는 리소스들로부터 콘텐츠를 공유하거나 북마크하는 데 유용할 수 있다.
 
-For a request message:
+요청 메시지에 관해:
 
-- If the request has a Content-Location header field, then the
-  sender asserts that the content is a representation of the
-  resource identified by the Content-Location field value. However,
-  such an assertion cannot be trusted unless it can be verified by
-  other means (not defined by this specification). The information
-  might still be useful for revision history links.
+- 만약 요청이 Content-Location 헤더 필드를 가진다면, 발신자는 콘텐츠가 Content-Location 필드 값에 의해 식별되는 리소스에 대한 표현임을 단언한다. 그러나, 그러한 단언은 다른 수단들(이 사양에서 정의되지 않은)을 통해 검증될 수 없다면 신뢰할 수 없다. 해당 정보는 여전히 revision history links에 대해 유용할 수 있다.
 
-- Otherwise, the content is unidentified by HTTP, but a more
-  specific identifier might be supplied within the content itself.
+- HTTP에 의해 콘텐츠가 식별되지 않으면, 콘텐츠 자체에 더 구체적인 식별자가 제공될 수 있다.
 
-For a response message, the following rules are applied in order
-until a match is found:
+응답 메시지에 관해서, 매치되는 첫 룰이 발견될 때 까지 다음 룰들이 순서대로 적용된다.
 
-1.  If the request method is HEAD or the response status code is 204
-    (No Content) or 304 (Not Modified), there is no content in the
-    response.
+1. 만약 요청 메소드가 HEAD거나 응답 상태 코드가 204(No Content) 혹은 304(Not Modified)라면, 응답에 콘텐츠는 없다.
 
-2.  If the request method is GET and the response status code is 200
-    (OK), the content is a representation of the target resource
-    (Section 7.1).
+2. 만약 요청 메소드가 GET이고 응답 상태 코드가 200(OK)이면, 콘텐츠는 타겟 리소스에 대한 표현이다(7.1절).
 
-3.  If the request method is GET and the response status code is 203
-    (Non-Authoritative Information), the content is a potentially
-    modified or enhanced representation of the target resource as
-    provided by an intermediary.
+3. 만약 요청 메소드가 GET이고 응답 상태코드가 203(Non-Authoritative Information)이면, 콘텐츠는 중개자에 의해 제공된대로 수정되거나 강화된 타겟 리소스의 표현이다.
 
-4.  If the request method is GET and the response status code is 206
-    (Partial Content), the content is one or more parts of a
-    representation of the target resource.
+4. 만약 요청 메소드가 GET이고 상태코드가 206(Partial Content)이면, 콘텐츠는 타겟 리소스의 하나 이상의 부분들이다.
 
-5.  If the response has a Content-Location header field and its field
-    value is a reference to the same URI as the target URI, the
-    content is a representation of the target resource.
+5. 만약 응답에 Content-Location 헤더 필드가 존재하고 그 필드 값이 타겟 URI와 같은 URI에 대한 참조라면, 콘텐츠는 타겟 리소스에 대한 표현이다.
 
-6.  If the response has a Content-Location header field and its field
-    value is a reference to a URI different from the target URI, then
-    the sender asserts that the content is a representation of the
-    resource identified by the Content-Location field value.
-    However, such an assertion cannot be trusted unless it can be
-    verified by other means (not defined by this specification).
+6. 만약 응답에 Content-Location 헤더 필드가 존재하고 그 필드 값이 타겟 URI와 다른 URI를 참조하고 있다면, 발신자는 콘텐츠가 Content-Location 필드 값에 의해 식별되는 리소스의 표현임을 단언한다. 그러나, 이러한 단언은 다른 수단들(이 사양에서 정의되지 않은)에 의해 검증되지 않으면 신뢰할 수 없다
 
-7.  Otherwise, the content is unidentified by HTTP, but a more
-    specific identifier might be supplied within the content itself.
+7. HTTP에 의해 콘텐츠가 식별되지 않으면, 콘텐츠 자체에 더 구체적인 식별자가 제공되고 있을 수 있다.
 
 ### 6.5. 트레일러 필드
 
