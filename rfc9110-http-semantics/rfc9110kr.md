@@ -1178,105 +1178,49 @@ _Note:_ 일부 필드 이름들은 "Content-"라는 접두사를 가진다. 이�
 
 #### 6.4.1. 콘텐츠 의미체계
 
-The purpose of content in a request is defined by the method
-semantics (Section 9).
+요청에 있는 콘텐츠의 목적은 메소드 의미 체계에 의해 정의된다(9절).
 
-For example, a representation in the content of a PUT request
-(Section 9.3.4) represents the desired state of the target resource
-after the request is successfully applied, whereas a representation
-in the content of a POST request (Section 9.3.3) represents
-information to be processed by the target resource.
+예를 들어, PUT 요청의 콘텐츠에 있는 표현(9.3.4절)은 요청이 적용되고 난 후에 기대되는 타겟 리소스의 상태를 나타내며, 반면에 POST 요청의 콘텐츠에 있는 표현(9.3.3절)은 타겟 리소스에 의해 처리될 정보를 나타낸다.
 
-In a response, the content's purpose is defined by the request
-method, response status code (Section 15), and response fields
-describing that content. For example, the content of a 200 (OK)
-response to GET (Section 9.3.1) represents the current state of the
-target resource, as observed at the time of the message origination
-date (Section 6.6.1), whereas the content of the same status code in
-a response to POST might represent either the processing result or
-the new state of the target resource after applying the processing.
+응답에서, 콘텐츠의 목적은 요청 메소드, 응답 상태 코드(15절), 그리고 콘텐츠를 기술하는 응답 필드들에 의해 정의된다. 예를 들어, GET(9.3.1절)에 대한 200(OK) 응답의 콘텐츠는, 메시지 발생 날짜에 관측된대로, 타겟 리소스의 현재 상태를 나타내며, 반면에 같은 상태 코드의 콘텐츠지만 POST에 대한 응답이면 그 처리에 대한 결과나 처리가 적용된 후 타겟 리소스의 새로운 상태를 나타낼 수도 있다.
 
-The content of a 206 (Partial Content) response to GET contains
-either a single part of the selected representation or a multipart
-message body containing multiple parts of that representation, as
-described in Section 15.3.7.
+GET에 대한 206(Partial Content) 응답의 콘텐츠는 선택된 표현의 단일 부분 혹은 해당 표현의 여러 부분들을 포함하고 있는 여러 부분의 메시지 바디를 포함하고, 이에 관해서는 15.3.7절에서 설명한다.
 
-Response messages with an error status code usually contain content
-that represents the error condition, such that the content describes
-the error state and what steps are suggested for resolving it.
+에러 상태 코드의 응답 메시지들은 보통 에러 컨디션을 나타내는 콘텐츠를 포함하여, 콘텐츠가 에러의 상태와 해결을 위해 거치도록 제안되는 단계들을 설명하도록 한다.
 
-Responses to the HEAD request method (Section 9.3.2) never include
-content; the associated response header fields indicate only what
-their values would have been if the request method had been GET
-(Section 9.3.1).
+HEAD 요청 메소드 (9.3.2)절에 대한 응답은 절대 콘텐츠를 포함하지 않는다; 관련된 응답 헤더 필드들은 요청 메소드가 GET이었다면 가졌을 값들만을 나타낸다.
 
-2xx (Successful) responses to a CONNECT request method
-(Section 9.3.6) switch the connection to tunnel mode instead of
-having content.
+CONNECT 요청 메소드(9.3.6절)에 대한 2xx(Successful) 응답들은 콘텐츠를 갖는 대신에 연결을 터널 모드로 전환한다.
 
-All 1xx (Informational), 204 (No Content), and 304 (Not Modified)
-responses do not include content.
+모든 1xx(Informational), 204(No Content), 그리고 304(Not Modified) 응답들은 콘텐츠를 포함하지 않는다.
 
-All other responses do include content, although that content might
-be of zero length.
+모든 다른 응답들은 콘텐츠를 포함하지만, 그 콘텐츠의 길이가 0일 수도 있다.
 
 #### 6.4.2. 콘텐츠 식별
 
-When a complete or partial representation is transferred as message
-content, it is often desirable for the sender to supply, or the
-recipient to determine, an identifier for a resource corresponding to
-that specific representation. For example, a client making a GET
-request on a resource for "the current weather report" might want an
-identifier specific to the content returned (e.g., "weather report
-for Laguna Beach at 20210720T1711"). This can be useful for sharing
-or bookmarking content from resources that are expected to have
-changing representations over time.
+완전한 혹은 부분적인 표현이 메시지로 전달될 때, 종종 특정된 표현에 해당하는 리소스에 대한 식별자를, 발신자가 제공하거나, 혹은 수신자가 결정하도록 기대된다. 예를 들어, "현재 날씨 리포트"에 관한 리소스에 대해 GET 요청을 하고 있는 한 클라이언트는 반환된 콘텐츠에 특정된 식별자를 원할 수 있다(예를 들어, 20210720T1711의 광안리 해변 날씨 리포트"). 이는 시간에 따라 표현이 변할 것으로 예상되는 리소스들로부터 콘텐츠를 공유하거나 북마크하는 데 유용할 수 있다.
 
-For a request message:
+요청 메시지에 관해:
 
-- If the request has a Content-Location header field, then the
-  sender asserts that the content is a representation of the
-  resource identified by the Content-Location field value. However,
-  such an assertion cannot be trusted unless it can be verified by
-  other means (not defined by this specification). The information
-  might still be useful for revision history links.
+- 만약 요청이 Content-Location 헤더 필드를 가진다면, 발신자는 콘텐츠가 Content-Location 필드 값에 의해 식별되는 리소스에 대한 표현임을 단언한다. 그러나, 그러한 단언은 다른 수단들(이 사양에서 정의되지 않은)을 통해 검증될 수 없다면 신뢰할 수 없다. 해당 정보는 여전히 revision history links에 대해 유용할 수 있다.
 
-- Otherwise, the content is unidentified by HTTP, but a more
-  specific identifier might be supplied within the content itself.
+- HTTP에 의해 콘텐츠가 식별되지 않으면, 콘텐츠 자체에 더 구체적인 식별자가 제공될 수 있다.
 
-For a response message, the following rules are applied in order
-until a match is found:
+응답 메시지에 관해서, 매치되는 첫 룰이 발견될 때 까지 다음 룰들이 순서대로 적용된다.
 
-1.  If the request method is HEAD or the response status code is 204
-    (No Content) or 304 (Not Modified), there is no content in the
-    response.
+1. 만약 요청 메소드가 HEAD거나 응답 상태 코드가 204(No Content) 혹은 304(Not Modified)라면, 응답에 콘텐츠는 없다.
 
-2.  If the request method is GET and the response status code is 200
-    (OK), the content is a representation of the target resource
-    (Section 7.1).
+2. 만약 요청 메소드가 GET이고 응답 상태 코드가 200(OK)이면, 콘텐츠는 타겟 리소스에 대한 표현이다(7.1절).
 
-3.  If the request method is GET and the response status code is 203
-    (Non-Authoritative Information), the content is a potentially
-    modified or enhanced representation of the target resource as
-    provided by an intermediary.
+3. 만약 요청 메소드가 GET이고 응답 상태코드가 203(Non-Authoritative Information)이면, 콘텐츠는 중개자에 의해 제공된대로 수정되거나 강화된 타겟 리소스의 표현이다.
 
-4.  If the request method is GET and the response status code is 206
-    (Partial Content), the content is one or more parts of a
-    representation of the target resource.
+4. 만약 요청 메소드가 GET이고 상태코드가 206(Partial Content)이면, 콘텐츠는 타겟 리소스의 하나 이상의 부분들이다.
 
-5.  If the response has a Content-Location header field and its field
-    value is a reference to the same URI as the target URI, the
-    content is a representation of the target resource.
+5. 만약 응답에 Content-Location 헤더 필드가 존재하고 그 필드 값이 타겟 URI와 같은 URI에 대한 참조라면, 콘텐츠는 타겟 리소스에 대한 표현이다.
 
-6.  If the response has a Content-Location header field and its field
-    value is a reference to a URI different from the target URI, then
-    the sender asserts that the content is a representation of the
-    resource identified by the Content-Location field value.
-    However, such an assertion cannot be trusted unless it can be
-    verified by other means (not defined by this specification).
+6. 만약 응답에 Content-Location 헤더 필드가 존재하고 그 필드 값이 타겟 URI와 다른 URI를 참조하고 있다면, 발신자는 콘텐츠가 Content-Location 필드 값에 의해 식별되는 리소스의 표현임을 단언한다. 그러나, 이러한 단언은 다른 수단들(이 사양에서 정의되지 않은)에 의해 검증되지 않으면 신뢰할 수 없다
 
-7.  Otherwise, the content is unidentified by HTTP, but a more
-    specific identifier might be supplied within the content itself.
+7. HTTP에 의해 콘텐츠가 식별되지 않으면, 콘텐츠 자체에 더 구체적인 식별자가 제공되고 있을 수 있다.
 
 ### 6.5. 트레일러 필드
 
