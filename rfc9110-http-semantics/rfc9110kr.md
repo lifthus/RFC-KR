@@ -1178,47 +1178,23 @@ _Note:_ 일부 필드 이름들은 "Content-"라는 접두사를 가진다. 이�
 
 #### 6.4.1. 콘텐츠 의미체계
 
-The purpose of content in a request is defined by the method
-semantics (Section 9).
+요청에 있는 콘텐츠의 목적은 메소드 의미 체계에 의해 정의된다(9절).
 
-For example, a representation in the content of a PUT request
-(Section 9.3.4) represents the desired state of the target resource
-after the request is successfully applied, whereas a representation
-in the content of a POST request (Section 9.3.3) represents
-information to be processed by the target resource.
+예를 들어, PUT 요청의 콘텐츠에 있는 표현(9.3.4절)은 요청이 적용되고 난 후에 기대되는 타겟 리소스의 상태를 나타내며, 반면에 POST 요청의 콘텐츠에 있는 표현(9.3.3절)은 타겟 리소스에 의해 처리될 정보를 나타낸다.
 
-In a response, the content's purpose is defined by the request
-method, response status code (Section 15), and response fields
-describing that content. For example, the content of a 200 (OK)
-response to GET (Section 9.3.1) represents the current state of the
-target resource, as observed at the time of the message origination
-date (Section 6.6.1), whereas the content of the same status code in
-a response to POST might represent either the processing result or
-the new state of the target resource after applying the processing.
+응답에서, 콘텐츠의 목적은 요청 메소드, 응답 상태 코드(15절), 그리고 콘텐츠를 기술하는 응답 필드들에 의해 정의된다. 예를 들어, GET(9.3.1절)에 대한 200(OK) 응답의 콘텐츠는, 메시지 발생 날짜에 관측된대로, 타겟 리소스의 현재 상태를 나타내며, 반면에 같은 상태 코드의 콘텐츠지만 POST에 대한 응답이면 그 처리에 대한 결과나 처리가 적용된 후 타겟 리소스의 새로운 상태를 나타낼 수도 있다.
 
-The content of a 206 (Partial Content) response to GET contains
-either a single part of the selected representation or a multipart
-message body containing multiple parts of that representation, as
-described in Section 15.3.7.
+GET에 대한 206(Partial Content) 응답의 콘텐츠는 선택된 표현의 단일 부분 혹은 해당 표현의 여러 부분들을 포함하고 있는 여러 부분의 메시지 바디를 포함하고, 이에 관해서는 15.3.7절에서 설명한다.
 
-Response messages with an error status code usually contain content
-that represents the error condition, such that the content describes
-the error state and what steps are suggested for resolving it.
+에러 상태 코드의 응답 메시지들은 보통 에러 컨디션을 나타내는 콘텐츠를 포함하여, 콘텐츠가 에러의 상태와 해결을 위해 거치도록 제안되는 단계들을 설명하도록 한다.
 
-Responses to the HEAD request method (Section 9.3.2) never include
-content; the associated response header fields indicate only what
-their values would have been if the request method had been GET
-(Section 9.3.1).
+HEAD 요청 메소드 (9.3.2)절에 대한 응답은 절대 콘텐츠를 포함하지 않는다; 관련된 응답 헤더 필드들은 요청 메소드가 GET이었다면 가졌을 값들만을 나타낸다.
 
-2xx (Successful) responses to a CONNECT request method
-(Section 9.3.6) switch the connection to tunnel mode instead of
-having content.
+CONNECT 요청 메소드(9.3.6절)에 대한 2xx(Successful) 응답들은 콘텐츠를 갖는 대신에 연결을 터널 모드로 전환한다.
 
-All 1xx (Informational), 204 (No Content), and 304 (Not Modified)
-responses do not include content.
+모든 1xx(Informational), 204(No Content), 그리고 304(Not Modified) 응답들은 콘텐츠를 포함하지 않는다.
 
-All other responses do include content, although that content might
-be of zero length.
+모든 다른 응답들은 콘텐츠를 포함하지만, 그 콘텐츠의 길이가 0일 수도 있다.
 
 #### 6.4.2. 콘텐츠 식별
 
