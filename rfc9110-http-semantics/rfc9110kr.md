@@ -1224,81 +1224,29 @@ CONNECT 요청 메소드(9.3.6절)에 대한 2xx(Successful) 응답들은 콘텐
 
 ### 6.5. 트레일러 필드
 
-Fields (Section 5) that are located within a "trailer section" are
-referred to as "trailer fields" (or just "trailers", colloquially).
-Trailer fields can be useful for supplying message integrity checks,
-digital signatures, delivery metrics, or post-processing status
-information.
+"트레일러 섹션" 내에 위치한 필드들(5절)은 "트레일러 필드"라고 불린다(혹은 그냥 구어체로, "트레일러"). 트레일러 필드는 메시지 무결성 체크, 디지털 시그니처, 전달 지표, 혹은 포스트-처리 상태 정보를 제공하는데 유용할 수 있다.
 
-Trailer fields ought to be processed and stored separately from the
-fields in the header section to avoid contradicting message semantics
-known at the time the header section was complete. The presence or
-absence of certain header fields might impact choices made for the
-routing or processing of the message as a whole before the trailers
-are received; those choices cannot be unmade by the later discovery
-of trailer fields.
+트레일러 필드들은 헤더 섹션 처리가 완료된 시점에 알려진 메시지 의미 체계와 모순되는 것을 피하기 위해 헤더 섹션의 필드들과 별도로 처리되고 저장되어야 한다. 특정 헤더 필드들의 존재 혹은 부재는 트레일러들이 수신되기 전에 전체 메시지에 대한 라우팅이나 처리에 관한 선택들에 영향을 미칠 수도 있다; 그러한 선택들은 나중에 트레일러 필드들을 발견하더라도 없던 일로 만들 수는 없다.
 
 #### 6.5.1. 트레일러 사용에 대한 제한
 
-A trailer section is only possible when supported by the version of
-HTTP in use and enabled by an explicit framing mechanism. For
-example, the chunked transfer coding in HTTP/1.1 allows a trailer
-section to be sent after the content (Section 7.1.2 of [HTTP/1.1]).
+트레일러 섹션은 오로지 사용되고 있는 HTTP 버전이 지원할 때와 프레이밍 메커니즘에 의해 명시적으로 허용될 때만 가능하다. 예를 들어, HTTP/1.1의 chunked transfer coding은 트레일러 섹션이 콘텐츠 다음에 보내지는 것을 허용한다([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 7.1.2절).
 
-Many fields cannot be processed outside the header section because
-their evaluation is necessary prior to receiving the content, such as
-those that describe message framing, routing, authentication, request
-modifiers, response controls, or content format. A sender MUST NOT
-generate a trailer field unless the sender knows the corresponding
-header field name's definition permits the field to be sent in
-trailers.
+많은 필드들은 헤더 섹션 밖에서는 처리될 수 없는데 이는 그것들에 대한 평가를 콘텐츠 수신 이전에 필요로 하기 때문이고, 메시지 프레이밍, 라우팅, 인증, 요청 수정자, 응답 제어, 혹은 콘텐츠 포맷과 같은 것들을 기술하는 필드들이 그러하다. 발신자는 어떤 헤더 필드 이름의 정의가 해당 필드가 트레일러에 실려 보내지는 것을 허용하는지 알고 있지 않는 한 절대(MUST NOT) 트레일러 필드를 생성해서는 안된다.
 
-Trailer fields can be difficult to process by intermediaries that
-forward messages from one protocol version to another. If the entire
-message can be buffered in transit, some intermediaries could merge
-trailer fields into the header section (as appropriate) before it is
-forwarded. However, in most cases, the trailers are simply
-discarded. A recipient MUST NOT merge a trailer field into a header
-section unless the recipient understands the corresponding header
-field definition and that definition explicitly permits and defines
-how trailer field values can be safely merged.
+트레일러 필드들은 한 프로토콜 버전에서 다른 프로토콜 버전으로 메시지들을 포워딩하는 중개자 입장에서 처리하기 어려울 수 있다. 만약 전체 메시지가 전송 중에 버퍼될 수 있다면, 어떤 중개자들은 포워딩 하기 전 트레일러 필드들을 헤더 섹션에 병합할 수 있다(적절히). 그러나, 대부분의 경우들에서, 트레일러들은 그냥 간단히 버려진다. 수신자는 스스로 해당하는 헤더 필드 정의를 이해하고 있으면서 그 정의가 명시적으로 트레일러 필드 값들이 안전하게 병합되는 방식을 허용하고 정의하고 있지 않는 한 절대(MUST NOT) 트레일러 필드를 헤더 섹션으로 병합해서는 안된다.
 
-The presence of the keyword "trailers" in the TE header field
-(Section 10.1.4) of a request indicates that the client is willing to
-accept trailer fields, on behalf of itself and any downstream
-clients. For requests from an intermediary, this implies that all
-downstream clients are willing to accept trailer fields in the
-forwarded response. Note that the presence of "trailers" does not
-mean that the client(s) will process any particular trailer field in
-the response; only that the trailer section(s) will not be dropped by
-any of the clients.
+요청의 TE 헤더 필드(10.1.4절)에서 "trailers"라는 키워드의 존재는 클라이언트가 자신을 포함한 어떤 다른 다운스트림 클라이언트들을 대신하여, 기꺼이 트레일러 필드들을 받아들일 것임을 나타낸다. 이는 중개자들로부터의 요청들에 대해, 모든 다운스트림 클라이언트들이 포워드된 응답의 트레일러 필드들을 받아들일 것임을 암시한다. "trailers" 키워드의 존재가 클라이언트들이 응답의 어떠한 특정 트레일러 필드를 처리할 것임을 의미하지는 않는다는 것을 명심하라; 오직 트레일러 섹션(들)이 어떠한 클라이언트들에 의해서도 버려지지 않음을 의미할 뿐이다.
 
-Because of the potential for trailer fields to be discarded in
-transit, a server SHOULD NOT generate trailer fields that it believes
-are necessary for the user agent to receive.
+이렇게 트레일러 필드들이 전송 중에 버려질 가능성 때문에, 서버는 웬만하면(SHOULD NOT) 유저 에이전트가 반드시 수신해야 한다고 믿어지는 트레일러 필드들은 생성하지 않아야 한다.
 
 #### 6.5.2. 트레일러 필드 처리
 
-The "Trailer" header field (Section 6.6.2) can be sent to indicate
-fields likely to be sent in the trailer section, which allows
-recipients to prepare for their receipt before processing the
-content. For example, this could be useful if a field name indicates
-that a dynamic checksum should be calculated as the content is
-received and then immediately checked upon receipt of the trailer
-field value.
+"Trailer" 헤더 필드(6.6.2절)은 트레일러 섹션을 통해 보내질 가능성이 있는 필드들을 나타내기 위해 보내질 수 있는데, 이는 수신자들이 콘텐츠를 처리하기 전 그것들을 수신할 준비를 할 수 있도록 한다. 예를 들어, 이는 필드 이름이 콘텐츠가 수신되는대로 동적 체크섬을 계산하고 트레일러 필드 값을 받는 즉시 확인해야함을 나타낼 때 유용할 수 있다.
 
-Like header fields, trailer fields with the same name are processed
-in the order received; multiple trailer field lines with the same
-name have the equivalent semantics as appending the multiple values
-as a list of members. Trailer fields that might be generated more
-than once during a message MUST be defined as a list-based field even
-if each member value is only processed once per field line received.
+헤더 필드 처럼, 같은 이름의 트레일러 필드들은 수신된 순서대로 처리된다; 같은 이름의 여러 트레일러 필드 라인들은 여러 값 멤버들을 리스트 형태로 붙이는 것과 동등한 의미를 가진다. 한 메시지에서 두 번 이상 생성될 수 있는 트레일러 필드들은 각 멤버 값들이 수신된 필드 라인 당 오직 한번만 처리된다고 하더라도 반드시(MUST) 리스트-기반 필드로 정의되어야 한다.
 
-At the end of a message, a recipient MAY treat the set of received
-trailer fields as a data structure of name/value pairs, similar to
-(but separate from) the header fields. Additional processing
-expectations, if any, can be defined within the field specification
-for a field intended for use in trailers.
+한 메시지의 끝에서, 수신자는 아마(MAY) 수신된 트레일러 필드들의 집합을 이름/값 쌍들의 데이터 스트럭쳐로 다룰 수 있을 것이며, 이는 헤더 필드와 비슷하다(그러나 별개다). 추가적인 처리에 대한 기대는, 만약 있다면, 트레일러에 사용되도록 의도된 필드의 필드 명세 내에서 정의될 수 있다.
 
 ### 6.6. 메시지 메타데이터
 
