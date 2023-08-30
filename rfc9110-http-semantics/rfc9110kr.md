@@ -1224,19 +1224,9 @@ CONNECT 요청 메소드(9.3.6절)에 대한 2xx(Successful) 응답들은 콘텐
 
 ### 6.5. 트레일러 필드
 
-Fields (Section 5) that are located within a "trailer section" are
-referred to as "trailer fields" (or just "trailers", colloquially).
-Trailer fields can be useful for supplying message integrity checks,
-digital signatures, delivery metrics, or post-processing status
-information.
+"트레일러 섹션" 내에 위치한 필드들(5절)은 "트레일러 필드"라고 불린다(혹은 그냥 구어체로, "트레일러"). 트레일러 필드는 메시지 무결성 체크, 디지털 시그니처, 전달 지표, 혹은 포스트-처리 상태 정보를 제공하는데 유용할 수 있다.
 
-Trailer fields ought to be processed and stored separately from the
-fields in the header section to avoid contradicting message semantics
-known at the time the header section was complete. The presence or
-absence of certain header fields might impact choices made for the
-routing or processing of the message as a whole before the trailers
-are received; those choices cannot be unmade by the later discovery
-of trailer fields.
+트레일러 필드들은 헤더 섹션 처리가 완료된 시점에 알려진 메시지 의미 체계와 모순되는 것을 피하기 위해 헤더 섹션의 필드들과 별도로 처리되고 저장되어야 한다. 특정 헤더 필드들의 존재 혹은 부재는 트레일러들이 수신되기 전에 전체 메시지에 대한 라우팅이나 처리에 관한 선택들에 영향을 미칠 수도 있다; 그러한 선택들은 나중에 트레일러 필드들을 발견하더라도 없던 일로 만들 수는 없다.
 
 #### 6.5.1. 트레일러 사용에 대한 제한
 
