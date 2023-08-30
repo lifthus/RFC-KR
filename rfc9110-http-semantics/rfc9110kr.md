@@ -1230,42 +1230,15 @@ CONNECT 요청 메소드(9.3.6절)에 대한 2xx(Successful) 응답들은 콘텐
 
 #### 6.5.1. 트레일러 사용에 대한 제한
 
-A trailer section is only possible when supported by the version of
-HTTP in use and enabled by an explicit framing mechanism. For
-example, the chunked transfer coding in HTTP/1.1 allows a trailer
-section to be sent after the content (Section 7.1.2 of [HTTP/1.1]).
+트레일러 섹션은 오로지 사용되고 있는 HTTP 버전이 지원할 때와 프레이밍 메커니즘에 의해 명시적으로 허용될 때만 가능하다. 예를 들어, HTTP/1.1의 chunked transfer coding은 트레일러 섹션이 콘텐츠 다음에 보내지는 것을 허용한다([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 7.1.2절).
 
-Many fields cannot be processed outside the header section because
-their evaluation is necessary prior to receiving the content, such as
-those that describe message framing, routing, authentication, request
-modifiers, response controls, or content format. A sender MUST NOT
-generate a trailer field unless the sender knows the corresponding
-header field name's definition permits the field to be sent in
-trailers.
+많은 필드들은 헤더 섹션 밖에서는 처리될 수 없는데 이는 그것들에 대한 평가를 콘텐츠 수신 이전에 필요로 하기 때문이고, 메시지 프레이밍, 라우팅, 인증, 요청 수정자, 응답 제어, 혹은 콘텐츠 포맷과 같은 것들을 기술하는 필드들이 그러하다. 발신자는 어떤 헤더 필드 이름의 정의가 해당 필드가 트레일러에 실려 보내지는 것을 허용하는지 알고 있지 않는 한 절대(MUST NOT) 트레일러 필드를 생성해서는 안된다.
 
-Trailer fields can be difficult to process by intermediaries that
-forward messages from one protocol version to another. If the entire
-message can be buffered in transit, some intermediaries could merge
-trailer fields into the header section (as appropriate) before it is
-forwarded. However, in most cases, the trailers are simply
-discarded. A recipient MUST NOT merge a trailer field into a header
-section unless the recipient understands the corresponding header
-field definition and that definition explicitly permits and defines
-how trailer field values can be safely merged.
+트레일러 필드들은 한 프로토콜 버전에서 다른 프로토콜 버전으로 메시지들을 포워딩하는 중개자 입장에서 처리하기 어려울 수 있다. 만약 전체 메시지가 전송 중에 버퍼될 수 있다면, 어떤 중개자들은 포워딩 하기 전 트레일러 필드들을 헤더 섹션에 병합할 수 있다(적절히). 그러나, 대부분의 경우들에서, 트레일러들은 그냥 간단히 버려진다. 수신자는 스스로 해당하는 헤더 필드 정의를 이해하고 있으면서 그 정의가 명시적으로 트레일러 필드 값들이 안전하게 병합되는 방식을 허용하고 정의하고 있지 않는 한 절대(MUST NOT) 트레일러 필드를 헤더 섹션으로 병합해서는 안된다.
 
-The presence of the keyword "trailers" in the TE header field
-(Section 10.1.4) of a request indicates that the client is willing to
-accept trailer fields, on behalf of itself and any downstream
-clients. For requests from an intermediary, this implies that all
-downstream clients are willing to accept trailer fields in the
-forwarded response. Note that the presence of "trailers" does not
-mean that the client(s) will process any particular trailer field in
-the response; only that the trailer section(s) will not be dropped by
-any of the clients.
+요청의 TE 헤더 필드(10.1.4절)에서 "trailers"라는 키워드의 존재는 클라이언트가 자신을 포함한 어떤 다른 다운스트림 클라이언트들을 대신하여, 기꺼이 트레일러 필드들을 받아들일 것임을 나타낸다. 이는 중개자들로부터의 요청들에 대해, 모든 다운스트림 클라이언트들이 포워드된 응답의 트레일러 필드들을 받아들일 것임을 암시한다. "trailers" 키워드의 존재가 클라이언트들이 응답의 어떠한 특정 트레일러 필드를 처리할 것임을 의미하지는 않는다는 것을 명심하라; 오직 트레일러 섹션(들)이 어떠한 클라이언트들에 의해서도 버려지지 않음을 의미할 뿐이다.
 
-Because of the potential for trailer fields to be discarded in
-transit, a server SHOULD NOT generate trailer fields that it believes
-are necessary for the user agent to receive.
+이렇게 트레일러 필드들이 전송 중에 버려질 가능성 때문에, 서버는 웬만하면(SHOULD NOT) 유저 에이전트가 반드시 수신해야 한다고 믿어지는 트레일러 필드들은 생성하지 않아야 한다.
 
 #### 6.5.2. 트레일러 필드 처리
 
