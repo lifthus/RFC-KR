@@ -1242,26 +1242,11 @@ CONNECT 요청 메소드(9.3.6절)에 대한 2xx(Successful) 응답들은 콘텐
 
 #### 6.5.2. 트레일러 필드 처리
 
-The "Trailer" header field (Section 6.6.2) can be sent to indicate
-fields likely to be sent in the trailer section, which allows
-recipients to prepare for their receipt before processing the
-content. For example, this could be useful if a field name indicates
-that a dynamic checksum should be calculated as the content is
-received and then immediately checked upon receipt of the trailer
-field value.
+"Trailer" 헤더 필드(6.6.2절)은 트레일러 섹션을 통해 보내질 가능성이 있는 필드들을 나타내기 위해 보내질 수 있는데, 이는 수신자들이 콘텐츠를 처리하기 전 그것들을 수신할 준비를 할 수 있도록 한다. 예를 들어, 이는 필드 이름이 콘텐츠가 수신되는대로 동적 체크섬을 계산하고 트레일러 필드 값을 받는 즉시 확인해야함을 나타낼 때 유용할 수 있다.
 
-Like header fields, trailer fields with the same name are processed
-in the order received; multiple trailer field lines with the same
-name have the equivalent semantics as appending the multiple values
-as a list of members. Trailer fields that might be generated more
-than once during a message MUST be defined as a list-based field even
-if each member value is only processed once per field line received.
+헤더 필드 처럼, 같은 이름의 트레일러 필드들은 수신된 순서대로 처리된다; 같은 이름의 여러 트레일러 필드 라인들은 여러 값 멤버들을 리스트 형태로 붙이는 것과 동등한 의미를 가진다. 한 메시지에서 두 번 이상 생성될 수 있는 트레일러 필드들은 각 멤버 값들이 수신된 필드 라인 당 오직 한번만 처리된다고 하더라도 반드시(MUST) 리스트-기반 필드로 정의되어야 한다.
 
-At the end of a message, a recipient MAY treat the set of received
-trailer fields as a data structure of name/value pairs, similar to
-(but separate from) the header fields. Additional processing
-expectations, if any, can be defined within the field specification
-for a field intended for use in trailers.
+한 메시지의 끝에서, 수신자는 아마(MAY) 수신된 트레일러 필드들의 집합을 이름/값 쌍들의 데이터 스트럭쳐로 다룰 수 있을 것이며, 이는 헤더 필드와 비슷하다(그러나 별개다). 추가적인 처리에 대한 기대는, 만약 있다면, 트레일러에 사용되도록 의도된 필드의 필드 명세 내에서 정의될 수 있다.
 
 ### 6.6. 메시지 메타데이터
 
