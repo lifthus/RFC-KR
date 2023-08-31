@@ -1040,7 +1040,7 @@ _Note:_ 파라미터는 "=" 문자 주변에 공백("나쁜" 공백 조차)을 �
 
 #### 5.6.7. Date/Time 포맷
 
-1995년 이전에는, 타임스탬프를 전달하기 위해 서버들에 의해 사용되던 세 가지 다른 형태들이 존재했었다. 옛 구현들과의 호환성을 위해, 세 가지 모두 여기 정의돼 있다. 선호되는 형태는 Internet Message Format[[RFC5322](https://datatracker.ietf.org/doc/html/rfc5322)]에서 사용된 날짜와 시간에 관한 사양의 고정-길이와 싱글-존 서브셋이다.
+1995년 이전에는, 타임스탬프를 전달하기 위해 서버들에 의해 사용되던 세 가지 다른 형태들이 존재했었다. 옛 구현들과의 호환성을 위해, 세 가지 모두 여기 정의돼 있다. 선호되는 형태는 Internet Message Format[[RFC5322](https://www.rfc-editor.org/info/rfc5322)]에서 사용된 날짜와 시간에 관한 사양의 고정-길이와 싱글-존 서브셋이다.
 
      HTTP-date    = IMF-fixdate / obs-date
 
@@ -1104,7 +1104,7 @@ HTTP-data 값은 시간을 Coordinated Universal Time(UTC)의 인스턴스로 �
 
 HTTP-date는 대소문자를 구분한다. [[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 4.2절은 캐시 수신자들을 위해 이를 완화한다는 것을 주목하라.
 
-발신자는 절대(MUST NOT) 구문의 SP와 같이 명시적으로 포함된 것을 넘어서 HTTP-data에 추가적인 공백을 생성해서는 안된다. day-name, day, month, year과 time-of-day의 의미는 Internet Message Format 구조들을 위해 각각에 대응되는 이름들로 정의된 것들([[RFC5322](https://datatracker.ietf.org/doc/html/rfc5322)], 3.3절)과 동일하다.
+발신자는 절대(MUST NOT) 구문의 SP와 같이 명시적으로 포함된 것을 넘어서 HTTP-data에 추가적인 공백을 생성해서는 안된다. day-name, day, month, year과 time-of-day의 의미는 Internet Message Format 구조들을 위해 각각에 대응되는 이름들로 정의된 것들([[RFC5322](https://www.rfc-editor.org/info/rfc5322)], 3.3절)과 동일하다.
 
 rfc850-date 포맷, 즉 숫자 두 개로 연도를 표현하는 형태의 타임스탬프 값의 수신자들은, 반드시(MUST) 50년 보다 미래를 가리키는 것으로 보이는 타임스탬프를 가장 최근 과거 연도 중 마지막 두 수가 같은 연도를 표현하는 것으로 해석해야 한다.
 
@@ -1250,78 +1250,41 @@ CONNECT 요청 메소드(9.3.6절)에 대한 2xx(Successful) 응답들은 콘텐
 
 ### 6.6. 메시지 메타데이터
 
-Fields that describe the message itself, such as when and how the
-message has been generated, can appear in both requests and
-responses.
+메시지 스스로를 기술하는 필드들은, 메시지가 언제 어떻게 생성됐는지와 같이, 요청과 응답 양쪽에서 모두 나타날 수 있다.
 
 #### 6.6.1. Date
 
-The "Date" header field represents the date and time at which the
-message was originated, having the same semantics as the Origination
-Date Field (orig-date) defined in Section 3.6.1 of [RFC5322]. The
-field value is an HTTP-date, as defined in Section 5.6.7.
+"Date" 헤더 필드는 메시지가 생성된 날짜와 시간을 나타내며, [[RFC5322](https://www.rfc-editor.org/info/rfc5322)]의 3.6.1절에 정의된 Origination Date Field(origin-date)와 같은 의미 체계를 공유한다. 필드 값은 5.6.7절에서 정의된 것과 같이, HTTP-date이다.
 
      Date = HTTP-date
 
-An example is
+예시는 다음과 같다
 
 Date: Tue, 15 Nov 1994 08:12:31 GMT
 
-A sender that generates a Date header field SHOULD generate its field
-value as the best available approximation of the date and time of
-message generation. In theory, the date ought to represent the
-moment just before generating the message content. In practice, a
-sender can generate the date value at any time during message
-origination.
+Date 헤더 필드를 생성하는 발신자는 웬만하면(SHOULD) 그 필드 값을 메시지 생성 시점의 날짜와 시간에 최대한 근사하도록 해야 한다. 이론적으로는, 날짜는 메시지 콘텐츠를 생성하기 바로 직전의 순간을 나타내야 한다. 실무에서는 발신자는 메시지 생성 중 어느 시점에서든 날짜 값을 생성할 수 있다.
 
-An origin server with a clock (as defined in Section 5.6.7) MUST
-generate a Date header field in all 2xx (Successful), 3xx
-(Redirection), and 4xx (Client Error) responses, and MAY generate a
-Date header field in 1xx (Informational) and 5xx (Server Error)
-responses.
+clock을 가진 오리진 서버는(5.6.7절에 정의된대로) 반드시(MUST) 모든 2xx(Successful), 3xx(Redirection), 그리고 4xx(Client Error) 응답들에 대해 Date 헤더 필드를 생성해야 하고, 아마(MAY) 1xx(Informational) 그리고 5xx(Server Error) 응답에서도 Date 헤더 필드를 생성할 수 있을 것이다.
 
-An origin server without a clock MUST NOT generate a Date header
-field.
+clock을 가지지 않은 오리진 서버는 절대(MUST NOT) Date 헤더 필드를 생성해서는 안된다.
 
-A recipient with a clock that receives a response message without a
-Date header field MUST record the time it was received and append a
-corresponding Date header field to the message's header section if it
-is cached or forwarded downstream.
+Date 헤더 필드가 없는 응답 메시지를 받는 clock을 가진 수신자는 메시지가 캐시되거나 다운스트름으로 포워드된다면 반드시(MUST) 그것을 수신한 시간을 기록하고 상응하는 Date 헤더 필드를 메시지의 헤더 섹션에 추가해야 한다.
 
-A recipient with a clock that receives a response with an invalid
-Date header field value MAY replace that value with the time that
-response was received.
+clock을 가진 수신자가 유효하지 않은 Date 헤더 필드를 가진 응답을 수신한다면 아마(MAY) 그 값을 응답을 수신한 시간으로 교체할 수 있을 것이다.
 
-A user agent MAY send a Date header field in a request, though
-generally will not do so unless it is believed to convey useful
-information to the server. For example, custom applications of HTTP
-might convey a Date if the server is expected to adjust its
-interpretation of the user's request based on differences between the
-user agent and server clocks.
+유저 에이전트는 아마(MAY) 요청에 Date 헤더 필드를 포함해 발신할 수 있겠지만, 그것이 서버에게 유용한 정보를 제공할 것이라고 믿어지는 경우가 아닌 이상 보통 그렇게 하지는 않을 것이다. 예를 들어, HTTP의 커스텀 애플리케이션은 서버가 유저 에이전트와 서버 clock의 차이에 기반해 유저의 요청에 대한 해석을 조정할 것으로 기대되는 경우 Date를 전달할 수 있을 것이다.
 
 #### 6.6.2. Trailer
 
-The "Trailer" header field provides a list of field names that the
-sender anticipates sending as trailer fields within that message.
-This allows a recipient to prepare for receipt of the indicated
-metadata before it starts processing the content.
+"Trailer" 헤더 필드는 발신자가 메시지 내의 트레일러 필드들로 보낼 것으로 예상되는 필드 이름들의 리스트를 제공한다. 이는 수신자가 콘텐츠의 처리를 시작하기 전에 지정된 메타데이터들을 수신할 준비를 할 수 있도록 한다.
 
      Trailer = #field-name
 
-For example, a sender might indicate that a signature will be
-computed as the content is being streamed and provide the final
-signature as a trailer field. This allows a recipient to perform the
-same check on the fly as it receives the content.
+예를 들어, 발신자는 시그니처가 콘텐츠가 스트림되면서 계산될 것임을 나타내면서 마지막 시그니처를 트레일러 필드로 제공할 수 있을 것이다. 이는 수신자가 콘텐츠를 수신하는대로 같은 체크를 즉석에서 수행할 수 있도록 한다.
 
-A sender that intends to generate one or more trailer fields in a
-message SHOULD generate a Trailer header field in the header section
-of that message to indicate which fields might be present in the
-trailers.
+하나 이상의 트레일러 필드들을 메시지에 생성하려고 의도하는 발신자는 웬만하면(SHOULD) 해당 메시지 헤더 필드 섹션에 어떤 필드가 트레일러에 나타날 수 있는지를 지정하기 위해 Trailer 헤더 필드를 생성해야 한ㄷ가.
 
-If an intermediary discards the trailer section in transit, the
-Trailer field could provide a hint of what metadata was lost, though
-there is no guarantee that a sender of Trailer will always follow
-through by sending the named fields.
+만약 전송중에 어떤 중개자가 트레일러 섹션을 버렸다면, 비록 Trailer 필드가 그 발신자가 항상 명명된 필드들을 따라 보낼 것 것이라고 보장하지는 않지만, 어떤 메타데이터가 손실됐는지에 대한 힌트는 제공할 수 있다.
 
 ## 7. HTTP 메시지 라우팅
 
