@@ -1250,9 +1250,7 @@ CONNECT 요청 메소드(9.3.6절)에 대한 2xx(Successful) 응답들은 콘텐
 
 ### 6.6. 메시지 메타데이터
 
-Fields that describe the message itself, such as when and how the
-message has been generated, can appear in both requests and
-responses.
+메시지 스스로를 기술하는 필드들은, 메시지가 언제 어떻게 생성됐는지와 같이, 요청과 응답 양쪽에서 모두 나타날 수 있다.
 
 #### 6.6.1. Date
 
