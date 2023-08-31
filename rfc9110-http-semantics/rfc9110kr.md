@@ -1294,7 +1294,7 @@ establishment or reuse of an inbound connection. The corresponding
 response routing follows the same connection chain back to the
 client.
 
-7.1. Determining the Target Resource
+### 7.1. 타겟 리소스 결정
 
 Although HTTP is used in a wide variety of applications, most clients
 rely on the same resource identification mechanism and configuration
@@ -1336,7 +1336,7 @@ HTTP/1.1 request.
       |  *Note:* Previous specifications defined the recomposed target
       |  URI as a distinct concept, the "effective request URI".
 
-7.2. Host and :authority
+### 7.2. Host와 :authority
 
 The "Host" header field in a request provides the host and port
 information from the target URI, enabling the origin server to
@@ -1370,18 +1370,18 @@ servers, or for use as a cache key in a shared cache, without first
 verifying that the intercepted connection is targeting a valid IP
 address for that host.
 
-7.3. Routing Inbound Requests
+### 7.3. 인바운드 요청 라우팅
 
 Once the target URI and its origin are determined, a client decides
 whether a network request is necessary to accomplish the desired
 semantics and, if so, where that request is to be directed.
 
-7.3.1. To a Cache
+#### 7.3.1. 캐시로
 
 If the client has a cache [CACHING] and the request can be satisfied
 by it, then the request is usually directed there first.
 
-7.3.2. To a Proxy
+#### 7.3.2. 프록시로
 
 If the request is not satisfied by a cache, then a typical client
 will check its configuration to determine whether a proxy is to be
@@ -1395,7 +1395,7 @@ inbound by establishing (or reusing) a connection to that proxy and
 then sending it an HTTP request message containing a request target
 that matches the client's target URI.
 
-7.3.3. To the Origin
+#### 7.3.3. 오리진으로
 
 If no proxy is applicable, a typical client will invoke a handler
 routine (specific to the target URI's scheme) to obtain access to the
@@ -1413,7 +1413,7 @@ server that is authoritative for the identified origin and then
 sending it an HTTP request message containing a request target that
 matches the client's target URI.
 
-7.4. Rejecting Misdirected Requests
+### 7.4. 잘못 도달한 요청 거부
 
 Once a request is received by a server and parsed sufficiently to
 determine its target URI, the server decides whether to process the
@@ -1445,7 +1445,7 @@ The 421 (Misdirected Request) status code in a response indicates
 that the origin server has rejected the request because it appears to
 have been misdirected (Section 15.5.20).
 
-7.5. Response Correlation
+### 7.5. 응답 상관관계
 
 A connection might be used for multiple request/response exchanges.
 The mechanism used to correlate between request and response messages
@@ -1465,7 +1465,7 @@ associated request SHOULD continue sending that request unless it
 receives an explicit indication to the contrary (see, e.g.,
 Section 9.5 of [HTTP/1.1] and Section 6.4 of [HTTP/2]).
 
-7.6. Message Forwarding
+### 7.6. 메시지 포워딩
 
 As described in Section 3.7, intermediaries can serve a variety of
 roles in the processing of HTTP requests and responses. Some
@@ -1497,7 +1497,7 @@ rely on incremental delivery of partial messages, since some
 implementations will buffer or delay message forwarding for the sake
 of network efficiency, security checks, or content transformations.
 
-7.6.1. Connection
+#### 7.6.1. 연결
 
 The "Connection" header field allows the sender to list desired
 control options for the current connection.
@@ -1562,7 +1562,7 @@ name anyway in order to avoid later collisions. Such reserved field
 names are registered in the "Hypertext Transfer Protocol (HTTP) Field
 Name Registry" (Section 16.3.1).
 
-7.6.2. Max-Forwards
+#### 7.6.2. 최대 포워드
 
 The "Max-Forwards" header field provides a mechanism with the TRACE
 (Section 9.3.8) and OPTIONS (Section 9.3.7) request methods to limit
@@ -1588,7 +1588,7 @@ the recipient's maximum supported value for Max-Forwards.
 A recipient MAY ignore a Max-Forwards header field received with any
 other request methods.
 
-7.6.3. Via
+#### 7.6.3. 통하기
 
 The "Via" header field indicates the presence of intermediate
 protocols and recipients between the user agent and the server (on
@@ -1668,7 +1668,7 @@ under the same organizational control and the hosts have already been
 replaced by pseudonyms. A sender MUST NOT combine members that have
 different received-protocol values.
 
-7.7. Message Transformations
+### 7.7. 메시지 변환
 
 Some intermediaries include features for transforming messages and
 their content. A proxy might, for example, convert between image
@@ -1722,7 +1722,7 @@ or the selected representation (other than the content) unless the
 field's definition specifically allows such modification or the
 modification is deemed necessary for privacy or security.
 
-7.8. Upgrade
+### 7.8. 업그레이드
 
 The "Upgrade" header field is intended to provide a simple mechanism
 for transitioning from HTTP/1.1 to some other protocol on the same
@@ -1828,7 +1828,7 @@ version rules of Section 2.5 and future updates to this
 specification. Additional protocol names ought to be registered
 using the registration procedure defined in Section 16.7.
 
-8.  Representation Data and Metadata
+## 8. 데이터와 메타데이터 표기
 
 8.1. Representation Data
 
