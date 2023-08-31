@@ -1276,27 +1276,15 @@ clock을 가진 수신자가 유효하지 않은 Date 헤더 필드를 가진 �
 
 #### 6.6.2. Trailer
 
-The "Trailer" header field provides a list of field names that the
-sender anticipates sending as trailer fields within that message.
-This allows a recipient to prepare for receipt of the indicated
-metadata before it starts processing the content.
+"Trailer" 헤더 필드는 발신자가 메시지 내의 트레일러 필드들로 보낼 것으로 예상되는 필드 이름들의 리스트를 제공한다. 이는 수신자가 콘텐츠의 처리를 시작하기 전에 지정된 메타데이터들을 수신할 준비를 할 수 있도록 한다.
 
      Trailer = #field-name
 
-For example, a sender might indicate that a signature will be
-computed as the content is being streamed and provide the final
-signature as a trailer field. This allows a recipient to perform the
-same check on the fly as it receives the content.
+예를 들어, 발신자는 시그니처가 콘텐츠가 스트림되면서 계산될 것임을 나타내면서 마지막 시그니처를 트레일러 필드로 제공할 수 있을 것이다. 이는 수신자가 콘텐츠를 수신하는대로 같은 체크를 즉석에서 수행할 수 있도록 한다.
 
-A sender that intends to generate one or more trailer fields in a
-message SHOULD generate a Trailer header field in the header section
-of that message to indicate which fields might be present in the
-trailers.
+하나 이상의 트레일러 필드들을 메시지에 생성하려고 의도하는 발신자는 웬만하면(SHOULD) 해당 메시지 헤더 필드 섹션에 어떤 필드가 트레일러에 나타날 수 있는지를 지정하기 위해 Trailer 헤더 필드를 생성해야 한ㄷ가.
 
-If an intermediary discards the trailer section in transit, the
-Trailer field could provide a hint of what metadata was lost, though
-there is no guarantee that a sender of Trailer will always follow
-through by sending the named fields.
+만약 전송중에 어떤 중개자가 트레일러 섹션을 버렸다면, 비록 Trailer 필드가 그 발신자가 항상 명명된 필드들을 따라 보낼 것 것이라고 보장하지는 않지만, 어떤 메타데이터가 손실됐는지에 대한 힌트는 제공할 수 있다.
 
 ## 7. HTTP 메시지 라우팅
 
