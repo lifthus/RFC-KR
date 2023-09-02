@@ -1292,45 +1292,23 @@ HTTP 요청 메시지 라우팅은 타겟 리소스, 클라이언트의 프록�
 
 ### 7.1. 타겟 리소스 결정
 
-Although HTTP is used in a wide variety of applications, most clients
-rely on the same resource identification mechanism and configuration
-techniques as general-purpose Web browsers. Even when communication
-options are hard-coded in a client's configuration, we can think of
-their combined effect as a URI reference (Section 4.1).
+비록 HTTP가 넓은 범위 여러 형태의 애플리케이션들에서 사용되기는 하지만, 대부분의 클라이언트들은 범용 웹브라우저들과 똑같은 리소스 식별 메커니즘과 설정 기술들에 의존한다. 클라이언트의 설정에 통신 옵션들이 하드-코딩되어 있을 때 조차, 우리는 그것들의 조합된 효과를 URI 참조(4.1절)로 생각할 수 있다.
 
-A URI reference is resolved to its absolute form in order to obtain
-the "target URI". The target URI excludes the reference's fragment
-component, if any, since fragment identifiers are reserved for
-client-side processing ([URI], Section 3.5).
+URI 레퍼런스는 "타겟 URI"를 획득하기 위해 그것의 절대 형태로 결정된다. 타겟 URI는 레퍼런스의 fragement component를, 만약 있다면, 제외하는데 이는 fragement 식별자들이 클라이언트 측 처리를 위해 예약되어 있기 때문이다 ([[URI](https://www.rfc-editor.org/info/rfc3986)], 3.5절)
 
-To perform an action on a "target resource", the client sends a
-request message containing enough components of its parsed target URI
-to enable recipients to identify that same resource. For historical
-reasons, the parsed target URI components, collectively referred to
-as the "request target", are sent within the message control data and
-the Host header field (Section 7.2).
+"타겟 리소스"에 대해 어떤 행동을 수행하기 위해, 클라이언트는 요청 메시지를 수신자들이 같은 리소스를 식별할 수 있도록 그것의 파싱된 타겟 URI의 컴포넌트들을 충분히 포함하여 보낸다. 역사적인 이유들로, 통칭 "요청 타겟"이라고 불리는, 파싱된 타겟 URI 컴포넌트들은, 메시지 제어 데이터와 Host 헤더 필드 내에 실려 보내진다(7.2절).
 
-There are two unusual cases for which the request target components
-are in a method-specific form:
+요청 타겟 컴포넌트들이 메소드에 특정되는 형태로 되어 있는 두 가지 일반적이지 않은 경우가 있다.
 
-- For CONNECT (Section 9.3.6), the request target is the host name
-  and port number of the tunnel destination, separated by a colon.
+- CONNECT(9.3.6절)에서, 요청 타겟은 호스트 이름과 터널 목적지의 포트 번호이고, 콜론으로 구분되어 있다.
 
-- For OPTIONS (Section 9.3.7), the request target can be a single
-  asterisk ("\*").
+- OPTIONS(9.3.7절)에서는, 요청 타겟이 단일의 별표 문자("\*")가 될 수 있다.
 
-See the respective method definitions for details. These forms MUST
-NOT be used with other methods.
+자세한 건 각각의 메소드 정의들을 참고하라. 이 형태들은 절대(MUST NOT) 다른 메소들에서는 사용되서는 안된다.
 
-Upon receipt of a client's request, a server reconstructs the target
-URI from the received components in accordance with their local
-configuration and incoming connection context. This reconstruction
-is specific to each major protocol version. For example, Section 3.3
-of [HTTP/1.1] defines how a server determines the target URI of an
-HTTP/1.1 request.
+클라이언트 요청을 수신했을 때, 서버는 그들의 로컬 설정과 수신된 연결 컨텍스에 따라 수신된 컴포넌트들로부터 타겟 URI를 재구성한다. 이 재구성은 각 메이저 프로토콜 버전에 따라 특정되어 있다. 예를 들어, [[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 3.3절은 서버가 어떻게 HTTP/1.1 요청의 타겟 URI를 결정하는지 정의한다.
 
-      |  *Note:* Previous specifications defined the recomposed target
-      |  URI as a distinct concept, the "effective request URI".
+_Note:_ 이전의 사양들은 재구성된 타겟 URI를, "effective request URI"라는 별개의 개념으로 정의했었다.
 
 ### 7.2. Host와 :authority
 
