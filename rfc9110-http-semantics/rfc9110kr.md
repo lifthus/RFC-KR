@@ -1288,11 +1288,7 @@ clock을 가진 수신자가 유효하지 않은 Date 헤더 필드를 가진 �
 
 ## 7. HTTP 메시지 라우팅
 
-HTTP request message routing is determined by each client based on
-the target resource, the client's proxy configuration, and
-establishment or reuse of an inbound connection. The corresponding
-response routing follows the same connection chain back to the
-client.
+HTTP 요청 메시지 라우팅은 타겟 리소스, 클라이언트의 프록시 설정, 그리고 인바운드 연결에 대한 수립 혹은 재사용에 따라 각 클라이언트에 의해 결정된다. 상응하는 응답 라우팅은 같은 연결 체인을 따라 클라이언트로 돌아온다.
 
 ### 7.1. 타겟 리소스 결정
 
