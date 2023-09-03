@@ -1329,12 +1329,11 @@ HTTP/2[[HTTP/2](https://www.rfc-editor.org/info/rfc9113)]와 HTTP/3[[HTTP/3](htt
 
 ### 7.3. 인바운드 요청 라우팅
 
-일단 타겟 URI와 그것의 오리진이 결정되면, 클라이언트는 네트워크 요청이 원하는 의미를 달성하는데 필수적인지를 결정하고, 만약 그렇다면, 해당 요청이 어느 쪽으로 보내질지를 결정한다.
+일단 타겟 URI와 그것의 오리진이 결정되면, 클라이언트는 네트워크 요청이 원하는 의미를 달성하는데 필수적인지를 결정하고, 만약 그렇다면, 해당 요청이 어느 쪽으로 향할지를 결정한다.
 
 #### 7.3.1. 캐시로
 
-If the client has a cache [CACHING] and the request can be satisfied
-by it, then the request is usually directed there first.
+만약 클라이언트가 캐시[[CACHING](https://www.rfc-editor.org/info/rfc9111)]를 가지고 있고 그것에 의해 요청이 만족될 수 있는 경우에, 요청은 보통 캐시로 먼저 향한다.
 
 #### 7.3.2. 프록시로
 
