@@ -1312,37 +1312,20 @@ _Note:_ 이전의 사양들은 재구성된 타겟 URI를, "effective request UR
 
 ### 7.2. Host와 :authority
 
-The "Host" header field in a request provides the host and port
-information from the target URI, enabling the origin server to
-distinguish among resources while servicing requests for multiple
-host names.
+"Host" 헤더 필드는 요청에서 타겟 URI에 대한 호스트와 포트 정보를 제공하며, 오리진 서버가 여러 호스트 이름들에 대해 요청을 받아 서비스를 하고 있을 때 리소스들 중 하나를 구별할 수 있도록 한다.
 
-In HTTP/2 [HTTP/2] and HTTP/3 [HTTP/3], the Host header field is, in
-some cases, supplanted by the ":authority" pseudo-header field of a
-request's control data.
+HTTP/2[[HTTP/2](https://www.rfc-editor.org/info/rfc9113)]와 HTTP/3[[HTTP/3](https://www.rfc-editor.org/info/rfc9114)]에서는, Host 헤더 필드가, 어떤 경우에서는, 요청의 제어 데이터의 ":authority"라는 슈도-헤더 필드에 의해 대체되기도 한다.
 
-     Host = uri-host [ ":" port ] ; Section 4
+     Host = uri-host [ ":" port ] ; 4절
 
-The target URI's authority information is critical for handling a
-request. A user agent MUST generate a Host header field in a request
-unless it sends that information as an ":authority" pseudo-header
-field. A user agent that sends Host SHOULD send it as the first
-field in the header section of a request.
+타겟 URI의 authority 정보는 요청을 다루는데 있어 핵심적이다. 유저 에이전트는 해당하는 정보를 ":authority" 슈도-헤더 필드로 보내지 않는 한 반드시(MUST) Host 헤더 필드를 요청에 생성해야 한다. Host를 보내는 유저 에이전트는 웬만하면(SHOULD) 그것을 요청 헤더 섹션의 첫번째 필드로 설정해야 한다.
 
-For example, a GET request to the origin server for
-<http://www.example.org/pub/WWW/> would begin with:
+예를 들어, <http://www.example.org/pub/WWW/>에 대한 오리진 서버로 GET 요청을 보내면 다음과 같이 시작할 것이다:
 
-GET /pub/WWW/ HTTP/1.1
-Host: www.example.org
+     GET /pub/WWW/ HTTP/1.1
+     Host: www.example.org
 
-Since the host and port information acts as an application-level
-routing mechanism, it is a frequent target for malware seeking to
-poison a shared cache or redirect a request to an unintended server.
-An interception proxy is particularly vulnerable if it relies on the
-host and port information for redirecting requests to internal
-servers, or for use as a cache key in a shared cache, without first
-verifying that the intercepted connection is targeting a valid IP
-address for that host.
+호스트와 포트 정보는 애플리케이션-레벨 라우팅 매커니즘의 일환으로 동작하기 때문에, 이는 공유 캐시를 오염시키거나 요청을 의도치 않은 서버로 보내려는 말웨어들에게 자주 타겟이 된다. 예컨대 처음에 가로채진 연결이 해당 호스트에 대해 유효한 IP 주소를 타게팅하고 있는지 확인 과정을 거치지 않은 채, 내부 서버로 요청을 리다이렉트하기 위해, 혹은 공유 캐시의 캐시 키로 사용하기 위해서 호스트와 포트 정보에 의존하는 인터셉션 프록시들에게 있어서 특히 취약하다.
 
 ### 7.3. 인바운드 요청 라우팅
 
