@@ -1329,9 +1329,7 @@ HTTP/2[[HTTP/2](https://www.rfc-editor.org/info/rfc9113)]와 HTTP/3[[HTTP/3](htt
 
 ### 7.3. 인바운드 요청 라우팅
 
-Once the target URI and its origin are determined, a client decides
-whether a network request is necessary to accomplish the desired
-semantics and, if so, where that request is to be directed.
+일단 타겟 URI와 그것의 오리진이 결정되면, 클라이언트는 네트워크 요청이 원하는 의미를 달성하는데 필수적인지를 결정하고, 만약 그렇다면, 해당 요청이 어느 쪽으로 보내질지를 결정한다.
 
 #### 7.3.1. 캐시로
 
