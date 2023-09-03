@@ -1337,17 +1337,9 @@ HTTP/2[[HTTP/2](https://www.rfc-editor.org/info/rfc9113)]와 HTTP/3[[HTTP/3](htt
 
 #### 7.3.2. 프록시로
 
-If the request is not satisfied by a cache, then a typical client
-will check its configuration to determine whether a proxy is to be
-used to satisfy the request. Proxy configuration is implementation-
-dependent, but is often based on URI prefix matching, selective
-authority matching, or both, and the proxy itself is usually
-identified by an "http" or "https" URI.
+만약 요청이 캐시에 의해 만족되지 않는다면, 전형적인 클라이언트는 해당 요청을 만족시키기 위해 프록시를 이용할지 결정하기 위해 자신의 설정을 확인할 것이다. 프록시 설정은 구현에 따라 다르지만, 종종 URI 접두사 매칭, 선택적 권한 매칭, 혹은 둘 다를 기반으로 하고, 프록시 그 자체는 "http" 혹은 "https" URI에 의해 식별된다.
 
-If an "http" or "https" proxy is applicable, the client connects
-inbound by establishing (or reusing) a connection to that proxy and
-then sending it an HTTP request message containing a request target
-that matches the client's target URI.
+"http" 혹은 "https" 프록시가 가용한 경우, 클라이언트는 해당 프록시에 대해 연결을 수립(혹은 재사용)하고는 클라이언트의 타겟 URI와 매치되는 요청 타겟을 포함하는 HTTP 요청 메시지를 보냄으로써 인바운에 연결한다.
 
 #### 7.3.3. 오리진으로
 
