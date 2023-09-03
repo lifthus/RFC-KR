@@ -1339,25 +1339,15 @@ HTTP/2[[HTTP/2](https://www.rfc-editor.org/info/rfc9113)]와 HTTP/3[[HTTP/3](htt
 
 만약 요청이 캐시에 의해 만족되지 않는다면, 전형적인 클라이언트는 해당 요청을 만족시키기 위해 프록시를 이용할지 결정하기 위해 자신의 설정을 확인할 것이다. 프록시 설정은 구현에 따라 다르지만, 종종 URI 접두사 매칭, 선택적 권한 매칭, 혹은 둘 다를 기반으로 하고, 프록시 그 자체는 "http" 혹은 "https" URI에 의해 식별된다.
 
-"http" 혹은 "https" 프록시가 가용한 경우, 클라이언트는 해당 프록시에 대해 연결을 수립(혹은 재사용)하고는 클라이언트의 타겟 URI와 매치되는 요청 타겟을 포함하는 HTTP 요청 메시지를 보냄으로써 인바운에 연결한다.
+어떤 "http" 혹은 "https" 프록시가 적용 가능한 경우, 클라이언트는 해당 프록시에 대해 연결을 수립(혹은 재사용)하고는 클라이언트의 타겟 URI와 매치되는 요청 타겟을 포함하는 HTTP 요청 메시지를 보냄으로써 인바운에 연결한다.
 
 #### 7.3.3. 오리진으로
 
-If no proxy is applicable, a typical client will invoke a handler
-routine (specific to the target URI's scheme) to obtain access to the
-identified resource. How that is accomplished is dependent on the
-target URI scheme and defined by its associated specification.
+어떠한 프록시도 적용할 수 없다면, 전형적인 클라이언트는 식별된 리소스에 대한 접근을 획득하기 위해 핸들러 루틴 (해당 타겟 URI 체계에 특정된)을 호출할 것이다. 그것이 어떻게 완수되는지는 타겟 URI 체계에 의존하며 그와 관련된 사양에 의해 정의된다.
 
-Section 4.3.2 defines how to obtain access to an "http" resource by
-establishing (or reusing) an inbound connection to the identified
-origin server and then sending it an HTTP request message containing
-a request target that matches the client's target URI.
+4.3.2절에서는 식별된 오리진 서버에 대해 인바운드 연결을 수립(혹은 재사용)하고는 클라이언트의 타겟 URI와 매치되는 요청 타겟을 포함하는 HTTP 요청 메시지를 보냄으로써 "http" 리소스에 대한 접근을 획득하는 방식을 정의한다.
 
-Section 4.3.3 defines how to obtain access to an "https" resource by
-establishing (or reusing) an inbound secured connection to an origin
-server that is authoritative for the identified origin and then
-sending it an HTTP request message containing a request target that
-matches the client's target URI.
+4.3.3절에서는 식별된 오리진에 대해 권한있는 오리진 서버에 안전한 인바운드 연결을 수립(혹은 재사용)하고는 클라이언트의 타겟 URI에 매치되는 요청 타겟을 포함하는 HTTP 요청 메시지를 보냄으로써 "https" 리소스에 대한 접근을 획득하는 방식을 정의한다.
 
 ### 7.4. 잘못 도달한 요청 거부
 
