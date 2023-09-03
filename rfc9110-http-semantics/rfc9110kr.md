@@ -1351,35 +1351,13 @@ HTTP/2[[HTTP/2](https://www.rfc-editor.org/info/rfc9113)]와 HTTP/3[[HTTP/3](htt
 
 ### 7.4. 잘못 도달한 요청 거부
 
-Once a request is received by a server and parsed sufficiently to
-determine its target URI, the server decides whether to process the
-request itself, forward the request to another server, redirect the
-client to a different resource, respond with an error, or drop the
-connection. This decision can be influenced by anything about the
-request or connection context, but is specifically directed at
-whether the server has been configured to process requests for that
-target URI and whether the connection context is appropriate for that
-request.
+일단 서버가 한 요청을 수신하고 그것의 타겟 URI를 결정할만큼 충분히 파싱했으면, 이제 서버는 스스로 요청을 처리할지, 다른 서버로 포워드할지, 클라이언트를 다른 리소스로 리다이렉트할지, 에러로 응답할지, 혹은 연결을 끊어버릴지를 결정하게 된다. 이 결정은 요청 혹은 연결 컨텍스트와 관련된 어느 것에 의해서든 영향을 받을 수 있지만, 특히 서버가 해당 타겟 URI에 대한 요청들을 처리하도록 설정됐는지와 해당 요청의 연결 컨텍스트가 적절한지에 직접적으로 영향 받는다.
 
-For example, a request might have been misdirected, deliberately or
-accidentally, such that the information within a received Host header
-field differs from the connection's host or port. If the connection
-is from a trusted gateway, such inconsistency might be expected;
-otherwise, it might indicate an attempt to bypass security filters,
-trick the server into delivering non-public content, or poison a
-cache. See Section 17 for security considerations regarding message
-routing.
+예를 들어, 요청은, 고의로 혹은 우발적으로, 오도될 수도 있는데, 수신된 Host 헤더 필드 내의 정보가 연결의 호스트나 포스트와 다르게 된다. 만약 연결이 신뢰할 수 있는 게이트웨이에서 오는 것이라면, 그러한 불일치는 예측될 수도 있다; 그렇지 않으면, 그것은 보안 필터들을 우회하려는, 서버가 공개되지 않은 콘텐츠를 전달하도록 속이려는, 혹은 캐시를 오염시키려는 시도를 나타내는 것일 수 있다. 메시지 라우팅에 관한 보안 고려사항들에 관해서는 17절을 참고하라.
 
-Unless the connection is from a trusted gateway, an origin server
-MUST reject a request if any scheme-specific requirements for the
-target URI are not met. In particular, a request for an "https"
-resource MUST be rejected unless it has been received over a
-connection that has been secured via a certificate valid for that
-target URI's origin, as defined by Section 4.2.2.
+연결이 신뢰할 수 있는 게이트웨이로부터 오는 게 아니라면, 오리진 서버는 요청이 타겟 URI에 대해서 체계에 특정된 요구 사항들 중 어떠한 것이라도 만족되지 않는다면 반드시(MUST) 해당 요청을 거부해야 한다. 특히나, "https" 리소스에 대한 요청은 그것이 4.2.2절에 정의된 대로, 해당 타겟 URI의 오리진에 대해 유효한 인증서를 통해 보안이 확보된 연결을 통해 수신된 것이 아니라면 반드시(MUST) 거부되어야 한다.
 
-The 421 (Misdirected Request) status code in a response indicates
-that the origin server has rejected the request because it appears to
-have been misdirected (Section 15.5.20).
+응답의 421(Misdirected Request) 상태 코드는 오리진 서버가 해당하는 요청이 오도된 것으로 보이기 때문에 거부했다는 것을 나타낸다(15.5.20절).
 
 ### 7.5. 응답 상관관계
 
