@@ -1312,112 +1312,52 @@ _Note:_ 이전의 사양들은 재구성된 타겟 URI를, "effective request UR
 
 ### 7.2. Host와 :authority
 
-The "Host" header field in a request provides the host and port
-information from the target URI, enabling the origin server to
-distinguish among resources while servicing requests for multiple
-host names.
+"Host" 헤더 필드는 요청에서 타겟 URI에 대한 호스트와 포트 정보를 제공하며, 오리진 서버가 여러 호스트 이름들에 대해 요청을 받아 서비스를 하고 있을 때 리소스들 중 하나를 구별할 수 있도록 한다.
 
-In HTTP/2 [HTTP/2] and HTTP/3 [HTTP/3], the Host header field is, in
-some cases, supplanted by the ":authority" pseudo-header field of a
-request's control data.
+HTTP/2[[HTTP/2](https://www.rfc-editor.org/info/rfc9113)]와 HTTP/3[[HTTP/3](https://www.rfc-editor.org/info/rfc9114)]에서는, Host 헤더 필드가, 어떤 경우에서는, 요청의 제어 데이터의 ":authority"라는 슈도-헤더 필드에 의해 대체되기도 한다.
 
-     Host = uri-host [ ":" port ] ; Section 4
+     Host = uri-host [ ":" port ] ; 4절
 
-The target URI's authority information is critical for handling a
-request. A user agent MUST generate a Host header field in a request
-unless it sends that information as an ":authority" pseudo-header
-field. A user agent that sends Host SHOULD send it as the first
-field in the header section of a request.
+타겟 URI의 authority 정보는 요청을 다루는데 있어 핵심적이다. 유저 에이전트는 해당하는 정보를 ":authority" 슈도-헤더 필드로 보내지 않는 한 반드시(MUST) Host 헤더 필드를 요청에 생성해야 한다. Host를 보내는 유저 에이전트는 웬만하면(SHOULD) 그것을 요청 헤더 섹션의 첫번째 필드로 설정해야 한다.
 
-For example, a GET request to the origin server for
-<http://www.example.org/pub/WWW/> would begin with:
+예를 들어, <http://www.example.org/pub/WWW/>에 대한 오리진 서버로 GET 요청을 보내면 다음과 같이 시작할 것이다:
 
-GET /pub/WWW/ HTTP/1.1
-Host: www.example.org
+     GET /pub/WWW/ HTTP/1.1
+     Host: www.example.org
 
-Since the host and port information acts as an application-level
-routing mechanism, it is a frequent target for malware seeking to
-poison a shared cache or redirect a request to an unintended server.
-An interception proxy is particularly vulnerable if it relies on the
-host and port information for redirecting requests to internal
-servers, or for use as a cache key in a shared cache, without first
-verifying that the intercepted connection is targeting a valid IP
-address for that host.
+호스트와 포트 정보는 애플리케이션-레벨 라우팅 매커니즘의 일환으로 동작하기 때문에, 이는 공유 캐시를 오염시키거나 요청을 의도치 않은 서버로 보내려는 말웨어들에게 자주 타겟이 된다. 예컨대 처음에 가로채진 연결이 해당 호스트에 대해 유효한 IP 주소를 타게팅하고 있는지 확인 과정을 거치지 않은 채, 내부 서버로 요청을 리다이렉트하기 위해, 혹은 공유 캐시의 캐시 키로 사용하기 위해서 호스트와 포트 정보에 의존하는 인터셉션 프록시들에게 있어서 특히 취약하다.
 
 ### 7.3. 인바운드 요청 라우팅
 
-Once the target URI and its origin are determined, a client decides
-whether a network request is necessary to accomplish the desired
-semantics and, if so, where that request is to be directed.
+일단 타겟 URI와 그것의 오리진이 결정되면, 클라이언트는 네트워크 요청이 원하는 의미를 달성하는데 필수적인지를 결정하고, 만약 그렇다면, 해당 요청이 어느 쪽으로 향할지를 결정한다.
 
 #### 7.3.1. 캐시로
 
-If the client has a cache [CACHING] and the request can be satisfied
-by it, then the request is usually directed there first.
+만약 클라이언트가 캐시[[CACHING](https://www.rfc-editor.org/info/rfc9111)]를 가지고 있고 그것에 의해 요청이 만족될 수 있는 경우에, 요청은 보통 캐시로 먼저 향한다.
 
 #### 7.3.2. 프록시로
 
-If the request is not satisfied by a cache, then a typical client
-will check its configuration to determine whether a proxy is to be
-used to satisfy the request. Proxy configuration is implementation-
-dependent, but is often based on URI prefix matching, selective
-authority matching, or both, and the proxy itself is usually
-identified by an "http" or "https" URI.
+만약 요청이 캐시에 의해 만족되지 않는다면, 전형적인 클라이언트는 해당 요청을 만족시키기 위해 프록시를 이용할지 결정하기 위해 자신의 설정을 확인할 것이다. 프록시 설정은 구현에 따라 다르지만, 종종 URI 접두사 매칭, 선택적 권한 매칭, 혹은 둘 다를 기반으로 하고, 프록시 그 자체는 "http" 혹은 "https" URI에 의해 식별된다.
 
-If an "http" or "https" proxy is applicable, the client connects
-inbound by establishing (or reusing) a connection to that proxy and
-then sending it an HTTP request message containing a request target
-that matches the client's target URI.
+어떤 "http" 혹은 "https" 프록시가 적용 가능한 경우, 클라이언트는 해당 프록시에 대해 연결을 수립(혹은 재사용)하고는 클라이언트의 타겟 URI와 매치되는 요청 타겟을 포함하는 HTTP 요청 메시지를 보냄으로써 인바운에 연결한다.
 
 #### 7.3.3. 오리진으로
 
-If no proxy is applicable, a typical client will invoke a handler
-routine (specific to the target URI's scheme) to obtain access to the
-identified resource. How that is accomplished is dependent on the
-target URI scheme and defined by its associated specification.
+어떠한 프록시도 적용할 수 없다면, 전형적인 클라이언트는 식별된 리소스에 대한 접근을 획득하기 위해 핸들러 루틴 (해당 타겟 URI 체계에 특정된)을 호출할 것이다. 그것이 어떻게 완수되는지는 타겟 URI 체계에 의존하며 그와 관련된 사양에 의해 정의된다.
 
-Section 4.3.2 defines how to obtain access to an "http" resource by
-establishing (or reusing) an inbound connection to the identified
-origin server and then sending it an HTTP request message containing
-a request target that matches the client's target URI.
+4.3.2절에서는 식별된 오리진 서버에 대해 인바운드 연결을 수립(혹은 재사용)하고는 클라이언트의 타겟 URI와 매치되는 요청 타겟을 포함하는 HTTP 요청 메시지를 보냄으로써 "http" 리소스에 대한 접근을 획득하는 방식을 정의한다.
 
-Section 4.3.3 defines how to obtain access to an "https" resource by
-establishing (or reusing) an inbound secured connection to an origin
-server that is authoritative for the identified origin and then
-sending it an HTTP request message containing a request target that
-matches the client's target URI.
+4.3.3절에서는 식별된 오리진에 대해 권한있는 오리진 서버에 안전한 인바운드 연결을 수립(혹은 재사용)하고는 클라이언트의 타겟 URI에 매치되는 요청 타겟을 포함하는 HTTP 요청 메시지를 보냄으로써 "https" 리소스에 대한 접근을 획득하는 방식을 정의한다.
 
 ### 7.4. 잘못 도달한 요청 거부
 
-Once a request is received by a server and parsed sufficiently to
-determine its target URI, the server decides whether to process the
-request itself, forward the request to another server, redirect the
-client to a different resource, respond with an error, or drop the
-connection. This decision can be influenced by anything about the
-request or connection context, but is specifically directed at
-whether the server has been configured to process requests for that
-target URI and whether the connection context is appropriate for that
-request.
+일단 서버가 한 요청을 수신하고 그것의 타겟 URI를 결정할만큼 충분히 파싱했으면, 이제 서버는 스스로 요청을 처리할지, 다른 서버로 포워드할지, 클라이언트를 다른 리소스로 리다이렉트할지, 에러로 응답할지, 혹은 연결을 끊어버릴지를 결정하게 된다. 이 결정은 요청 혹은 연결 컨텍스트와 관련된 어느 것에 의해서든 영향을 받을 수 있지만, 특히 서버가 해당 타겟 URI에 대한 요청들을 처리하도록 설정됐는지와 해당 요청의 연결 컨텍스트가 적절한지에 직접적으로 영향 받는다.
 
-For example, a request might have been misdirected, deliberately or
-accidentally, such that the information within a received Host header
-field differs from the connection's host or port. If the connection
-is from a trusted gateway, such inconsistency might be expected;
-otherwise, it might indicate an attempt to bypass security filters,
-trick the server into delivering non-public content, or poison a
-cache. See Section 17 for security considerations regarding message
-routing.
+예를 들어, 요청은, 고의로 혹은 우발적으로, 오도될 수도 있는데, 수신된 Host 헤더 필드 내의 정보가 연결의 호스트나 포스트와 다르게 된다. 만약 연결이 신뢰할 수 있는 게이트웨이에서 오는 것이라면, 그러한 불일치는 예측될 수도 있다; 그렇지 않으면, 그것은 보안 필터들을 우회하려는, 서버가 공개되지 않은 콘텐츠를 전달하도록 속이려는, 혹은 캐시를 오염시키려는 시도를 나타내는 것일 수 있다. 메시지 라우팅에 관한 보안 고려사항들에 관해서는 17절을 참고하라.
 
-Unless the connection is from a trusted gateway, an origin server
-MUST reject a request if any scheme-specific requirements for the
-target URI are not met. In particular, a request for an "https"
-resource MUST be rejected unless it has been received over a
-connection that has been secured via a certificate valid for that
-target URI's origin, as defined by Section 4.2.2.
+연결이 신뢰할 수 있는 게이트웨이로부터 오는 게 아니라면, 오리진 서버는 요청이 타겟 URI에 대해서 체계에 특정된 요구 사항들 중 어떠한 것이라도 만족되지 않는다면 반드시(MUST) 해당 요청을 거부해야 한다. 특히나, "https" 리소스에 대한 요청은 그것이 4.2.2절에 정의된 대로, 해당 타겟 URI의 오리진에 대해 유효한 인증서를 통해 보안이 확보된 연결을 통해 수신된 것이 아니라면 반드시(MUST) 거부되어야 한다.
 
-The 421 (Misdirected Request) status code in a response indicates
-that the origin server has rejected the request because it appears to
-have been misdirected (Section 15.5.20).
+응답의 421(Misdirected Request) 상태 코드는 오리진 서버가 해당하는 요청이 오도된 것으로 보이기 때문에 거부했다는 것을 나타낸다(15.5.20절).
 
 ### 7.5. 응답 상관관계
 
