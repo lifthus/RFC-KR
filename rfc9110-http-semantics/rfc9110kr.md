@@ -1369,35 +1369,15 @@ HTTP/2[[HTTP/2](https://www.rfc-editor.org/info/rfc9113)]와 HTTP/3[[HTTP/3](htt
 
 ### 7.6. 메시지 포워딩
 
-As described in Section 3.7, intermediaries can serve a variety of
-roles in the processing of HTTP requests and responses. Some
-intermediaries are used to improve performance or availability.
-Others are used for access control or to filter content. Since an
-HTTP stream has characteristics similar to a pipe-and-filter
-architecture, there are no inherent limits to the extent an
-intermediary can enhance (or interfere) with either direction of the
-stream.
+3.7절에 기술된대로, 중개자들은 HTTP 요청과 응답들을 처리하는데 있어 다양한 역할들을 수행할 수 있다. 어떤 중개자들은 성능과 가용성을 향상시키기 위해 사용된다. 어떤 것들은 접근 제어 혹은 콘텐츠 필터링을 위해 사용된다. HTTP 스트림은 pipe-and-filter 아키텍처와 비슷한 특성들을 가지기 때문에, 본질적으로 중개자에게는 스트림의 어느 쪽으로든 향상시키는데(혹은 간섭하는데) 정해진 정도 같은 것이 없다.
 
-Intermediaries are expected to forward messages even when protocol
-elements are not recognized (e.g., new methods, status codes, or
-field names) since that preserves extensibility for downstream
-recipients.
+중개자들은 프로토콜 요소들이 인식되지 않을 때조차 메시지들을 포워딩하도록 기대되는데(예를 들어, 새로운 메소드, 상태 코드, 혹은 필드 이름들) 이렇게 하는 것이 다운스트림 수신자들에 대한 확장성을 보호하기 때문이다.
 
-An intermediary not acting as a tunnel MUST implement the Connection
-header field, as specified in Section 7.6.1, and exclude fields from
-being forwarded that are only intended for the incoming connection.
+터널로써 작동하지 않는 중개자는 반드시(MUST) 7.6.1절에 지정된대로, Connection 헤더 필드를 구현해야 하고, 들어오는 연결에 대해서만 의도된 필드들은 포워딩에서 제외해야 한다.
 
-An intermediary MUST NOT forward a message to itself unless it is
-protected from an infinite request loop. In general, an intermediary
-ought to recognize its own server names, including any aliases, local
-variations, or literal IP addresses, and respond to such requests
-directly.
+한 중개자는 무한 요청 루프에 대해 보호되지 않은 경우에는 절대(MUST NOT) 스스로에게 메시지를 포워딩해서는 안된다. 일반적으로, 중개자는 자기 서버 이름들을, 어떠한 별칭들, 로컬 변형들, 혹은 리터럴 IP 주소들을 포함하여 인식하고 있어야 하고, 그러한 요청들에 대해 직접적으로 응답해야 한다.
 
-An HTTP message can be parsed as a stream for incremental processing
-or forwarding downstream. However, senders and recipients cannot
-rely on incremental delivery of partial messages, since some
-implementations will buffer or delay message forwarding for the sake
-of network efficiency, security checks, or content transformations.
+하나의 HTTP 메시지는 incremental processing이나 다운스트림 포워딩을 위해 하나의 스트림으로 파싱될 수 있다. 하지만, 발신자들과 수신자들은 부분 메시지들의 incremental delivery에 의존할 수 없다, 이는 일부 구현체들이 네트워크 효율성, 보안 체크, 혹은 콘텐츠 변형을 위해 메시지 포워딩을 버퍼링하거나 지연시킬 것이기 때문이다.
 
 #### 7.6.1. 연결
 
