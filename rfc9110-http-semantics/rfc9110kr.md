@@ -146,7 +146,7 @@ than English.
 - - [7.3.2 프록시로](#732-프록시로)
 - - [7.3.3 오리진으로](#733-오리진으로)
 - [7.4 잘못 도달한 요청 거부](#74-잘못-도달한-요청-거부)
-- [7.5 응답 상관관계](#75-응답-상관관계)
+- [7.5 응답 연관짓기](#75-응답-연관짓기)
 - [7.6 메시지 포워딩](#76-메시지-포워딩)
 - - [7.6.1 연결](#761-연결)
 - - [7.6.2 최대 포워드](#762-최대-포워드)
@@ -1359,25 +1359,13 @@ HTTP/2[[HTTP/2](https://www.rfc-editor.org/info/rfc9113)]와 HTTP/3[[HTTP/3](htt
 
 응답의 421(Misdirected Request) 상태 코드는 오리진 서버가 해당하는 요청이 오도된 것으로 보이기 때문에 거부했다는 것을 나타낸다(15.5.20절).
 
-### 7.5. 응답 상관관계
+### 7.5. 응답 연관짓기
 
-A connection might be used for multiple request/response exchanges.
-The mechanism used to correlate between request and response messages
-is version dependent; some versions of HTTP use implicit ordering of
-messages, while others use an explicit identifier.
+한 연결은 여러 요청/응답 교환에 걸쳐 사용될 수 있다. 요청과 응답 메시지들을 연관시키기 위한 메커니즘은 버전에 따라 다르다; HTTP의 일부 버전들은 메시지들의 암시적인 순서를 사용하는 반면, 다른 것들은 명시적인 식별자를 사용한다.
 
-All responses, regardless of the status code (including interim
-responses) can be sent at any time after a request is received, even
-if the request is not yet complete. A response can complete before
-its corresponding request is complete (Section 6.1). Likewise,
-clients are not expected to wait any specific amount of time for a
-response. Clients (including intermediaries) might abandon a request
-if the response is not received within a reasonable period of time.
+모든 응답들은, 상태 코드와 관계없이(중간 응답을 포함하여) 요청을 수신한 후 언제든지 보내질 수 있고, 요청이 아직 완전하지 않을 때조차 가능하다. 어떤 한 응답은 상응하는 요청이 끝나기도 전에 완료될 수 있다(6.1절). 마찬가지로, 클라이언트들은 응답에 대해 어떠한 특정된 시간만큼 기다리도록 기대되지 않는다. 클라이언트들은(중개자들을 포함해) 응답이 합리적인 수준의 기간 내에 수신되지 않으면 그냥 요청을 버릴 수도 있다.
 
-A client that receives a response while it is still sending the
-associated request SHOULD continue sending that request unless it
-receives an explicit indication to the contrary (see, e.g.,
-Section 9.5 of [HTTP/1.1] and Section 6.4 of [HTTP/2]).
+클라이언트는 응답을 수신할 때 여전히 관련된 요청을 보내고 있더라도 반대 상황에 대한 명시적인 표시가 없는 한 웬만하면(SHOULD) 해당 요청을 계속 보내야 한다(예를 들어, [[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 9.5절과 [[HTTP/2](https://www.rfc-editor.org/info/rfc9113)]의 6.4절을 참고하라).
 
 ### 7.6. 메시지 포워딩
 
