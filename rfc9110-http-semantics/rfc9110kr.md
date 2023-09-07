@@ -146,7 +146,7 @@ than English.
 - - [7.3.2 프록시로](#732-프록시로)
 - - [7.3.3 오리진으로](#733-오리진으로)
 - [7.4 잘못 도달한 요청 거부](#74-잘못-도달한-요청-거부)
-- [7.5 응답 상관관계](#75-응답-상관관계)
+- [7.5 응답 연관짓기](#75-응답-연관짓기)
 - [7.6 메시지 포워딩](#76-메시지-포워딩)
 - - [7.6.1 연결](#761-연결)
 - - [7.6.2 최대 포워드](#762-최대-포워드)
@@ -1359,122 +1359,58 @@ HTTP/2[[HTTP/2](https://www.rfc-editor.org/info/rfc9113)]와 HTTP/3[[HTTP/3](htt
 
 응답의 421(Misdirected Request) 상태 코드는 오리진 서버가 해당하는 요청이 오도된 것으로 보이기 때문에 거부했다는 것을 나타낸다(15.5.20절).
 
-### 7.5. 응답 상관관계
+### 7.5. 응답 연관짓기
 
-A connection might be used for multiple request/response exchanges.
-The mechanism used to correlate between request and response messages
-is version dependent; some versions of HTTP use implicit ordering of
-messages, while others use an explicit identifier.
+한 연결은 여러 요청/응답 교환에 걸쳐 사용될 수 있다. 요청과 응답 메시지들을 연관시키기 위한 메커니즘은 버전에 따라 다르다; HTTP의 일부 버전들은 메시지들의 암시적인 순서를 사용하는 반면, 다른 것들은 명시적인 식별자를 사용한다.
 
-All responses, regardless of the status code (including interim
-responses) can be sent at any time after a request is received, even
-if the request is not yet complete. A response can complete before
-its corresponding request is complete (Section 6.1). Likewise,
-clients are not expected to wait any specific amount of time for a
-response. Clients (including intermediaries) might abandon a request
-if the response is not received within a reasonable period of time.
+모든 응답들은, 상태 코드와 관계없이(중간 응답을 포함하여) 요청을 수신한 후 언제든지 보내질 수 있고, 요청이 아직 완전하지 않을 때조차 가능하다. 어떤 한 응답은 상응하는 요청이 끝나기도 전에 완료될 수 있다(6.1절). 마찬가지로, 클라이언트들은 응답에 대해 어떠한 특정된 시간만큼 기다리도록 기대되지 않는다. 클라이언트들은(중개자들을 포함해) 응답이 합리적인 수준의 기간 내에 수신되지 않으면 그냥 요청을 버릴 수도 있다.
 
-A client that receives a response while it is still sending the
-associated request SHOULD continue sending that request unless it
-receives an explicit indication to the contrary (see, e.g.,
-Section 9.5 of [HTTP/1.1] and Section 6.4 of [HTTP/2]).
+클라이언트는 응답을 수신할 때 여전히 관련된 요청을 보내고 있더라도 반대 상황에 대한 명시적인 표시가 없는 한 웬만하면(SHOULD) 해당 요청을 계속 보내야 한다(예를 들어, [[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 9.5절과 [[HTTP/2](https://www.rfc-editor.org/info/rfc9113)]의 6.4절을 참고하라).
 
 ### 7.6. 메시지 포워딩
 
-As described in Section 3.7, intermediaries can serve a variety of
-roles in the processing of HTTP requests and responses. Some
-intermediaries are used to improve performance or availability.
-Others are used for access control or to filter content. Since an
-HTTP stream has characteristics similar to a pipe-and-filter
-architecture, there are no inherent limits to the extent an
-intermediary can enhance (or interfere) with either direction of the
-stream.
+3.7절에 기술된대로, 중개자들은 HTTP 요청과 응답들을 처리하는데 있어 다양한 역할들을 수행할 수 있다. 어떤 중개자들은 성능과 가용성을 향상시키기 위해 사용된다. 어떤 것들은 접근 제어 혹은 콘텐츠 필터링을 위해 사용된다. HTTP 스트림은 pipe-and-filter 아키텍처와 비슷한 특성들을 가지기 때문에, 본질적으로 중개자에게는 스트림의 어느 쪽으로든 향상시키는데(혹은 간섭하는데) 정해진 정도 같은 것이 없다.
 
-Intermediaries are expected to forward messages even when protocol
-elements are not recognized (e.g., new methods, status codes, or
-field names) since that preserves extensibility for downstream
-recipients.
+중개자들은 프로토콜 요소들이 인식되지 않을 때조차 메시지들을 포워딩하도록 기대되는데(예를 들어, 새로운 메소드, 상태 코드, 혹은 필드 이름들) 이렇게 하는 것이 다운스트림 수신자들에 대한 확장성을 보호하기 때문이다.
 
-An intermediary not acting as a tunnel MUST implement the Connection
-header field, as specified in Section 7.6.1, and exclude fields from
-being forwarded that are only intended for the incoming connection.
+터널로써 작동하지 않는 중개자는 반드시(MUST) 7.6.1절에 지정된대로, Connection 헤더 필드를 구현해야 하고, 들어오는 연결에 대해서만 의도된 필드들은 포워딩에서 제외해야 한다.
 
-An intermediary MUST NOT forward a message to itself unless it is
-protected from an infinite request loop. In general, an intermediary
-ought to recognize its own server names, including any aliases, local
-variations, or literal IP addresses, and respond to such requests
-directly.
+한 중개자는 무한 요청 루프에 대해 보호되지 않은 경우에는 절대(MUST NOT) 스스로에게 메시지를 포워딩해서는 안된다. 일반적으로, 중개자는 자기 서버 이름들을, 어떠한 별칭들, 로컬 변형들, 혹은 리터럴 IP 주소들을 포함하여 인식하고 있어야 하고, 그러한 요청들에 대해 직접적으로 응답해야 한다.
 
-An HTTP message can be parsed as a stream for incremental processing
-or forwarding downstream. However, senders and recipients cannot
-rely on incremental delivery of partial messages, since some
-implementations will buffer or delay message forwarding for the sake
-of network efficiency, security checks, or content transformations.
+하나의 HTTP 메시지는 incremental processing이나 다운스트림 포워딩을 위해 하나의 스트림으로 파싱될 수 있다. 하지만, 발신자들과 수신자들은 부분 메시지들의 incremental delivery에 의존할 수 없다, 이는 일부 구현체들이 네트워크 효율성, 보안 체크, 혹은 콘텐츠 변형을 위해 메시지 포워딩을 버퍼링하거나 지연시킬 것이기 때문이다.
 
 #### 7.6.1. 연결
 
-The "Connection" header field allows the sender to list desired
-control options for the current connection.
+"Connection" 헤더 필드는 발신자가 현재 연결에 대해 바라는 제어 옵션들을 나열할 수 있도록 한다.
 
      Connection        = #connection-option
      connection-option = token
 
-Connection options are case-insensitive.
+연결 옵션들은 대소문자를 구분하지 않는다.
 
-When a field aside from Connection is used to supply control
-information for or about the current connection, the sender MUST list
-the corresponding field name within the Connection header field.
-Note that some versions of HTTP prohibit the use of fields for such
-information, and therefore do not allow the Connection field.
+Connection 말고 다른 필드가 현재 연결을 위해서 혹은 대해서 제어 정보를 공급하기 위해 사용될 때는, 발신자든 반드시(MUST) Connection 헤더 필드 내에 상응하는 필드 이름을 나열해야 한다. HTTP 일부 버전들은 그러한 정보를 위해 필드들을 사용하는 것을 금지하는데, 따라서 Connection 필드가 허용되지 않음을 명심하라.
 
-Intermediaries MUST parse a received Connection header field before a
-message is forwarded and, for each connection-option in this field,
-remove any header or trailer field(s) from the message with the same
-name as the connection-option, and then remove the Connection header
-field itself (or replace it with the intermediary's own control
-options for the forwarded message).
+중개자들은 반드시(MUST) 메시지가 포워딩되기 전에, 수신된 Connection 헤더 필드를 파싱해야하고, 해당 필드의 connection-option들에 대해, connection-opion과 같은 이름의 헤더나 트레일러 필드(들)을 메시지로부터 제거하고는, Connection 헤더 필드 자체까지 제거해야 한다(혹은 포워딩되는 메시지에 대해 중개자 자신의 제어 옵션들로 대체하거나).
 
-Hence, the Connection header field provides a declarative way of
-distinguishing fields that are only intended for the immediate
-recipient ("hop-by-hop") from those fields that are intended for all
-recipients on the chain ("end-to-end"), enabling the message to be
-self-descriptive and allowing future connection-specific extensions
-to be deployed without fear that they will be blindly forwarded by
-older intermediaries.
+이리하여, Connection 헤더 필드는 직후의 수신자("hop-by-hop")만을 위해 의도된 필드들을 체인 상의 모든 수신자들("end-to-end")을 위해 의도된 필드들로 부터 구분하는 선언적인 방법을 제공하며, 메시지가 자가-설명적일 수 있도록 하고 차후의 연결별 확장들이 오래된 중개자들에 의해 무지성으로 포워딩될 것이라는 공포 없이 배포될 수 있도록 한다.
 
-Furthermore, intermediaries SHOULD remove or replace fields that are
-known to require removal before forwarding, whether or not they
-appear as a connection-option, after applying those fields'
-semantics. This includes but is not limited to:
+나아가서, 중개자들은 웬만하면(SHOULD) 포워딩하기 전에 제거를 요구하는 것으로 알려진 필드들을, 그 필드들의 의미를 적용하고 나서, 제거하거나 대체해야 하며, 그것들이 connection-option으로 나타나든 말든 상관 없다. 여기에는 다음 것들이 포함되지만 이에 국한되지는 않는다:
 
-- Proxy-Connection (Appendix C.2.2 of [HTTP/1.1])
+- Proxy-Connection (Appendix C.2.2 of [[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)])
 
-- Keep-Alive (Section 19.7.1 of [RFC2068])
+- Keep-Alive (Section 19.7.1 of [[RFC2068](https://www.rfc-editor.org/info/rfc2068)])
 
 - TE (Section 10.1.4)
 
-- Transfer-Encoding (Section 6.1 of [HTTP/1.1])
+- Transfer-Encoding (Section 6.1 of [[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)])
 
 - Upgrade (Section 7.8)
 
-A sender MUST NOT send a connection option corresponding to a field
-that is intended for all recipients of the content. For example,
-Cache-Control is never appropriate as a connection option
-(Section 5.2 of [CACHING]).
+발신자는 절대(MUST NOT) 콘텐츠의 모든 수신자들을 위해 의도된 필드에 상응하는 연결 옵션을 보내서는 안된다. 예를 들어, Cache-Control은 연결 옵션으로 절대 적합하지 않다([[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 5.2절).
 
-Connection options do not always correspond to a field present in the
-message, since a connection-specific field might not be needed if
-there are no parameters associated with a connection option. In
-contrast, a connection-specific field received without a
-corresponding connection option usually indicates that the field has
-been improperly forwarded by an intermediary and ought to be ignored
-by the recipient.
+연결 옵션들이 항상 메시지에 존재하는 필드에 대응하지는 않는데, 이는 연결 옵션과 관련된 파라미터가 없을 경우 연결별 필드가 필요하지 않을 수 있기 때문이다. 반대로, 대응되는 연결 옵션 없이 수신된 연결별 필드는 보통 그 필드가 중개자에 의해 부적합하게 포워딩됐고 수신자에 의해 무시되어야 함을 나타낸다.
 
-When defining a new connection option that does not correspond to a
-field, specification authors ought to reserve the corresponding field
-name anyway in order to avoid later collisions. Such reserved field
-names are registered in the "Hypertext Transfer Protocol (HTTP) Field
-Name Registry" (Section 16.3.1).
+필드와 대응되지 않는 새로운 연결 옵션을 정의하려 할 때, 사양 작성자들은 대응되는 필드 이름을 어쨌든 나중의 충돌을 피하기 위해 예약해야 한다. 그러한 예약된 필드 이름들은 "Hypertext Transfer Protocol (HTTP) Field Name Registry"(16.3.1절)에 등록된다.
 
 #### 7.6.2. 최대 포워드
 
