@@ -1381,68 +1381,36 @@ HTTP/2[[HTTP/2](https://www.rfc-editor.org/info/rfc9113)]와 HTTP/3[[HTTP/3](htt
 
 #### 7.6.1. 연결
 
-The "Connection" header field allows the sender to list desired
-control options for the current connection.
+"Connection" 헤더 필드는 발신자가 현재 연결에 대해 바라는 제어 옵션들을 나열할 수 있도록 한다.
 
      Connection        = #connection-option
      connection-option = token
 
-Connection options are case-insensitive.
+연결 옵션들은 대소문자를 구분하지 않는다.
 
-When a field aside from Connection is used to supply control
-information for or about the current connection, the sender MUST list
-the corresponding field name within the Connection header field.
-Note that some versions of HTTP prohibit the use of fields for such
-information, and therefore do not allow the Connection field.
+Connection 말고 다른 필드가 현재 연결을 위해서 혹은 대해서 제어 정보를 공급하기 위해 사용될 때는, 발신자든 반드시(MUST) Connection 헤더 필드 내에 상응하는 필드 이름을 나열해야 한다. HTTP 일부 버전들은 그러한 정보를 위해 필드들을 사용하는 것을 금지하는데, 따라서 Connection 필드가 허용되지 않음을 명심하라.
 
-Intermediaries MUST parse a received Connection header field before a
-message is forwarded and, for each connection-option in this field,
-remove any header or trailer field(s) from the message with the same
-name as the connection-option, and then remove the Connection header
-field itself (or replace it with the intermediary's own control
-options for the forwarded message).
+중개자들은 반드시(MUST) 메시지가 포워딩되기 전에, 수신된 Connection 헤더 필드를 파싱해야하고, 해당 필드의 connection-option들에 대해, connection-opion과 같은 이름의 헤더나 트레일러 필드(들)을 메시지로부터 제거하고는, Connection 헤더 필드 자체까지 제거해야 한다(혹은 포워딩되는 메시지에 대해 중개자 자신의 제어 옵션들로 대체하거나).
 
-Hence, the Connection header field provides a declarative way of
-distinguishing fields that are only intended for the immediate
-recipient ("hop-by-hop") from those fields that are intended for all
-recipients on the chain ("end-to-end"), enabling the message to be
-self-descriptive and allowing future connection-specific extensions
-to be deployed without fear that they will be blindly forwarded by
-older intermediaries.
+이리하여, Connection 헤더 필드는 직후의 수신자("hop-by-hop")만을 위해 의도된 필드들을 체인 상의 모든 수신자들("end-to-end")을 위해 의도된 필드들로 부터 구분하는 선언적인 방법을 제공하며, 메시지가 자가-설명적일 수 있도록 하고 차후의 연결별 확장들이 오래된 중개자들에 의해 무지성으로 포워딩될 것이라는 공포 없이 배포될 수 있도록 한다.
 
-Furthermore, intermediaries SHOULD remove or replace fields that are
-known to require removal before forwarding, whether or not they
-appear as a connection-option, after applying those fields'
-semantics. This includes but is not limited to:
+나아가서, 중개자들은 웬만하면(SHOULD) 포워딩하기 전에 제거를 요구하는 것으로 알려진 필드들을, 그 필드들의 의미를 적용하고 나서, 제거하거나 대체해야 하며, 그것들이 connection-option으로 나타나든 말든 상관 없다. 여기에는 다음 것들이 포함되지만 이에 국한되지는 않는다:
 
-- Proxy-Connection (Appendix C.2.2 of [HTTP/1.1])
+- Proxy-Connection (Appendix C.2.2 of [[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)])
 
-- Keep-Alive (Section 19.7.1 of [RFC2068])
+- Keep-Alive (Section 19.7.1 of [[RFC2068](https://www.rfc-editor.org/info/rfc2068)])
 
 - TE (Section 10.1.4)
 
-- Transfer-Encoding (Section 6.1 of [HTTP/1.1])
+- Transfer-Encoding (Section 6.1 of [[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)])
 
 - Upgrade (Section 7.8)
 
-A sender MUST NOT send a connection option corresponding to a field
-that is intended for all recipients of the content. For example,
-Cache-Control is never appropriate as a connection option
-(Section 5.2 of [CACHING]).
+발신자는 절대(MUST NOT) 콘텐츠의 모든 수신자들을 위해 의도된 필드에 상응하는 연결 옵션을 보내서는 안된다. 예를 들어, Cache-Control은 연결 옵션으로 절대 적합하지 않다([[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 5.2절).
 
-Connection options do not always correspond to a field present in the
-message, since a connection-specific field might not be needed if
-there are no parameters associated with a connection option. In
-contrast, a connection-specific field received without a
-corresponding connection option usually indicates that the field has
-been improperly forwarded by an intermediary and ought to be ignored
-by the recipient.
+연결 옵션들이 항상 메시지에 존재하는 필드에 대응하지는 않는데, 이는 연결 옵션과 관련된 파라미터가 없을 경우 연결별 필드가 필요하지 않을 수 있기 때문이다. 반대로, 대응되는 연결 옵션 없이 수신된 연결별 필드는 보통 그 필드가 중개자에 의해 부적합하게 포워딩됐고 수신자에 의해 무시되어야 함을 나타낸다.
 
-When defining a new connection option that does not correspond to a
-field, specification authors ought to reserve the corresponding field
-name anyway in order to avoid later collisions. Such reserved field
-names are registered in the "Hypertext Transfer Protocol (HTTP) Field
-Name Registry" (Section 16.3.1).
+필드와 대응되지 않는 새로운 연결 옵션을 정의하려 할 때, 사양 작성자들은 대응되는 필드 이름을 어쨌든 나중의 충돌을 피하기 위해 예약해야 한다. 그러한 예약된 필드 이름들은 "Hypertext Transfer Protocol (HTTP) Field Name Registry"(16.3.1절)에 등록된다.
 
 #### 7.6.2. 최대 포워드
 
