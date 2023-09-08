@@ -148,9 +148,9 @@ than English.
 - [7.4 잘못 도달한 요청 거부](#74-잘못-도달한-요청-거부)
 - [7.5 응답 연관짓기](#75-응답-연관짓기)
 - [7.6 메시지 포워딩](#76-메시지-포워딩)
-- - [7.6.1 연결](#761-연결)
-- - [7.6.2 최대 포워드](#762-최대-포워드)
-- - [7.6.3 통하기](#763-통하기)
+- - [7.6.1 Connection](#761-connection)
+- - [7.6.2 Max-Forwards](#762-max-forwards)
+- - [7.6.3 Via](#763-via)
 - [7.7 메시지 변환](#77-메시지-변환)
 - [7.8 업그레이드](#78-업그레이드)
 
@@ -1379,7 +1379,7 @@ HTTP/2[[HTTP/2](https://www.rfc-editor.org/info/rfc9113)]와 HTTP/3[[HTTP/3](htt
 
 하나의 HTTP 메시지는 incremental processing이나 다운스트림 포워딩을 위해 하나의 스트림으로 파싱될 수 있다. 하지만, 발신자들과 수신자들은 부분 메시지들의 incremental delivery에 의존할 수 없다, 이는 일부 구현체들이 네트워크 효율성, 보안 체크, 혹은 콘텐츠 변형을 위해 메시지 포워딩을 버퍼링하거나 지연시킬 것이기 때문이다.
 
-#### 7.6.1. 연결
+#### 7.6.1. Connection
 
 "Connection" 헤더 필드는 발신자가 현재 연결에 대해 바라는 제어 옵션들을 나열할 수 있도록 한다.
 
@@ -1412,7 +1412,7 @@ Connection 말고 다른 필드가 현재 연결을 위해서 혹은 대해서 �
 
 필드와 대응되지 않는 새로운 연결 옵션을 정의하려 할 때, 사양 작성자들은 대응되는 필드 이름을 어쨌든 나중의 충돌을 피하기 위해 예약해야 한다. 그러한 예약된 필드 이름들은 "Hypertext Transfer Protocol (HTTP) Field Name Registry"(16.3.1절)에 등록된다.
 
-#### 7.6.2. 최대 포워드
+#### 7.6.2. Max-Forwards
 
 "Max-Forwards" 헤더 필드는 TRACE(9.3.8절)와 OPTIONS(9.3.7절) 요청 메소드와 함께 요청이 프록시들에 의해 포워드되는 횟수를 제한하는 메커니즘을 제공한다. 이는 클라이언트가 체인 중간에서 실패하거나 루핑하는 것으로 보이는 요청을 추적하려할 때 유용할 수 있다.
 
@@ -1424,7 +1424,7 @@ Max-Forwards 값은 해당 메시지가 포워드될 수 있는 남은 횟수를
 
 수신자는 아마(MAY) 이외의 요청 메소드들과 함께 수신된 Max-Forwards 헤더 필드는 무시할 수 있을 것이다.
 
-#### 7.6.3. 통하기
+#### 7.6.3. Via
 
 The "Via" header field indicates the presence of intermediate
 protocols and recipients between the user agent and the server (on
