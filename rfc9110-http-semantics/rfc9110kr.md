@@ -1414,29 +1414,15 @@ Connection 말고 다른 필드가 현재 연결을 위해서 혹은 대해서 �
 
 #### 7.6.2. 최대 포워드
 
-The "Max-Forwards" header field provides a mechanism with the TRACE
-(Section 9.3.8) and OPTIONS (Section 9.3.7) request methods to limit
-the number of times that the request is forwarded by proxies. This
-can be useful when the client is attempting to trace a request that
-appears to be failing or looping mid-chain.
+"Max-Forwards" 헤더 필드는 TRACE(9.3.8절)와 OPTIONS(9.3.7절) 요청 메소드와 함께 요청이 프록시들에 의해 포워드되는 횟수를 제한하는 메커니즘을 제공한다. 이는 클라이언트가 체인 중간에서 실패하거나 루핑하는 것으로 보이는 요청을 추적하려할 때 유용할 수 있다.
 
      Max-Forwards = 1*DIGIT
 
-The Max-Forwards value is a decimal integer indicating the remaining
-number of times this request message can be forwarded.
+Max-Forwards 값은 해당 메시지가 포워드될 수 있는 남은 횟수를 나타내는 십진 정수이다.
 
-Each intermediary that receives a TRACE or OPTIONS request containing
-a Max-Forwards header field MUST check and update its value prior to
-forwarding the request. If the received value is zero (0), the
-intermediary MUST NOT forward the request; instead, the intermediary
-MUST respond as the final recipient. If the received Max-Forwards
-value is greater than zero, the intermediary MUST generate an updated
-Max-Forwards field in the forwarded message with a field value that
-is the lesser of a) the received value decremented by one (1) or b)
-the recipient's maximum supported value for Max-Forwards.
+한 Max-Forwards 헤더 필드를 포함하는 TRACE나 OPTIONS 요청을 수신한 각 중개자는 반드시(MUST) 해당 요청을 포워딩하기 전에 그 값을 확인하고 업데이트 해야 한다. 만약 수신된 값이 0이라면, 중개자는 절대(MUST NOT) 해당 요청을 포워딩해서는 안된다; 대신에, 중개자는 반드시(MUST) 최종 수신자로서 응답해야 한다. 만약 수신한 Max-Forwards 값이 0보다 크다면, 중개자는 포워딩된 메시지에 반드시(MUST) a) 수신된 값에서 1이 감소된 값 혹은 b) 수신자가 지원하는 최대 Max-Forwards 값 둘 중 더 작은 값으로 갱신된 Max-Forwards 필드를 생성해야 한다.
 
-A recipient MAY ignore a Max-Forwards header field received with any
-other request methods.
+수신자는 아마(MAY) 이외의 요청 메소드들과 함께 수신된 Max-Forwards 헤더 필드는 무시할 수 있을 것이다.
 
 #### 7.6.3. 통하기
 
