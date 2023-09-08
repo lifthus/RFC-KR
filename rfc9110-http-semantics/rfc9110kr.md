@@ -148,9 +148,9 @@ than English.
 - [7.4 잘못 도달한 요청 거부](#74-잘못-도달한-요청-거부)
 - [7.5 응답 연관짓기](#75-응답-연관짓기)
 - [7.6 메시지 포워딩](#76-메시지-포워딩)
-- - [7.6.1 연결](#761-연결)
-- - [7.6.2 최대 포워드](#762-최대-포워드)
-- - [7.6.3 통하기](#763-통하기)
+- - [7.6.1 Connection](#761-connection)
+- - [7.6.2 Max-Forwards](#762-max-forwards)
+- - [7.6.3 Via](#763-via)
 - [7.7 메시지 변환](#77-메시지-변환)
 - [7.8 업그레이드](#78-업그레이드)
 
@@ -1238,7 +1238,7 @@ CONNECT 요청 메소드(9.3.6절)에 대한 2xx(Successful) 응답들은 콘텐
 
 요청의 TE 헤더 필드(10.1.4절)에서 "trailers"라는 키워드의 존재는 클라이언트가 자신을 포함한 어떤 다른 다운스트림 클라이언트들을 대신하여, 기꺼이 트레일러 필드들을 받아들일 것임을 나타낸다. 이는 중개자들로부터의 요청들에 대해, 모든 다운스트림 클라이언트들이 포워드된 응답의 트레일러 필드들을 받아들일 것임을 암시한다. "trailers" 키워드의 존재가 클라이언트들이 응답의 어떠한 특정 트레일러 필드를 처리할 것임을 의미하지는 않는다는 것을 명심하라; 오직 트레일러 섹션(들)이 어떠한 클라이언트들에 의해서도 버려지지 않음을 의미할 뿐이다.
 
-이렇게 트레일러 필드들이 전송 중에 버려질 가능성 때문에, 서버는 웬만하면(SHOULD NOT) 유저 에이전트가 반드시 수신해야 한다고 믿어지는 트레일러 필드들은 생성하지 않아야 한다.
+이렇게 트레일러 필드들이 전송 중에 버려질 가능성 때문에, 서버는 웬만해서는(SHOULD NOT) 유저 에이전트가 반드시 수신해야 한다고 믿어지는 트레일러 필드들은 생성하지 않아야 한다.
 
 #### 6.5.2. 트레일러 필드 처리
 
@@ -1379,7 +1379,7 @@ HTTP/2[[HTTP/2](https://www.rfc-editor.org/info/rfc9113)]와 HTTP/3[[HTTP/3](htt
 
 하나의 HTTP 메시지는 incremental processing이나 다운스트림 포워딩을 위해 하나의 스트림으로 파싱될 수 있다. 하지만, 발신자들과 수신자들은 부분 메시지들의 incremental delivery에 의존할 수 없다, 이는 일부 구현체들이 네트워크 효율성, 보안 체크, 혹은 콘텐츠 변형을 위해 메시지 포워딩을 버퍼링하거나 지연시킬 것이기 때문이다.
 
-#### 7.6.1. 연결
+#### 7.6.1. Connection
 
 "Connection" 헤더 필드는 발신자가 현재 연결에 대해 바라는 제어 옵션들을 나열할 수 있도록 한다.
 
@@ -1412,111 +1412,54 @@ Connection 말고 다른 필드가 현재 연결을 위해서 혹은 대해서 �
 
 필드와 대응되지 않는 새로운 연결 옵션을 정의하려 할 때, 사양 작성자들은 대응되는 필드 이름을 어쨌든 나중의 충돌을 피하기 위해 예약해야 한다. 그러한 예약된 필드 이름들은 "Hypertext Transfer Protocol (HTTP) Field Name Registry"(16.3.1절)에 등록된다.
 
-#### 7.6.2. 최대 포워드
+#### 7.6.2. Max-Forwards
 
-The "Max-Forwards" header field provides a mechanism with the TRACE
-(Section 9.3.8) and OPTIONS (Section 9.3.7) request methods to limit
-the number of times that the request is forwarded by proxies. This
-can be useful when the client is attempting to trace a request that
-appears to be failing or looping mid-chain.
+"Max-Forwards" 헤더 필드는 TRACE(9.3.8절)와 OPTIONS(9.3.7절) 요청 메소드와 함께 요청이 프록시들에 의해 포워드되는 횟수를 제한하는 메커니즘을 제공한다. 이는 클라이언트가 체인 중간에서 실패하거나 루핑하는 것으로 보이는 요청을 추적하려할 때 유용할 수 있다.
 
      Max-Forwards = 1*DIGIT
 
-The Max-Forwards value is a decimal integer indicating the remaining
-number of times this request message can be forwarded.
+Max-Forwards 값은 해당 메시지가 포워드될 수 있는 남은 횟수를 나타내는 십진 정수이다.
 
-Each intermediary that receives a TRACE or OPTIONS request containing
-a Max-Forwards header field MUST check and update its value prior to
-forwarding the request. If the received value is zero (0), the
-intermediary MUST NOT forward the request; instead, the intermediary
-MUST respond as the final recipient. If the received Max-Forwards
-value is greater than zero, the intermediary MUST generate an updated
-Max-Forwards field in the forwarded message with a field value that
-is the lesser of a) the received value decremented by one (1) or b)
-the recipient's maximum supported value for Max-Forwards.
+한 Max-Forwards 헤더 필드를 포함하는 TRACE나 OPTIONS 요청을 수신한 각 중개자는 반드시(MUST) 해당 요청을 포워딩하기 전에 그 값을 확인하고 업데이트 해야 한다. 만약 수신된 값이 0이라면, 중개자는 절대(MUST NOT) 해당 요청을 포워딩해서는 안된다; 대신에, 중개자는 반드시(MUST) 최종 수신자로서 응답해야 한다. 만약 수신한 Max-Forwards 값이 0보다 크다면, 중개자는 포워딩된 메시지에 반드시(MUST) a) 수신된 값에서 1이 감소된 값 혹은 b) 수신자가 지원하는 최대 Max-Forwards 값 둘 중 더 작은 값으로 갱신된 Max-Forwards 필드를 생성해야 한다.
 
-A recipient MAY ignore a Max-Forwards header field received with any
-other request methods.
+수신자는 아마(MAY) 이외의 요청 메소드들과 함께 수신된 Max-Forwards 헤더 필드는 무시할 수 있을 것이다.
 
-#### 7.6.3. 통하기
+#### 7.6.3. Via
 
-The "Via" header field indicates the presence of intermediate
-protocols and recipients between the user agent and the server (on
-requests) or between the origin server and the client (on responses),
-similar to the "Received" header field in email (Section 3.6.7 of
-[RFC5322]). Via can be used for tracking message forwards, avoiding
-request loops, and identifying the protocol capabilities of senders
-along the request/response chain.
+"Via" 헤더 필드는 유저 에이전트와 서버 사이(요청들에서) 혹은 오리진서버와 클라이언트 사이(응답들에서)에 중간 프로토콜들과 수신자들이 존재한다는 것을 나타내는데, email의 "Received" 헤더 필드([[RFC5322](https://www.rfc-editor.org/info/rfc5322)]의 3.6.7절)와 비슷하다. Via는 메시지 포워딩을 추적하고, 요청 루프를 회피하고, 요청/응답 체인에 거친 발신자들의 프로토콜 수용 능력을 식별하는데 사용될 수 있다.
 
      Via = #( received-protocol RWS received-by [ RWS comment ] )
 
      received-protocol = [ protocol-name "/" ] protocol-version
-                       ; see Section 7.8
+                       ; 7.8절 참조
      received-by       = pseudonym [ ":" port ]
      pseudonym         = token
 
-Each member of the Via field value represents a proxy or gateway that
-has forwarded the message. Each intermediary appends its own
-information about how the message was received, such that the end
-result is ordered according to the sequence of forwarding recipients.
+Via 필드 값의 각 멤버는 메시지를 포워드한 프록시나 게이트웨이를 나타낸다. 각 중개자는 메시지를 어떻게 수신했는지에 대한 자신의 정보를 덧붙여, 마지막 결과는 포워드한 수신자들의 순서에 따라 나열된다.
 
-A proxy MUST send an appropriate Via header field, as described
-below, in each message that it forwards. An HTTP-to-HTTP gateway
-MUST send an appropriate Via header field in each inbound request
-message and MAY send a Via header field in forwarded response
-messages.
+프록시는 반드시(MUST) 포워드하는 각 메시지에서 , 아래에 기술된대로, 적합한 Via 헤더 필드를 보내야 한다. HTTP-to-HTTP 게이트웨이는 반드시(MUST) 각 인바운드 요청 메시지들에 적합한 Via 헤더 필드를 보내야 하고 아마(MAY) 포워드되는 응답 메시지들에 Via 헤더를 보낼 수 있을 것이다.
 
-For each intermediary, the received-protocol indicates the protocol
-and protocol version used by the upstream sender of the message.
-Hence, the Via field value records the advertised protocol
-capabilities of the request/response chain such that they remain
-visible to downstream recipients; this can be useful for determining
-what backwards-incompatible features might be safe to use in
-response, or within a later request, as described in Section 2.5.
-For brevity, the protocol-name is omitted when the received protocol
-is HTTP.
+각 중개자들에 대해, received-protocol은 메시지의 업스트림 발신자에 의해 사용된 프로토콜과 프로토콜 버전을 나타낸다. 이리하여, Via 필드 값은 요청/응답 체인의 알려진 프로토콜 수용 능력을 기록하게 되고 이는 다운스트림 수신자들이 계속 볼 수 있게 된다; 이는 어떤 하위-비호환 기능들이 응답, 혹은 나중 요청에서, 사용하기에 안전한지 결정할 때 유용할 수 있고, 2.5절에 관련해서 기술되어 있다. 간결함을 위해, protocol-name은 수신 프로토콜이 HTTP일 때는 생략된다.
 
-The received-by portion is normally the host and optional port number
-of a recipient server or client that subsequently forwarded the
-message. However, if the real host is considered to be sensitive
-information, a sender MAY replace it with a pseudonym. If a port is
-not provided, a recipient MAY interpret that as meaning it was
-received on the default port, if any, for the received-protocol.
+received-by 부분은 보통 이후에 메시지를 포워드한 수신 서버 혹은 클라이언트의 호스트와 선택적인 포트 넘버를 나타낸다. 그러나, 실제 호스트가 민감한 정보로 간주된다면, 발신자는 아마(MAY) 그것을 pseudonym으로 교체할 수 있을 것이다. 만약 포트가 제공되지 않으면, 수신자는 아마(MAY), 만약 있다면, received-protocle의 기본 포트에서 수신됐다는 의미로 해석할 수 있을 것이다.
 
-A sender MAY generate comments to identify the software of each
-recipient, analogous to the User-Agent and Server header fields.
-However, comments in Via are optional, and a recipient MAY remove
-them prior to forwarding the message.
+발신자는 아마(MAY) 각 수신자의 소프트웨어를 식별하기 위해 주석들을 생성할 수 있을 것이고, User-Agent와 Server 헤더 필드와 유사하다. 그러나, Via의 주석은 선택 사항이고, 수신자는 아마(MAY) 메시지를 포워드하기 전에 그것들을 제거할 수도 있을 것이다.
 
-For example, a request message could be sent from an HTTP/1.0 user
-agent to an internal proxy code-named "fred", which uses HTTP/1.1 to
-forward the request to a public proxy at p.example.net, which
-completes the request by forwarding it to the origin server at
-www.example.com. The request received by www.example.com would then
-have the following Via header field:
+예를 들어, HTTP/1.0 유저 에이전트로부터 코드 네임 "fred"의 내부 프록시로 한 요청 메시지가 전달될 수 있는데, 그 프록시는 메시지를 p.example.net의 공개 프록시로 포워드하기 위해 HTTP/1.1을 사용하며, 공개 프록시는 요청을 www.example.com의 오리진 서버로 포워드하며 요청을 완료한다고 하자. www.example.com에 의해 수신된 해당 요청은 다음의 Via 헤더 필드를 가지고 있을 것이다.
 
-Via: 1.0 fred, 1.1 p.example.net
+     Via: 1.0 fred, 1.1 p.example.net
 
-An intermediary used as a portal through a network firewall SHOULD
-NOT forward the names and ports of hosts within the firewall region
-unless it is explicitly enabled to do so. If not enabled, such an
-intermediary SHOULD replace each received-by host of any host behind
-the firewall by an appropriate pseudonym for that host.
+네트워크 방화벽을 통한 포탈로써 사용되는 중개자는 명시적으로 그리 하라 되어있지 않은 한 웬만해서는(SHOULD NOT) 방화벽 구역 내의 호스트들의 이름과 포트를 포워딩해서는 안된다. 그렇게 하라고 되어 있지 않으면, 그러한 중개자는 웬만하면(SHOULD) 방화벽 뒤의 어떠한 호스트든 각 received-by 호스트를 그 호스트를 위한 적절한 pseudonym으로 교체해 줘야 한다.
 
-An intermediary MAY combine an ordered subsequence of Via header
-field list members into a single member if the entries have identical
-received-protocol values. For example,
+중개자는 Via 헤더 필드 리스트 멤버 부분열의 항목들이 같은 received-protocol 값들을 가지고 있다면 아마(MAY) 하나의 멤버로 결합할 수 있을 것이다. 예를 들어,
 
-Via: 1.0 ricky, 1.1 ethel, 1.1 fred, 1.0 lucy
+     Via: 1.0 ricky, 1.1 ethel, 1.1 fred, 1.0 lucy
 
-could be collapsed to
+는 다음과 같이 줄일 수 있다
 
-Via: 1.0 ricky, 1.1 mertz, 1.0 lucy
+     Via: 1.0 ricky, 1.1 mertz, 1.0 lucy
 
-A sender SHOULD NOT combine multiple list members unless they are all
-under the same organizational control and the hosts have already been
-replaced by pseudonyms. A sender MUST NOT combine members that have
-different received-protocol values.
+발신자는 여러 리스트 멤버들이 모두 같은 조직 통제 아래에 있고 호스트들이 이미 pseudonyms로 교체되지 않은 한 웬만해서는(SHOULD NOT) 그것들을 결합해서는 안된다. 발신자는 절대(MUST NOT) 다른 received-protocol 값들을 가진 멤버들을 결합해서는 안된다.
 
 ### 7.7. 메시지 변환
 
