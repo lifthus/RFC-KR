@@ -152,7 +152,7 @@ than English.
 - - [7.6.2 Max-Forwards](#762-max-forwards)
 - - [7.6.3 Via](#763-via)
 - [7.7 메시지 변환](#77-메시지-변환)
-- [7.8 업그레이드](#78-업그레이드)
+- [7.8 Upgrade](#78-upgrade)
 
 [8. 데이터와 메타데이터 표기](#8-데이터와-메타데이터-표기)
 
@@ -1463,71 +1463,25 @@ received-by 부분은 보통 이후에 메시지를 포워드한 수신 서버 �
 
 ### 7.7. 메시지 변환
 
-Some intermediaries include features for transforming messages and
-their content. A proxy might, for example, convert between image
-formats in order to save cache space or to reduce the amount of
-traffic on a slow link. However, operational problems might occur
-when these transformations are applied to content intended for
-critical applications, such as medical imaging or scientific data
-analysis, particularly when integrity checks or digital signatures
-are used to ensure that the content received is identical to the
-original.
+어떤 중개자들은 메시지들과 그 콘텐츠를 변형하기 위한 기능들을 포함한다. 프록시는 아마, 예를 들어, 캐시 공간을 절약하거나 느린 링크 상의 트래픽을 감소시키기 위해 이미지 포맷들 간에 전환할 수 있을 것이다. 그러나, 이러한 변형들이, 의료 영상 처리나 과학 데이터 분석 같이 중요한 애플리케이션들을 위해 의도된 콘텐츠에 대해 적용될 때는, 작동상의 문제들이 발생할 수 있을 것이고, 특히 수신된 콘텐츠가 원본과 동일하다는 것을 보장하기 위해 무결성 체크나 디지털 시그니처들이 사용될 때 그러하다.
 
-An HTTP-to-HTTP proxy is called a "transforming proxy" if it is
-designed or configured to modify messages in a semantically
-meaningful way (i.e., modifications, beyond those required by normal
-HTTP processing, that change the message in a way that would be
-significant to the original sender or potentially significant to
-downstream recipients). For example, a transforming proxy might be
-acting as a shared annotation server (modifying responses to include
-references to a local annotation database), a malware filter, a
-format transcoder, or a privacy filter. Such transformations are
-presumed to be desired by whichever client (or client organization)
-chose the proxy.
+HTTP-to-HTTP 프록시는 의미론적으로 유의미한 방식으로 메시지들을 수정하도록 설계 혹은 설정된 경우 "transforming proxy"라고 불린다(즉, 원본 발신자에게나 잠재적으로는 다운스트림 수신자들에게 의미있을 방법을 통해 메시지를 변화시키는, 일반 HTTP 처리에서 요구되는 것을 넘어서는, 그러한 수정들). 예를 들어, transforming proxy는 공유된 어노테이션 서버(응답들이 로컬 어노테이션 데이터베이스에 대한 참조들을 포함하도록 수정하는)로서 작동할 수 있고, 말웨어 필터, 포맷 트랜스코더, 혹은 프라이버시 필터로 작동할 수 있다. 이러한 변형들은 해당 프록시를 선택한 어느 클라이언트(혹은 클라이언트 조직)든 그런 동작을 바랐다고 간주된다.
 
-If a proxy receives a target URI with a host name that is not a fully
-qualified domain name, it MAY add its own domain to the host name it
-received when forwarding the request. A proxy MUST NOT change the
-host name if the target URI contains a fully qualified domain name.
+만약 프록시가 호스트 이름이 완전히 갖춰지지 않은 도메인 이름인 타겟 URI를 수신한다면, 프록시는 아마(MAY) 해당 요청을 포워딩할 때 수신한 호스트 네임에 자기 자신의 도메인을 추가할 수 있을 것이다. 프록시는 타겟 URI가 완전히 갖춰진 도메인 이름을 포함하고 있다면 절대(MUST NOT) 호스트 이름을 변경해서는 안된다.
 
-A proxy MUST NOT modify the "absolute-path" and "query" parts of the
-received target URI when forwarding it to the next inbound server
-except as required by that forwarding protocol. For example, a proxy
-forwarding a request to an origin server via HTTP/1.1 will replace an
-empty path with "/" (Section 3.2.1 of [HTTP/1.1]) or "\*"
-(Section 3.2.4 of [HTTP/1.1]), depending on the request method.
+프록시는 포워딩 프로토콜에 의해 요구되는 경우를 제외하고는 절대(MUST NOT) 수신한 타겟 URI의 "absolute-path"와 "query" 파트들을 수정해서는 안된다. 예를 들어, HTTP/1.1을 통해 오리진 서버로 요청을 포워딩하는 프록시는 빈 경로를 "/"([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 3.2.1절) 혹은 "\*"([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 3.2.4절)로 대체할 것이고, 이는 요청 메서드에 따른다.
 
-A proxy MUST NOT transform the content (Section 6.4) of a response
-message that contains a no-transform cache directive (Section 5.2.2.6
-of [CACHING]). Note that this does not apply to message
-transformations that do not change the content, such as the addition
-or removal of transfer codings (Section 7 of [HTTP/1.1]).
+프록시는 절대(MUST NOT) no-transform 캐시 지시자를 포함하는 응답 메시지들의 콘텐츠(6.4절)를 변형해서는 안된다([[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 5.2.2.6절). 다만 콘텐츠를 변경하지 않는 메시지 변형들에는 적용되지 않음을 주의하고, transfer coding들의 추가나 제거가 그러한 변형이다([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 7절).
 
-A proxy MAY transform the content of a message that does not contain
-a no-transform cache directive. A proxy that transforms the content
-of a 200 (OK) response can inform downstream recipients that a
-transformation has been applied by changing the response status code
-to 203 (Non-Authoritative Information) (Section 15.3.4).
+프록시는 아마 (MAY) no-transform 캐시 지시자를 포함하지 않는 메시지의 콘텐츠는 변형할 수 있을 것이다. 200(OK) 응답의 콘텐츠를 변형하는 프록시는 응답 상태 코드를 203(Non-Authoritative Information)로 수정하여 다운스트림 수신자들에게 변형이 적용됐음을 알릴 수 있다(15.3.4절).
 
-A proxy SHOULD NOT modify header fields that provide information
-about the endpoints of the communication chain, the resource state,
-or the selected representation (other than the content) unless the
-field's definition specifically allows such modification or the
-modification is deemed necessary for privacy or security.
+프록시는 필드의 정의가 구체적으로 수정을 허용하거나 수정이 프라이버시나 보안을 위해 필수적이라고 간주되는게 아닌 한 웬만해서는(SHOULD NOT) 통신 체인의 엔드포인트들, 리소스 상태, 혹은 선택된 표현(콘텐츠를 제외한)에 대한 정보를 제공하는 헤더 필드들을 수정해서는 안된다.
 
-### 7.8. 업그레이드
+### 7.8. Upgrade
 
-The "Upgrade" header field is intended to provide a simple mechanism
-for transitioning from HTTP/1.1 to some other protocol on the same
-connection.
+"Upgrade" 헤더 필드는 같은 연결 상에서 HTTP/1.1으로 부터 다른 어떤 프로토콜로 전환하기 위한 간단한 메커니즘을 제공하도록 의도되어 있다.
 
-A client MAY send a list of protocol names in the Upgrade header
-field of a request to invite the server to switch to one or more of
-the named protocols, in order of descending preference, before
-sending the final response. A server MAY ignore a received Upgrade
-header field if it wishes to continue using the current protocol on
-that connection. Upgrade cannot be used to insist on a protocol
-change.
+클라이언트는 아마(MAY) 요청의 Upgrade 헤더 필드에 프로토콜 이름들의 리스트를 포함해 보내 서버가 하나 이상의 지정된 프로토콜들로 스위칭하도록 제안할 수 있고, 그 우선순위는 앞에 나열될 수록 높으며, 서버는 최종 응답을 보내기 전에 스위칭할 수 있다. 서버는 아마(MAY) 수신한 Upgrade 헤더 필드를 해당 연결에서 기존 프로토콜을 사용하는 것을 계속하길 바라면 그냥 무시할 수 있을 것이다. Upgrade는 확실한 프로토콜 변경을 요구하는 수단이 아니다.
 
      Upgrade          = #protocol
 
@@ -1535,91 +1489,40 @@ change.
      protocol-name    = token
      protocol-version = token
 
-Although protocol names are registered with a preferred case,
-recipients SHOULD use case-insensitive comparison when matching each
-protocol-name to supported protocols.
+프로토콜 이름들의 대소문자를 선호하는대로 등록하면 되지만, 수신자들은 웬만하면(SHOULD) 각 protocol-name을 지원하는 프로토콜들로 매칭할 때 대소문자를 구분하지 않고 비교해야 한다.
 
-A server that sends a 101 (Switching Protocols) response MUST send an
-Upgrade header field to indicate the new protocol(s) to which the
-connection is being switched; if multiple protocol layers are being
-switched, the sender MUST list the protocols in layer-ascending
-order. A server MUST NOT switch to a protocol that was not indicated
-by the client in the corresponding request's Upgrade header field. A
-server MAY choose to ignore the order of preference indicated by the
-client and select the new protocol(s) based on other factors, such as
-the nature of the request or the current load on the server.
+101(Switching Protocols) 응답을 보내는 서버는 반드시(MUST) Upgrade 헤더 필드를 보내어 해당 연결이 스위칭하는 새로운 프로토콜(들)을 나타내야 한다; 만약 여러 프로토콜 레이어들이 스위칭된다면, 발신자는 반드시(MUST) 해당 프로토콜들을 레이어가 올라가는 순으로 나열해야 한다. 발신자는 절대 (MUST NOT) 클라이언트가 해당하는 요청의 Upgrade 헤더 필드에 나타내지 않은 프로토콜로 스위칭해서는 안된다. 서버는 아마(MAY) 클라이언트가 지정한 우선순위를 무시할 수 있을 것이고 새로운 프로토콜(들)을 다른 요소들, 요청의 성격이나 현재 서버의 부하 같은 것에 따라 선택할 수 있을 것이다.
 
-A server that sends a 426 (Upgrade Required) response MUST send an
-Upgrade header field to indicate the acceptable protocols, in order
-of descending preference.
+426(Upgrade Required) 응답을 보내는 서버는 반드시(MUST) Upgrade 헤더 필드를 보내 수용 가능한 프로토콜들을 나타내야 하고, 이는 우선순위가 높은 것 부터 나열한다.
 
-A server MAY send an Upgrade header field in any other response to
-advertise that it implements support for upgrading to the listed
-protocols, in order of descending preference, when appropriate for a
-future request.
+서버는 아마(MAY) 다른 아무 응답에서 Upgrade 헤더 필드를 보내 자신이 나열된 프로토콜들로의 업그레이딩을 지원한다고 알릴 수 있을 것이며, 이는 우선순위가 높은 순서고, 차후의 요청에서 적절한 때에 가능하다.
 
-The following is a hypothetical example sent by a client:
+다음은 클라이언트에 의해 보내진 가상의 예시다:
 
-GET /hello HTTP/1.1
-Host: www.example.com
-Connection: upgrade
-Upgrade: websocket, IRC/6.9, RTA/x11
+     GET /hello HTTP/1.1
+     Host: www.example.com
+     Connection: upgrade
+     Upgrade: websocket, IRC/6.9, RTA/x11
 
-The capabilities and nature of the application-level communication
-after the protocol change is entirely dependent upon the new
-protocol(s) chosen. However, immediately after sending the 101
-(Switching Protocols) response, the server is expected to continue
-responding to the original request as if it had received its
-equivalent within the new protocol (i.e., the server still has an
-outstanding request to satisfy after the protocol has been changed,
-and is expected to do so without requiring the request to be
-repeated).
+프로토콜이 바뀌고 나서의 애플리케이션-레벨 통신의 능력과 성격은 새로이 선택된 프로토콜(들)에 완전히 의존한다. 그러나, 101(Switching Protocols) 응답을 보낸 직후, 서버는 원래 요청을 서버가 새로운 프로토콜 내에서 원래 요청과 동등한 것을 받은 것 처럼 원래 요청에 대해 응답을 계속해야 한다(즉, 서버는 프로토콜이 바뀌고 나서도 아직 만족시켜야할 미해결 요청을 가지고 있고, 해당 요청을 반복할 필요 없이 이리 하도록 기대된다).
 
-For example, if the Upgrade header field is received in a GET request
-and the server decides to switch protocols, it first responds with a
-101 (Switching Protocols) message in HTTP/1.1 and then immediately
-follows that with the new protocol's equivalent of a response to a
-GET on the target resource. This allows a connection to be upgraded
-to protocols with the same semantics as HTTP without the latency cost
-of an additional round trip. A server MUST NOT switch protocols
-unless the received message semantics can be honored by the new
-protocol; an OPTIONS request can be honored by any protocol.
+예를 들어, 만약 Upgrade 헤더 필드가 GET 요청에서 수신되고 서버는 프로토콜을 스위칭하기로 결정한다면, 먼저 서버는 101(Switching Protocols) 메시지를 HTTP/1.1로 응답하고나서 즉시 타겟 리소스의 GET에 대한 응답에 대해 새로운 프로토콜의 동등한 것으로 그 응답을 따른다. 이는 연결이 추가적인 라운드 트립에 의한 지연 비용 없이 HTTP와 같은 의미체계의 프로토콜들로 업그레이드될 수 있도록 한다. 서버는 수신한 메시지 의미체계가 새로운 프로토콜에 의해 지켜질 수 있는게 아니라면 절대(MUST NOT) 프로토콜들을 스위칭해서는 안된다; OPTIONS 요청은 아무 프로토콜들에게나 지켜질 수 있다.
 
-The following is an example response to the above hypothetical
-request:
+다음은 위의 가상 요청에 대한 예시 응답이다:
 
-HTTP/1.1 101 Switching Protocols
-Connection: upgrade
-Upgrade: websocket
+     HTTP/1.1 101 Switching Protocols
+     Connection: upgrade
+     Upgrade: websocket
 
-[... data stream switches to websocket with an appropriate response
-(as defined by new protocol) to the "GET /hello" request ...]
+     [... 데이터 스트림은 "GET /hello" 요청에 대해 적절한 응답과 함께(새로운 프로토콜에 의해 정의된대로) websocket으로 스위칭 ...]
 
-A sender of Upgrade MUST also send an "Upgrade" connection option in
-the Connection header field (Section 7.6.1) to inform intermediaries
-not to forward this field. A server that receives an Upgrade header
-field in an HTTP/1.0 request MUST ignore that Upgrade field.
+Upgrade의 발신자는 또한 "Upgrade" 연결 옵션을 Connection 헤더 필드(7.6.1절)에 포함해 보내 중개자들이 이 필드를 포워딩하지 않도록 알려야 한다. Upgrade 헤더 필드를 HTTP/1.0 요청에서 수신하는 서버는 반드시(MUST) 해당 Upgrade 필드를 무시해야 한다.
 
-A client cannot begin using an upgraded protocol on the connection
-until it has completely sent the request message (i.e., the client
-can't change the protocol it is sending in the middle of a message).
-If a server receives both an Upgrade and an Expect header field with
-the "100-continue" expectation (Section 10.1.1), the server MUST send
-a 100 (Continue) response before sending a 101 (Switching Protocols)
-response.
+클라이언트는 업그레이드된 프로토콜을 해당 연결에서 사용하는 것을 요청 메시지를 완전히 보내기 전에는 시작할 수 없다(즉, 클라이언트는 메시지를 한창 보내고 있는 프로토콜을 변경할 수 없다). 만약 서버가 Upgrade와 Expect 헤더 필드를 동시에 "100-continue" expectation(10.1.1절)과 함께 수신한다면, 서버는 101(Switching Protocols) 응답을 보내기 전에 반드시(MUST) 100(Continue) 응답을 보내야 한다.
 
-The Upgrade header field only applies to switching protocols on top
-of the existing connection; it cannot be used to switch the
-underlying connection (transport) protocol, nor to switch the
-existing communication to a different connection. For those
-purposes, it is more appropriate to use a 3xx (Redirection) response
-(Section 15.4).
+Upgrade 헤더 필드는 오직 기존 연결의 최상부에서 프로토콜을 전환하는데에만 적용된다; 기반 연결 (트랜스포트) 프로토콜 스위칭할 수 없고, 기존 통신을 다른 연결로 스위칭할 수도 없다. 그러한 목적들을 위해서는, 3xx(Redirection) 응답(15.4절)을 사용하는 편이 더 적절하다.
 
-This specification only defines the protocol name "HTTP" for use by
-the family of Hypertext Transfer Protocols, as defined by the HTTP
-version rules of Section 2.5 and future updates to this
-specification. Additional protocol names ought to be registered
-using the registration procedure defined in Section 16.7.
+이 사양은 프로토콜 이름 "HTTP"를, 2.5절의 HTTP 버전 룰들과 이 사양의 차후 업데이트에 의해 정의되는대로 오직 Hypertext Transfer Protocol의 일종에 의한 사용을 위해 정의한다. 추가적인 프로토콜 이름들은 16.7절에 정의된 등록 절차를 이용해 등록되어야 한다.
 
 ## 8. 데이터와 메타데이터 표기
 
