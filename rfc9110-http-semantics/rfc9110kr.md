@@ -1463,57 +1463,19 @@ received-by 부분은 보통 이후에 메시지를 포워드한 수신 서버 �
 
 ### 7.7. 메시지 변환
 
-Some intermediaries include features for transforming messages and
-their content. A proxy might, for example, convert between image
-formats in order to save cache space or to reduce the amount of
-traffic on a slow link. However, operational problems might occur
-when these transformations are applied to content intended for
-critical applications, such as medical imaging or scientific data
-analysis, particularly when integrity checks or digital signatures
-are used to ensure that the content received is identical to the
-original.
+어떤 중개자들은 메시지들과 그 콘텐츠를 변형하기 위한 기능들을 포함한다. 프록시는 아마, 예를 들어, 캐시 공간을 절약하거나 느린 링크 상의 트래픽을 감소시키기 위해 이미지 포맷들 간에 전환할 수 있을 것이다. 그러나, 이러한 변형들이, 의료 영상 처리나 과학 데이터 분석 같이 중요한 애플리케이션들을 위해 의도된 콘텐츠에 대해 적용될 때는, 작동상의 문제들이 발생할 수 있을 것이고, 특히 수신된 콘텐츠가 원본과 동일하다는 것을 보장하기 위해 무결성 체크나 디지털 시그니처들이 사용될 때 그러하다.
 
-An HTTP-to-HTTP proxy is called a "transforming proxy" if it is
-designed or configured to modify messages in a semantically
-meaningful way (i.e., modifications, beyond those required by normal
-HTTP processing, that change the message in a way that would be
-significant to the original sender or potentially significant to
-downstream recipients). For example, a transforming proxy might be
-acting as a shared annotation server (modifying responses to include
-references to a local annotation database), a malware filter, a
-format transcoder, or a privacy filter. Such transformations are
-presumed to be desired by whichever client (or client organization)
-chose the proxy.
+HTTP-to-HTTP 프록시는 의미론적으로 유의미한 방식으로 메시지들을 수정하도록 설계 혹은 설정된 경우 "transforming proxy"라고 불린다(즉, 원본 발신자에게나 잠재적으로는 다운스트림 수신자들에게 의미있을 방법을 통해 메시지를 변화시키는, 일반 HTTP 처리에서 요구되는 것을 넘어서는, 그러한 수정들). 예를 들어, transforming proxy는 공유된 어노테이션 서버(응답들이 로컬 어노테이션 데이터베이스에 대한 참조들을 포함하도록 수정하는)로서 작동할 수 있고, 말웨어 필터, 포맷 트랜스코더, 혹은 프라이버시 필터로 작동할 수 있다. 이러한 변형들은 해당 프록시를 선택한 어느 클라이언트(혹은 클라이언트 조직)든 그런 동작을 바랐다고 간주된다.
 
-If a proxy receives a target URI with a host name that is not a fully
-qualified domain name, it MAY add its own domain to the host name it
-received when forwarding the request. A proxy MUST NOT change the
-host name if the target URI contains a fully qualified domain name.
+만약 프록시가 호스트 이름이 완전히 갖춰지지 않은 도메인 이름인 타겟 URI를 수신한다면, 프록시는 아마(MAY) 해당 요청을 포워딩할 때 수신한 호스트 네임에 자기 자신의 도메인을 추가할 수 있을 것이다. 프록시는 타겟 URI가 완전히 갖춰진 도메인 이름을 포함하고 있다면 절대(MUST NOT) 호스트 이름을 변경해서는 안된다.
 
-A proxy MUST NOT modify the "absolute-path" and "query" parts of the
-received target URI when forwarding it to the next inbound server
-except as required by that forwarding protocol. For example, a proxy
-forwarding a request to an origin server via HTTP/1.1 will replace an
-empty path with "/" (Section 3.2.1 of [HTTP/1.1]) or "\*"
-(Section 3.2.4 of [HTTP/1.1]), depending on the request method.
+프록시는 포워딩 프로토콜에 의해 요구되는 경우를 제외하고는 절대(MUST NOT) 수신한 타겟 URI의 "absolute-path"와 "query" 파트들을 수정해서는 안된다. 예를 들어, HTTP/1.1을 통해 오리진 서버로 요청을 포워딩하는 프록시는 빈 경로를 "/"([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 3.2.1절) 혹은 "\*"([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 3.2.4절)로 대체할 것이고, 이는 요청 메서드에 따른다.
 
-A proxy MUST NOT transform the content (Section 6.4) of a response
-message that contains a no-transform cache directive (Section 5.2.2.6
-of [CACHING]). Note that this does not apply to message
-transformations that do not change the content, such as the addition
-or removal of transfer codings (Section 7 of [HTTP/1.1]).
+프록시는 절대(MUST NOT) no-transform 캐시 지시자를 포함하는 응답 메시지들의 콘텐츠(6.4절)를 변형해서는 안된다([[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 5.2.2.6절). 다만 콘텐츠를 변경하지 않는 메시지 변형들에는 적용되지 않음을 주의하고, transfer coding들의 추가나 제거가 그러한 변형이다([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 7절).
 
-A proxy MAY transform the content of a message that does not contain
-a no-transform cache directive. A proxy that transforms the content
-of a 200 (OK) response can inform downstream recipients that a
-transformation has been applied by changing the response status code
-to 203 (Non-Authoritative Information) (Section 15.3.4).
+프록시는 아마 (MAY) no-transform 캐시 지시자를 포함하지 않는 메시지의 콘텐츠는 변형할 수 있을 것이다. 200(OK) 응답의 콘텐츠를 변형하는 프록시는 응답 상태 코드를 203(Non-Authoritative Information)로 수정하여 다운스트림 수신자들에게 변형이 적용됐음을 알릴 수 있다(15.3.4절).
 
-A proxy SHOULD NOT modify header fields that provide information
-about the endpoints of the communication chain, the resource state,
-or the selected representation (other than the content) unless the
-field's definition specifically allows such modification or the
-modification is deemed necessary for privacy or security.
+프록시는 필드의 정의가 구체적으로 수정을 허용하거나 수정이 프라이버시나 보안을 위해 필수적이라고 간주되는게 아닌 한 웬만하면(SHOULD NOT) 통신 체인의 엔드포인트들, 리소스 상태, 혹은 선택된 표현(콘텐츠를 제외한)에 대한 정보를 제공하는 헤더 필드들을 수정해서는 안된다.
 
 ### 7.8. 업그레이드
 
