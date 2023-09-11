@@ -1539,49 +1539,21 @@ HTTP 메시지와 연관된 표현 데이터는 메시지의 콘텐츠로 제공
 
 표현 헤더 필드들은 표현에 대한 메타데이터를 제공한다. 메시지가 콘텐츠를 포함할 때, 표현 헤더 필드들은 해당 데이터를 어떻게 해석할지를 기술한다. HEAD 요청에 대한 응답에서, 표현 헤더 필드들은 만약 동일한 요청이 GET이라면 콘텐츠에 포함되어 있을 표현 데이터를 기술한다.
 
-8.3. Content-Type
+### 8.3. Content-Type
 
-The "Content-Type" header field indicates the media type of the
-associated representation: either the representation enclosed in the
-message content or the selected representation, as determined by the
-message semantics. The indicated media type defines both the data
-format and how that data is intended to be processed by a recipient,
-within the scope of the received message semantics, after any content
-codings indicated by Content-Encoding are decoded.
+"Content-Type" 헤더 필드는 연관된 표현의 미디어 타입을 나타낸다: 표현이라함은 메시지 콘텐츠에 포함된 것 혹은, 메시지 의미체계에 의해 결정되어 선택된 표현. 지정된 미디어 타입은 Content-Encoding에 의해 지정된 콘텐츠 코딩들이 모두 디코딩된 후, 수신된 메시지 의미체계의 범위 내에서, 데이터 포맷과 해당 데이터가 수신자에게 어떻게 처리되기를 의도된 것인지를 정의한다.
 
      Content-Type = media-type
 
-Media types are defined in Section 8.3.1. An example of the field is
+미디어 타입은 8.3.1절에 정의되어 있다. 필드 예시는
 
-Content-Type: text/html; charset=ISO-8859-4
+     Content-Type: text/html; charset=ISO-8859-4
 
-A sender that generates a message containing content SHOULD generate
-a Content-Type header field in that message unless the intended media
-type of the enclosed representation is unknown to the sender. If a
-Content-Type header field is not present, the recipient MAY either
-assume a media type of "application/octet-stream" ([RFC2046],
-Section 4.5.1) or examine the data to determine its type.
+콘텐츠를 포함하는 메시지를 생성하는 발신자는 포함된 표현의 의도된 미디어 타입이 발신자에게도 알려지지 않은 것이 아니라면 웬만하면(SHOULD) Content-Type 헤더 필드를 메시지에 생성해야 한다. 만약 Content-Type 헤더 필드가 존재하지 않는다면, 수신자는 아마(MAY) "application/octet-stream"([[RFC2046](https://www.rfc-editor.org/info/rfc2046)], 4.5.1절)의 미디어 타입을 가정하거나 그 타입을 결정하기 위해 조사할 수 있을 것이다.
 
-In practice, resource owners do not always properly configure their
-origin server to provide the correct Content-Type for a given
-representation. Some user agents examine the content and, in certain
-cases, override the received type (for example, see [Sniffing]).
-This "MIME sniffing" risks drawing incorrect conclusions about the
-data, which might expose the user to additional security risks (e.g.,
-"privilege escalation"). Furthermore, distinct media types often
-share a common data format, differing only in how the data is
-intended to be processed, which is impossible to distinguish by
-inspecting the data alone. When sniffing is implemented,
-implementers are encouraged to provide a means for the user to
-disable it.
+실무적으로, 리소스 오너들이 항상 주어진 표현에 대해 올바른 Content-Type을 제공하도록 그들의 오리진 서버를 적절히 설정하지는 않는다. 어떤 유저 에이전트들은 콘텐츠를 조사하고, 특정 케이스들에서는, 수신된 타입을 오버라이드한다(예를 들어, [[Sniffing](https://mimesniff.spec.whatwg.org)] 참조). 이 "MIME sniffing"은 데이터에 관한 잘못된 결론들로 이끄는 위험을 초래하며, 유저에게 추가적인 보안 리스크들을 노출시킬 수 있다(예를 들어, "privilege escalation", "권한 확대"). 게다가, 다른 별도의 미디어 타입들이 종종 공통의 데이터 포맷을 공유하며, 데이터가 어떻게 처리되도록 의도됐는지에 관해서만 다른 경우도 있는데, 데이터만 검사해서는 서로 구분할 수 없다. 스니핑이 구현됐을 때, 구현자들은 유저가 이를 무력화할 수 있는 수단을 제공하도록 권장된다.
 
-Although Content-Type is defined as a singleton field, it is
-sometimes incorrectly generated multiple times, resulting in a
-combined field value that appears to be a list. Recipients often
-attempt to handle this error by using the last syntactically valid
-member of the list, leading to potential interoperability and
-security issues if different implementations have different error
-handling behaviors.
+Content-Type이 싱글톤 필드로 정의되어 있긴 하지만, 가끔 부적절하게 여러 번 생성되기도 하며, 리스트로 나타나는 조합된 필드 값에 이르게 된다. 수신자들은 종종 이 에러를 문법적으로 유효한 리스트의 마지막 멤버를 사용함으로써 대처하기도 하는데, 다른 구현들이 다른 에러 핸들링 행동들을 가질 때 잠재적인 상호운용성과 보안 이슈들로 이어지게 된다.
 
 8.3.1. Media Type
 
