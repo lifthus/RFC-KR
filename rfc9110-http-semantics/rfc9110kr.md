@@ -154,10 +154,10 @@ than English.
 - [7.7 메시지 변환](#77-메시지-변환)
 - [7.8 Upgrade](#78-upgrade)
 
-[8. 데이터와 메타데이터 표기](#8-데이터와-메타데이터-표기)
+[8. 표현 데이터와 메타데이터](#8-표현-데이터와-메타데이터)
 
-- [8.1. Representation Data]()
-- [8.2. Representation Metadata]()
+- [8.1. 표현 데이터](#81-표현-데이터)
+- [8.2. 표현 메타데이터](#82-표현-메타데이터)
 - [8.3. Content-Type]()
 - - [8.3.1. Media Type]()
 - - [8.3.2. Charset]()
@@ -1525,22 +1525,17 @@ Upgrade 헤더 필드는 오직 기존 연결의 최상부에서 프로토콜을
 
 이 사양은 프로토콜 이름 "HTTP"를, 2.5절의 HTTP 버전 룰들과 이 사양의 차후 업데이트에 의해 정의되는대로 오직 Hypertext Transfer Protocol의 일종에 의한 사용을 위해 정의한다. 추가적인 프로토콜 이름들은 16.7절에 정의된 등록 절차를 이용해 등록되어야 한다.
 
-## 8. 데이터와 메타데이터 표기
+## 8. 표현 데이터와 메타데이터
 
-8.1. Representation Data
+### 8.1. 표현 데이터
 
-The representation data associated with an HTTP message is either
-provided as the content of the message or referred to by the message
-semantics and the target URI. The representation data is in a format
-and encoding defined by the representation metadata header fields.
+HTTP 메시지와 연관된 표현 데이터는 메시지의 콘텐츠로 제공되거나 메시지 의미체계와 타겟 URI에 의해 참조된다. 표현 데이터는 표현 메타데이터 헤더 필드들에 의해 정의된 포맷과 인코딩으로 되어 있다.
 
-The data type of the representation data is determined via the header
-fields Content-Type and Content-Encoding. These define a two-layer,
-ordered encoding model:
+표현 데이터의 데이터 타입은 Content-Type과 Content-Encoding 헤더 필드들을 통해 결정된다. 이것들은 2-계층의, 순서대로된 인코딩 모델을 정의한다.
 
      representation-data := Content-Encoding( Content-Type( data ) )
 
-8.2. Representation Metadata
+### 8.2. 표현 메타데이터
 
 Representation header fields provide metadata about the
 representation. When a message includes content, the representation
