@@ -1537,12 +1537,7 @@ HTTP 메시지와 연관된 표현 데이터는 메시지의 콘텐츠로 제공
 
 ### 8.2. 표현 메타데이터
 
-Representation header fields provide metadata about the
-representation. When a message includes content, the representation
-header fields describe how to interpret that data. In a response to
-a HEAD request, the representation header fields describe the
-representation data that would have been enclosed in the content if
-the same request had been a GET.
+표현 헤더 필드들은 표현에 대한 메타데이터를 제공한다. 메시지가 콘텐츠를 포함할 때, 표현 헤더 필드들은 해당 데이터를 어떻게 해석할지를 기술한다. HEAD 요청에 대한 응답에서, 표현 헤더 필드들은 만약 동일한 요청이 GET이라면 콘텐츠에 포함되어 있을 표현 데이터를 기술한다.
 
 8.3. Content-Type
 
