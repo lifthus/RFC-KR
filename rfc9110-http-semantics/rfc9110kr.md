@@ -158,10 +158,10 @@ than English.
 
 - [8.1. 표현 데이터](#81-표현-데이터)
 - [8.2. 표현 메타데이터](#82-표현-메타데이터)
-- [8.3. Content-Type]()
-- - [8.3.1. Media Type]()
-- - [8.3.2. Charset]()
-- - [8.3.3. Multipart Types]()
+- [8.3. Content-Type](#83-content-type)
+- - [8.3.1. Media Type](#831-media-type)
+- - [8.3.2. Charset](#832-charset)
+- - [8.3.3. Multipart Types](#833-multipart-types)
 - [8.4. Content-Encoding]()
 - - [8.4.1. Content Codings]()
 - - - [8.4.1.1. Compress Coding]()
@@ -1555,78 +1555,46 @@ HTTP 메시지와 연관된 표현 데이터는 메시지의 콘텐츠로 제공
 
 Content-Type이 싱글톤 필드로 정의되어 있긴 하지만, 가끔 부적절하게 여러 번 생성되기도 하며, 리스트로 나타나는 조합된 필드 값에 이르게 된다. 수신자들은 종종 이 에러를 문법적으로 유효한 리스트의 마지막 멤버를 사용함으로써 대처하기도 하는데, 다른 구현들이 다른 에러 핸들링 행동들을 가질 때 잠재적인 상호운용성과 보안 이슈들로 이어지게 된다.
 
-8.3.1. Media Type
+#### 8.3.1. Media Type
 
-HTTP uses media types [RFC2046] in the Content-Type (Section 8.3) and
-Accept (Section 12.5.1) header fields in order to provide open and
-extensible data typing and type negotiation. Media types define both
-a data format and various processing models: how to process that data
-in accordance with the message context.
+HTTP는 Content-Type(8.3절)과 Accept(12.5.1절) 헤더 필드들에서 미디어 타입들[[RFC2046](https://www.rfc-editor.org/info/rfc2046)]을 사용하여 개방되고 확장 가능한 데이터 타이핑과 타입 협상을 제공한다. 미디어 타입들은 데이터 포맷과 다양한 프로세싱 모델들 둘 다를 정의 한다: 프로세싱 모델이라함은 메시지의 콘텍스에 따라 데이터를 어떻게 처리할지를 말함.
 
      media-type = type "/" subtype parameters
      type       = token
      subtype    = token
 
-The type and subtype tokens are case-insensitive.
+tupe과 subtype 토큰들은 대소문자를 구별하지 않는다.
 
-The type/subtype MAY be followed by semicolon-delimited parameters
-(Section 5.6.6) in the form of name/value pairs. The presence or
-absence of a parameter might be significant to the processing of a
-media type, depending on its definition within the media type
-registry. Parameter values might or might not be case-sensitive,
-depending on the semantics of the parameter name.
+type/subtype은 아마(MAY) 세미콜론으로 구분되는 이름/값 쌍의 파라미터들(5.6.6절)로 이어질 수 있을 것이다. 파라미터의 존재 혹은 부재는 미디어 타입의 처리에 있어 의미가 있을 수도 있으며, 이는 미디어 타입 레지스트리 내의 정의에 따른다. 파라미터 값들은 대소문자를 구분 할 수도 있고 안할 수도 있는데 이는 파라미터 이름의 의미체계에 따른다.
 
-For example, the following media types are equivalent in describing
-HTML text data encoded in the UTF-8 character encoding scheme, but
+For example, the following media types are equivalent in describing HTML text data encoded in the UTF-8 character encoding scheme, but
 the first is preferred for consistency (the "charset" parameter value
 is defined as being case-insensitive in [RFC2046], Section 4.1.2):
+
+예를 들어, 다음 미디어 타입들은 UTF-8 문자 인코딩 체계로 인코딩된 HTML 텍스트 데이터를 설명하는데 있어 동등하지만, 일관성을 위해 첫번째 것이 선호된다("charset" 파라미터 값은 대소문자를 구별하지 않는 것으로 [[RFC2046](https://www.rfc-editor.org/info/rfc2046)], 4.1.2절에 정의되어 있다.):
 
      text/html;charset=utf-8
      Text/HTML;Charset="utf-8"
      text/html; charset="utf-8"
      text/html;charset=UTF-8
 
-Media types ought to be registered with IANA according to the
-procedures defined in [BCP13].
+미디어 타입들은 [[BCP13](https://www.rfc-editor.org/info/bcp13)]에 정의된 절차에 따라 IANA에 등록되어야 한다.
 
-8.3.2. Charset
+#### 8.3.2. Charset
 
-HTTP uses "charset" names to indicate or negotiate the character
-encoding scheme ([RFC6365], Section 2) of a textual representation.
-In the fields defined by this document, charset names appear either
-in parameters (Content-Type), or, for Accept-Encoding, in the form of
-a plain token. In both cases, charset names are matched case-
-insensitively.
+HTTP는 텍스트 표현의 문자 엔코딩 체계([[RFC6365](https://www.rfc-editor.org/info/rfc6365)], 2절)를 나타내거나 협상하기 위해 "charset" 이름들을 사용한다. 이 문서에 의해 정의되는 필드들에서, charset 이름들은 파라미터로(Content-Type), 혹은, Accept-Encoding에서, 플레인 토큰 형태로 나타난다. 두 경우 모두, charset 이름들은 대소문자를 구별하지 않는다.
 
-Charset names ought to be registered in the IANA "Character Sets"
-registry (<https://www.iana.org/assignments/character-sets>)
-according to the procedures defined in Section 2 of [RFC2978].
+Charset 이름들은 [[RFC2978](https://www.rfc-editor.org/info/rfc2978)]의 2절에 정의된 절차들에 따라 IANA "Character Sets" 레지스트리(<https://www.iana.org/assignments/character-sets>)에 등록되어야 한다.
 
-      |  *Note:* In theory, charset names are defined by the "mime-
-      |  charset" ABNF rule defined in Section 2.3 of [RFC2978] (as
-      |  corrected in [Err1912]).  That rule allows two characters that
-      |  are not included in "token" ("{" and "}"), but no charset name
-      |  registered at the time of this writing includes braces (see
-      |  [Err5433]).
+_Note:_ 이론적으로, charset 이름들은 [[RFC2978](https://www.rfc-editor.org/info/rfc2978)]의 2.3절에 정의된 "mime-charset" ABNF 룰에 의해 정의 된다([[Err1912](https://www.rfc-editor.org/errata/eid1912)]에 정정된대로). 해당 규칙은 "token"에 포함되지 않은 두 문자("{"와 "}")를 허용하지만, 이 문서가 작성되는 시점에 등록된 어떠한 charset도 중괄호를 포함하지 않는다([[Err5433](https://www.rfc-editor.org/errata/eid5433)] 참조).
 
-8.3.3. Multipart Types
+#### 8.3.3. Multipart Types
 
-MIME provides for a number of "multipart" types -- encapsulations of
-one or more representations within a single message body. All
-multipart types share a common syntax, as defined in Section 5.1.1 of
-[RFC2046], and include a boundary parameter as part of the media type
-value. The message body is itself a protocol element; a sender MUST
-generate only CRLF to represent line breaks between body parts.
+MIME은 많은 "multipart" 타입들을 제공한다 -- 즉 단일 메시지 바디 내에서 하나 이상의 표현들의 캡슐화들. 모든 멀티파트 타입들은 공통의 구문을 공유하며, 이는 [[RFC2046](https://www.rfc-editor.org/info/rfc2046)]의 5.1.1절에 정의되어 있고, 미디어 타입 값의 일부로 바운더리 파라미터를 포함한다. 메시지 바디는 그 자체로 프로토콜 요소다; 발신자는 반드시(MUST) 바디 파트들 간의 줄바꿈을 나타내기 위해 오로지 CRLF만 생성해야 한다.
 
-HTTP message framing does not use the multipart boundary as an
-indicator of message body length, though it might be used by
-implementations that generate or process the content. For example,
-the "multipart/form-data" type is often used for carrying form data
-in a request, as described in [RFC7578], and the "multipart/
-byteranges" type is defined by this specification for use in some 206
-(Partial Content) responses (see Section 15.3.7).
+HTTP 메시지 프레이밍은 멀티파트 바운더리를 메시지 바디 길이를 나타내는 용도로 사용하지 않지만, 콘텐츠를 생성하거나 처리하는 구현체들에 의해 그리 사용될 수 있다. 예를 들어, "multipart/form-data" 타입은 종종 요청의 폼 데이터를 전달하기 위해 사용되는데, [[RFC7578](https://www.rfc-editor.org/info/rfc7578)]에 해당 내용이 정의되어 있고, "multipart/byteranges" 타입은 이 사양에 의해 일부 206(Partial Content) 응답들에서 사용되도록 정의되어 있다(15.3.7절 참조).
 
-8.4. Content-Encoding
+### 8.4. Content-Encoding
 
 The "Content-Encoding" header field indicates what content codings
 have been applied to the representation, beyond those inherent in the
@@ -1676,7 +1644,7 @@ An origin server MAY respond with a status code of 415 (Unsupported
 Media Type) if a representation in the request message has a content
 coding that is not acceptable.
 
-8.4.1. Content Codings
+#### 8.4.1. Content Codings
 
 Content coding values indicate an encoding transformation that has
 been or can be applied to a representation. Content codings are
@@ -1695,7 +1663,7 @@ Section 16.6
 Content-coding values are used in the Accept-Encoding
 (Section 12.5.3) and Content-Encoding (Section 8.4) header fields.
 
-8.4.1.1. Compress Coding
+##### 8.4.1.1. Compress Coding
 
 The "compress" coding is an adaptive Lempel-Ziv-Welch (LZW) coding
 [Welch] that is commonly produced by the UNIX file compression
@@ -1711,14 +1679,14 @@ the Lempel-Ziv (LZ77) compression algorithm and Huffman coding.
       |  *Note:* Some non-conformant implementations send the "deflate"
       |  compressed data without the zlib wrapper.
 
-8.4.1.3. Gzip Coding
+##### 8.4.1.3. Gzip Coding
 
 The "gzip" coding is an LZ77 coding with a 32-bit Cyclic Redundancy
 Check (CRC) that is commonly produced by the gzip file compression
 program [RFC1952]. A recipient SHOULD consider "x-gzip" to be
 equivalent to "gzip".
 
-8.5. Content-Language
+### 8.5. Content-Language
 
 The "Content-Language" header field describes the natural language(s)
 of the intended audience for the representation. Note that this
@@ -1757,7 +1725,7 @@ Content-Language would properly only include "en".
 Content-Language MAY be applied to any media type -- it is not
 limited to textual documents.
 
-8.5.1. Language Tags
+#### 8.5.1. Language Tags
 
 A language tag, as defined in [RFC5646], identifies a natural
 language spoken, written, or otherwise conveyed by human beings for
@@ -1784,7 +1752,7 @@ tag. Example tags include:
 
 See [RFC5646] for further information.
 
-8.6. Content-Length
+### 8.6. Content-Length
 
 The "Content-Length" header field indicates the associated
 representation's data length as a decimal non-negative integer number
@@ -1859,7 +1827,7 @@ invalid or replace that invalid field value with a single instance of
 the decimal value, since this likely indicates that a duplicate was
 generated or combined by an upstream message processor.
 
-8.7. Content-Location
+### 8.7. Content-Location
 
 The "Content-Location" header field references a URI that can be used
 as an identifier for a specific resource corresponding to the
@@ -1945,7 +1913,7 @@ only one of the negotiated representations. If the user agent had
 wanted the latter semantics, it would have applied the PUT directly
 to the Content-Location URI.
 
-8.8. Validator Fields
+### 8.8. Validator Fields
 
 Resource metadata is referred to as a "validator" if it can be used
 within a precondition (Section 13.1) to make a conditional request
@@ -1976,7 +1944,7 @@ has been defined by various extensions of HTTP, such as Web
 Distributed Authoring and Versioning [WEBDAV], that are beyond the
 scope of this specification.
 
-8.8.1. Weak versus Strong
+#### 8.8.1. Weak versus Strong
 
 Validators come in two flavors: strong or weak. Weak validators are
 easy to generate but are far less useful for comparisons. Strong
@@ -2063,7 +2031,7 @@ require exact equality with previously obtained representation data,
 such as when validating a cache entry or limiting a web traversal to
 recent changes.
 
-8.8.2. Last-Modified
+#### 8.8.2. Last-Modified
 
 The "Last-Modified" header field in a response provides a timestamp
 indicating the date and time at which the origin server believes the
@@ -2076,7 +2044,7 @@ An example of its use is
 
 Last-Modified: Tue, 15 Nov 1994 12:45:26 GMT
 
-8.8.2.1. Generation
+##### 8.8.2.1. Generation
 
 An origin server SHOULD send Last-Modified for any selected
 representation for which a last modification date can be reasonably
@@ -2111,7 +2079,7 @@ An origin server without a clock MUST NOT generate a Last-Modified
 date for a response unless that date value was assigned to the
 resource by some other system (presumably one with a clock).
 
-8.8.2.2. Comparison
+##### 8.8.2.2. Comparison
 
 A Last-Modified time, when used as a validator in a request, is
 implicitly weak unless it is possible to deduce that it is strong,
@@ -2153,7 +2121,7 @@ sent by the origin server during the same second, but both had the
 same Last-Modified time, then at least one of those responses would
 have a Date value equal to its Last-Modified time.
 
-8.8.3. ETag
+#### 8.8.3. ETag
 
 The "ETag" field in a response provides the current entity tag for
 the selected representation, as determined at the conclusion of
@@ -2202,7 +2170,7 @@ Section 6.5). However, since trailers are often ignored, it is
 preferable to send ETag as a header field unless the entity tag is
 generated while sending the content.
 
-8.8.3.1. Generation
+##### 8.8.3.1. Generation
 
 The principle behind entity tags is that only the service author
 knows the implementation of a resource well enough to select the most
@@ -2226,7 +2194,7 @@ evaluating cache freshness ([CACHING]) can substantially reduce
 unnecessary transfers and significantly improve service availability,
 scalability, and reliability.
 
-8.8.3.2. Comparison
+##### 8.8.3.2. Comparison
 
 There are two entity tag comparison functions, depending on whether
 or not the comparison context allows the use of weak validators:
@@ -2255,7 +2223,7 @@ both the weak and strong comparison function results:
 
                             Table 3
 
-8.8.3.3. Example: Entity Tags Varying on Content-Negotiated Resources
+##### 8.8.3.3. Example: Entity Tags Varying on Content-Negotiated Resources
 
 Consider a resource that is subject to content negotiation
 (Section 12), and where the representations sent in response to a GET
@@ -2309,9 +2277,9 @@ Content-Encoding: gzip
       |  codings (Section 7 of [HTTP/1.1]) apply only during message
       |  transfer and do not result in distinct entity tags.
 
-9.  Methods
+## 9. Methods
 
-9.1. Overview
+### 9.1. Overview
 
 The request method token is the primary source of request semantics;
 it indicates the purpose for which the client has made this request
