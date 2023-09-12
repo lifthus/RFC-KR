@@ -158,10 +158,10 @@ than English.
 
 - [8.1. 표현 데이터](#81-표현-데이터)
 - [8.2. 표현 메타데이터](#82-표현-메타데이터)
-- [8.3. Content-Type]()
-- - [8.3.1. Media Type]()
-- - [8.3.2. Charset]()
-- - [8.3.3. Multipart Types]()
+- [8.3. Content-Type](#83-content-type)
+- - [8.3.1. Media Type](#831-media-type)
+- - [8.3.2. Charset](#832-charset)
+- - [8.3.3. Multipart Types](#833-multipart-types)
 - [8.4. Content-Encoding]()
 - - [8.4.1. Content Codings]()
 - - - [8.4.1.1. Compress Coding]()
@@ -1555,7 +1555,7 @@ HTTP 메시지와 연관된 표현 데이터는 메시지의 콘텐츠로 제공
 
 Content-Type이 싱글톤 필드로 정의되어 있긴 하지만, 가끔 부적절하게 여러 번 생성되기도 하며, 리스트로 나타나는 조합된 필드 값에 이르게 된다. 수신자들은 종종 이 에러를 문법적으로 유효한 리스트의 마지막 멤버를 사용함으로써 대처하기도 하는데, 다른 구현들이 다른 에러 핸들링 행동들을 가질 때 잠재적인 상호운용성과 보안 이슈들로 이어지게 된다.
 
-8.3.1. Media Type
+#### 8.3.1. Media Type
 
 HTTP uses media types [RFC2046] in the Content-Type (Section 8.3) and
 Accept (Section 12.5.1) header fields in order to provide open and
@@ -1589,7 +1589,7 @@ is defined as being case-insensitive in [RFC2046], Section 4.1.2):
 Media types ought to be registered with IANA according to the
 procedures defined in [BCP13].
 
-8.3.2. Charset
+#### 8.3.2. Charset
 
 HTTP uses "charset" names to indicate or negotiate the character
 encoding scheme ([RFC6365], Section 2) of a textual representation.
