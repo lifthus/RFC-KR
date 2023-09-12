@@ -1590,20 +1590,9 @@ _Note:_ 이론적으로, charset 이름들은 [[RFC2978](https://www.rfc-editor.
 
 #### 8.3.3. Multipart Types
 
-MIME provides for a number of "multipart" types -- encapsulations of
-one or more representations within a single message body. All
-multipart types share a common syntax, as defined in Section 5.1.1 of
-[RFC2046], and include a boundary parameter as part of the media type
-value. The message body is itself a protocol element; a sender MUST
-generate only CRLF to represent line breaks between body parts.
+MIME은 많은 "multipart" 타입들을 제공한다 -- 즉 단일 메시지 바디 내에서 하나 이상의 표현들의 캡슐화들. 모든 멀티파트 타입들은 공통의 구문을 공유하며, 이는 [[RFC2046](https://www.rfc-editor.org/info/rfc2046)]의 5.1.1절에 정의되어 있고, 미디어 타입 값의 일부로 바운더리 파라미터를 포함한다. 메시지 바디는 그 자체로 프로토콜 요소다; 발신자는 반드시(MUST) 바디 파트들 간의 줄바꿈을 나타내기 위해 오로지 CRLF만 생성해야 한다.
 
-HTTP message framing does not use the multipart boundary as an
-indicator of message body length, though it might be used by
-implementations that generate or process the content. For example,
-the "multipart/form-data" type is often used for carrying form data
-in a request, as described in [RFC7578], and the "multipart/
-byteranges" type is defined by this specification for use in some 206
-(Partial Content) responses (see Section 15.3.7).
+HTTP 메시지 프레이밍은 멀티파트 바운더리를 메시지 바디 길이를 나타내는 용도로 사용하지 않지만, 콘텐츠를 생성하거나 처리하는 구현체들에 의해 그리 사용될 수 있다. 예를 들어, "multipart/form-data" 타입은 종종 요청의 폼 데이터를 전달하기 위해 사용되는데, [[RFC7578](https://www.rfc-editor.org/info/rfc7578)]에 해당 내용이 정의되어 있고, "multipart/byteranges" 타입은 이 사양에 의해 일부 206(Partial Content) 응답들에서 사용되도록 정의되어 있다(15.3.7절 참조).
 
 ### 8.4. Content-Encoding
 
