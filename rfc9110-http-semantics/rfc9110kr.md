@@ -1557,37 +1557,28 @@ Content-Type이 싱글톤 필드로 정의되어 있긴 하지만, 가끔 부적
 
 #### 8.3.1. Media Type
 
-HTTP uses media types [RFC2046] in the Content-Type (Section 8.3) and
-Accept (Section 12.5.1) header fields in order to provide open and
-extensible data typing and type negotiation. Media types define both
-a data format and various processing models: how to process that data
-in accordance with the message context.
+HTTP는 Content-Type(8.3절)과 Accept(12.5.1절) 헤더 필드들에서 미디어 타입들[[RFC2046](https://www.rfc-editor.org/info/rfc2046)]을 사용하여 개방되고 확장 가능한 데이터 타이핑과 타입 협상을 제공한다. 미디어 타입들은 데이터 포맷과 다양한 프로세싱 모델들 둘 다를 정의 한다: 프로세싱 모델이라함은 메시지의 콘텍스에 따라 데이터를 어떻게 처리할지를 말함.
 
      media-type = type "/" subtype parameters
      type       = token
      subtype    = token
 
-The type and subtype tokens are case-insensitive.
+tupe과 subtype 토큰들은 대소문자를 구별하지 않는다.
 
-The type/subtype MAY be followed by semicolon-delimited parameters
-(Section 5.6.6) in the form of name/value pairs. The presence or
-absence of a parameter might be significant to the processing of a
-media type, depending on its definition within the media type
-registry. Parameter values might or might not be case-sensitive,
-depending on the semantics of the parameter name.
+type/subtype은 아마(MAY) 세미콜론으로 구분되는 이름/값 쌍의 파라미터들(5.6.6절)로 이어질 수 있을 것이다. 파라미터의 존재 혹은 부재는 미디어 타입의 처리에 있어 의미가 있을 수도 있으며, 이는 미디어 타입 레지스트리 내의 정의에 따른다. 파라미터 값들은 대소문자를 구분 할 수도 있고 안할 수도 있는데 이는 파라미터 이름의 의미체계에 따른다.
 
-For example, the following media types are equivalent in describing
-HTML text data encoded in the UTF-8 character encoding scheme, but
+For example, the following media types are equivalent in describing HTML text data encoded in the UTF-8 character encoding scheme, but
 the first is preferred for consistency (the "charset" parameter value
 is defined as being case-insensitive in [RFC2046], Section 4.1.2):
+
+예를 들어, 다음 미디어 타입들은 UTF-8 문자 인코딩 체계로 인코딩된 HTML 텍스트 데이터를 설명하는데 있어 동등하지만, 일관성을 위해 첫번째 것이 선호된다("charset" 파라미터 값은 대소문자를 구별하지 않는 것으로 [[RFC2046](https://www.rfc-editor.org/info/rfc2046)], 4.1.2절에 정의되어 있다.):
 
      text/html;charset=utf-8
      Text/HTML;Charset="utf-8"
      text/html; charset="utf-8"
      text/html;charset=UTF-8
 
-Media types ought to be registered with IANA according to the
-procedures defined in [BCP13].
+미디어 타입들은 [[BCP13](https://www.rfc-editor.org/info/bcp13)]에 정의된 절차에 따라 IANA에 등록되어야 한다.
 
 #### 8.3.2. Charset
 
