@@ -1600,7 +1600,7 @@ according to the procedures defined in Section 2 of [RFC2978].
       |  registered at the time of this writing includes braces (see
       |  [Err5433]).
 
-8.3.3. Multipart Types
+#### 8.3.3. Multipart Types
 
 MIME provides for a number of "multipart" types -- encapsulations of
 one or more representations within a single message body. All
@@ -1617,7 +1617,7 @@ in a request, as described in [RFC7578], and the "multipart/
 byteranges" type is defined by this specification for use in some 206
 (Partial Content) responses (see Section 15.3.7).
 
-8.4. Content-Encoding
+### 8.4. Content-Encoding
 
 The "Content-Encoding" header field indicates what content codings
 have been applied to the representation, beyond those inherent in the
