@@ -1582,7 +1582,7 @@ is defined as being case-insensitive in [RFC2046], Section 4.1.2):
 
 #### 8.3.2. Charset
 
-HTTP는 텍스트 표현의 문자 엔코딩 체계([[RFC6365](https://www.rfc-editor.org/info/rfc6365)], 2절)를 나타내거나 협상하기 위해 "charset" 이름들을 사용한다. 이 문서에 의해 정의되는 필드들에서, charset 이름들은 파라미터로(Content-Type), 혹은, Accept-Encoding에서, 플레인 토큰 형태로 나타난다. 두 경우 모두, charset 이름들은 대소문자를 구별하지 않는다.
+HTTP는 텍스트 표현의 문자 인코딩 체계([[RFC6365](https://www.rfc-editor.org/info/rfc6365)], 2절)를 나타내거나 협상하기 위해 "charset" 이름들을 사용한다. 이 문서에 의해 정의되는 필드들에서, charset 이름들은 파라미터로(Content-Type), 혹은, Accept-Encoding에서, 플레인 토큰 형태로 나타난다. 두 경우 모두, charset 이름들은 대소문자를 구별하지 않는다.
 
 Charset 이름들은 [[RFC2978](https://www.rfc-editor.org/info/rfc2978)]의 2절에 정의된 절차들에 따라 IANA "Character Sets" 레지스트리(<https://www.iana.org/assignments/character-sets>)에 등록되어야 한다.
 
@@ -1596,53 +1596,30 @@ HTTP 메시지 프레이밍은 멀티파트 바운더리를 메시지 바디 길
 
 ### 8.4. Content-Encoding
 
-The "Content-Encoding" header field indicates what content codings
-have been applied to the representation, beyond those inherent in the
-media type, and thus what decoding mechanisms have to be applied in
-order to obtain data in the media type referenced by the Content-Type
-header field. Content-Encoding is primarily used to allow a
-representation's data to be compressed without losing the identity of
-its underlying media type.
+"Content-Encoding" 헤더 필드는, 미디어 타입에 내재된 것을 넘어, 표현에 대해 어떤 콘텐츠 코딩들이 적용됐는지를 나타내어, Content-Type 헤더 필드에 의해 참조된 미디어 타입에서 데이터를 획득하기 위해 어떤 디코딩 매커니즘을 사용해야만 하는지를 나타나게 된다. Content-Encoding은 표현의 데이터가 그것의 기반이되는 미디어 타입의 정체성을 잃지 않으면서 압축되도록 하는데 주로 사용된다.
 
      Content-Encoding = #content-coding
 
-An example of its use is
+그 사용 예는
 
-Content-Encoding: gzip
+     Content-Encoding: gzip
 
-If one or more encodings have been applied to a representation, the
-sender that applied the encodings MUST generate a Content-Encoding
-header field that lists the content codings in the order in which
-they were applied. Note that the coding named "identity" is reserved
-for its special role in Accept-Encoding and thus SHOULD NOT be
-included.
+만약 하나 이상의 인코딩들이 표현에 대해 적용됐다면, 해당 인코딩들을 적용한 발신자는 반드시(MUST) Content-Encoding 헤더 필드를 생성하여 콘텐츠 코딩들의 그것들이 적용된 순서대로 나열하여야 한다. "identity"라고 명명된 코딩은 Accept-Encoding에서의 특수한 역할을 위해 예약됐기 때문에 웬만해서는(SHOULD NOT) 포함하면 안된다는 것에 주의하라.
 
-Additional information about the encoding parameters can be provided
-by other header fields not defined by this specification.
+인코딩 파라미터들에 대한 추가적인 정보는 이 사양에서 정의되지 않은 다른 헤더 필드들에 의해 제공될 수 있다.
 
-Unlike Transfer-Encoding (Section 6.1 of [HTTP/1.1]), the codings
-listed in Content-Encoding are a characteristic of the
-representation; the representation is defined in terms of the coded
-form, and all other metadata about the representation is about the
-coded form unless otherwise noted in the metadata definition.
-Typically, the representation is only decoded just prior to rendering
-or analogous usage.
+Transfer-Encoding([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 6.1절)과 달리, Content-Encoding에 나열된 코딩들은 표현의 특성이다; 표현은 코딩 형태로 정의되고, 모든 다른 표현에 대한 메타데이터는 해당 메타데이터 정의에 나타나있지 않은 이상 코딩 형태에 관한 것이다. 전형적으로, 표현은 오직 렌더링이나 유사한 사용에 바로 앞서 디코딩된다.
 
-If the media type includes an inherent encoding, such as a data
-format that is always compressed, then that encoding would not be
-restated in Content-Encoding even if it happens to be the same
-algorithm as one of the content codings. Such a content coding would
-only be listed if, for some bizarre reason, it is applied a second
-time to form the representation. Likewise, an origin server might
+Likewise, an origin server might
 choose to publish the same data as multiple representations that
 differ only in whether the coding is defined as part of Content-Type
 or Content-Encoding, since some user agents will behave differently
 in their handling of each response (e.g., open a "Save as ..." dialog
 instead of automatic decompression and rendering of content).
 
-An origin server MAY respond with a status code of 415 (Unsupported
-Media Type) if a representation in the request message has a content
-coding that is not acceptable.
+만약 미디어 타입이 고유한 인코딩을 포함한다면, 항상 압축되는 데이터 포맷 처럼, 해당 인코딩은 Content-Encoding에 재언급되지 않을 것이고 그것이 콘텐츠 코딩들 중 하나와 같은 알고리즘인 것으로 나타날지라도 그렇다. 이러한 콘텐츠 코딩은 오직, 어떤 괴상한 이유에서, 표현을 형성하기 위해 인코딩이 두번째 적용되면 나열될 것이다. 마찬가지로, 오리진 서버는 같은 데이터를 코딩이 Content-Type 아니면 Content-Encoding의 부분으로 정의됐는지 여부만 다른 여러 표현들로 발행할 수도 있는데, 이는 일부 유저 에이전트들이 그들이 각 응답을 처리하며 다르게 행동할 수 있기 때문이다(예를 들어, 자동 압축 해제와 콘텐츠 렌더링 대신에 "다른 이름으로 저장" 대화상자 열기).
+
+오리진 서버는 아마(MAY) 요청 메시지의 표현이 받아들일 수 없는 콘텐츠 코딩으로 되어 있다면 415(Unsupported Media Type) 상태 코드로 응답할 수 있을 것이다.
 
 #### 8.4.1. Content Codings
 
