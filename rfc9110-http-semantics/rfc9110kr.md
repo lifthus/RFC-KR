@@ -1640,42 +1640,26 @@ _Note:_ 일부 준수하지 않는 구현체들은 "deflate" 압축된 데이터
 
 ### 8.5. Content-Language
 
-The "Content-Language" header field describes the natural language(s)
-of the intended audience for the representation. Note that this
-might not be equivalent to all the languages used within the
-representation.
+"Content-Language" 헤더 필드는 표현의 의도된 청중들의 자연 언어(들)을 기술한다. 다만 이것이 표현 내에 사용된 모든 언어들과 동등하지는 않다는 것을 명심하라.
 
      Content-Language = #language-tag
 
-Language tags are defined in Section 8.5.1. The primary purpose of
-Content-Language is to allow a user to identify and differentiate
-representations according to the users' own preferred language.
-Thus, if the content is intended only for a Danish-literate audience,
-the appropriate field is
+언어 태그들은 8.5.1절에 정의되어 있다. Content-Language의 주된 목적은 유저 자신들이 선호하는 언어에 따라 표현들을 식별하고 구분할 수 있도록 하기 위함이다. 이리하여, 콘텐츠가 오로지 덴마크어를 구사할 수 있는 청중들을 위해 의도된 것이라면, 적절한 필드는 바로
 
 Content-Language: da
 
-If no Content-Language is specified, the default is that the content
-is intended for all language audiences. This might mean that the
-sender does not consider it to be specific to any natural language,
-or that the sender does not know for which language it is intended.
+만약 Content-Language가 지정되지 않았다면, 기본적으로 콘텐츠가 모든 언어의 청중들을 위해 의도된 것으로 된다. 이는 발신자가 콘텐츠가 어떠한 자연 언어들에 대해서도 특정되지 않음을 의미할 수도 있고, 어떤 언어가 의도된 것인지 모른다는 것을 의미할 수도 있다.
 
-Multiple languages MAY be listed for content that is intended for
-multiple audiences. For example, a rendition of the "Treaty of
-Waitangi", presented simultaneously in the original Maori and English
-versions, would call for
+여러 청중들을 대상으로 한 콘텐츠를 위해서는 아마(MAY) 여러 언어들이 나열될 수도 있을 것이다. 예를 들어, 마오리 언어 원본과 영어 버전들이 동시에 제공되는, "Treaty of Waitangi"의 인도는, 다음과 같이 요구될 것이다
 
-Content-Language: mi, en
+     Content-Language: mi, en
 
-However, just because multiple languages are present within a
-representation does not mean that it is intended for multiple
-linguistic audiences. An example would be a beginner's language
-primer, such as "A First Lesson in Latin", which is clearly intended
-to be used by an English-literate audience. In this case, the
-Content-Language would properly only include "en".
+그러나, 그저 표현 내에 여러 언어들이 나타나는 것이 다국어를 구사하는 청중을 대상으로 함을 의미하지는 않는다. "A First Lesson in Latin"과 같은, 분명히 영어를 구사하는 청중들이 사용하도록 의도된, 초급 언어 입문서가 그 예시가 될 것이다. 이 경우, Content-Language는 적절히 "en"만을 포함해야 한다.
 
 Content-Language MAY be applied to any media type -- it is not
 limited to textual documents.
+
+Content-Language는 아마(MAY) 어떠한 미디어 타입에 대해서도 적용될 수 있을 것이다 -- 텍스트 문서들로만 제한되어 있지 않다.
 
 #### 8.5.1. Language Tags
 
