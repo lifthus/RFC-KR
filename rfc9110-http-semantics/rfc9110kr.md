@@ -1626,11 +1626,6 @@ Transfer-Encoding([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 6.1�
 
 ##### 8.4.1.1. Compress Coding
 
-The "compress" coding is an adaptive Lempel-Ziv-Welch (LZW) coding
-[Welch] that is commonly produced by the UNIX file compression
-program "compress". A recipient SHOULD consider "x-compress" to be
-equivalent to "compress".
-
 "compress" 코딩은 adaptive Lempel-Ziv-Welch(LZW) 코딩[[Welch](https://ieeexplore.ieee.org/document/1659158/)이고 UNIX 파일 압축 프로그램 "compress"에 의해 흔히 생성된다. 수신자는 웬만하면(SHOULD) "x-compress"를 "compress"와 동등한 것으로 간주해야 한다
 
 ##### 8.4.1.2. Deflate Coding
