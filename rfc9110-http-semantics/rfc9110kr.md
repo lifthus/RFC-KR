@@ -1610,97 +1610,56 @@ HTTP 메시지 프레이밍은 멀티파트 바운더리를 메시지 바디 길
 
 Transfer-Encoding([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 6.1절)과 달리, Content-Encoding에 나열된 코딩들은 표현의 특성이다; 표현은 코딩 형태로 정의되고, 모든 다른 표현에 대한 메타데이터는 해당 메타데이터 정의에 나타나있지 않은 이상 코딩 형태에 관한 것이다. 전형적으로, 표현은 오직 렌더링이나 유사한 사용에 바로 앞서 디코딩된다.
 
-Likewise, an origin server might
-choose to publish the same data as multiple representations that
-differ only in whether the coding is defined as part of Content-Type
-or Content-Encoding, since some user agents will behave differently
-in their handling of each response (e.g., open a "Save as ..." dialog
-instead of automatic decompression and rendering of content).
-
 만약 미디어 타입이 고유한 인코딩을 포함한다면, 항상 압축되는 데이터 포맷 처럼, 해당 인코딩은 Content-Encoding에 재언급되지 않을 것이고 그것이 콘텐츠 코딩들 중 하나와 같은 알고리즘인 것으로 나타날지라도 그렇다. 이러한 콘텐츠 코딩은 오직, 어떤 괴상한 이유에서, 표현을 형성하기 위해 인코딩이 두번째 적용되면 나열될 것이다. 마찬가지로, 오리진 서버는 같은 데이터를 코딩이 Content-Type 아니면 Content-Encoding의 부분으로 정의됐는지 여부만 다른 여러 표현들로 발행할 수도 있는데, 이는 일부 유저 에이전트들이 그들이 각 응답을 처리하며 다르게 행동할 수 있기 때문이다(예를 들어, 자동 압축 해제와 콘텐츠 렌더링 대신에 "다른 이름으로 저장" 대화상자 열기).
 
 오리진 서버는 아마(MAY) 요청 메시지의 표현이 받아들일 수 없는 콘텐츠 코딩으로 되어 있다면 415(Unsupported Media Type) 상태 코드로 응답할 수 있을 것이다.
 
 #### 8.4.1. Content Codings
 
-Content coding values indicate an encoding transformation that has
-been or can be applied to a representation. Content codings are
-primarily used to allow a representation to be compressed or
-otherwise usefully transformed without losing the identity of its
-underlying media type and without loss of information. Frequently,
-the representation is stored in coded form, transmitted directly, and
-only decoded by the final recipient.
+콘텐츠 코딩 값들은 표현에 대해 적용되어 있는 혹은 적용될 수 있는 인코딩 변환을 나타낸다. 콘텐츠 코딩들은 주로 한 표현이 압축되도록 그게 아니면 정보의 손실 없이 그 기반이되는 미디어 타입의 정체성을 잃지 않으면서 유용하게 변형하도록 허용하기 위해 사용된다. 자주, 표현은 코딩된 형태로 저장되고, 직접 전송되며, 그리고 오직 마지막 수신자에 의해서만 디코딩된다.
 
      content-coding   = token
 
-All content codings are case-insensitive and ought to be registered
-within the "HTTP Content Coding Registry", as described in
-Section 16.6
+모든 콘텐츠 코딩들은 대소문자를 구별하지 않고 "HTTP Content Coding Registry" 내에, 16.6절에 정의된대로 등록되어야 한다.
 
-Content-coding values are used in the Accept-Encoding
-(Section 12.5.3) and Content-Encoding (Section 8.4) header fields.
+콘텐츠-코딩 값들은 Accept-Encoding(12.5.3절)과 Content-Encoding(8.4절) 헤더 필드들에서 사용된다.
 
 ##### 8.4.1.1. Compress Coding
 
-The "compress" coding is an adaptive Lempel-Ziv-Welch (LZW) coding
-[Welch] that is commonly produced by the UNIX file compression
-program "compress". A recipient SHOULD consider "x-compress" to be
-equivalent to "compress".
+"compress" 코딩은 adaptive Lempel-Ziv-Welch(LZW) 코딩[[Welch](https://ieeexplore.ieee.org/document/1659158/)이고 UNIX 파일 압축 프로그램 "compress"에 의해 흔히 생성된다. 수신자는 웬만하면(SHOULD) "x-compress"를 "compress"와 동등한 것으로 간주해야 한다
 
-8.4.1.2. Deflate Coding
+##### 8.4.1.2. Deflate Coding
 
-The "deflate" coding is a "zlib" data format [RFC1950] containing a
-"deflate" compressed data stream [RFC1951] that uses a combination of
-the Lempel-Ziv (LZ77) compression algorithm and Huffman coding.
+"deflate" 코딩은 "zlib" 데이터 포맷[[RFC1950](https://www.rfc-editor.org/info/rfc1950)]이고 Lampel-Ziv(LZ77) 압축 알고리즘과 Huffman coding의 조합을 사용하는 "deflate" 압축된 데이터스트림[[RFC1951](https://www.rfc-editor.org/info/rfc1951)]을 포함한다.
 
-      |  *Note:* Some non-conformant implementations send the "deflate"
-      |  compressed data without the zlib wrapper.
+_Note:_ 일부 준수하지 않는 구현체들은 "deflate" 압축된 데이터를 zlib wrapper 없이 보내기도 한다.
 
 ##### 8.4.1.3. Gzip Coding
 
-The "gzip" coding is an LZ77 coding with a 32-bit Cyclic Redundancy
-Check (CRC) that is commonly produced by the gzip file compression
-program [RFC1952]. A recipient SHOULD consider "x-gzip" to be
-equivalent to "gzip".
+"gzip" 코딩은 32-bit Cyclic Redundancy Check(CRC)를 사용하는 LZ77 코딩이며 흔히 gzip 파일 압축 프로그램[[RFC1952](https://www.rfc-editor.org/info/rfc1952)]에 의해 생성된다. 수신자는 웬만하면(SHOULD) "x-gzip"을 "gzip"과 동등하게 여겨야 한다.
 
 ### 8.5. Content-Language
 
-The "Content-Language" header field describes the natural language(s)
-of the intended audience for the representation. Note that this
-might not be equivalent to all the languages used within the
-representation.
+"Content-Language" 헤더 필드는 표현의 의도된 청중들의 자연 언어(들)을 기술한다. 다만 이것이 표현 내에 사용된 모든 언어들과 동등하지는 않다는 것을 명심하라.
 
      Content-Language = #language-tag
 
-Language tags are defined in Section 8.5.1. The primary purpose of
-Content-Language is to allow a user to identify and differentiate
-representations according to the users' own preferred language.
-Thus, if the content is intended only for a Danish-literate audience,
-the appropriate field is
+언어 태그들은 8.5.1절에 정의되어 있다. Content-Language의 주된 목적은 유저 자신들이 선호하는 언어에 따라 표현들을 식별하고 구분할 수 있도록 하기 위함이다. 이리하여, 콘텐츠가 오로지 덴마크어를 구사할 수 있는 청중들을 위해 의도된 것이라면, 적절한 필드는 바로
 
 Content-Language: da
 
-If no Content-Language is specified, the default is that the content
-is intended for all language audiences. This might mean that the
-sender does not consider it to be specific to any natural language,
-or that the sender does not know for which language it is intended.
+만약 Content-Language가 지정되지 않았다면, 기본적으로 콘텐츠가 모든 언어의 청중들을 위해 의도된 것으로 된다. 이는 발신자가 콘텐츠가 어떠한 자연 언어들에 대해서도 특정되지 않음을 의미할 수도 있고, 어떤 언어가 의도된 것인지 모른다는 것을 의미할 수도 있다.
 
-Multiple languages MAY be listed for content that is intended for
-multiple audiences. For example, a rendition of the "Treaty of
-Waitangi", presented simultaneously in the original Maori and English
-versions, would call for
+여러 청중들을 대상으로 한 콘텐츠를 위해서는 아마(MAY) 여러 언어들이 나열될 수도 있을 것이다. 예를 들어, 마오리 언어 원본과 영어 버전들이 동시에 제공되는, "Treaty of Waitangi"의 인도는, 다음과 같이 요구될 것이다
 
-Content-Language: mi, en
+     Content-Language: mi, en
 
-However, just because multiple languages are present within a
-representation does not mean that it is intended for multiple
-linguistic audiences. An example would be a beginner's language
-primer, such as "A First Lesson in Latin", which is clearly intended
-to be used by an English-literate audience. In this case, the
-Content-Language would properly only include "en".
+그러나, 그저 표현 내에 여러 언어들이 나타나는 것이 다국어를 구사하는 청중을 대상으로 함을 의미하지는 않는다. "A First Lesson in Latin"과 같은, 분명히 영어를 구사하는 청중들이 사용하도록 의도된, 초급 언어 입문서가 그 예시가 될 것이다. 이 경우, Content-Language는 적절히 "en"만을 포함해야 한다.
 
 Content-Language MAY be applied to any media type -- it is not
 limited to textual documents.
+
+Content-Language는 아마(MAY) 어떠한 미디어 타입에 대해서도 적용될 수 있을 것이다 -- 텍스트 문서들로만 제한되어 있지 않다.
 
 #### 8.5.1. Language Tags
 
