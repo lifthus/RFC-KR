@@ -1637,14 +1637,11 @@ equivalent to "compress".
 
 "deflate" 코딩은 "zlib" 데이터 포맷[[RFC1950](https://www.rfc-editor.org/info/rfc1950)]이고 Lampel-Ziv(LZ77) 압축 알고리즘과 Huffman coding의 조합을 사용하는 "deflate" 압축된 데이터스트림[[RFC1951](https://www.rfc-editor.org/info/rfc1951)]을 포함한다.
 
-*Note:* 일부 준수하지 않는 구현체들은 "deflate" 압축된 데이터를 zlib wrapper 없이 보내기도 한다.
+_Note:_ 일부 준수하지 않는 구현체들은 "deflate" 압축된 데이터를 zlib wrapper 없이 보내기도 한다.
 
 ##### 8.4.1.3. Gzip Coding
 
-The "gzip" coding is an LZ77 coding with a 32-bit Cyclic Redundancy
-Check (CRC) that is commonly produced by the gzip file compression
-program [RFC1952]. A recipient SHOULD consider "x-gzip" to be
-equivalent to "gzip".
+"gzip" 코딩은 32-bit Cyclic Redundancy Check(CRC)를 사용하는 LZ77 코딩이며 흔히 gzip 파일 압축 프로그램[[RFC1952](https://www.rfc-editor.org/info/rfc1952)]에 의해 생성된다. 수신자는 웬만하면(SHOULD) "x-gzip"을 "gzip"과 동등하게 여겨야 한다.
 
 ### 8.5. Content-Language
 
