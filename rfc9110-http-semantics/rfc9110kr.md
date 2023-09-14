@@ -1610,13 +1610,6 @@ HTTP 메시지 프레이밍은 멀티파트 바운더리를 메시지 바디 길
 
 Transfer-Encoding([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 6.1절)과 달리, Content-Encoding에 나열된 코딩들은 표현의 특성이다; 표현은 코딩 형태로 정의되고, 모든 다른 표현에 대한 메타데이터는 해당 메타데이터 정의에 나타나있지 않은 이상 코딩 형태에 관한 것이다. 전형적으로, 표현은 오직 렌더링이나 유사한 사용에 바로 앞서 디코딩된다.
 
-Likewise, an origin server might
-choose to publish the same data as multiple representations that
-differ only in whether the coding is defined as part of Content-Type
-or Content-Encoding, since some user agents will behave differently
-in their handling of each response (e.g., open a "Save as ..." dialog
-instead of automatic decompression and rendering of content).
-
 만약 미디어 타입이 고유한 인코딩을 포함한다면, 항상 압축되는 데이터 포맷 처럼, 해당 인코딩은 Content-Encoding에 재언급되지 않을 것이고 그것이 콘텐츠 코딩들 중 하나와 같은 알고리즘인 것으로 나타날지라도 그렇다. 이러한 콘텐츠 코딩은 오직, 어떤 괴상한 이유에서, 표현을 형성하기 위해 인코딩이 두번째 적용되면 나열될 것이다. 마찬가지로, 오리진 서버는 같은 데이터를 코딩이 Content-Type 아니면 Content-Encoding의 부분으로 정의됐는지 여부만 다른 여러 표현들로 발행할 수도 있는데, 이는 일부 유저 에이전트들이 그들이 각 응답을 처리하며 다르게 행동할 수 있기 때문이다(예를 들어, 자동 압축 해제와 콘텐츠 렌더링 대신에 "다른 이름으로 저장" 대화상자 열기).
 
 오리진 서버는 아마(MAY) 요청 메시지의 표현이 받아들일 수 없는 콘텐츠 코딩으로 되어 있다면 415(Unsupported Media Type) 상태 코드로 응답할 수 있을 것이다.
