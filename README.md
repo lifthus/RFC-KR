@@ -8,5 +8,7 @@ RFC 문서의 한국어 번역본
 
 <hr>
 
-🚧🛠️ [RFC 9110 - HTTP 의미체계](https://github.com/lifthus/RFC-KR/blob/main/rfc9110-http-semantics/rfc9110kr.md) 30%<br>
-🚧🛠️ [RFC 9114 - HTTP/3](https://github.com/lifthus/RFC-KR/blob/main/rfc9114-http3/rfc9114kr.md) 20%<br>
+🚧🛠️ [RFC 9110 - HTTP 의미체계](https://github.com/lifthus/RFC-KR/blob/main/rfc9110-http-semantics/rfc9110kr.md)<br>
+ㄴ 35% 🟩🟩🟩🟩🟩🟩🟩🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥<br>
+🚧🛠️ [RFC 9114 - HTTP/3](https://github.com/lifthus/RFC-KR/blob/main/rfc9114-http3/rfc9114kr.md)<br>
+ㄴ 20% 🟩🟩🟩🟩🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥<br>
