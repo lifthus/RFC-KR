@@ -1631,14 +1631,13 @@ The "compress" coding is an adaptive Lempel-Ziv-Welch (LZW) coding
 program "compress". A recipient SHOULD consider "x-compress" to be
 equivalent to "compress".
 
-8.4.1.2. Deflate Coding
+"compress" 코딩은 adaptive Lempel-Ziv-Welch(LZW) 코딩[[Welch](https://ieeexplore.ieee.org/document/1659158/)이고 UNIX 파일 압축 프로그램 "compress"에 의해 흔히 생성된다. 수신자는 웬만하면(SHOULD) "x-compress"를 "compress"와 동등한 것으로 간주해야 한다
 
-The "deflate" coding is a "zlib" data format [RFC1950] containing a
-"deflate" compressed data stream [RFC1951] that uses a combination of
-the Lempel-Ziv (LZ77) compression algorithm and Huffman coding.
+##### 8.4.1.2. Deflate Coding
 
-      |  *Note:* Some non-conformant implementations send the "deflate"
-      |  compressed data without the zlib wrapper.
+"deflate" 코딩은 "zlib" 데이터 포맷[[RFC1950](https://www.rfc-editor.org/info/rfc1950)]이고 Lampel-Ziv(LZ77) 압축 알고리즘과 Huffman coding의 조합을 사용하는 "deflate" 압축된 데이터스트림[[RFC1951](https://www.rfc-editor.org/info/rfc1951)]을 포함한다.
+
+*Note:* 일부 준수하지 않는 구현체들은 "deflate" 압축된 데이터를 zlib wrapper 없이 보내기도 한다.
 
 ##### 8.4.1.3. Gzip Coding
 
