@@ -1616,22 +1616,13 @@ Transfer-Encoding([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 6.1�
 
 #### 8.4.1. Content Codings
 
-Content coding values indicate an encoding transformation that has
-been or can be applied to a representation. Content codings are
-primarily used to allow a representation to be compressed or
-otherwise usefully transformed without losing the identity of its
-underlying media type and without loss of information. Frequently,
-the representation is stored in coded form, transmitted directly, and
-only decoded by the final recipient.
+콘텐츠 코딩 값들은 표현에 대해 적용되어 있는 혹은 적용될 수 있는 인코딩 변환을 나타낸다. 콘텐츠 코딩들은 주로 한 표현이 압축되도록 그게 아니면 정보의 손실 없이 그 기반이되는 미디어 타입의 정체성을 잃지 않으면서 유용하게 변형하도록 허용하기 위해 사용된다. 자주, 표현은 코딩된 형태로 저장되고, 직접 전송되며, 그리고 오직 마지막 수신자에 의해서만 디코딩된다.
 
      content-coding   = token
 
-All content codings are case-insensitive and ought to be registered
-within the "HTTP Content Coding Registry", as described in
-Section 16.6
+모든 콘텐츠 코딩들은 대소문자를 구별하지 않고 "HTTP Content Coding Registry" 내에, 16.6절에 정의된대로 등록되어야 한다.
 
-Content-coding values are used in the Accept-Encoding
-(Section 12.5.3) and Content-Encoding (Section 8.4) header fields.
+콘텐츠-코딩 값들은 Accept-Encoding(12.5.3절)과 Content-Encoding(8.4절) 헤더 필드들에서 사용된다.
 
 ##### 8.4.1.1. Compress Coding
 
