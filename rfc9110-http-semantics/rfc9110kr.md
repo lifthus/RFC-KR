@@ -1663,30 +1663,17 @@ Content-Language는 아마(MAY) 어떠한 미디어 타입에 대해서도 적�
 
 #### 8.5.1. Language Tags
 
-A language tag, as defined in [RFC5646], identifies a natural
-language spoken, written, or otherwise conveyed by human beings for
-communication of information to other human beings. Computer
-languages are explicitly excluded.
+언어 태그는, [[RFC5646](https://www.rfc-editor.org/info/rfc5646)]에 정의된 대로, 말해지거나, 써지거나, 혹은 그렇지 않으면 인간들에 의해 다른 인간들에게 정보 통신을 위해 전달된 자연 언어를 식별한다. 컴퓨터 언어들은 명시적으로 제외된다.
 
-HTTP uses language tags within the Accept-Language and
-Content-Language header fields. Accept-Language uses the broader
-language-range production defined in Section 12.5.4, whereas
-Content-Language uses the language-tag production defined below.
+HTTP는 Accent-Language와 Content-Language 헤더 필드들 내에서 언어 태그들을 사용한다. Accept-Language는 12.5.4절에 정의된 더 넓은 language-range production을 사용하는 반면, Content-Language는 아래에 정의된 language-tag production을 사용한다.
 
-     language-tag = <Language-Tag, see [RFC5646], Section 2.1>
+     language-tag = <Language-Tag, [RFC5646], 2.1절 참조>
 
-A language tag is a sequence of one or more case-insensitive subtags,
-each separated by a hyphen character ("-", %x2D). In most cases, a
-language tag consists of a primary language subtag that identifies a
-broad family of related languages (e.g., "en" = English), which is
-optionally followed by a series of subtags that refine or narrow that
-language's range (e.g., "en-CA" = the variety of English as
-communicated in Canada). Whitespace is not allowed within a language
-tag. Example tags include:
+언어 태그는 각각이 하이픈 문자("-", %x2D)에 의해 구별되는, 하나 이상의 대소문자를 구별하지 않는 서브태그들의 시퀀스다. 대부분의 경우, 언어 태그는 관련된 넓은 언어군을 식별하는 주요 언어 서브태그(예를 들어, "en" = English)로 구성되며, 선택적으로 언어의 범위를 세밀히 조정하거나 좁히는 서브태그들의 시리즈가 뒤따른다(예를 들어, "en-CA" = 캐나다에서 사용되는 영어의 변형). 언어 태그 내에 공백은 허용되지 않는다. 예시 태그들은 다음과 같다:
 
      fr, en-US, es-419, az-Arab, x-pig-latin, man-Nkoo-GN
 
-See [RFC5646] for further information.
+더 자세한 정보를 위해서는 [[RFC5646](https://www.rfc-editor.org/info/rfc5646)]를 참조하라.
 
 ### 8.6. Content-Length
 
