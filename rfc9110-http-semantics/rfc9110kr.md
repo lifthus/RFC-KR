@@ -1677,78 +1677,31 @@ HTTP는 Accent-Language와 Content-Language 헤더 필드들 내에서 언어 �
 
 ### 8.6. Content-Length
 
-The "Content-Length" header field indicates the associated
-representation's data length as a decimal non-negative integer number
-of octets. When transferring a representation as content, Content-
-Length refers specifically to the amount of data enclosed so that it
-can be used to delimit framing (e.g., Section 6.2 of [HTTP/1.1]). In
-other cases, Content-Length indicates the selected representation's
-current length, which can be used by recipients to estimate transfer
-time or to compare with previously stored representations.
+"Content-Length" 헤더 필드는 연관된 표현의 데이터 길이를 옥텟들의 비음수 10진수로 나타낸다. 표현을 콘텐츠로 전송할 때, Content-Length는 특히 포함된 데이터의 양을 나타내어 프레이밍을 구분하는데 사용할 수 있도록 한다(예를 들어, [[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 6.2절). 다른 경우들에서, Content-Length는 선택된 표현의 현재 길이를 나타내며, 수신자들이 전송 시간을 추정하거나 이전에 저장된 표현들과 비교하는데 사용할 수 있다.
 
      Content-Length = 1*DIGIT
 
-An example is
+예시는
 
-Content-Length: 3495
+     Content-Length: 3495
 
-A user agent SHOULD send Content-Length in a request when the method
-defines a meaning for enclosed content and it is not sending
-Transfer-Encoding. For example, a user agent normally sends Content-
-Length in a POST request even when the value is 0 (indicating empty
-content). A user agent SHOULD NOT send a Content-Length header field
-when the request message does not contain content and the method
-semantics do not anticipate such data.
+유저 에이전트는 메소드가 동봉된 콘텐츠에 대한 의미를 정의하고 Transfer-Encoding을 따로 보내지 않을 때의 요청에는 웬만하면(SHOULD) Content-Length를 보내야 한다. 예를 들어, 유저 에이전트는 보통 값이 0일 때 조차(빈 콘텐츠를 나타내며) POST 요청에서는 Content-Length를 보낸다. 유저 에이전트는 요청 메시지가 콘텐츠를 포함하지 않고 메소드 의미체계가 그러한 데이터를 기대하지 않을 때는 웬만해서는(SHOULD NOT) Content-Length를 보내지 않아야 한다.
 
-A server MAY send a Content-Length header field in a response to a
-HEAD request (Section 9.3.2); a server MUST NOT send Content-Length
-in such a response unless its field value equals the decimal number
-of octets that would have been sent in the content of a response if
-the same request had used the GET method.
+서버는 아마(MAY) HEAD 요청에 대한 응답에서 Content-Length 헤더 필드를 보낼 수 있을 것이다.(9.3.2절); 서버는 같은 요청이 GET 메소드를 사용했다면 응답의 콘텐츠에 보내졌을 옥텟들의 십진수로된 수와 그 필드 값이 동일하지 않은 한 그러한 응답에 Content-Length를 절대(MUST NOT) 보내서는 안된다.
 
-A server MAY send a Content-Length header field in a 304 (Not
-Modified) response to a conditional GET request (Section 15.4.5); a
-server MUST NOT send Content-Length in such a response unless its
-field value equals the decimal number of octets that would have been
-sent in the content of a 200 (OK) response to the same request.
+서버는 아마(MAY) 조건부 GET 요청에 대한 304 (Not Modified) 응답에 Content-Length 헤더 필드를 보낼 수 있을 것이다(15.4.5절); 서버는 같은 요청에 대한 200 (OK) 응답의 콘텐츠에 보내졌을 옥텟들의 십진수로된 수와 그 필드 값이 동일하지 않은 한 그러한 응답에 절대(MUST NOT) Content-Length를 보내서는 안된다.
 
-A server MUST NOT send a Content-Length header field in any response
-with a status code of 1xx (Informational) or 204 (No Content). A
-server MUST NOT send a Content-Length header field in any 2xx
-(Successful) response to a CONNECT request (Section 9.3.6).
+서버는 1xx(Informational) 혹은 204(No Content) 상태 코드의 어떠한 응답에도 절대(MUST NOT) Content-Length 헤더 필드를 보내서는 안된다. 서버는 CONNECT 요청에 대한 어떠한 2xx(Successful) 응답에도 Content-Length 헤더필드를 절대(MUST NOT) 보내서는 안된다.
 
-Aside from the cases defined above, in the absence of Transfer-
-Encoding, an origin server SHOULD send a Content-Length header field
-when the content size is known prior to sending the complete header
-section. This will allow downstream recipients to measure transfer
-progress, know when a received message is complete, and potentially
-reuse the connection for additional requests.
+위에 정의된 경우들 외에, Transfer-Encoding이 부재한 경우, 오리진 서버는 웬만하면(SHOULD) 콘텐츠 사이즈가 완전한 헤더 섹션을 보내기 전에 알려져 있을 때라면 Content-Length 헤더 필드를 보내야 한다. 이는 다운스트림 수신자들이 전송 진행 상황을 측정할 수 있게 하고, 언제 수신된 메시지가 완료될지 알 수 있게 하고, 그리고 잠재적으로 추가적인 요청들에 대해 해당 연결을 재사용할 수 있게 한다.
 
-Any Content-Length field value greater than or equal to zero is
-valid. Since there is no predefined limit to the length of content,
-a recipient MUST anticipate potentially large decimal numerals and
-prevent parsing errors due to integer conversion overflows or
-precision loss due to integer conversion (Section 17.5).
+Content-Length 필드 값이 0 이상이라면 어떠한 값이든 유효하다. 콘텐츠 길이에 대해 미리 정의된 제한 같은 것은 없기 때문에, 수신자는 반드시(MUST) 잠재적으로 큰 십진수 숫자들을 예측하고 정수 변환 오버플로우나 정수 변환에 의한 정확도 손실로 인한 파싱 에러들을 방지해야 한다(17.5절).
 
-Because Content-Length is used for message delimitation in HTTP/1.1,
-its field value can impact how the message is parsed by downstream
-recipients even when the immediate connection is not using HTTP/1.1.
-If the message is forwarded by a downstream intermediary, a Content-
-Length field value that is inconsistent with the received message
-framing might cause a security failure due to request smuggling or
-response splitting.
+HTTP/1.1에서 Content-Length는 메시지 경계 결정을 위해 사용되기 때문에, 그 필드 값은 메시지가 다운스트림 수신자들에게 어떻게 파싱될지에 영향을 미치고 이는 당장의 연결이 HTTP/1.1이 아닐 때 조차도 그러하다. 만약 메시지가 다운스트림 중개자에 의해 포워드된다면, 수신된 메시지 프레이밍과 불일치한 Content-Length 필드 값은 요청 스머글링이나 응답 스플리팅으로 인한 보안 실패를 초래할 수 있다.
 
-As a result, a sender MUST NOT forward a message with a Content-
-Length header field value that is known to be incorrect.
+결론적으로, 발신자는 절대(MUST NOT) 잘못된 것으로 알려진 Content-Length 헤더 필드 값을 가진 메시지를 포워드해서는 안된다.
 
-Likewise, a sender MUST NOT forward a message with a Content-Length
-header field value that does not match the ABNF above, with one
-exception: a recipient of a Content-Length header field value
-consisting of the same decimal value repeated as a comma-separated
-list (e.g, "Content-Length: 42, 42") MAY either reject the message as
-invalid or replace that invalid field value with a single instance of
-the decimal value, since this likely indicates that a duplicate was
-generated or combined by an upstream message processor.
+마찬가지로, 발신자는 위의 ABNF와 매치되지 않는 Content-Length 헤더 필드를 가진 메시지를 절대(MUST NOT) 포워드해서는 안되며, 다만 하나의 예외는: 콤마로 구분되는 반복되는 같은 십진수 값의 리스트(예를 들어, "Content-Length: 42, 42")로 구성된 Content-Length 헤더 필드 값의 수신자는 아마(MAY) 해당 메시지를 유효하지 않은 것으로 거부하거나 그 유효하지 않은 필드 값을 해당 십진수 값의 단일 인스턴스로 대체할 수 있을 것이며, 이는 업스트림 메시지 프로세서에 의해 중복이 생성되거나 결합된 것을 나타낼 가능성이 높기 때문이다.
 
 ### 8.7. Content-Location
 
