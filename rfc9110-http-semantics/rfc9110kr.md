@@ -162,13 +162,13 @@ than English.
 - - [8.3.1. Media Type](#831-media-type)
 - - [8.3.2. Charset](#832-charset)
 - - [8.3.3. Multipart Types](#833-multipart-types)
-- [8.4. Content-Encoding]()
-- - [8.4.1. Content Codings]()
-- - - [8.4.1.1. Compress Coding]()
-- - - [8.4.1.2. Deflate Coding]()
-- - - [8.4.1.3. Gzip Coding]()
-- [8.5. Content-Language]()
-- - [8.5.1. Language Tags]()
+- [8.4. Content-Encoding](#84-content-encoding)
+- - [8.4.1. Content Codings](#841-content-codings)
+- - - [8.4.1.1. Compress Coding](#8411-compress-coding)
+- - - [8.4.1.2. Deflate Coding](#8412-deflate-coding)
+- - - [8.4.1.3. Gzip Coding](#8413-gzip-coding)
+- [8.5. Content-Language](#85-content-language)
+- - [8.5.1. 언어 태그들](#851-언어-태그들)
 - [8.6. Content-Length]()
 - [8.7. Content-Location]()
 - [8.8. Validator Fields]()
@@ -1661,7 +1661,7 @@ limited to textual documents.
 
 Content-Language는 아마(MAY) 어떠한 미디어 타입에 대해서도 적용될 수 있을 것이다 -- 텍스트 문서들로만 제한되어 있지 않다.
 
-#### 8.5.1. Language Tags
+#### 8.5.1. 언어 태그들
 
 언어 태그는, [[RFC5646](https://www.rfc-editor.org/info/rfc5646)]에 정의된 대로, 말해지거나, 써지거나, 혹은 그렇지 않으면 인간들에 의해 다른 인간들에게 정보 통신을 위해 전달된 자연 언어를 식별한다. 컴퓨터 언어들은 명시적으로 제외된다.
 
