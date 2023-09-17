@@ -1705,89 +1705,29 @@ HTTP/1.1에서 Content-Length는 메시지 경계 결정을 위해 사용되기 
 
 ### 8.7. Content-Location
 
-The "Content-Location" header field references a URI that can be used
-as an identifier for a specific resource corresponding to the
-representation in this message's content. In other words, if one
-were to perform a GET request on this URI at the time of this
-message's generation, then a 200 (OK) response would contain the same
-representation that is enclosed as content in this message.
+"Content-Location" 헤더 필드는 해당 메시지 콘텐츠의 표현에 해당하는 특정한 자원을 위한 식별자로 사용될 수 있는 URI를 참조한다. 다시 말해, 만약 누군가 이 메시지가 생성된 시점에 해당 URI에 대해 GET 요청을 수행한다면, 그 200(OK) 응답은 기존 메시지의 콘텐츠로 동봉되어 있는 표현과 동일한 것을 포함할 것이다.
 
      Content-Location = absolute-URI / partial-URI
 
-The field value is either an absolute-URI or a partial-URI. In the
-latter case (Section 4), the referenced URI is relative to the target
-URI ([URI], Section 5).
+필드 값은 absolute-URI 혹은 partial-URI다. 후자의 경우(4절), 참조된 URI는 타겟 URI에 대해 상대적이다([[URI](https://www.rfc-editor.org/info/rfc3986)], 5절).
 
-The Content-Location value is not a replacement for the target URI
-(Section 7.1). It is representation metadata. It has the same
-syntax and semantics as the header field of the same name defined for
-MIME body parts in Section 4 of [RFC2557]. However, its appearance
-in an HTTP message has some special implications for HTTP recipients.
+Content-Location 값은 타겟 URI에 대한 대체가 아니다(7.1절). 표현 메타데이터다. [[RFC2557](https://www.rfc-editor.org/info/rfc2557)]의 4절에 MIME body parts를 위해 정의된 같은 이름의 헤더 필드와 같은 구문과 의미체계를 가지고 있다. 그러나, HTTP 메시지에서 나타나는 그 모습은 HTTP 수신자들에 대해 약간 특별한 암시들을 갖는다.
 
-If Content-Location is included in a 2xx (Successful) response
-message and its value refers (after conversion to absolute form) to a
-URI that is the same as the target URI, then the recipient MAY
-consider the content to be a current representation of that resource
-at the time indicated by the message origination date. For a GET
-(Section 9.3.1) or HEAD (Section 9.3.2) request, this is the same as
-the default semantics when no Content-Location is provided by the
-server. For a state-changing request like PUT (Section 9.3.4) or
-POST (Section 9.3.3), it implies that the server's response contains
-the new representation of that resource, thereby distinguishing it
-from representations that might only report about the action (e.g.,
-"It worked!"). This allows authoring applications to update their
-local copies without the need for a subsequent GET request.
+만약 Content-Length가 2xx(Successful) 응답 메시지에 포함되고 그 값이(절대 형태로 전환된 후) 타겟 URI와 같은 URI를 참조한다면, 수신자는 아마(MAY) 그 콘텐츠가 메시지 발생 날짜에 의해 나타내진 시점의 해당 리소스에 대한 현재 표현이라고 간주할 수 있을 것이다. GET(9.3.1절) 혹은 HEAD(9.3.2절) 요청에 대해서는, 이것이 Content-Location이 서버에 의해 제공되지 않을 때의 기본 의미체계와 같다. PUT(9.3.4절)이나 POST(9.3.3절) 같은 상태-변화 요청에 대해서는, 서버의 응답이 해당 리소스의 새로운 표현을 포함한다는 것을 암시하여, 오직 행동에 대해 보고하기만 하는 표현들로부터 그것을 구분한다("It worked!" 같은). 이는 상태를 작성하는 애플리케이션들이 추가적인 GET 요청에 대한 필요 없이 그들의 로컬 카피들을 업데이트하도록 한다.
 
-If Content-Location is included in a 2xx (Successful) response
-message and its field value refers to a URI that differs from the
-target URI, then the origin server claims that the URI is an
-identifier for a different resource corresponding to the enclosed
-representation. Such a claim can only be trusted if both identifiers
-share the same resource owner, which cannot be programmatically
-determined via HTTP.
+만약 Content-Length가 2xx(Successful) 응답 메시지에 포함되며 그 필드 값이 타겟 URI와 다른 URI를 참조한다면, 오리진 서버는 해당 URI가 동봉된 표현에 해당하는 다른 리소스를 위한 식별자라고 주장하는 것이다. 그러한 주장은 오직 두 식별자들 모두 HTTP를 통해 프로그램적으로 결정될 수 없는, 같은 리소스 소유자를 공유할 때만 신뢰할 수 있다.
 
-- For a response to a GET or HEAD request, this is an indication
-  that the target URI refers to a resource that is subject to
-  content negotiation and the Content-Location field value is a more
-  specific identifier for the selected representation.
+- GET이나 HEAD 요청에 대해, 이는 타겟 URI가 콘텐츠 협상 대상이 되는 리소스를 가리키고 있고 Content-Location 필드 값은 선택된 표현에 대해 더 구체적인 식별자라는 것을 나타낸다.
 
-- For a 201 (Created) response to a state-changing method, a
-  Content-Location field value that is identical to the Location
-  field value indicates that this content is a current
-  representation of the newly created resource.
+- 상태-변화 메소드에 대한 201(Created) 응답에 대해, Location 필드 값과 동일한 Content-Location 필드 값은 이 콘텐츠가 새로 생성된 리소스의 현재 표현임을 나타낸다.
 
-- Otherwise, such a Content-Location indicates that this content is
-  a representation reporting on the requested action's status and
-  that the same report is available (for future access with GET) at
-  the given URI. For example, a purchase transaction made via a
-  POST request might include a receipt document as the content of
-  the 200 (OK) response; the Content-Location field value provides
-  an identifier for retrieving a copy of that same receipt in the
-  future.
+- 그렇지 않으면, 그러한 Content-Location은 이 콘텐츠가 요청된 행동의 상태를 보고하는 표현이라는 것과 그 보고가 주어진 URI에서(차후의 GET 접근에서) 가용하다는 것을 나타낸다. 예를 들어, POST 요청을 통해 만들어진 구매 트랜잭션은 200(OK) 응답의 콘텐츠로 영수증 문서를 포함할 수 있을 것이다; Content-Location 필드 값은 차후에 그와 같은 영수증의 복사본을 얻기 위한 식별자를 제공한다.
 
-A user agent that sends Content-Location in a request message is
-stating that its value refers to where the user agent originally
-obtained the content of the enclosed representation (prior to any
-modifications made by that user agent). In other words, the user
-agent is providing a back link to the source of the original
-representation.
+요청 메시지에 Content-Location을 보내는 유저 에이전트는 그 값이 유저 에이전트가 동봉된 표현의 콘텐츠를 원래 얻었던 곳을 가리킨다고 말하는 것이다(유저에 의해 어떠한 수정들이 이루어지기 전에). 다시 말해, 유저 에이전트는 원래 표현의 소스에게 백 링크를 제공하는 것이다.
 
-An origin server that receives a Content-Location field in a request
-message MUST treat the information as transitory request context
-rather than as metadata to be saved verbatim as part of the
-representation. An origin server MAY use that context to guide in
-processing the request or to save it for other uses, such as within
-source links or versioning metadata. However, an origin server MUST
-NOT use such context information to alter the request semantics.
+요청 메시지에 Content-Location 필드를 수신하는 오리진 서버는 반드시(MUST) 그 정보를 표현의 일부로서 그대로 저장되는 메타데이터로 보다 일시적인 요청 콘텍스트로 다뤄야한다. 오리진 서버는, 소스 링크들이나 버저닝 메타데이터 내에서 처럼 아마(MAY) 해당 콘텍스트를 요청을 처리하는 것을 가이드하기 위해서나 다른 용도로 저장하기 위해서 사용할 수 있을 것이다. 그러나, 오리진 서버는 절대 (MUST NOT) 그러한 콘텍스트 정보를 요청 의미체계를 변경하기 위해 사용해서는 안된다.
 
-For example, if a client makes a PUT request on a negotiated resource
-and the origin server accepts that PUT (without redirection), then
-the new state of that resource is expected to be consistent with the
-one representation supplied in that PUT; the Content-Location cannot
-be used as a form of reverse content selection identifier to update
-only one of the negotiated representations. If the user agent had
-wanted the latter semantics, it would have applied the PUT directly
-to the Content-Location URI.
+예를 들어, 클라이언트가 협상된 리소스에 PUT 요청을 하고 오리진 서버가 해당 PUT을 수용한다면(리디렉션 없이), 해당 리소스의 새로운 상태는 해당 PUT에서 공급된 햔 표현과 일관적일 것으로 기대된다; Content-Location은 협상된 표현들 중 오직 하나만 업데이트 하기 위한 콘텐츠 역선택 식별자의 형태로 사용될 수 없댜. 만약 유저 에이전트가 후자의 의미체계를 원했다면, PUT을 해당 Content-Location URI에 직접 적용했을 것이다.
 
 ### 8.8. Validator Fields
 
