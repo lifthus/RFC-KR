@@ -169,9 +169,9 @@ than English.
 - - - [8.4.1.3. Gzip Coding](#8413-gzip-coding)
 - [8.5. Content-Language](#85-content-language)
 - - [8.5.1. 언어 태그들](#851-언어-태그들)
-- [8.6. Content-Length]()
-- [8.7. Content-Location]()
-- [8.8. Validator Fields]()
+- [8.6. Content-Length](#86-content-length)
+- [8.7. Content-Location](#87-content-location)
+- [8.8. Validator 필드들](#88-validator-필드들)
 - - [8.8.1. Weak versus Strong]()
 - - [8.8.2. Last-Modified]()
 - - - [8.8.2.1. Generation]()
@@ -1729,36 +1729,17 @@ Content-Location 값은 타겟 URI에 대한 대체가 아니다(7.1절). 표현
 
 예를 들어, 클라이언트가 협상된 리소스에 PUT 요청을 하고 오리진 서버가 해당 PUT을 수용한다면(리디렉션 없이), 해당 리소스의 새로운 상태는 해당 PUT에서 공급된 햔 표현과 일관적일 것으로 기대된다; Content-Location은 협상된 표현들 중 오직 하나만 업데이트 하기 위한 콘텐츠 역선택 식별자의 형태로 사용될 수 없댜. 만약 유저 에이전트가 후자의 의미체계를 원했다면, PUT을 해당 Content-Location URI에 직접 적용했을 것이다.
 
-### 8.8. Validator Fields
+### 8.8. Validator 필드들
 
-Resource metadata is referred to as a "validator" if it can be used
-within a precondition (Section 13.1) to make a conditional request
-(Section 13). Validator fields convey a current validator for the
-selected representation (Section 3.2).
+리소스 메타데이터는 조건부 요청을 만들기 위해 전제 조건(13.12절) 내에서 사용될 수 있다면 "validator"라고 불린다. Validator 필드들은 선택된 표현에 대한 현재 validator를 전달한다(3.2절).
 
-In responses to safe requests, validator fields describe the selected
-representation chosen by the origin server while handling the
-response. Note that, depending on the method and status code
-semantics, the selected representation for a given response is not
-necessarily the same as the representation enclosed as response
-content.
+안전한 요청들에 대한 응답들에서, validator 필드들은 오리진 서버가 응답을 핸들링하는 동안 선택한 표현을 설명한다. 메소드와 상태 코드 의미 체계에 따라, 주어진 응답에 대해 선택된 표현이 필연적으로 응답 콘텐츠로 동봉된 표현과 동일하진 않으니, 이를 명심하라.
 
-In a successful response to a state-changing request, validator
-fields describe the new representation that has replaced the prior
-selected representation as a result of processing the request.
+상태-변화 요청에 대한 성공적인 응답에서, validator 필드들은 요청을 처리한 결과로서 이전에 선택된 표현을 대체한 새로운 표현을 설명한다.
 
-For example, an ETag field in a 201 (Created) response communicates
-the entity tag of the newly created resource's representation, so
-that the entity tag can be used as a validator in later conditional
-requests to prevent the "lost update" problem.
+예를 들어, 201(Created) 응답의 ETag 필드는 새로이 생성된 리소스의 표현의 엔티티 태그를 전달하여, 그 엔티티 태그가 나중의 조건부 요청들에서 "lost update" 문제를 예방하기 위한 validator로 쓰이도록 한다.
 
-This specification defines two forms of metadata that are commonly
-used to observe resource state and test for preconditions:
-modification dates (Section 8.8.2) and opaque entity tags
-(Section 8.8.3). Additional metadata that reflects resource state
-has been defined by various extensions of HTTP, such as Web
-Distributed Authoring and Versioning [WEBDAV], that are beyond the
-scope of this specification.
+이 사양서는 리소스 상태를 관측하고 전제 조건을 테스트하는데 흔히 사용되는 두 형태의 메타데이터를 정의 한다: 수정 날짜들(8.8.2절)과 불투명 엔티티 태그들(8.8.3절). 리소스 상태를 반영하는 추가적인 메타데이터는 HTTP의 다양한 확장들에 의해 정의되어 있으며, Web Distributed Authoring and Versioning[[WEBDAV](https://www.rfc-editor.org/info/rfc4918)] 같은 것이 있고, 이 사양의 범위를 넘어선다.
 
 #### 8.8.1. Weak versus Strong
 
