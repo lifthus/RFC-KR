@@ -1741,92 +1741,27 @@ Content-Location 값은 타겟 URI에 대한 대체가 아니다(7.1절). 표현
 
 이 사양서는 리소스 상태를 관측하고 전제 조건을 테스트하는데 흔히 사용되는 두 형태의 메타데이터를 정의 한다: 수정 날짜들(8.8.2절)과 불투명 엔티티 태그들(8.8.3절). 리소스 상태를 반영하는 추가적인 메타데이터는 HTTP의 다양한 확장들에 의해 정의되어 있으며, Web Distributed Authoring and Versioning[[WEBDAV](https://www.rfc-editor.org/info/rfc4918)] 같은 것이 있고, 이 사양의 범위를 넘어선다.
 
-#### 8.8.1. Weak versus Strong
+#### 8.8.1. 약한 것 대 강한 것
 
-Validators come in two flavors: strong or weak. Weak validators are
-easy to generate but are far less useful for comparisons. Strong
-validators are ideal for comparisons but can be very difficult (and
-occasionally impossible) to generate efficiently. Rather than impose
-that all forms of resource adhere to the same strength of validator,
-HTTP exposes the type of validator in use and imposes restrictions on
-when weak validators can be used as preconditions.
+Validator들은 두 가지 형태로 나타난다: 강하거나 약하거나. 약한 validator들은 생성하기 쉽지만 비교에 있어서 훨씬 덜 유용하다. 강한 validator들은 비교에 이상적이지만 효율적으로 생성하기 매우 어려울 수 있다(그리고 가끔은 불가능하다). 모든 형태의 리소스가 같은 강도의 validator를 고수하도록 강제하기 보다, HTTP는 사용되는 validator의 타입을 노출하고 약한 validator들이 전제 조건으로 사용될 수 있을 때에 대한 제한을 부과한다.
 
-A "strong validator" is representation metadata that changes value
-whenever a change occurs to the representation data that would be
-observable in the content of a 200 (OK) response to GET.
+"강한 validator"는 GET에 대한 200(OK) 응답의 콘텐츠에서 관측될 수 있는 표현 데이터에 변경이 발생할 때마다 그 값이 변경되는 표현 메타데이터다.
 
-A strong validator might change for reasons other than a change to
-the representation data, such as when a semantically significant part
-of the representation metadata is changed (e.g., Content-Type), but
-it is in the best interests of the origin server to only change the
-value when it is necessary to invalidate the stored responses held by
-remote caches and authoring tools.
+강한 validator는 표현 데이터의 변경 외의 이유들에 의해서도 변경될 수 있는데, 표현 메타데이터의 의미적으로 중요한 일부분이 변경될 때(예를 들어, Content-Type)가 그러하지만, 오리진 서버에게는 오직 원격 캐시들과 authoring tool들에 의해 저장된 응답들을 무효화시켜야 할 때만 그 값을 변경하는 것이 최선이다.
 
-Cache entries might persist for arbitrarily long periods, regardless
-of expiration times. Thus, a cache might attempt to validate an
-entry using a validator that it obtained in the distant past. A
-strong validator is unique across all versions of all representations
-associated with a particular resource over time. However, there is
-no implication of uniqueness across representations of different
-resources (i.e., the same strong validator might be in use for
-representations of multiple resources at the same time and does not
-imply that those representations are equivalent).
+캐시 엔트리들은 임의적으로 긴 기간동안 유지될 수 있을 것이며, 이는 유효 기간과 관련 없을 수 있다. 이리하여, 캐시는 먼 과거에 얻은 validator를 사용해 엔트리를 검증하려 할 수 있을 것이다. 강한 validator는 특정 리소스와 연관된 시간이 지남에 따른 모든 표현들의 모든 버전들에 걸쳐 유일하다. 그러나, 다른 리소스들의 표현들에 걸친 유일함에 관한 암시는 존재하지 않는다(즉, 같은 강한 validator는 동시에 여러 리소스들의 표현들에 사용되면서 그 표현들이 동등하다는 것을 암시하지는 않을 수 있다).
 
-There are a variety of strong validators used in practice. The best
-are based on strict revision control, wherein each change to a
-representation always results in a unique node name and revision
-identifier being assigned before the representation is made
-accessible to GET. A collision-resistant hash function applied to
-the representation data is also sufficient if the data is available
-prior to the response header fields being sent and the digest does
-not need to be recalculated every time a validation request is
-received. However, if a resource has distinct representations that
-differ only in their metadata, such as might occur with content
-negotiation over media types that happen to share the same data
-format, then the origin server needs to incorporate additional
-information in the validator to distinguish those representations.
+실무적으로 사용되는 다양한 강한 validator들이 존재한다. 그중 최고는 엄격한 개정 통제에 기반하며, 표현에 대한 각 변경은 항상 표현이 GET에 대해 접근가능해지기 전에 할당되는 유일한 노드 이름과 개정 식별자로 나타나게 된다. 표현 데이터에 적용되는 충돌-저항 해시 함수는 또한 데이터가 응답 헤더 필드들이 보내지기 전에 가용하고 digest가 검증 요청이 수신될 때마다 매번 다시 계산되지 않아도 된다면 충분하다. 그러나, 리소스가 오직 그 메타데이터만 다른 별도의 표현들을 가지고 있다면, 그런 경우는 같은 데이터 포맷을 공유하기 위해 발생하는 미디어 타입들에 관한 콘텐츠 협상에서 발생할 수 있는데, 그러면 오리진 서버는 그러한 표현들을 구분하기 위해 validator에 추가적인 정보를 포함할 필요가 있다.
 
-In contrast, a "weak validator" is representation metadata that might
-not change for every change to the representation data. This
-weakness might be due to limitations in how the value is calculated
-(e.g., clock resolution), an inability to ensure uniqueness for all
-possible representations of the resource, or a desire of the resource
-owner to group representations by some self-determined set of
-equivalency rather than unique sequences of data.
+반면에, "약한 validator"는 표현 데이터에 대한 모든 변경마다 변하지는 않을 수 있는 표현 메타데이터다. 이러한 약함은 값이 계산되는 방식의 제한(예를 들어, 시계 정확도), 리소스의 모든 가능한 표현들에 대해 유일함을 보장하지 못하는 것, 혹은 데이터의 유일한 시퀀스들 보다 어떤 자기-결정된 등가 집합에 의해 표현들을 그룹화하길 원하는 리소스 오너의 바람에 기인할 수 있다.
 
-An origin server SHOULD change a weak entity tag whenever it
-considers prior representations to be unacceptable as a substitute
-for the current representation. In other words, a weak entity tag
-ought to change whenever the origin server wants caches to invalidate
-old responses.
+오리진 서버는 언제든 이전 표현들이 현재 표현을 위한 대체로서 받아들일 수 없을 때는 웬만하면(SHOULD) 약한 엔티티 태그를 변경해야 한다. 다시 말해, 약한 엔티티 태그는 오리진 서버가 캐시들이 오래된 응답들을 무효화하길 원할 때 마다 변경되어야 한다.
 
-For example, the representation of a weather report that changes in
-content every second, based on dynamic measurements, might be grouped
-into sets of equivalent representations (from the origin server's
-perspective) with the same weak validator in order to allow cached
-representations to be valid for a reasonable period of time (perhaps
-adjusted dynamically based on server load or weather quality).
-Likewise, a representation's modification time, if defined with only
-one-second resolution, might be a weak validator if it is possible
-for the representation to be modified twice during a single second
-and retrieved between those modifications.
+예를 들어, 동적 측정에 기반한, 매 초마다 콘텐츠가 변경되는 날씨 보고서의 표현은, 캐시된 표현들이 합리적인 기간(아마 서버 부하나 날씨 상태에 따라 동적으로 조정될 것)동안 유효할 수 있도록 같은 약한 validator를 가진 동등한 표현들(오리진 서버의 관점에서)의 집합들로 그룹화될 수 있을 것이다. 마찬가지로, 한 표현의 수정 시각은, 오직 1초의 정확도로만 정의된 경우, 만약 표현이 1초 동안 두 번 수정되고 그 사이에 획득될 수 있다면 약한 validator가 될 수 있다.
 
-Likewise, a validator is weak if it is shared by two or more
-representations of a given resource at the same time, unless those
-representations have identical representation data. For example, if
-the origin server sends the same validator for a representation with
-a gzip content coding applied as it does for a representation with no
-content coding, then that validator is weak. However, two
-simultaneous representations might share the same strong validator if
-they differ only in the representation metadata, such as when two
-different media types are available for the same representation data.
+마찬가지로, 동시에 주어진 리소스의 두 개 이상의 표현들에 의해 공유된다면 validator는 약하다고 할 수 있으며, 그 표현들이 동일한 표현 데이터를 가지고 있다면 그렇지 않다. 예를 들어, 오리진 서버가 콘텐츠 코딩이 없는 표현 처럼 적용된 gzip 콘텐츠 코딩의 표현을 위해 같은 validator를 보낸다면, validator는 약하다 할 수 있다. 그러나, 두 동시 표현들은, 다른 두 미디어 타입들이 같은 표현 데이터에 대해 가용한 것 처럼 오직 그 표현 메타데이터만 다르다면 같은 강한 validator를 공유할 수 있다.
 
-Strong validators are usable for all conditional requests, including
-cache validation, partial content ranges, and "lost update"
-avoidance. Weak validators are only usable when the client does not
-require exact equality with previously obtained representation data,
-such as when validating a cache entry or limiting a web traversal to
-recent changes.
+강한 validator들은, 캐시 검증, 부분 콘텐츠 범위, 그리고 "lost update" 회피를 포함하여, 모든 조건부 요청들에 대해 사용 가능하다. 약한 validator들은 오직 클라이언트가 이전에 얻은 표현 데이터와 정확히 동일한 것을 요구하지 않을 때만 사용 가능하며, 캐시 엔트리를 검증하거나 최근 변경에 대한 웹 탐색을 제한할 때가 그러하다.
 
 #### 8.8.2. Last-Modified
 
