@@ -5142,55 +5142,29 @@ Author: See Authors' Addresses section.
 
 Change controller: IESG
 
-15. Status Codes
+## 15. 상태 코드
 
-The status code of a response is a three-digit integer code that
-describes the result of the request and the semantics of the
-response, including whether the request was successful and what
-content is enclosed (if any). All valid status codes are within the
-range of 100 to 599, inclusive.
+응답의 상태 코드는 요청의 결과와 요청이 성공했는지의 여부 및 어떤 콘텐츠가 동봉되어 있는지를 포함한 응답의 의미를 설명하는 세 자리 정수 코드다 (있는 경우). 모든 유효한 상태 코드는 100부터 599까지의 범위 내에 있다.
 
-The first digit of the status code defines the class of response.
-The last two digits do not have any categorization role. There are
-five values for the first digit:
+상태 코드의 첫 번째 자리는 응답의 클래스를 정의한다. 마지막 두 자리는 분류 역할이 없다. 첫 번째 숫자에는 다섯 가지의 정보가 있다:
 
-- 1xx (Informational): The request was received, continuing process
+- 1xx (정보제공): 요청을 받았고, 처리를 계속 한다.
 
-- 2xx (Successful): The request was successfully received,
-  understood, and accepted
+- 2xx (성공적인): 요청을 성공적으로 받았고, 이해했고, 승인했다.
 
-- 3xx (Redirection): Further action needs to be taken in order to
-  complete the request
+- 3xx (리다이렉션): 요청을 완료하려면 추가 조치가 필요하다.
 
-- 4xx (Client Error): The request contains bad syntax or cannot be
-  fulfilled
+- 4xx (클라이언트 에러): 요청에 잘못된 구문이 포함되어 있거나 수행할 수 없다.
 
-- 5xx (Server Error): The server failed to fulfill an apparently
-  valid request
+- 5xx (서버 에러): 서버가 명백히 유효한 요청을 수행하지 못했다.
 
-HTTP status codes are extensible. A client is not required to
-understand the meaning of all registered status codes, though such
-understanding is obviously desirable. However, a client MUST
-understand the class of any status code, as indicated by the first
-digit, and treat an unrecognized status code as being equivalent to
-the x00 status code of that class.
+HTTP 상태 코드는 확장 가능하다.클라이언트는 등록된 모른 상태 코드의 의미를 이해할 필요는 없지만, 이해하는것이 분명히 바람직하다. 그러나, 클라이언트는 반드시(MUST) 첫 번째 숫자로 표시된 상태코드의 클래스를 이해하고 인식할 수 없는 상태 코드를 해당 클래스의 x00 상태 코드와 동등한 것으로 처리해야 한다.
 
-For example, if a client receives an unrecognized status code of 471,
-it can see from the first digit that there was something wrong with
-its request and treat the response as if it had received a 400 (Bad
-Request) status code. The response message will usually contain a
-representation that explains the status.
+예시로, 클라이언트가 471이라는 인식되지 않는 상태 코드를 받은 경우, 첫 번째 숫자를 통해 요청에 문제가 있음을 파악하고 응답을 400(잘못된 요청) 상태 코드를 받은 것처럼 처리할 수 있다. 응답 메시지에는 일반적으로 상태를 설명하는 표현이 포함된다.
 
-Values outside the range 100..599 are invalid. Implementations often
-use three-digit integer values outside of that range (i.e., 600..999)
-for internal communication of non-HTTP status (e.g., library errors).
-A client that receives a response with an invalid status code SHOULD
-process the response as if it had a 5xx (Server Error) status code.
+100..599 범위를 벗어난 값은 유효하지 않다. 구현에서는 종종 HTTP가 아닌 상태의 내부 통신을 위해 해당 범위를 벗어난 세 자리 정수 값을(예: 600..999) 사용하는 경우가 많다. (예: 라이브러리 에러) 유효하지않은 상태 코드를 가진 응답을 수신한 클라이언트는 왠만하면(SHOULD) 5xx(서버 에러) 상태 코드를 가진 것처럼 응답을 처리해야 한다.
 
-A single request can have multiple associated responses: zero or more
-"interim" (non-final) responses with status codes in the
-"informational" (1xx) range, followed by exactly one "final" response
-with a status code in one of the other ranges.
+단일 요청은 여러 개의 관련 응답이 있을 수 있다: 상태 코드가 “정보”(1xx) 범위인 “중간”(최종이 아님) 응답이 0개 이상이고, 다른 범위 중 하나의 상태 코드가 있는 “최종” 응답이 정확히 하나만 있는 경우다.
 
 15.1. Overview of Status Codes
 
