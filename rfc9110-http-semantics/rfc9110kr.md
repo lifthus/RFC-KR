@@ -5166,24 +5166,13 @@ HTTP 상태 코드는 확장 가능하다.클라이언트는 등록된 모른 �
 
 단일 요청은 여러 개의 관련 응답이 있을 수 있다: 상태 코드가 “정보”(1xx) 범위인 “중간”(최종이 아님) 응답이 0개 이상이고, 다른 범위 중 하나의 상태 코드가 있는 “최종” 응답이 정확히 하나만 있는 경우다.
 
-15.1. Overview of Status Codes
+### 15.1. 상태 코드의 개요
 
-The status codes listed below are defined in this specification. The
-reason phrases listed here are only recommendations -- they can be
-replaced by local equivalents or left out altogether without
-affecting the protocol.
+아래에 나열된 상태 코드는 본 명세서에 정의되어 있다. 여기에 나열된 이유 문구는 권장 사항일 뿐이다 — 프로토콜에 영향을 주지 않고 로컬에 상응하는 문구로 대체하거나 아예 생략할 수 있다.
 
-Responses with status codes that are defined as heuristically
-cacheable (e.g., 200, 203, 204, 206, 300, 301, 308, 404, 405, 410,
-414, and 501 in this specification) can be reused by a cache with
-heuristic expiration unless otherwise indicated by the method
-definition or explicit cache controls [CACHING]; all other status
-codes are not heuristically cacheable.
+Heuristic하게 캐시 가능한 것으로 정의된 상태 코드를 갖는 응답은 (예: 본 명세서에서 200, 203, 204, 206, 300, 301, 308, 404, 405, 410, 414, 501) 메서드 정의 또는 명시적 캐시 컨트롤[CACHING]; 에 달리 명시되지 않는 한 Heuristic 만료를 갖는 캐시에 의해 재사용할 수 있으며, 다른 모든 상태 코드들은 Heuristic하게 캐시할 수 없다.
 
-Additional status codes, outside the scope of this specification,
-have been specified for use in HTTP. All such status codes ought to
-be registered within the "Hypertext Transfer Protocol (HTTP) Status
-Code Registry", as described in Section 16.2.
+본 명세서의 범위를 벗어난 추가적인 상태 코드는 HTTP에서 사용하도록 규정되어 있다. 이러한 모든 상태 코드는 16.2절에 설명된 것과 같이 “Hypertext Transfer Protocol (HTTP) Status Code Registry”에 등록해야 한다.
 
 15.2. Informational 1xx
 
