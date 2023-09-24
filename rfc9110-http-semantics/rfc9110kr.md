@@ -176,7 +176,7 @@ than English.
 - - [8.8.2. Last-Modified](#882-last-modified)
 - - - [8.8.2.1. 생성](#8821-생성)
 - - -[ 8.8.2.2. 비교](#8822-비교)
-- - [8.8.3. ETag]()
+- - [8.8.3. ETag](#883-etag)
 - - - [8.8.3.1. Generation]()
 - - - [8.8.3.2. Comparison]()
 - - - [8.8.3.3. Example: Entity Tags Varying on Content-Negotiated Resources]()
