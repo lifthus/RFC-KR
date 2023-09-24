@@ -173,10 +173,10 @@ than English.
 - [8.7. Content-Location](#87-content-location)
 - [8.8. 검증자 필드들](#88-검증자-필드들)
 - - [8.8.1. 약한 것 대 강한 것](#881-약한-것-대-강한-것)
-- - [8.8.2. Last-Modified]()
-- - - [8.8.2.1. Generation]()
-- - -[ 8.8.2.2. Comparison]()
-- - [8.8.3. ETag]()
+- - [8.8.2. Last-Modified](#882-last-modified)
+- - - [8.8.2.1. 생성](#8821-생성)
+- - -[ 8.8.2.2. 비교](#8822-비교)
+- - [8.8.3. ETag](#883-etag)
 - - - [8.8.3.1. Generation]()
 - - - [8.8.3.2. Comparison]()
 - - - [8.8.3.3. Example: Entity Tags Varying on Content-Negotiated Resources]()
@@ -870,7 +870,7 @@ HTTP는 미리 등록된 키 네임스페이스와 함께 확장 가능한 이�
 
 이는, 아래의 잘 알려진 예외는 별개로, 발신자는 해당 필드의 정의에서 다중 필드 라인 값이 콤마로 구분되는 리스트로 재조합되도록 허용되지 않는다면(즉, 최소 하나의 필드 정의의 대안이 5.6.1절에 정의된 #(values)의 ABNF룰과 같은, 콤마로 구분되는 리스트를 허용하지 않으면), 절대(MUST NOT) 메시지 내에서 같은 이름의 여러 필드 라인들을 생성하거나 같은 이름이 이미 존재할 때 그 이름의 필드 라인을 덧붙여서는 안됨을 의미한다.
 
-_Note:_ 실무적으로, "Set-Cookie" 헤더 필드 ([[COOKIE](https://www.rfc-editor.org/info/rfc6265)]) 종종 응답 메시지에서 여러 필드 라인에거쳐 나타나고, 리스트 구문을 사용하지 않고, 위의 같은 필드 이름의 여러 필드 라인들에 대한 요구사항들을 위반한다. 그것이 하나의 필드 값으로 조합될 수 없기 때문에, 수신자들은 "Set-Cookie"를 필드들을 처리하며 특별한 케이스로 다뤄야 한다. (자세한 건 [[Kri2001](http://arxiv.org/abs/cs.SE/0105018)의 부록 A.2.3을 참조하라)
+**Note:** 실무적으로, "Set-Cookie" 헤더 필드 ([[COOKIE](https://www.rfc-editor.org/info/rfc6265)]) 종종 응답 메시지에서 여러 필드 라인에거쳐 나타나고, 리스트 구문을 사용하지 않고, 위의 같은 필드 이름의 여러 필드 라인들에 대한 요구사항들을 위반한다. 그것이 하나의 필드 값으로 조합될 수 없기 때문에, 수신자들은 "Set-Cookie"를 필드들을 처리하며 특별한 케이스로 다뤄야 한다. (자세한 건 [[Kri2001](http://arxiv.org/abs/cs.SE/0105018)의 부록 A.2.3을 참조하라)
 
 한 섹션에서 수신한 다른 이름을 가진 필드 라인들의 순서는 그리 중요하지 않다. 그러나, 구현체들이 가능한 빨리 메시지를 핸들링할지 말지 결정할 수 있도록, 요청의 Host나 응답의 Date 같은, 추가적인 제어 데이터를 포함하는 헤더 필드들을 먼저 보내는 것이 좋은 관행이다.
 
@@ -916,7 +916,7 @@ CR, LF, 혹은 NUL 문자들을 포함하는 필드 값들은 유효하지 않�
 
 많은 필드들(8.3절에 정의된, Content-Type 같은)은 파라미터 값으로 따옴표 없는 경우(token) 그리고 따옴표 있는 경우(quoted-string)의 구문을 허용하는 파라미터들을 위해 공통적인 구문을 사용한다(5.6.6절). 공통적인 구문의 사용은 수신자들로 하여금 기존의 파서 구성 요소들을 재사용할 수 있도록 한다. 두 형태 모두 허용할 때는, 파라미터 값의 의미는 token으로 받았든 quoted string으로 받았든 동일해야 한다.
 
-_Note:_ 필드 값 구문을 정의하기 위해, 이 사양서는 해당 필드의 값에 허용된 문법을 정의하기 위해 해당 필드 이름을 따른 ABNF 룰을 사용한다(해당 값이 기반 메시지 구문에서 추출되고 여러 인스턴스들이 list로 조합된 후).
+**Note:** 필드 값 구문을 정의하기 위해, 이 사양서는 해당 필드의 값에 허용된 문법을 정의하기 위해 해당 필드 이름을 따른 ABNF 룰을 사용한다(해당 값이 기반 메시지 구문에서 추출되고 여러 인스턴스들이 list로 조합된 후).
 
 ### 5.6. 필드 값들을 정의하기 위한 공통 규칙들
 
@@ -1037,7 +1037,7 @@ BWS는 의미가 없다. BWS로 정의된 것으로 알려진 어떤 콘텐츠�
 
 토큰 프로덕션과 매치되는 한 파라미터 값은 토큰으로써 혹은 quoted-string 내에서 전송될 수 있다. 인용된 것과 안된 값들은 동등하다.
 
-_Note:_ 파라미터는 "=" 문자 주변에 공백("나쁜" 공백 조차)을 허용하지 않는다.
+**Note:** 파라미터는 "=" 문자 주변에 공백("나쁜" 공백 조차)을 허용하지 않는다.
 
 #### 5.6.7. Date/Time 포맷
 
@@ -1111,7 +1111,7 @@ rfc850-date 포맷, 즉 숫자 두 개로 연도를 표현하는 형태의 타�
 
 타임스탬프 값의 수신자들은 필드 정의에 의해 딱히 제한된 게 아니라면 타임스탬프를 파싱하는데 있어 강력하게 하도록 권장된다. 예를 들어, 메시지들은 종종 Internet Message Format에 의해 정의된 어떤 날짜와 시간 사양이든 생설할 수도 있는 HTTP가 아닌 소스로 부터 HTTP를 통해 포워딩된다.
 
-_Note:_ 타임스탬프 포맷들을 위한 HTTP 요구사항들은 그것들이 프로토콜 스트림 내에서 사용될 때만 적용된다. 구현체들까지 사용자에게 보여주거나, 요청 로깅 등등을 위해 그러한 포맷들을 사용할 필요는 없다.
+**Note:** 타임스탬프 포맷들을 위한 HTTP 요구사항들은 그것들이 프로토콜 스트림 내에서 사용될 때만 적용된다. 구현체들까지 사용자에게 보여주거나, 요청 로깅 등등을 위해 그러한 포맷들을 사용할 필요는 없다.
 
 ## 6. 메시지 추상화
 
@@ -1167,7 +1167,7 @@ HTTP/1.1([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)])과 그 이전 �
 
 메시지의 "헤더 섹션"은 헤더 필드 라인들의 시퀀스로 구성된다. 각 헤더 필드는 메시지 의미를 수정하거나 확장할 수도, 발신자에 대해 기술할 수도, 콘텐츠를 정의할 수도, 혹은 추가적인 콘텍스트를 제공할 수도 있다.
 
-_Note:_ 우리는 오직 헤더 섹션에서 보내지는 것이 허용됐을 때만 명명된 필드들을 특별히 "헤더 필드"라고 부른다.
+**Note:** 우리는 오직 헤더 섹션에서 보내지는 것이 허용됐을 때만 명명된 필드들을 특별히 "헤더 필드"라고 부른다.
 
 ### 6.4. 콘텐츠
 
@@ -1175,7 +1175,7 @@ HTTP 메시지는 메시지 "콘텐츠"로 종종 완전한 혹은 부분적인 
 
 콘텐츠에 대한 이 추상적인 정의는 메시지 프레이밍으로부터 추출된 후의 데이터를 반영한다. 예를 들어, HTTP/1.1 메시지 바디([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 6절)는 chunked transfer coding -- 데이터 청크들의 시퀀스, 길이가 0인 하나의 청크, 그리고 트레일러 섹션 -- 으로 인코딩된 데이터 스트림으로 구성될 수 있는 반면 같은 메시지의 콘텐츠는 오직 transfer coding이 디코딩되고 난 후의 데이터 스트림만 포함한다; 청크 길이, 청크 프레이밍 구문, 혹은 트레일러 필드를 포함하지 않는다(6.5절).
 
-_Note:_ 일부 필드 이름들은 "Content-"라는 접두사를 가진다. 이는 비공식적인 관행이다; 이 필드들 중 일부가, 위에 정의된 것 처럼 메시지의 콘텐츠를 가리키는 반면, 이외의 것들은 선택된 표현(3.2절)으로 범위가 지정된다. 명확히 하기 위해 각 필드의 정의를 참고해라.
+**Note:** 일부 필드 이름들은 "Content-"라는 접두사를 가진다. 이는 비공식적인 관행이다; 이 필드들 중 일부가, 위에 정의된 것 처럼 메시지의 콘텐츠를 가리키는 반면, 이외의 것들은 선택된 표현(3.2절)으로 범위가 지정된다. 명확히 하기 위해 각 필드의 정의를 참고해라.
 
 #### 6.4.1. 콘텐츠 의미체계
 
@@ -1309,7 +1309,7 @@ URI 레퍼런스는 "타겟 URI"를 획득하기 위해 그것의 절대 형태�
 
 클라이언트 요청을 수신했을 때, 서버는 그들의 로컬 설정과 수신된 연결 컨텍스에 따라 수신된 컴포넌트들로부터 타겟 URI를 재구성한다. 이 재구성은 각 메이저 프로토콜 버전에 따라 특정되어 있다. 예를 들어, [[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 3.3절은 서버가 어떻게 HTTP/1.1 요청의 타겟 URI를 결정하는지 정의한다.
 
-_Note:_ 이전의 사양들은 재구성된 타겟 URI를, "effective request URI"라는 별개의 개념으로 정의했었다.
+**Note:** 이전의 사양들은 재구성된 타겟 URI를, "effective request URI"라는 별개의 개념으로 정의했었다.
 
 ### 7.2. Host와 :authority
 
@@ -1586,7 +1586,7 @@ HTTP는 텍스트 표현의 문자 인코딩 체계([[RFC6365](https://www.rfc-e
 
 Charset 이름들은 [[RFC2978](https://www.rfc-editor.org/info/rfc2978)]의 2절에 정의된 절차들에 따라 IANA "Character Sets" 레지스트리(<https://www.iana.org/assignments/character-sets>)에 등록되어야 한다.
 
-_Note:_ 이론적으로, charset 이름들은 [[RFC2978](https://www.rfc-editor.org/info/rfc2978)]의 2.3절에 정의된 "mime-charset" ABNF 룰에 의해 정의 된다([[Err1912](https://www.rfc-editor.org/errata/eid1912)]에 정정된대로). 해당 규칙은 "token"에 포함되지 않은 두 문자("{"와 "}")를 허용하지만, 이 문서가 작성되는 시점에 등록된 어떠한 charset도 중괄호를 포함하지 않는다([[Err5433](https://www.rfc-editor.org/errata/eid5433)] 참조).
+**Note:** 이론적으로, charset 이름들은 [[RFC2978](https://www.rfc-editor.org/info/rfc2978)]의 2.3절에 정의된 "mime-charset" ABNF 룰에 의해 정의 된다([[Err1912](https://www.rfc-editor.org/errata/eid1912)]에 정정된대로). 해당 규칙은 "token"에 포함되지 않은 두 문자("{"와 "}")를 허용하지만, 이 문서가 작성되는 시점에 등록된 어떠한 charset도 중괄호를 포함하지 않는다([[Err5433](https://www.rfc-editor.org/errata/eid5433)] 참조).
 
 #### 8.3.3. Multipart Types
 
@@ -1632,7 +1632,7 @@ Transfer-Encoding([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 6.1�
 
 "deflate" 코딩은 "zlib" 데이터 포맷[[RFC1950](https://www.rfc-editor.org/info/rfc1950)]이고 Lampel-Ziv(LZ77) 압축 알고리즘과 Huffman coding의 조합을 사용하는 "deflate" 압축된 데이터스트림[[RFC1951](https://www.rfc-editor.org/info/rfc1951)]을 포함한다.
 
-_Note:_ 일부 준수하지 않는 구현체들은 "deflate" 압축된 데이터를 zlib wrapper 없이 보내기도 한다.
+**Note:** 일부 준수하지 않는 구현체들은 "deflate" 압축된 데이터를 zlib wrapper 없이 보내기도 한다.
 
 ##### 8.4.1.3. Gzip Coding
 
@@ -1765,105 +1765,51 @@ Content-Location 값은 타겟 URI에 대한 대체가 아니다(7.1절). 표현
 
 #### 8.8.2. Last-Modified
 
-The "Last-Modified" header field in a response provides a timestamp
-indicating the date and time at which the origin server believes the
-selected representation was last modified, as determined at the
-conclusion of handling the request.
+응답의 "Last-Modified" 헤더 필드는 요청 핸들링의 결과로서 결정된대로, 오리진 서버가 선택된 표현이 마지막으로 수정됐다고 믿는 날짜와 시간을 나타내는 타임스탬프를 제공한다.
 
      Last-Modified = HTTP-date
 
-An example of its use is
+그 사용 예는
 
 Last-Modified: Tue, 15 Nov 1994 12:45:26 GMT
 
-##### 8.8.2.1. Generation
+##### 8.8.2.1. 생성
 
-An origin server SHOULD send Last-Modified for any selected
-representation for which a last modification date can be reasonably
-and consistently determined, since its use in conditional requests
-and evaluating cache freshness ([CACHING]) can substantially reduce
-unnecessary transfers and significantly improve service availability
-and scalability.
+오리진 서버는 웬만하면(SHOULD) 어느 선택된 표현이든 마지막 수정 날짜가 합리적이고 일관적이게 결정될 수 있다면 Last-Modified를 보내야 하며, 이는 조건부 요청들과 캐시 신선도 평가([[CACHING](https://www.rfc-editor.org/info/rfc9111)])에서 사용되면 불필요한 전송들을 대폭 줄이고 서비스 가용성과 확장성을 의미있는 수준으로 향상시킬 수 있기 때문이다.
 
-A representation is typically the sum of many parts behind the
-resource interface. The last-modified time would usually be the most
-recent time that any of those parts were changed. How that value is
-determined for any given resource is an implementation detail beyond
-the scope of this specification.
+전형적으로 표현은 리소스 인터페이스 뒤 많은 파트들의 합체다. 마지막 수정 시간은 보통 그 파트들 중 어느 것이든 변경된 가장 최근의 시간일 것이다. 어느 주어진 리소스에서든 그 값이 결정되는 방식은 이 사양서의 범위를 넘어서는 구현 세부사항이다.
 
-An origin server SHOULD obtain the Last-Modified value of the
-representation as close as possible to the time that it generates the
-Date field value for its response. This allows a recipient to make
-an accurate assessment of the representation's modification time,
-especially if the representation changes near the time that the
-response is generated.
+오리진 서버는 웬만하면(SHOULD) 표현의 Last-Modified 값을 가능한 응답의 Date 필드 값을 생성할 때와 최대한 가까운 시점에 획득해야 한다. 이는 수신자가 표현의 수정 시간에 대해 정확한 평가를 내릴 수 있도록 하며, 특히 표현이 응답이 생성되는 것과 가까운 시점에 변경될 때 그러하다.
 
-An origin server with a clock (as defined in Section 5.6.7) MUST NOT
-generate a Last-Modified date that is later than the server's time of
-message origination (Date, Section 6.6.1). If the last modification
-time is derived from implementation-specific metadata that evaluates
-to some time in the future, according to the origin server's clock,
-then the origin server MUST replace that value with the message
-origination date. This prevents a future modification date from
-having an adverse impact on cache validation.
+클락을 가진 오리진 서버는(5.6.7절에 정의된대로) 절대(MUST NOT) 서버의 메시지 생성 시간보다 늦은 Last-Modified 날짜를 생성해서는 안된다(Date, 6.6.1절). 만약 마지막 수정 시간이 미래의 어느 시점으로 평가되는 구현별 메타데이터에서 파생된다면, 오리진 서버의 클락을 따라, 오리진 서버는 반드시(MUST) 해당 값을 메시지 생성 날짜로 대체해야 한다. 이는 미래 수정 날짜가 캐시 검증에 부정적인 영향을 미치는 것을 방지한다.
 
-An origin server without a clock MUST NOT generate a Last-Modified
-date for a response unless that date value was assigned to the
-resource by some other system (presumably one with a clock).
+클락을 가지지 않은 오리진 서버는 날짜 값이 다른 어떤 시스템(아마 클락을 가진)에 의해 해당 리소스에 따로 할당된게 아니라면 절대(MUST NOT) 응답에 Last-Modified 날짜를 생성해서는 안된다.
 
-##### 8.8.2.2. Comparison
+##### 8.8.2.2. 비교
 
-A Last-Modified time, when used as a validator in a request, is
-implicitly weak unless it is possible to deduce that it is strong,
-using the following rules:
+Last-Modified 시간이, 요청에서 검증자로 사용될 때, 다음 규칙들을 사용해, 강한 것이라고 추측할 수 있는게 아니라면 암시ㅐ적으로 약한 검증자가 된다.
 
-- The validator is being compared by an origin server to the actual
-  current validator for the representation and,
+- 검증자가 오리진 서버에 의해 해당 표현을 위한 현재의 실제 검증자와 비교되고,
 
-- That origin server reliably knows that the associated
-  representation did not change twice during the second covered by
-  the presented validator;
+- 해당 오리진 서버는 해당 연관된 표현이 제시된 검증자에 의해 두번째로 다뤄지는 동안 두번 변경되지 않았음을 확실히 알고 있다;
 
-or
+혹은
 
-- The validator is about to be used by a client in an
-  If-Modified-Since, If-Unmodified-Since, or If-Range header field,
-  because the client has a cache entry for the associated
-  representation, and
+- 검증자가 곧 클라이언트에 의해 If-Modified-Since, If-Unmodified-Since, 혹은 If-Range 헤더 필드에서 사용될 것이고, 그 이유는 클라이언트가 연관된 표현에 대한 캐시 엔트리를 가지고 있기 때문이며, 그리고
 
-- That cache entry includes a Date value which is at least one
-  second after the Last-Modified value and the client has reason to
-  believe that they were generated by the same clock or that there
-  is enough difference between the Last-Modified and Date values to
-  make clock synchronization issues unlikely;
+- 해당 캐시 엔트리가 Last-Modified 보다 최소 1초 이후의 Date 값을 포함하고 해당 클라이언트는 그것들이 같은 클락에 의해 생성되었거나 Last-Modified와 Date 값들 사이에 클락 동기화 이슈들이 일어나지 않을만큼의 충분한 차이가 있다고 믿을 이유를 가지고 있다;
 
-or
+혹은
 
-- The validator is being compared by an intermediate cache to the
-  validator stored in its cache entry for the representation, and
+- 검증자가 중간 캐시에 의해 해당 표현을 위한 캐시 엔트리에 저장된 검증자와 비교되며, 그리고
 
-- That cache entry includes a Date value which is at least one
-  second after the Last-Modified value and the cache has reason to
-  believe that they were generated by the same clock or that there
-  is enough difference between the Last-Modified and Date values to
-  make clock synchronization issues unlikely.
+- 해당 캐시 엔트리는 Last-Modified 값 보다 최소 1초 이후의 Date 값을 포함하고 해당 캐시가 그것들이 같은 클락에 의해 생성되었거나 Last-Modified와 Date 값들 사이에 클락 동기화 이슈들이 일어나지 않을만큼의 충분한 차이가 있다고 믿을 이유를 가지고 있다.
 
-This method relies on the fact that if two different responses were
-sent by the origin server during the same second, but both had the
-same Last-Modified time, then at least one of those responses would
-have a Date value equal to its Last-Modified time.
+이 방법은 만약 다른 두 응답들이 같은 초(second)에 오리진 서버에 의해 보내졌지만, 둘 다 같은 Last-Modified 시간을 가졌다면, 적어도 그 응답들 중 하나는 그 Last-Modified 시간과 일치하는 Date 값을 가졌을 것이라는 사실에 의존한다.
 
 #### 8.8.3. ETag
 
-The "ETag" field in a response provides the current entity tag for
-the selected representation, as determined at the conclusion of
-handling the request. An entity tag is an opaque validator for
-differentiating between multiple representations of the same
-resource, regardless of whether those multiple representations are
-due to resource state changes over time, content negotiation
-resulting in multiple representations being valid at the same time,
-or both. An entity tag consists of an opaque quoted string, possibly
-prefixed by a weakness indicator.
+응답의 "ETag" 필드는 요청을 핸들링한 결과에서 결정된대로, 선택된 표현에 대한 현재 엔티티 태그를 제공한다. 엔티티 태그는 같은 리소스의 여러 표현들을 구별하기 위한 불투명한 검증자이며, 이는 그 여러 표현들이 시간에 따른 리소스 상태 변화들에 의한 것인지, 동시에 유효하게 되는 여러 표현들로 나타나는 콘텐츠 협상에 의한 것인지, 혹은 둘 다에 의한 것인지는 관계 없다. 엔티티 태그는 약함을 나타내는 접두사로 시작할 수 있는, 불투명한 인용 문자열로 구성된다.
 
      ETag       = entity-tag
 
@@ -1871,36 +1817,21 @@ prefixed by a weakness indicator.
      weak       = %s"W/"
      opaque-tag = DQUOTE *etagc DQUOTE
      etagc      = %x21 / %x23-7E / obs-text
-                ; VCHAR except double quotes, plus obs-text
+                ; 쌍따옴표를 제외한 VCHAR, 더하기 obs-text
 
-      |  *Note:* Previously, opaque-tag was defined to be a quoted-
-      |  string ([RFC2616], Section 3.11); thus, some recipients might
-      |  perform backslash unescaping.  Servers therefore ought to avoid
-      |  backslash characters in entity tags.
+**Note:** 이전에, opaque-tag는 quoted-string으로 정의됐었다([[RFC2616](https://www.rfc-editor.org/info/rfc2616), 3.11절]); 그러므로, 일부 수신자들은 백슬래시 언이스케이핑을 수행할 수 있을 것이다. 서버는 따라서 엔티티 태그들에서 백슬래시 문자들을 피해야 한다.
 
-An entity tag can be more reliable for validation than a modification
-date in situations where it is inconvenient to store modification
-dates, where the one-second resolution of HTTP-date values is not
-sufficient, or where modification dates are not consistently
-maintained.
+엔티티 태그는 수정 날짜들을 저장하기 불편하거나, HTTP-date 값들의 1초 수준 정확도가 충분치 않거나, 혹은 수정 날짜들이 일관적으로 유지되지 않는 상황들에서 수정 날짜보다 검증에 있어 더 신뢰성 있을 수 있다.
 
-Examples:
+예시:
 
 ETag: "xyzzy"
 ETag: W/"xyzzy"
 ETag: ""
 
-An entity tag can be either a weak or strong validator, with strong
-being the default. If an origin server provides an entity tag for a
-representation and the generation of that entity tag does not satisfy
-all of the characteristics of a strong validator (Section 8.8.1),
-then the origin server MUST mark the entity tag as weak by prefixing
-its opaque value with "W/" (case-sensitive).
+엔티티 태그는 약하거나 강한 검증자 모두 될 수 있으며, 강한 상태가 기본이다. 만약 오리진 서버가 표현을 위한 엔티티 태그를 제공하고 그 엔티티 태그의 생성이 강한 검증자의 모든 특성들을 만족시키지 못한다면(8.8.1절), 오리진 서버는 반드시(MUST) 해당 엔티티 태그의 불투명 값에 "W/"(대소문자 구별) 접두사를 붙임으로써 약한 것으로 표시해야 한다.
 
-A sender MAY send the ETag field in a trailer section (see
-Section 6.5). However, since trailers are often ignored, it is
-preferable to send ETag as a header field unless the entity tag is
-generated while sending the content.
+발신자는 아마(MAY) 트레일러 섹션에 ETag 필드를 보낼 수 있을 것이다(6.5절 참조). 그러나, 트레일러들은 종종 무시되기 때문에, 해당 엔티티 태그가 콘텐츠를 보내는 동안 생성된게 아니라면 헤더 필드에 ETag를 보내는 것을 선호할 수 있다.
 
 ##### 8.8.3.1. Generation
 
