@@ -173,8 +173,8 @@ than English.
 - [8.7. Content-Location](#87-content-location)
 - [8.8. 검증자 필드들](#88-검증자-필드들)
 - - [8.8.1. 약한 것 대 강한 것](#881-약한-것-대-강한-것)
-- - [8.8.2. Last-Modified]()
-- - - [8.8.2.1. Generation]()
+- - [8.8.2. Last-Modified](#882-last-modified)
+- - - [8.8.2.1. 생성](#8821-생성)
 - - -[ 8.8.2.2. Comparison]()
 - - [8.8.3. ETag]()
 - - - [8.8.3.1. Generation]()
@@ -1773,40 +1773,17 @@ Content-Location 값은 타겟 URI에 대한 대체가 아니다(7.1절). 표현
 
 Last-Modified: Tue, 15 Nov 1994 12:45:26 GMT
 
-##### 8.8.2.1. Generation
+##### 8.8.2.1. 생성
 
-An origin server SHOULD send Last-Modified for any selected
-representation for which a last modification date can be reasonably
-and consistently determined, since its use in conditional requests
-and evaluating cache freshness ([CACHING]) can substantially reduce
-unnecessary transfers and significantly improve service availability
-and scalability.
+오리진 서버는 웬만하면(SHOULD) 어느 선택된 표현이든 마지막 수정 날짜가 합리적이고 일관적이게 결정될 수 있다면 Last-Modified를 보내야 하며, 이는 조건부 요청들과 캐시 신선도 평가([[CACHING](https://www.rfc-editor.org/info/rfc9111)])에서 사용되면 불필요한 전송들을 대폭 줄이고 서비스 가용성과 확장성을 의미있는 수준으로 향상시킬 수 있기 때문이다.
 
-A representation is typically the sum of many parts behind the
-resource interface. The last-modified time would usually be the most
-recent time that any of those parts were changed. How that value is
-determined for any given resource is an implementation detail beyond
-the scope of this specification.
+전형적으로 표현은 리소스 인터페이스 뒤 많은 파트들의 합체다. 마지막 수정 시간은 보통 그 파트들 중 어느 것이든 변경된 가장 최근의 시간일 것이다. 어느 주어진 리소스에서든 그 값이 결정되는 방식은 이 사양서의 범위를 넘어서는 구현 세부사항이다.
 
-An origin server SHOULD obtain the Last-Modified value of the
-representation as close as possible to the time that it generates the
-Date field value for its response. This allows a recipient to make
-an accurate assessment of the representation's modification time,
-especially if the representation changes near the time that the
-response is generated.
+오리진 서버는 웬만하면(SHOULD) 표현의 Last-Modified 값을 가능한 응답의 Date 필드 값을 생성할 때와 최대한 가까운 시점에 획득해야 한다. 이는 수신자가 표현의 수정 시간에 대해 정확한 평가를 내릴 수 있도록 하며, 특히 표현이 응답이 생성되는 것과 가까운 시점에 변경될 때 그러하다.
 
-An origin server with a clock (as defined in Section 5.6.7) MUST NOT
-generate a Last-Modified date that is later than the server's time of
-message origination (Date, Section 6.6.1). If the last modification
-time is derived from implementation-specific metadata that evaluates
-to some time in the future, according to the origin server's clock,
-then the origin server MUST replace that value with the message
-origination date. This prevents a future modification date from
-having an adverse impact on cache validation.
+클락을 가진 오리진 서버는(5.6.7절에 정의된대로) 절대(MUST NOT) 서버의 메시지 생성 시간보다 늦은 Last-Modified 날짜를 생성해서는 안된다(Date, 6.6.1절). 만약 마지막 수정 시간이 미래의 어느 시점으로 평가되는 구현별 메타데이터에서 파생된다면, 오리진 서버의 클락을 따라, 오리진 서버는 반드시(MUST) 해당 값을 메시지 생성 날짜로 대체해야 한다. 이는 미래 수정 날짜가 캐시 검증에 부정적인 영향을 미치는 것을 방지한다.
 
-An origin server without a clock MUST NOT generate a Last-Modified
-date for a response unless that date value was assigned to the
-resource by some other system (presumably one with a clock).
+클락을 가지지 않은 오리진 서버는 날짜 값이 다른 어떤 시스템(아마 클락을 가진)에 의해 해당 리소스에 따로 할당된게 아니라면 절대(MUST NOT) 응답에 Last-Modified 날짜를 생성해서는 안된다.
 
 ##### 8.8.2.2. Comparison
 
