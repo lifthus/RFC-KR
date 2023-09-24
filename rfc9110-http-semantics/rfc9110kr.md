@@ -1765,14 +1765,11 @@ Content-Location 값은 타겟 URI에 대한 대체가 아니다(7.1절). 표현
 
 #### 8.8.2. Last-Modified
 
-The "Last-Modified" header field in a response provides a timestamp
-indicating the date and time at which the origin server believes the
-selected representation was last modified, as determined at the
-conclusion of handling the request.
+응답의 "Last-Modified" 헤더 필드는 요청 핸들링의 결과로서 결정된대로, 오리진 서버가 선택된 표현이 마지막으로 수정됐다고 믿는 날짜와 시간을 나타내는 타임스탬프를 제공한다.
 
      Last-Modified = HTTP-date
 
-An example of its use is
+그 사용 예는
 
 Last-Modified: Tue, 15 Nov 1994 12:45:26 GMT
 
