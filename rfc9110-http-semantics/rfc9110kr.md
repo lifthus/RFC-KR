@@ -1843,32 +1843,26 @@ ETag: ""
 
 ##### 8.8.3.2. 비교
 
-There are two entity tag comparison functions, depending on whether
-or not the comparison context allows the use of weak validators:
+비교 컨텐스트에서 약한 검증자들의 사용이 허용되는지에 따라, 두 가지 엔티티 태그 비교 함수들이 존재한다.
 
-"Strong comparison": two entity tags are equivalent if both are not
-weak and their opaque-tags match character-by-character.
+"강한 비교": 두 엔티티 태그들은 만약 둘 다 약하지 않고 그것들의 불투명-태그들이 문자마다 매치되면 동등하다.
 
-"Weak comparison": two entity tags are equivalent if their opaque-
-tags match character-by-character, regardless of either or both
-being tagged as "weak".
+"약한 비교": 두 엔티티 태그들은 그것들의 불투명-태그들이 문자마다 매치되면, 그것들 중 하나 혹은 둘 다 "약한 것"으로 태그됐는지와는 관계 없이 동등하다.
 
-The example below shows the results for a set of entity tag pairs and
-both the weak and strong comparison function results:
+아래의 예시는 엔티티 태그 쌍들의 집합에 대한 약한 그리고 강한 비교 함수 둘 다의 결과들을 보여준다:
 
-+========+========+===================+=================+
+<center>
+
 | ETag 1 | ETag 2 | Strong Comparison | Weak Comparison |
-+========+========+===================+=================+
-| W/"1" | W/"1" | no match | match |
-+--------+--------+-------------------+-----------------+
-| W/"1" | W/"2" | no match | no match |
-+--------+--------+-------------------+-----------------+
-| W/"1" | "1" | no match | match |
-+--------+--------+-------------------+-----------------+
-| "1" | "1" | match | match |
-+--------+--------+-------------------+-----------------+
+| ------ | ------ | ----------------- | --------------- |
+| W/"1"  | W/"1"  | 불일치            | 일치            |
+| W/"1"  | W/"2"  | 불일치            | 불일치          |
+| W/"1"  | "1"    | 불일치            | 일치            |
+| "1"    | "1"    | 일치              | 일치            |
 
-                            Table 3
+Table 3
+
+</center>
 
 ##### 8.8.3.3. 예시: 콘텐츠-협상된 리소스들에서의 다양한 엔티티 태그들
 
