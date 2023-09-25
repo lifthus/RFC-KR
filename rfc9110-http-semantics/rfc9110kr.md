@@ -178,8 +178,8 @@ than English.
 - - -[ 8.8.2.2. 비교](#8822-비교)
 - - [8.8.3. ETag](#883-etag)
 - - - [8.8.3.1. 생성](#8831-생성)
-- - - [8.8.3.2. Comparison]()
-- - - [8.8.3.3. Example: Entity Tags Varying on Content-Negotiated Resources]()
+- - - [8.8.3.2. 비교](#8832-비교)
+- - - [8.8.3.3. 예시: 콘텐츠-협상된 리소스들에서의 다양한 엔티티 태그들](#8833-예시-콘텐츠-협상된-리소스들에서의-다양한-엔티티-태그들)
 
 9. Methods
    9.1. Overview
@@ -1841,7 +1841,7 @@ ETag: ""
 
 오리진 서버는 웬만하면(SHOULD) 변경의 감지가 합리적이고 일관적으로 결정될 수 있다면 어떤 선택된 표현이든 ETag를 보내야 하며, 이는 조건부 요청들과 캐시 신선도 평가([[CACHING](https://www.rfc-editor.org/info/rfc9111)])에서의 엔티티 태그 사용이 불필요한 전송들을 대폭 줄이고 서비스의 가용성, 확장성, 그리고 신뢰성을 의미있는 수준으로 향상시킬 수 있기 때문이다.
 
-##### 8.8.3.2. Comparison
+##### 8.8.3.2. 비교
 
 There are two entity tag comparison functions, depending on whether
 or not the comparison context allows the use of weak validators:
@@ -1870,7 +1870,7 @@ both the weak and strong comparison function results:
 
                             Table 3
 
-##### 8.8.3.3. Example: Entity Tags Varying on Content-Negotiated Resources
+##### 8.8.3.3. 예시: 콘텐츠-협상된 리소스들에서의 다양한 엔티티 태그들
 
 Consider a resource that is subject to content negotiation
 (Section 12), and where the representations sent in response to a GET
