@@ -1866,57 +1866,46 @@ Table 3
 
 ##### 8.8.3.3. 예시: 콘텐츠-협상된 리소스들에서의 다양한 엔티티 태그들
 
-Consider a resource that is subject to content negotiation
-(Section 12), and where the representations sent in response to a GET
-request vary based on the Accept-Encoding request header field
-(Section 12.5.3):
+콘텐츠 협상의 대상이 되는 한 리소스를 고려해보자(12절), 그리고 GET 요청에 대한 응답에서 보내진 표현들이 Accept-Encoding 요청 헤더 필드에 기반하여 다양하게 있다고 하자(12.5.3절):
 
 > > Request:
 
-GET /index HTTP/1.1
-Host: www.example.com
-Accept-Encoding: gzip
+     GET /index HTTP/1.1
+     Host: www.example.com
+     Accept-Encoding: gzip
 
-In this case, the response might or might not use the gzip content
-coding. If it does not, the response might look like:
-
-> > Response:
-
-HTTP/1.1 200 OK
-Date: Fri, 26 Mar 2010 00:05:00 GMT
-ETag: "123-a"
-Content-Length: 70
-Vary: Accept-Encoding
-Content-Type: text/plain
-
-Hello World!
-Hello World!
-Hello World!
-Hello World!
-Hello World!
-
-An alternative representation that does use gzip content coding would
-be:
+이 경우에, 응답은 gzip 콘텐츠 코딩을 사용할 수도 안할 수도 있다. 만약 사용하지 않으면, 응답은 다음과 같이 보일 수 있을 것이다:
 
 > > Response:
 
-HTTP/1.1 200 OK
-Date: Fri, 26 Mar 2010 00:05:00 GMT
-ETag: "123-b"
-Content-Length: 43
-Vary: Accept-Encoding
-Content-Type: text/plain
-Content-Encoding: gzip
+     HTTP/1.1 200 OK
+     Date: Fri, 26 Mar 2010 00:05:00 GMT
+     ETag: "123-a"
+     Content-Length: 70
+     Vary: Accept-Encoding
+     Content-Type: text/plain
 
-...binary data...
+     Hello World!
+     Hello World!
+     Hello World!
+     Hello World!
+     Hello World!
 
-      |  *Note:* Content codings are a property of the representation
-      |  data, so a strong entity tag for a content-encoded
-      |  representation has to be distinct from the entity tag of an
-      |  unencoded representation to prevent potential conflicts during
-      |  cache updates and range requests.  In contrast, transfer
-      |  codings (Section 7 of [HTTP/1.1]) apply only during message
-      |  transfer and do not result in distinct entity tags.
+gzip 콘텐츠 코딩을 사용한 다른 표현은 다음과 같을 것이다:
+
+> > Response:
+
+     HTTP/1.1 200 OK
+     Date: Fri, 26 Mar 2010 00:05:00 GMT
+     ETag: "123-b"
+     Content-Length: 43
+     Vary: Accept-Encoding
+     Content-Type: text/plain
+     Content-Encoding: gzip
+
+     ...binary data...
+
+**Note:** 콘텐츠 코딩들은 표현 데이터의 속성이므로, 콘텐츠-인코딩된 표현을 위한 강한 엔티티 태그는 캐시 업데이트와 범위 요청들에서의 잠재적인 충돌들을 방지하기 위해 인코딩되지 않은 표현의 엔티티 태그로부터 구분되어야 한다. 반대로, 전송 코딩들([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 7절)은 오직 메시지 전송 동안에만 적용되며 구분되는 엔티티 태그들로 나타나지는 않는다.
 
 ## 9. Methods
 
