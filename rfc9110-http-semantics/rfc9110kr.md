@@ -177,9 +177,9 @@ than English.
 - - - [8.8.2.1. 생성](#8821-생성)
 - - -[ 8.8.2.2. 비교](#8822-비교)
 - - [8.8.3. ETag](#883-etag)
-- - - [8.8.3.1. Generation]()
-- - - [8.8.3.2. Comparison]()
-- - - [8.8.3.3. Example: Entity Tags Varying on Content-Negotiated Resources]()
+- - - [8.8.3.1. 생성](#8831-생성)
+- - - [8.8.3.2. 비교](#8832-비교)
+- - - [8.8.3.3. 예시: 콘텐츠-협상된 리소스들에서의 다양한 엔티티 태그들](#8833-예시-콘텐츠-협상된-리소스들에서의-다양한-엔티티-태그들)
 
 9. Methods
    9.1. Overview
@@ -1833,112 +1833,79 @@ ETag: ""
 
 발신자는 아마(MAY) 트레일러 섹션에 ETag 필드를 보낼 수 있을 것이다(6.5절 참조). 그러나, 트레일러들은 종종 무시되기 때문에, 해당 엔티티 태그가 콘텐츠를 보내는 동안 생성된게 아니라면 헤더 필드에 ETag를 보내는 것을 선호할 수 있다.
 
-##### 8.8.3.1. Generation
+##### 8.8.3.1. 생성
 
-The principle behind entity tags is that only the service author
-knows the implementation of a resource well enough to select the most
-accurate and efficient validation mechanism for that resource, and
-that any such mechanism can be mapped to a simple sequence of octets
-for easy comparison. Since the value is opaque, there is no need for
-the client to be aware of how each entity tag is constructed.
+엔티티 태그들 뒤에 있는 원리는 오직 서비스 작성자만이 해당 리소스를 위한 가장 정확하고 효율적인 검증 메커니즘을 선택할 수 있을 정도로 충분히 리소스의 구현을 알고 있으며, 그러한 어떤 메커니즘이든 쉬운 비교를 위해 간단한 옥텟들의 시퀀스로 매핑될 수 있다는 것이다. 값이 불투명하기 때문에, 클라이언트는 각 엔티티 태그가 어떻게 생성되는지 알 필요가 없다.
 
-For example, a resource that has implementation-specific versioning
-applied to all changes might use an internal revision number, perhaps
-combined with a variance identifier for content negotiation, to
-accurately differentiate between representations. Other
-implementations might use a collision-resistant hash of
-representation content, a combination of various file attributes, or
-a modification timestamp that has sub-second resolution.
+예를 들어, 모든 변경들에 적용된 구현별 버저닝을 가진 리소스는, 아마 콘텐츠 협상을 위한 변경 식별자와 조합되어, 표현들을 정확히 구별하기 위해 내부적인 개정 번호를 사용할 수 있을 것이다. 다른 구현체들은 표현 콘텐츠의 충돌-저항 해시, 다양한 파일 속성들의 조합, 혹은 sub-second 정확도를 가진 타임스탬프 수정을 사용할 수도 있다.
 
-An origin server SHOULD send an ETag for any selected representation
-for which detection of changes can be reasonably and consistently
-determined, since the entity tag's use in conditional requests and
-evaluating cache freshness ([CACHING]) can substantially reduce
-unnecessary transfers and significantly improve service availability,
-scalability, and reliability.
+오리진 서버는 웬만하면(SHOULD) 변경의 감지가 합리적이고 일관적으로 결정될 수 있다면 어떤 선택된 표현이든 ETag를 보내야 하며, 이는 조건부 요청들과 캐시 신선도 평가([[CACHING](https://www.rfc-editor.org/info/rfc9111)])에서의 엔티티 태그 사용이 불필요한 전송들을 대폭 줄이고 서비스의 가용성, 확장성, 그리고 신뢰성을 의미있는 수준으로 향상시킬 수 있기 때문이다.
 
-##### 8.8.3.2. Comparison
+##### 8.8.3.2. 비교
 
-There are two entity tag comparison functions, depending on whether
-or not the comparison context allows the use of weak validators:
+비교 컨텐스트에서 약한 검증자들의 사용이 허용되는지에 따라, 두 가지 엔티티 태그 비교 함수들이 존재한다.
 
-"Strong comparison": two entity tags are equivalent if both are not
-weak and their opaque-tags match character-by-character.
+"강한 비교": 두 엔티티 태그들은 만약 둘 다 약하지 않고 그것들의 불투명-태그들이 문자마다 매치되면 동등하다.
 
-"Weak comparison": two entity tags are equivalent if their opaque-
-tags match character-by-character, regardless of either or both
-being tagged as "weak".
+"약한 비교": 두 엔티티 태그들은 그것들의 불투명-태그들이 문자마다 매치되면, 그것들 중 하나 혹은 둘 다 "약한 것"으로 태그됐는지와는 관계 없이 동등하다.
 
-The example below shows the results for a set of entity tag pairs and
-both the weak and strong comparison function results:
+아래의 예시는 엔티티 태그 쌍들의 집합에 대한 약한 그리고 강한 비교 함수 둘 다의 결과들을 보여준다:
 
-+========+========+===================+=================+
+<center>
+
 | ETag 1 | ETag 2 | Strong Comparison | Weak Comparison |
-+========+========+===================+=================+
-| W/"1" | W/"1" | no match | match |
-+--------+--------+-------------------+-----------------+
-| W/"1" | W/"2" | no match | no match |
-+--------+--------+-------------------+-----------------+
-| W/"1" | "1" | no match | match |
-+--------+--------+-------------------+-----------------+
-| "1" | "1" | match | match |
-+--------+--------+-------------------+-----------------+
+| ------ | ------ | ----------------- | --------------- |
+| W/"1"  | W/"1"  | 불일치            | 일치            |
+| W/"1"  | W/"2"  | 불일치            | 불일치          |
+| W/"1"  | "1"    | 불일치            | 일치            |
+| "1"    | "1"    | 일치              | 일치            |
 
-                            Table 3
+Table 3
 
-##### 8.8.3.3. Example: Entity Tags Varying on Content-Negotiated Resources
+</center>
 
-Consider a resource that is subject to content negotiation
-(Section 12), and where the representations sent in response to a GET
-request vary based on the Accept-Encoding request header field
-(Section 12.5.3):
+##### 8.8.3.3. 예시: 콘텐츠-협상된 리소스들에서의 다양한 엔티티 태그들
+
+콘텐츠 협상의 대상이 되는 한 리소스를 고려해보자(12절), 그리고 GET 요청에 대한 응답에서 보내진 표현들이 Accept-Encoding 요청 헤더 필드에 기반하여 다양하게 있다고 하자(12.5.3절):
 
 > > Request:
 
-GET /index HTTP/1.1
-Host: www.example.com
-Accept-Encoding: gzip
+     GET /index HTTP/1.1
+     Host: www.example.com
+     Accept-Encoding: gzip
 
-In this case, the response might or might not use the gzip content
-coding. If it does not, the response might look like:
-
-> > Response:
-
-HTTP/1.1 200 OK
-Date: Fri, 26 Mar 2010 00:05:00 GMT
-ETag: "123-a"
-Content-Length: 70
-Vary: Accept-Encoding
-Content-Type: text/plain
-
-Hello World!
-Hello World!
-Hello World!
-Hello World!
-Hello World!
-
-An alternative representation that does use gzip content coding would
-be:
+이 경우에, 응답은 gzip 콘텐츠 코딩을 사용할 수도 안할 수도 있다. 만약 사용하지 않으면, 응답은 다음과 같이 보일 수 있을 것이다:
 
 > > Response:
 
-HTTP/1.1 200 OK
-Date: Fri, 26 Mar 2010 00:05:00 GMT
-ETag: "123-b"
-Content-Length: 43
-Vary: Accept-Encoding
-Content-Type: text/plain
-Content-Encoding: gzip
+     HTTP/1.1 200 OK
+     Date: Fri, 26 Mar 2010 00:05:00 GMT
+     ETag: "123-a"
+     Content-Length: 70
+     Vary: Accept-Encoding
+     Content-Type: text/plain
 
-...binary data...
+     Hello World!
+     Hello World!
+     Hello World!
+     Hello World!
+     Hello World!
 
-      |  *Note:* Content codings are a property of the representation
-      |  data, so a strong entity tag for a content-encoded
-      |  representation has to be distinct from the entity tag of an
-      |  unencoded representation to prevent potential conflicts during
-      |  cache updates and range requests.  In contrast, transfer
-      |  codings (Section 7 of [HTTP/1.1]) apply only during message
-      |  transfer and do not result in distinct entity tags.
+gzip 콘텐츠 코딩을 사용한 다른 표현은 다음과 같을 것이다:
+
+> > Response:
+
+     HTTP/1.1 200 OK
+     Date: Fri, 26 Mar 2010 00:05:00 GMT
+     ETag: "123-b"
+     Content-Length: 43
+     Vary: Accept-Encoding
+     Content-Type: text/plain
+     Content-Encoding: gzip
+
+     ...binary data...
+
+**Note:** 콘텐츠 코딩들은 표현 데이터의 속성이므로, 콘텐츠-인코딩된 표현을 위한 강한 엔티티 태그는 캐시 업데이트와 범위 요청들에서의 잠재적인 충돌들을 방지하기 위해 인코딩되지 않은 표현의 엔티티 태그로부터 구분되어야 한다. 반대로, 전송 코딩들([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 7절)은 오직 메시지 전송 동안에만 적용되며 구분되는 엔티티 태그들로 나타나지는 않는다.
 
 ## 9. Methods
 
