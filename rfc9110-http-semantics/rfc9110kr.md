@@ -177,7 +177,7 @@ than English.
 - - - [8.8.2.1. 생성](#8821-생성)
 - - -[ 8.8.2.2. 비교](#8822-비교)
 - - [8.8.3. ETag](#883-etag)
-- - - [8.8.3.1. Generation]()
+- - - [8.8.3.1. 생성](#8831-생성)
 - - - [8.8.3.2. Comparison]()
 - - - [8.8.3.3. Example: Entity Tags Varying on Content-Negotiated Resources]()
 
@@ -1833,29 +1833,13 @@ ETag: ""
 
 발신자는 아마(MAY) 트레일러 섹션에 ETag 필드를 보낼 수 있을 것이다(6.5절 참조). 그러나, 트레일러들은 종종 무시되기 때문에, 해당 엔티티 태그가 콘텐츠를 보내는 동안 생성된게 아니라면 헤더 필드에 ETag를 보내는 것을 선호할 수 있다.
 
-##### 8.8.3.1. Generation
+##### 8.8.3.1. 생성
 
-The principle behind entity tags is that only the service author
-knows the implementation of a resource well enough to select the most
-accurate and efficient validation mechanism for that resource, and
-that any such mechanism can be mapped to a simple sequence of octets
-for easy comparison. Since the value is opaque, there is no need for
-the client to be aware of how each entity tag is constructed.
+엔티티 태그들 뒤에 있는 원리는 오직 서비스 작성자만이 해당 리소스를 위한 가장 정확하고 효율적인 검증 메커니즘을 선택할 수 있을 정도로 충분히 리소스의 구현을 알고 있으며, 그러한 어떤 메커니즘이든 쉬운 비교를 위해 간단한 옥텟들의 시퀀스로 매핑될 수 있다는 것이다. 값이 불투명하기 때문에, 클라이언트는 각 엔티티 태그가 어떻게 생성되는지 알 필요가 없다.
 
-For example, a resource that has implementation-specific versioning
-applied to all changes might use an internal revision number, perhaps
-combined with a variance identifier for content negotiation, to
-accurately differentiate between representations. Other
-implementations might use a collision-resistant hash of
-representation content, a combination of various file attributes, or
-a modification timestamp that has sub-second resolution.
+예를 들어, 모든 변경들에 적용된 구현별 버저닝을 가진 리소스는, 아마 콘텐츠 협상을 위한 변경 식별자와 조합되어, 표현들을 정확히 구별하기 위해 내부적인 개정 번호를 사용할 수 있을 것이다. 다른 구현체들은 표현 콘텐츠의 충돌-저항 해시, 다양한 파일 속성들의 조합, 혹은 sub-second 정확도를 가진 타임스탬프 수정을 사용할 수도 있다.
 
-An origin server SHOULD send an ETag for any selected representation
-for which detection of changes can be reasonably and consistently
-determined, since the entity tag's use in conditional requests and
-evaluating cache freshness ([CACHING]) can substantially reduce
-unnecessary transfers and significantly improve service availability,
-scalability, and reliability.
+오리진 서버는 웬만하면(SHOULD) 변경의 감지가 합리적이고 일관적으로 결정될 수 있다면 어떤 선택된 표현이든 ETag를 보내야 하며, 이는 조건부 요청들과 캐시 신선도 평가([[CACHING](https://www.rfc-editor.org/info/rfc9111)])에서의 엔티티 태그 사용이 불필요한 전송들을 대폭 줄이고 서비스의 가용성, 확장성, 그리고 신뢰성을 의미있는 수준으로 향상시킬 수 있기 때문이다.
 
 ##### 8.8.3.2. Comparison
 
