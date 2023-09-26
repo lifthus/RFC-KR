@@ -5174,25 +5174,15 @@ Heuristic하게 캐시 가능한 것으로 정의된 상태 코드를 갖는 응
 
 본 명세서의 범위를 벗어난 추가적인 상태 코드는 HTTP에서 사용하도록 규정되어 있다. 이러한 모든 상태 코드는 16.2절에 설명된 것과 같이 “Hypertext Transfer Protocol (HTTP) Status Code Registry”에 등록해야 한다.
 
-15.2. Informational 1xx
+### 15.2. Informational 1xx
 
-The 1xx (Informational) class of status code indicates an interim
-response for communicating connection status or request progress
-prior to completing the requested action and sending a final
-response. Since HTTP/1.0 did not define any 1xx status codes, a
-server MUST NOT send a 1xx response to an HTTP/1.0 client.
+1xx(Informational) 상태 코드 클래스는 요청된 작업을 완료하고 최종 응답을 전송하기 전에 연결 상태 또는 요청 진행 상황을 전달하기 위한 중간 응답을 나타낸다. HTTP/1.0 은 어떠한 1xx 상태 코드가 정의되어 있지 않으므로, 서버는 HTTP/1.0 클라이언트에 1xx 응답을 절대(MUST NOT) 전송해서는 안 된다.
 
-A 1xx response is terminated by the end of the header section; it
-cannot contain content or trailers.
+1xx 응답은 헤더 섹션이 끝날 때 종료되며, 콘텐츠나 트레일러를 포함 할 수 없다.
 
-A client MUST be able to parse one or more 1xx responses received
-prior to a final response, even if the client does not expect one. A
-user agent MAY ignore unexpected 1xx responses.
+클라이언트는 최종 응답 전에 수신된 하나 이상의 1xx 응답을 클라이언트가 예상하지 못하더라도 반드시(MUST) 파싱할 수 있어야 한다. 사용자 에이전트는 예상지 못한 1xx 응답을 아마(MAY) 무시할 수 있다.
 
-A proxy MUST forward 1xx responses unless the proxy itself requested
-the generation of the 1xx response. For example, if a proxy adds an
-"Expect: 100-continue" header field when it forwards a request, then
-it need not forward the corresponding 100 (Continue) response(s).
+프록시는 프록시 자체가 1xx 응답 생성을 요청하지 않는 한 반드시(MUST) 1xx 응답을 전달해야 한다. 예를 들어 프록시가 요청을 전달할 때 “예상: 100-continue” 헤더 필드를 추가하는 경우, 해당 100(Continue) 응답을 전달할 필요가 없다.
 
 15.2.1. 100 Continue
 
