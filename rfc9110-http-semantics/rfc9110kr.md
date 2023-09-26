@@ -399,7 +399,7 @@ HTTP/2([RFC7540](https://datatracker.ietf.org/doc/html/rfc7540))에서는 충분
 
 HTTP의 세가지 모든 major 버전들은 이 문서에서 정의된 의미체계에 의존한다. 이들은 사용하는 상황에 따라 각각 이점과 한계점이 있기 때문에 서로를 완전히 폐기하지는 않는다. 이들의 구현에 대해서는 각각의 특정한 상황에 따라 가장 적합한 전송 방식과 메시징 구문이 선택되기를 기대된다.
 
-이 HTTP에 대한 개정은 각 major 프로토콜 버전들이 같은 핵심적인 의미체계를 공유하며 독립적으로 진행하도록 하기 위해 의미체계 정의 (이 문서)와 캐싱([RFC7234](https://datatracker.ietf.org/doc/html/rfc7234))을 현재 HTTP/1.1 메시징 구문([RFC7231](https://datatracker.ietf.org/doc/html/rfc7231))에서 분리한다.
+이 HTTP에 대한 개정은 각 major 프로토콜 버전들이 같은 핵심적인 의미체계를 공유하며 독립적으로 진행하도록 하기 위해 의미체계 정의(이 문서)와 캐싱([RFC7234](https://datatracker.ietf.org/doc/html/rfc7234))을 현재 HTTP/1.1 메시징 구문([RFC7231](https://datatracker.ietf.org/doc/html/rfc7231))에서 분리한다.
 
 ### 1.3. 핵심 의미체계
 
