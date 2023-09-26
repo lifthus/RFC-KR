@@ -772,9 +772,6 @@ HTTP는 동등함을 결정하기 위해 특별한 메소드를 사용하는 것
 
 두 오리진은 그들이 사용하는 체계, 호스트, 또는 포트가 다르면 구분된다. 구별되는 두 오리진이 같은 개체에 의해 제어되는게 확실할 때 조차, 오리진들 아래의 두 네임스페이스들은 해당 오리진에 대해 권한있는 서버에 의해 명시적으로 별칭이 지정되지 않은 한 구별된다.
 
-Origin is also used within HTML and related Web protocols, beyond the
-scope of this document, as described in [RFC6454].
-
 오리진은 또한, 이 문서의 범위를 넘어, [[RFC6454](https://datatracker.ietf.org/doc/html/rfc6454)]에 서술된대로, HTML 그리고 그와 관련된 웹 프로토콜에서도 사용된다.
 
 ### 4.3.2. http 오리진들
