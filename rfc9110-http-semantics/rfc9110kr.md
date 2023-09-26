@@ -5184,22 +5184,13 @@ Heuristic하게 캐시 가능한 것으로 정의된 상태 코드를 갖는 응
 
 프록시는 프록시 자체가 1xx 응답 생성을 요청하지 않는 한 반드시(MUST) 1xx 응답을 전달해야 한다. 예를 들어 프록시가 요청을 전달할 때 “예상: 100-continue” 헤더 필드를 추가하는 경우, 해당 100(Continue) 응답을 전달할 필요가 없다.
 
-15.2.1. 100 Continue
+#### 15.2.1. 100 Continue
 
-The 100 (Continue) status code indicates that the initial part of a
-request has been received and has not yet been rejected by the
-server. The server intends to send a final response after the
-request has been fully received and acted upon.
+100(Continue) 상태 코드는 요청의 초기 부분이 수신되었으나 아직 서버에 의해 거절되지 않았음을 나타낸다. 서버는 요청을 완전히 수신하고 조치된 후에 최종 응답을 전송하고자 한다.
 
-When the request contains an Expect header field that includes a
-100-continue expectation, the 100 response indicates that the server
-wishes to receive the request content, as described in
-Section 10.1.1. The client ought to continue sending the request and
-discard the 100 response.
+요청에 100-continue 기대가 포함된 Expect 헤더 필드를 포함하는 경우, 100 응답은 10.1.1절에 설명된 대로 서버가 요청 콘텐츠를 수신하기를 원한다는 것을 나타낸다. 클라이언트는 요청을 계속 전송하고 100 응답을 폐기해야 한다.
 
-If the request did not contain an Expect header field containing the
-100-continue expectation, the client can simply discard this interim
-response.
+요청에 100-continue 기대가 포함된 Expect 헤더 필드가 포함되지 않은 경우, 클라이언트는 이 임시 응답을 간단히 폐기할 수 있다.
 
 15.2.2. 101 Switching Protocols
 
