@@ -5198,10 +5198,9 @@ Heuristic하게 캐시 가능한 것으로 정의된 상태 코드를 갖는 응
 
 서버는 프로토콜을 전환하는 것이 유리할 때만 프로토콜 전환에 동의한다고 가정한다. 예를 들어, 최신 버전의 HTTP로 전환하는 것이 이전 버전보다 유리할 수 있으며, 이러한 기능을 사용하는 리소스를 제공할 때 실시간 동기 프로토콜로 전환하는 것이 유리할 수 있다.
 
-15.3. Successful 2xx
+### 15.3. Successful 2xx
 
-The 2xx (Successful) class of status code indicates that the client's
-request was successfully received, understood, and accepted.
+상태 코드의 2xx (Successful) 클래스는 클라이언트의 요청이 성공적으로 수신, 이해 및 수락되었음을 나타낸다.
 
 15.3.1. 200 OK
 
