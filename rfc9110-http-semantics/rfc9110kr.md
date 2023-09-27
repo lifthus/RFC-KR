@@ -952,16 +952,13 @@ CR, LF, 혹은 NUL 문자들을 포함하는 필드 값들은 유효하지 않�
      example-list      = 1#example-list-elmt
      example-list-elmt = token ; see Section 5.6.2
 
-Then the following are valid values for example-list (not including
-the double quotes, which are present for delimitation only):
-
 또 다음은 example-list에 대해 유효한 값들이다(쌍따옴표들은 오로지 구분을 위해서 존재하니까 제외하고):
 
      "foo,bar"
      "foo ,bar,"
      "foo , ,bar,charlie"
 
-반대로, 다음 값들은, 최소 하나의 비어이씾 않은 요소가 example-list 프로덕션에 의해 요구되기 때문에, 유효하지 않다:
+반대로, 다음 값들은, 최소 하나의 비어있지 않은 요소가 example-list 프로덕션에 의해 요구되기 때문에, 유효하지 않다:
 
      ""
      ","
