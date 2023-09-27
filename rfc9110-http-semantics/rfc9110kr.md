@@ -5192,20 +5192,11 @@ Heuristic하게 캐시 가능한 것으로 정의된 상태 코드를 갖는 응
 
 요청에 100-continue 기대가 포함된 Expect 헤더 필드가 포함되지 않은 경우, 클라이언트는 이 임시 응답을 간단히 폐기할 수 있다.
 
-15.2.2. 101 Switching Protocols
+#### 15.2.2. 101 Switching Protocols
 
-The 101 (Switching Protocols) status code indicates that the server
-understands and is willing to comply with the client's request, via
-the Upgrade header field (Section 7.8), for a change in the
-application protocol being used on this connection. The server MUST
-generate an Upgrade header field in the response that indicates which
-protocol(s) will be in effect after this response.
+101(Switching Protocols) 상태 코드는 서버가 업그레이드 헤더 필드(7.8절)를 통해 이 연결에서 사용 중인 애플리케이션 프로토콜의 변경에 대한 클라이언트의 요청을 이해하고, 이를 준수할 것임을 나타낸다. 서버는 반드시(MUST) 응답 후에 어떤 프로토콜이 적용될 것인지를 나타내는 업그레이드 헤더 필드를 응답에 생성해야 한다.
 
-It is assumed that the server will only agree to switch protocols
-when it is advantageous to do so. For example, switching to a newer
-version of HTTP might be advantageous over older versions, and
-switching to a real-time, synchronous protocol might be advantageous
-when delivering resources that use such features.
+서버는 프로토콜을 전환하는 것이 유리할 때만 프로토콜 전환에 동의한다고 가정한다. 예를 들어, 최신 버전의 HTTP로 전환하는 것이 이전 버전보다 유리할 수 있으며, 이러한 기능을 사용하는 리소스를 제공할 때 실시간 동기 프로토콜로 전환하는 것이 유리할 수 있다.
 
 15.3. Successful 2xx
 
