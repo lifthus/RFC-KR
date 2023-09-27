@@ -5202,58 +5202,37 @@ Heuristic하게 캐시 가능한 것으로 정의된 상태 코드를 갖는 응
 
 상태 코드의 2xx (Successful) 클래스는 클라이언트의 요청이 성공적으로 수신, 이해 및 수락되었음을 나타낸다.
 
-15.3.1. 200 OK
+#### 15.3.1. 200 OK
 
-The 200 (OK) status code indicates that the request has succeeded.
-The content sent in a 200 response depends on the request method.
-For the methods defined by this specification, the intended meaning
-of the content can be summarized as:
+200(OK) 상태 코드는 요청이 성공했음을 나타낸다.
+200 응답으로 전송되는 내용은 요청 메소드에 따라 다르다.
+본 명세서에서 정의된 메소드의 경우, 콘텐츠의 의도된 의미는 다음과 같이 요약할 수 있다:
 
 +================+============================================+
-| Request Method | Response content is a representation of: |
+| Request Method | 응답 콘텐츠는 다음을 나타낸다: |
 +================+============================================+
-| GET | the target resource |
+| GET | 목표 리소스 |
 +----------------+--------------------------------------------+
-| HEAD | the target resource, like GET, but without |
-| | transferring the representation data |
+| HEAD | GET과 같이 대상 리소스를 전송하지만 표현 데이터는 전송하지 않는다. |
 +----------------+--------------------------------------------+
-| POST | the status of, or results obtained from, |
-| | the action |
+| POST | 작업의 상태 또는 작업으로부터 얻은 결과 |
 +----------------+--------------------------------------------+
-| PUT, DELETE | the status of the action |
+| PUT, DELETE | 작업의 상태 |
 +----------------+--------------------------------------------+
-| OPTIONS | communication options for the target |
-| | resource |
+| OPTIONS | 대상 리소스에 대한 통신 옵션 |
 +----------------+--------------------------------------------+
-| TRACE | the request message as received by the |
-| | server returning the trace |
+| TRACE | trace가 반환하는 서버가 수신한 요청 메세지 |
 +----------------+--------------------------------------------+
 
                                Table 6
 
-Aside from responses to CONNECT, a 200 response is expected to
-contain message content unless the message framing explicitly
-indicates that the content has zero length. If some aspect of the
-request indicates a preference for no content upon success, the
-origin server ought to send a 204 (No Content) response instead. For
-CONNECT, there is no content because the successful result is a
-tunnel, which begins immediately after the 200 response header
-section.
+CONNECT에 대한 응답과 별도로, 메세지 프레임에 콘텐츠 길이가 0임을 명시적으로 표시하지 않는 한 200 응답은 메세지 콘텐츠를 포함할 것으로 예상한다. 요청의 일부 측면이 성공 시 콘텐츠가 없는 것을 선호하는 경우, origin 서버는 대신 204 (No Content) 응답을 전송해야 한다. CONNECT의 경우, 성공적인 결과는 200 응답 헤더 섹션 바로 뒤에 시작되는 터널이므로 콘텐츠가 없다.
 
-A 200 response is heuristically cacheable; i.e., unless otherwise
-indicated by the method definition or explicit cache controls (see
-Section 4.2.2 of [CACHING]).
+200 응답은 메소드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 heuristic 하게 캐시할 수 있다. ([CACHING] 4.2.2절 참조)
 
-In 200 responses to GET or HEAD, an origin server SHOULD send any
-available validator fields (Section 8.8) for the selected
-representation, with both a strong entity tag and a Last-Modified
-date being preferred.
+origin 서버는 GET 또는 HEAD에 대한 200 응답에서 선택한 표현에 대해 사용 가능한 검증자 필드 (8.8절)를 보내야 하며, 강력한 엔티티 태그와 마지막 수정 날짜가 선호된다.
 
-In 200 responses to state-changing methods, any validator fields
-(Section 8.8) sent in the response convey the current validators for
-the new representation formed as a result of successfully applying
-the request semantics. Note that the PUT method (Section 9.3.4) has
-additional requirements that might preclude sending such validators.
+상태 변경 메소드에 대한 200 응답에서, 응답에 전송된 임의의 검증자 필드 (8.8절)는 요청 semantics를 성공적으로 적용한 결과로 형성된 새로운 표현에 대한 현재 검증자를 전달한다. PUT 방식 (9.3.4절)에는 이러한 검증자의 전송을 방해할 수 있는 추가 요구 사항이 있다는 점을 유의하라.
 
 15.3.2. 201 Created
 
