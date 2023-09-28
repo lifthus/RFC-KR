@@ -5276,47 +5276,22 @@ origin 서버는 GET 또는 HEAD에 대한 200 응답에서 선택한 표현에 
 
 205 상태 코드는 추가 콘텐츠가 제공되지 않음을 의미하므로, 서버는 205 응답으로 콘텐츠를 생성해서는 안 된다.
 
-15.3.7. 206 Partial Content
+#### 15.3.7. 206 Partial Content
 
-The 206 (Partial Content) status code indicates that the server is
-successfully fulfilling a range request for the target resource by
-transferring one or more parts of the selected representation.
+206 (Partial Content) 상태 코드는 서버가 선택한 표현의 하나 이상의 부분을 전송하여 대상 리소스에 대한 범위 요청을 성공적으로 수행하고 있음을 나타낸다.
 
-A server that supports range requests (Section 14) will usually
-attempt to satisfy all of the requested ranges, since sending less
-data will likely result in another client request for the remainder.
-However, a server might want to send only a subset of the data
-requested for reasons of its own, such as temporary unavailability,
-cache efficiency, load balancing, etc. Since a 206 response is self-
-descriptive, the client can still understand a response that only
-partially satisfies its range request.
+범위 요청을 지원하는 서버 (14절) 는 일반적으로 요청된 모든 범위를 충족하려고 시도하는데, 이는 데이터를 적게 보내면 나머지 부분에 대한 또 다른 클라이언트 요청이 발생할 가능성이 있기 때문이다. 그러나 서버는 일시적인 사용 불가, 캐시 효율성, 로드 밸런싱등과 같은 이유로 요청된 데이터의 일부만 전송하고자 할 수 있다. 206 응답은 자기 설명적이기 때문에, 클라이언트는 범위 요청을 부분적으로만 만족시키는 응답을 이해할 수 있다.
 
-A client MUST inspect a 206 response's Content-Type and Content-Range
-field(s) to determine what parts are enclosed and whether additional
-requests are needed.
+클라이언트는 206 응답의 콘텐츠 유형 및 콘텐츠 범위 필드를 검사하여 어떤 부분이 포함되는지, 추가 요청이 필요한지 여부를 반드시(MUST) 확인해야 한다.
 
-A server that generates a 206 response MUST generate the following
-header fields, in addition to those required in the subsections
-below, if the field would have been sent in a 200 (OK) response to
-the same request: Date, Cache-Control, ETag, Expires,
-Content-Location, and Vary.
+206 응답을 생성하는 서버는 동일한 요청에 대한 200 (OK) 응답으로 전송되었을 경우, 아래 하위 항목에 필요한 필드 외에 다음과 같은 헤더 필드를 반드시(MUST) 생성해야 한다. 날짜, 캐시-제어, ETag, 만료, 콘텐츠 위치, 등등
 
-A Content-Length header field present in a 206 response indicates the
-number of octets in the content of this message, which is usually not
-the complete length of the selected representation. Each
-Content-Range header field includes information about the selected
-representation's complete length.
 
-A sender that generates a 206 response to a request with an If-Range
-header field SHOULD NOT generate other representation header fields
-beyond those required because the client already has a prior response
-containing those header fields. Otherwise, a sender MUST generate
-all of the representation header fields that would have been sent in
-a 200 (OK) response to the same request.
+206 응답에 있는 Content-Length 헤더 필드는 이 메세지 콘텐츠의 옥텟 수를 나타내며, 일반적으로 선택한 표현의 전체 길이가 아니다. 각 Content-Range 헤더 필드는 선택한 표현의 전체 길이에 대한 정보가 포함되어 있다.
 
-A 206 response is heuristically cacheable; i.e., unless otherwise
-indicated by explicit cache controls (see Section 4.2.2 of
-[CACHING]).
+If-Range 헤더 필드를 갖는 요청에 대한 206 응답을 생성하는 발신자는 클라이언트가 이미 해당 헤더 필드를 포함하는 이전 응답을 가지고 있기 때문에 요구되는 것 이상의 다른 표현 헤더 필드를 웬만해서는(SHOULD NOT) 생성해서는 안 된다. 그렇지 않으면 발신자는 동일한 요청에 대해 200(OK) 응답으로 전송되었을 모든 표현 헤더 필드를 반드시(MUST) 생성해야 한다.
+
+206 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [CACHING]) heuristic하게 캐시 할 수 있다.
 
 15.3.7.1. Single Part
 
