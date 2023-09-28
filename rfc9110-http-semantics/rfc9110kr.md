@@ -5234,19 +5234,11 @@ origin 서버는 GET 또는 HEAD에 대한 200 응답에서 선택한 표현에 
 
 상태 변경 메소드에 대한 200 응답에서, 응답에 전송된 임의의 검증자 필드 (8.8절)는 요청 semantics를 성공적으로 적용한 결과로 형성된 새로운 표현에 대한 현재 검증자를 전달한다. PUT 방식 (9.3.4절)에는 이러한 검증자의 전송을 방해할 수 있는 추가 요구 사항이 있다는 점을 유의하라.
 
-15.3.2. 201 Created
+#### 15.3.2. 201 Created
 
-The 201 (Created) status code indicates that the request has been
-fulfilled and has resulted in one or more new resources being
-created. The primary resource created by the request is identified
-by either a Location header field in the response or, if no Location
-header field is received, by the target URI.
+201(Created) 상태 코드는 요청이 완료되어 하나 이상의 새로운 리소스가 생성되었음을 나타낸다. 요청에 의해 생선된 기본 리소스는 응답의 Location 헤더 필드 또는 Location 헤더 필드가 수신되지 않은 경우 대상 URI로 식별된다.
 
-The 201 response content typically describes and links to the
-resource(s) created. Any validator fields (Section 8.8) sent in the
-response convey the current validators for a new representation
-created by the request. Note that the PUT method (Section 9.3.4) has
-additional requirements that might preclude sending such validators.
+201 응답 콘텐츠는 일반적으로 생성된 리소스에 대한 설명 및 링크를 제공한다. 응답에 전송된 모든 검증자 필드 (8.8절) 는 요청에 의해 생성된 새로운 표현에 대한 현재 검증자를 전달한다. PUT 방식 (9.3.4절) 에는 이러한 검증자의 전송을 방해할 수 있는 추가 요구 사항이 있음에 유의한다.
 
 15.3.3. 202 Accepted
 
