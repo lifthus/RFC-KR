@@ -5252,39 +5252,20 @@ origin 서버는 GET 또는 HEAD에 대한 200 응답에서 선택한 표현에 
 
 203 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [CACHING]) heuristic하게 캐시 할 수 있다.
 
-15.3.5. 204 No Content
+#### 15.3.5. 204 No Content
 
-The 204 (No Content) status code indicates that the server has
-successfully fulfilled the request and that there is no additional
-content to send in the response content. Metadata in the response
-header fields refer to the target resource and its selected
-representation after the requested action was applied.
+204 (No Content) 상태 코드는 서버가 성공적으로 요청을 처리했고, 응답 콘텐츠에서 보낼 추가 콘텐츠가 없음을 나타낸다. 응답 헤더 필드의 메타데이터는 대상 리소스와 요청된 작업이 적용된 후 선택한 표현을 참조한다.
 
-For example, if a 204 status code is received in response to a PUT
-request and the response contains an ETag field, then the PUT was
-successful and the ETag field value contains the entity tag for the
-new representation of that target resource.
+예를 들어, PUT 요청에 대한 응답으로 204 상태 코드가 수신되고 응답에 ETag 필드가 포함하는 경우, PUT이 성공했으며 ETag 필드 값에 대상 리소스의 새로운 표현을 위한 엔티티 태그가 포함한다.
 
-The 204 response allows a server to indicate that the action has been
-successfully applied to the target resource, while implying that the
-user agent does not need to traverse away from its current "document
-view" (if any). The server assumes that the user agent will provide
-some indication of the success to its user, in accord with its own
-interface, and apply any new or updated metadata in the response to
-its active representation.
+204 응답을 통해 서버는 대상 리소스에 성공적으로 적용되었음을 나타낼 수 있게 하고, 동시에 사용자 에이전트가 현재의 “문서보기” (있는 경우)에서 이동할 필요가 없음을 암시한다. 서버는 사용자 에이전트가 자제 인터페이스에 따라 사용자에게 성공 여부를 표시하고 활성 표현에 대한 응답으로 새로운 메타데이터 또는 업데이트된 메타데이터를 적용할 것으로 가정한다.
 
-For example, a 204 status code is commonly used with document editing
-interfaces corresponding to a "save" action, such that the document
-being saved remains available to the user for editing. It is also
-frequently used with interfaces that expect automated data transfers
-to be prevalent, such as within distributed version control systems.
+예를 들어, 204 상태 코드는 일반적으로 “저장” 작업에 해당하는 문서 편집 인터페이스에 사용되며, 저장중인 문서는 사용자가 편집을 위해 사용할 수 있도록 한다. 또한 분산 버전 관리 시스템과 같이 자동화된 데이터 전송이 보편화 될 것으로 예상되는 인터페이스에서도 자주 사용된다.
 
-A 204 response is terminated by the end of the header section; it
-cannot contain content or trailers.
+204 응답은 헤더 섹션의 끝에 의해 종료된다; 그것은 콘텐츠나 트레일러를 포함할 수 없다.
 
-A 204 response is heuristically cacheable; i.e., unless otherwise
-indicated by the method definition or explicit cache controls (see
-Section 4.2.2 of [CACHING]).
+204 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [CACHING]) heuristic하게 캐시 할 수 있다.
+
 
 15.3.6. 205 Reset Content
 
