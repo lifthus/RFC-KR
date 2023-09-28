@@ -5246,20 +5246,11 @@ origin 서버는 GET 또는 HEAD에 대한 200 응답에서 선택한 표현에 
 
 202 응답은 의도적으로 응답하지 않는다. 이것의 목적은 프로세스가 완료될 때까지 서버에 대한 사용자 에이전트의 연결을 유지할 필요 없이 서버가 다른 프로세스 (아마 하루에 한 번만 실행되는 배치 지향 프로세스) 에 대한 요청을 수락할 수 있도록 하는 것이다. 이 응답과 함께 전송되는 표현은 요청의 현재 상태를 설명하고 사용자에게 요청이 언제 완료될지 예상할 수 있는 상태 모니터를 가리키거나 포함해야 한다.
 
-15.3.4. 203 Non-Authoritative Information
+#### 15.3.4. 203 Non-Authoritative Information
 
-The 203 (Non-Authoritative Information) status code indicates that
-the request was successful but the enclosed content has been modified
-from that of the origin server's 200 (OK) response by a transforming
-proxy (Section 7.7). This status code allows the proxy to notify
-recipients when a transformation has been applied, since that
-knowledge might impact later decisions regarding the content. For
-example, future cache validation requests for the content might only
-be applicable along the same request path (through the same proxies).
+203 (Non-Authoritative Information) 상태 코드는 요청이 성공했지만 변환 프로식에 의해 원본 서버의 200 (OK) 응답에서 동봉된 콘텐츠가 수정되었음을 나타낸다 (7.7절). 이 상태 코드를 통해 프록시는 변환이 적용되었을 때 수신자에게 알릴 수 있고, 이 지식은 나중에 콘텐츠와 관련된 의사 결정에 영향을 미칠 수 있다. 예를 들어, 콘텐츠에 대한 향후 캐시 유효성 검사 요청은 동일한 요청 경로 (동일한 프록시를 통해) 를 통해서만 적용할 수 있다.
 
-A 203 response is heuristically cacheable; i.e., unless otherwise
-indicated by the method definition or explicit cache controls (see
-Section 4.2.2 of [CACHING]).
+203 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [CACHING]) heuristic하게 캐시 할 수 있다.
 
 15.3.5. 204 No Content
 
