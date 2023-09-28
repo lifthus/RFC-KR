@@ -5240,23 +5240,11 @@ origin 서버는 GET 또는 HEAD에 대한 200 응답에서 선택한 표현에 
 
 201 응답 콘텐츠는 일반적으로 생성된 리소스에 대한 설명 및 링크를 제공한다. 응답에 전송된 모든 검증자 필드 (8.8절) 는 요청에 의해 생성된 새로운 표현에 대한 현재 검증자를 전달한다. PUT 방식 (9.3.4절) 에는 이러한 검증자의 전송을 방해할 수 있는 추가 요구 사항이 있음에 유의한다.
 
-15.3.3. 202 Accepted
+#### 15.3.3. 202 Accepted
 
-The 202 (Accepted) status code indicates that the request has been
-accepted for processing, but the processing has not been completed.
-The request might or might not eventually be acted upon, as it might
-be disallowed when processing actually takes place. There is no
-facility in HTTP for re-sending a status code from an asynchronous
-operation.
+202 (Accepted) 상태 코드는 요청이 처리를 위해 수락되었지만 처리가 완료되지 않았음을 나타낸다. 요청이 실제로 처리될 때 허용되지 않을 수 있기 때문에 요청이 처리될 수도 있고 처리되지 않을 수도 있다. HTTP에는 비동기 작업에서 상태 코드를 다시 전송하는 기능이 없다.
 
-The 202 response is intentionally noncommittal. Its purpose is to
-allow a server to accept a request for some other process (perhaps a
-batch-oriented process that is only run once per day) without
-requiring that the user agent's connection to the server persist
-until the process is completed. The representation sent with this
-response ought to describe the request's current status and point to
-(or embed) a status monitor that can provide the user with an
-estimate of when the request will be fulfilled.
+202 응답은 의도적으로 응답하지 않는다. 이것의 목적은 프로세스가 완료될 때까지 서버에 대한 사용자 에이전트의 연결을 유지할 필요 없이 서버가 다른 프로세스 (아마 하루에 한 번만 실행되는 배치 지향 프로세스) 에 대한 요청을 수락할 수 있도록 하는 것이다. 이 응답과 함께 전송되는 표현은 요청의 현재 상태를 설명하고 사용자에게 요청이 언제 완료될지 예상할 수 있는 상태 모니터를 가리키거나 포함해야 한다.
 
 15.3.4. 203 Non-Authoritative Information
 
