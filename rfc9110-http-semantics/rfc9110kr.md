@@ -5267,22 +5267,14 @@ origin 서버는 GET 또는 HEAD에 대한 200 응답에서 선택한 표현에 
 204 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [CACHING]) heuristic하게 캐시 할 수 있다.
 
 
-15.3.6. 205 Reset Content
+#### 15.3.6. 205 Reset Content
 
-The 205 (Reset Content) status code indicates that the server has
-fulfilled the request and desires that the user agent reset the
-"document view", which caused the request to be sent, to its original
-state as received from the origin server.
+205 (Reset Content) 상태 코드는 서버가 요청을 처리했으며 사용자 에이전트가 요청을 전송한 “문서 보기” 를 origin 서버 에서 받은 원래 상태로 재설정하기를 원한다는 것을 나타낸다.
 
-This response is intended to support a common data entry use case
-where the user receives content that supports data entry (a form,
-notepad, canvas, etc.), enters or manipulates data in that space,
-causes the entered data to be submitted in a request, and then the
-data entry mechanism is reset for the next entry so that the user can
-easily initiate another input action.
+이 응답은 사용자가 데이터 입력을 지원하는 컨텐츠(양식, 메모장, 캔버스 등)를 수신하고, 해당 공간에 데이터를 입력하거나 조작하여, 입력된 데이터가 요청에 제출되도록 한 다음, 사용자가 다른 입력 작업을 쉽게 시작할 수 있도록 다음 입력을 위해 데이터 입력 메커니즘이 재설정되는 일반적인 데이터 입력 사용 사례를 지원하기 위한 것이다.
 
-Since the 205 status code implies that no additional content will be
-provided, a server MUST NOT generate content in a 205 response.
+
+205 상태 코드는 추가 콘텐츠가 제공되지 않음을 의미하므로, 서버는 205 응답으로 콘텐츠를 생성해서는 안 된다.
 
 15.3.7. 206 Partial Content
 
