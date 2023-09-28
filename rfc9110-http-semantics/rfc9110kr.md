@@ -5293,12 +5293,9 @@ If-Range 헤더 필드를 갖는 요청에 대한 206 응답을 생성하는 발
 
 206 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [CACHING]) heuristic하게 캐시 할 수 있다.
 
-15.3.7.1. Single Part
+##### 15.3.7.1. Single Part
 
-If a single part is being transferred, the server generating the 206
-response MUST generate a Content-Range header field, describing what
-range of the selected representation is enclosed, and a content
-consisting of the range. For example:
+만약 단일 부분이 전송되는 경우, 206 응답을 생성하는 서버는, 선택한 표현의 어떤 범위가 포함되는지를 기술하는 Content-Range 헤더 필드 및 범위로 구성되는 콘텐츠틑 반드시(MUST) 생성해야 한다. 예를 들어 :
 
 HTTP/1.1 206 Partial Content
 Date: Wed, 15 Nov 1995 06:25:24 GMT
