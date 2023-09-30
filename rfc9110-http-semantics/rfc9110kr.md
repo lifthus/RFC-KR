@@ -5336,46 +5336,17 @@ Content-Range: bytes 7000-7999/8000
 
 다중 파트 응답을 생성하는 서버는 수신된 범위 헤더 필드에 대한 범위 사양이 표시된 순서대로 파트를 웬만하면(SHOULD) 보내야 하며, 만족스럽지 않은 것으로 간주되거나 다른 범위로 합쳐진 범위는 제외해야 한다. 다중 파트 응답을 수신하는 클라이언트는 각 body 파트에 있는 Content-Range 헤더 필드를 반드시(MUST) 검사하여 해당 body 파트에 포함된 범위를 확인해야 한다; 클라이언트는 요청한 것과 동일한 범위나, 동일한 순서를 받을 수 없다.
 
-15.3.7.3. Combining Parts
+##### 15.3.7.3. Combining Parts
 
-A response might transfer only a subrange of a representation if the
-connection closed prematurely or if the request used one or more
-Range specifications. After several such transfers, a client might
-have received several ranges of the same representation. These
-ranges can only be safely combined if they all have in common the
-same strong validator (Section 8.8.1).
+연결이 조기에 종료되거나 요청이 하나 이상의 범위 사양을 사용한 경우 응답의 표현의 하위 범위만 전송할 수 있다. 이러한 전송을 여러 번 수행한 후, 클라이언트는 동일한 표현의 여러 범위를 수신했을 수 있다. 이러한 범위는 모두 동일한 강력한 검증자를 공통으로 사용하는 경우에만 안전하게 결합할 수 있다 (8.8.1절)
 
-A client that has received multiple partial responses to GET requests
-on a target resource MAY combine those responses into a larger
-continuous range if they share the same strong validator.
+타켓 리소스에 대한 GET 요청에 대해 여러 부분을 받은 클라이언트는 동일한 강력한 검증자를 공유하는 경우 아마(MAY) 해당 응답을 더 큰 연속 범위로 결합할 수 있다.
 
-If the most recent response is an incomplete 200 (OK) response, then
-the header fields of that response are used for any combined response
-and replace those of the matching stored responses.
+가장 최근 응답이 불완전한 200(OK) 응답인 경우, 해당 응답의 헤더 필드는 결합된 모든 응답에 사용되며 일치하는 저장된 응답의 헤더 필드를 대체한다.
 
-If the most recent response is a 206 (Partial Content) response and
-at least one of the matching stored responses is a 200 (OK), then the
-combined response header fields consist of the most recent 200
-response's header fields. If all of the matching stored responses
-are 206 responses, then the stored response with the most recent
-header fields is used as the source of header fields for the combined
-response, except that the client MUST use other header fields
-provided in the new response, aside from Content-Range, to replace
-all instances of the corresponding header fields in the stored
-response.
+가장 최근 응답이 206(Partial Content) 응답이고, 일치하는 저장된 응답 중 하나 이상이 200(OK) 인 경우, 결합된 응답 헤더 필드는 가장 최근 200 응답의 헤더 필드로 구성된다. 일치하는 모든 저장된 응답이 206 응답인 경우, 가장 최근의 헤더 필드를 가진 저장된 응답은 결합된 응답의 헤더 필드 소스로 사용되지만, 클라이언트는 저장된 응답에서 해당 헤더 필드의 모든 인스턴스를 대체하기 위해 Content-Range를 제외하고, 새로운 응답에서 제공된 다른 헤더 필드를 사용해야 한다는 점을 반드시(MUST) 제외한다.
 
-The combined response content consists of the union of partial
-content ranges within the new response and all of the matching stored
-responses. If the union consists of the entire range of the
-representation, then the client MUST process the combined response as
-if it were a complete 200 (OK) response, including a Content-Length
-header field that reflects the complete length. Otherwise, the
-client MUST process the set of continuous ranges as one of the
-following: an incomplete 200 (OK) response if the combined response
-is a prefix of the representation, a single 206 (Partial Content)
-response containing "multipart/byteranges" content, or multiple 206
-(Partial Content) responses, each with one continuous range that is
-indicated by a Content-Range header field.
+결합된 응답 콘텐츠는 새로운 응답 내의 부분 콘텐츠의 범위와 일치하는 모든 저장된 응답의 결합으로 구성된다. 결합이 전체 범위의 표현의로 구성된 경우, 클라이언트는 전체 길이를 반영하는 Content-Length 헤더 필드를 포함하여 결합된 응답을 완전한 200(OK) 응답인 것처럼 반드시(MUST) 처리해야 한다. 그렇지 않으면 클라이언트는 연속 범위 집합을 다음 중 하나로 반드시(MUST) 처리해야 한다: 결합된 표현의 접두사인 경우 불완전한 200(OK) 응답, "multipart/byteranges" 콘텐츠를 포함하는 단일 206(Partial Content) 응답, 또는 각각  Content-Range 헤더 필드로 표시되는 연속 범위가 하나인 다중 206(Partial Content) 응답이다.
 
 15.4. Redirection 3xx
 
