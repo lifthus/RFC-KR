@@ -5398,48 +5398,22 @@ Location 헤더 필드 (10.2.2절) 가 제공되면, 사용자 에이전트는 �
       |  *Note:* 이 사양의 이전 버전에서는 최대 5개의 리다이렉션을 권장했다([RFC2068], 10.3절).
       |  콘텐츠 개발자들은 일부 클라이언트가 이러한 고정된 제한을 구현할 수 있다는 점을 인지할 필요가 있다.
 
-15.4.1. 300 Multiple Choices
+#### 15.4.1. 300 Multiple Choices
 
-The 300 (Multiple Choices) status code indicates that the target
-resource has more than one representation, each with its own more
-specific identifier, and information about the alternatives is being
-provided so that the user (or user agent) can select a preferred
-representation by redirecting its request to one or more of those
-identifiers. In other words, the server desires that the user agent
-engage in reactive negotiation to select the most appropriate
-representation(s) for its needs (Section 12).
+300 (Multiple Choices) 상태 코드는 대상 리소스에 각각 더 구체적인 식별자가 있는 하나 이상의 표현이 있고, 사용자 (또는 사용자 에이전트)가 요청을 하나 이상의 식별자로 리다이렉션하여 선호하는 표현을 선택할 수 있도록 정보가 제공되고 있음을 나타낸다. 즉. 서버는 사용자 에이전트가 자신의 요구에 가장 적합한 표현(들)을 선택하기 위해 반응형 협상에 참여하기를 원한다 (12절).
 
-If the server has a preferred choice, the server SHOULD generate a
-Location header field containing a preferred choice's URI reference.
-The user agent MAY use the Location field value for automatic
-redirection.
+서버에 기본 설정이 있는 경우, 서버는 기본 설정의 URI 참조가 포함된 Location 헤더 필드를 생성해야 한다. 사용자 에이전트는 자동 리다이렉션을 위해 Location 필드 값을 사용할 수 있다.
 
-For request methods other than HEAD, the server SHOULD generate
-content in the 300 response containing a list of representation
-metadata and URI reference(s) from which the user or user agent can
-choose the one most preferred. The user agent MAY make a selection
-from that list automatically if it understands the provided media
-type. A specific format for automatic selection is not defined by
-this specification because HTTP tries to remain orthogonal to the
-definition of its content. In practice, the representation is
-provided in some easily parsed format believed to be acceptable to
-the user agent, as determined by shared design or content
-negotiation, or in some commonly accepted hypertext format.
+HEAD 이외의 요청 메소드의 경우, 서버는 사용자 또는 사용자 에이전트가 가장 선호하는 것을 선택할수 있는 표현 메타데이터 및 URI 참조 목록이 포함된 콘텐츠를 300응답에 웬만하면(SHOULD) 생성해야 한다. 사용자 에이전트가 제공된 미디어 유형을 이해하는 경우 해당 목록에서 자동으로 선택할 수 있다. HTTP는 콘텐츠의 정의에 직교를 유지하려고 하기 때문에 자동 선택을 위한 특정 형식은 이 사양에 정의되어 있지 않다. 실제로 표현은 공유 디자인 또는 콘텐츠 협상에 의해 결정된 대로 사용자 에이전트가 수용 가능한 것으로 간주되는 쉽게 파싱된 형식 또는 일반적으로 허용되는 하이퍼텍스트 형식으로 제공된다.
 
-A 300 response is heuristically cacheable; i.e., unless otherwise
-indicated by the method definition or explicit cache controls (see
-Section 4.2.2 of [CACHING]).
+300 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [CACHING]) heuristic하게 캐시 할 수 있다.
 
-      |  *Note:* The original proposal for the 300 status code defined
-      |  the URI header field as providing a list of alternative
+      |  *Note:* 300 상태 코드에 대한 원래 제안에서는 URI 헤더 필드가 200, 300 및 406 응답에 사용할 수 있고 
+      |  HEAD 메소드에 대한 응답으로 전송될 수 있도록 대체 표현 목록을 제공하는 것으로 정의했다. 
       |  representations, such that it would be usable for 200, 300, and
-      |  406 responses and be transferred in responses to the HEAD
-      |  method.  However, lack of deployment and disagreement over
-      |  syntax led to both URI and Alternates (a subsequent proposal)
-      |  being dropped from this specification.  It is possible to
-      |  communicate the list as a Link header field value [RFC8288]
-      |  whose members have a relationship of "alternate", though
-      |  deployment is a chicken-and-egg problem.
+      |  그러나, 배포의 부족과 구문에 대한 의견 불일치로 인해 URI와 Alternates (후속 제안)는 이 명세서에서 
+      |  삭제  되었다. 구성원들이 “alternate” 관계를 갖는 링크 헤더 필드 값 [RFC8288]으로 목록을 전달
+      |  할 수 도 있지만, 배포는 닭과 달걀의 문제다.
 
 15.4.2. 301 Moved Permanently
 
