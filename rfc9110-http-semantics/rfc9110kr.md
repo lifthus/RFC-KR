@@ -5295,7 +5295,7 @@ If-Range 헤더 필드를 갖는 요청에 대한 206 응답을 생성하는 발
 
 ##### 15.3.7.1. Single Part
 
-만약 단일 부분이 전송되는 경우, 206 응답을 생성하는 서버는, 선택한 표현의 어떤 범위가 포함되는지를 기술하는 Content-Range 헤더 필드 및 범위로 구성되는 콘텐츠틑 반드시(MUST) 생성해야 한다. 예를 들어 :
+만약 단일 부분이 전송되는 경우, 206 응답을 생성하는 서버는, 선택한 표현의 어떤 범위가 포함되는지를 기술하는 Content-Range 헤더 필드 및 범위로 구성되는 콘텐츠틑 반드시(MUST) 생성해야 한다. 예를 들어:
 
 HTTP/1.1 206 Partial Content
 Date: Wed, 15 Nov 1995 06:25:24 GMT
@@ -5306,23 +5306,11 @@ Content-Type: image/gif
 
 ... 26012 bytes of partial image data ...
 
-15.3.7.2. Multiple Parts
+##### 15.3.7.2. Multiple Parts
 
-If multiple parts are being transferred, the server generating the
-206 response MUST generate "multipart/byteranges" content, as defined
-in Section 14.6, and a Content-Type header field containing the
-"multipart/byteranges" media type and its required boundary
-parameter. To avoid confusion with single-part responses, a server
-MUST NOT generate a Content-Range header field in the HTTP header
-section of a multiple part response (this field will be sent in each
-part instead).
+여러 부분이 전송되는 경우, 206 응답을 샹성하는 서버는 14.6절에 정의된 대로 “multipart/byteranges” 콘텐츠를 생성하고, “multipart/byteranges” 미디어 타입 및 필수 경계 매개변수를 포함하는 Content-Type 헤더 필드를 반드시(MUST) 생성해야 한다. 단일 부분 응답과의 혼동을 방지하기 위해 서버는 다중 파트 응답의 HTTP 헤더 섹션에 Content-Range 헤더 필드를 생성해서는 안된다 (이 필드는 대신 각 파트에 전송된다).
 
-Within the header area of each body part in the multipart content,
-the server MUST generate a Content-Range header field corresponding
-to the range being enclosed in that body part. If the selected
-representation would have had a Content-Type header field in a 200
-(OK) response, the server SHOULD generate that same Content-Type
-header field in the header area of each body part. For example:
+다중 파트 콘텐츠의 각 body 부분의 헤더 영역 내에서, 서버는 해당 body 부분으로 둘러싸인 범위에 해당하는 Content-Range 헤더 필드를 생성해야 한다. 만약 선택한 표현에 200(OK) 응답에서 Content-Type 헤더 필드가 있다면, 서버는 각 body 부분의 헤더 영역에 동일한 Content-Type 헤더 필드를 생성해야 한다. 예를 들어:
 
 HTTP/1.1 206 Partial Content
 Date: Wed, 15 Nov 1995 06:25:24 GMT
@@ -5342,34 +5330,11 @@ Content-Range: bytes 7000-7999/8000
 ...the second range
 --THIS_STRING_SEPARATES--
 
-When multiple ranges are requested, a server MAY coalesce any of the
-ranges that overlap, or that are separated by a gap that is smaller
-than the overhead of sending multiple parts, regardless of the order
-in which the corresponding range-spec appeared in the received Range
-header field. Since the typical overhead between each part of a
-"multipart/byteranges" is around 80 bytes, depending on the selected
-representation's media type and the chosen boundary parameter length,
-it can be less efficient to transfer many small disjoint parts than
-it is to transfer the entire selected representation.
+여러 범위가 요청될 때, 서버는 수신된 범위 헤더 필드에 해당 범위 사양이 표시된 순서과 관계없이 여러 부분을 전송할 때 발생되는 오버헤드보다 작은 간격으로 중복되거나 분리된 범위 중 하나를 아마(MAY) 합칠 수 있다. "multipart/byteranges"의 각 부분 사이의 일반적인 오버헤드가 약 80 바이트이기 때문에, 선택된 표현의 미디어 타입 및 선택한 경계 매개변수 길이에 따라, 선택한 표현 전체를 전송하는 것보다 작게 분리된 부분을 많이 전송하는 것이 덜 효율적일 수 있다.
 
-A server MUST NOT generate a multipart response to a request for a
-single range, since a client that does not request multiple parts
-might not support multipart responses. However, a server MAY
-generate a "multipart/byteranges" response with only a single body
-part if multiple ranges were requested and only one range was found
-to be satisfiable or only one range remained after coalescing. A
-client that cannot process a "multipart/byteranges" response MUST NOT
-generate a request that asks for multiple ranges.
+여러 부분을 요청하지 않는 클라이언트는 다중 부분 응답을 지원하지 않을 수 있으므로 서버는 단일 범위에 대한 요청에 대해 다중 부분 응답을 생성해서는 안 된다. 그러나, 여러 범위가 요청되었으나 하나의 범위만이 만족스러운 것으로 확인되거나 합쳐진 후 하나의 범위만 남은 경우 서버는 단일 body 부분으로만 "multipart/byteranges" 응답을 아마(MAY) 생성할 수 있다. "multipart/byteranges” 응답을 처리할 수 없는 클라이언트는 다중 범위를 요청하는 요청을 생성해서는 안 된다.
 
-A server that generates a multipart response SHOULD send the parts in
-the same order that the corresponding range-spec appeared in the
-received Range header field, excluding those ranges that were deemed
-unsatisfiable or that were coalesced into other ranges. A client
-that receives a multipart response MUST inspect the Content-Range
-header field present in each body part in order to determine which
-range is contained in that body part; a client cannot rely on
-receiving the same ranges that it requested, nor the same order that
-it requested.
+다중 파트 응답을 생성하는 서버는 수신된 범위 헤더 필드에 대한 범위 사양이 표시된 순서대로 파트를 웬만하면(SHOULD) 보내야 하며, 만족스럽지 않은 것으로 간주되거나 다른 범위로 합쳐진 범위는 제외해야 한다. 다중 파트 응답을 수신하는 클라이언트는 각 body 파트에 있는 Content-Range 헤더 필드를 반드시(MUST) 검사하여 해당 body 파트에 포함된 범위를 확인해야 한다; 클라이언트는 요청한 것과 동일한 범위나, 동일한 순서를 받을 수 없다.
 
 15.3.7.3. Combining Parts
 
