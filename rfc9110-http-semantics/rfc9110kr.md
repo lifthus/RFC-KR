@@ -5415,33 +5415,19 @@ HEAD 이외의 요청 메소드의 경우, 서버는 사용자 또는 사용자 
       |  삭제  되었다. 구성원들이 “alternate” 관계를 갖는 링크 헤더 필드 값 [RFC8288]으로 목록을 전달
       |  할 수 도 있지만, 배포는 닭과 달걀의 문제다.
 
-15.4.2. 301 Moved Permanently
+#### 15.4.2. 301 Moved Permanently
 
-The 301 (Moved Permanently) status code indicates that the target
-resource has been assigned a new permanent URI and any future
-references to this resource ought to use one of the enclosed URIs.
-The server is suggesting that a user agent with link-editing
-capability can permanently replace references to the target URI with
-one of the new references sent by the server. However, this
-suggestion is usually ignored unless the user agent is actively
-editing references (e.g., engaged in authoring content), the
-connection is secured, and the origin server is a trusted authority
-for the content being edited.
+301 (Moved Permanently) 상태 코드는 대상 리소스에 새로운 영구 URI가 할당되었음을 나타내며 이 리소스에 대한 향후 참조는 동봉된 URI 중 하나를 사용해야 한다. 서버는 링크 편집 기능이 있는 사용자 에이전트가 대상 URI에 대한 참조를 서버가 보낸 새로운 참조 중 하나로 영구적으로 대체할 수 있다고 제안한다. 그러나, 사용자 에이전트가 참조를 적극적으로 편집하고 (예: 콘텐츠 작성에 관여), 연결이 보안되어 있고, origin 서버가 편집 중인 콘텐츠에 대해 신뢰할 수 있는 권한이 아닌 한 이 제한은 보통 무시된다.
 
-The server SHOULD generate a Location header field in the response
-containing a preferred URI reference for the new permanent URI. The
-user agent MAY use the Location field value for automatic
-redirection. The server's response content usually contains a short
-hypertext note with a hyperlink to the new URI(s).
 
-      |  *Note:* For historical reasons, a user agent MAY change the
-      |  request method from POST to GET for the subsequent request.  If
-      |  this behavior is undesired, the 308 (Permanent Redirect) status
-      |  code can be used instead.
+서버는 새로운 영구 URI에 대한 선호되는 URI 참조가 포함된 응답에 Location 헤더 필드를 웬만하면(SHOULD) 생성해야 한다. 사용자 에이전트는 자동 리다이렉션을 위해 Location 필드 값을 아마(MAY) 사용할 수 있다. 서버의 응답 콘텐츠에는 보통 새로운 URI로 연결되는 하이퍼링크가 포함된 짧은 하이퍼텍스트 메모가 포함된다.
 
-A 301 response is heuristically cacheable; i.e., unless otherwise
-indicated by the method definition or explicit cache controls (see
-Section 4.2.2 of [CACHING]).
+      |  *Note:* 과거의 이유로, 사용자 에이전트는 후속 요청에 대해
+      |  요청 방식을 POST에서 GET으로 아마(MAY) 변경할 수 있다. 
+      |  이 동장을 원하지 않는 경우 308 (Permanent Redirect) 상태 코드를
+      |  대신 사용할 수 있다.
+
+301 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [CACHING]) heuristic하게 캐시 할 수 있다.
 
 15.4.3. 302 Found
 
