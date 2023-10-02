@@ -5429,23 +5429,16 @@ HEAD 이외의 요청 메소드의 경우, 서버는 사용자 또는 사용자 
 
 301 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [CACHING]) heuristic하게 캐시 할 수 있다.
 
-15.4.3. 302 Found
+#### 15.4.3. 302 Found
 
-The 302 (Found) status code indicates that the target resource
-resides temporarily under a different URI. Since the redirection
-might be altered on occasion, the client ought to continue to use the
-target URI for future requests.
+302 (Found) 상태 코드는 대상 리소스가 일시적으로 다른 URI에 존재함울 나타낸다. 리다리렉션은 종종 변경될 수 있기 때문에, 클라이언트는 향후 요청을 위해 대상 URI를 계속 사용해야 한다.
 
-The server SHOULD generate a Location header field in the response
-containing a URI reference for the different URI. The user agent MAY
-use the Location field value for automatic redirection. The server's
-response content usually contains a short hypertext note with a
-hyperlink to the different URI(s).
+서버는 다른 URI에 대한 URI 참조가 포함된 응답에 Location 헤더 필드를 웬만하면(SHOULD) 생성해야 한다. 사용자 에이전트는 자동 리다이렉션을 위해 Location 필드 값을 사용할 수 있다. 서버의 응답 콘텐츠에는 일반적으로 다른 URI로 연결되는 하이퍼링크가 포함된 짧은 하이퍼텍스트 메모가 포함되어 있다.
 
-      |  *Note:* For historical reasons, a user agent MAY change the
-      |  request method from POST to GET for the subsequent request.  If
-      |  this behavior is undesired, the 307 (Temporary Redirect) status
-      |  code can be used instead.
+      |  *Note:* 과거의 이유로, 사용자 에이전트는 후속 요청에 대해
+      |  요청 방식을 POST에서 GET으로 아마(MAY) 변경할 수 있다. 
+      |  이 동장을 원하지 않는 경우 307 (Temporary Redirect) 상태 코드를
+      |  대신 사용할 수 있다.
 
 15.4.4. 303 See Other
 
