@@ -181,181 +181,182 @@ than English.
 - - - [8.8.3.2. 비교](#8832-비교)
 - - - [8.8.3.3. 예시: 콘텐츠-협상된 리소스들에서의 다양한 엔티티 태그들](#8833-예시-콘텐츠-협상된-리소스들에서의-다양한-엔티티-태그들)
 
-9. Methods
-   9.1. Overview
-   9.2. Common Method Properties
-   9.2.1. Safe Methods
-   9.2.2. Idempotent Methods
-   9.2.3. Methods and Caching
-   9.3. Method Definitions
-   9.3.1. GET
-   9.3.2. HEAD
-   9.3.3. POST
-   9.3.4. PUT
-   9.3.5. DELETE
-   9.3.6. CONNECT
-   9.3.7. OPTIONS
-   9.3.8. TRACE 10. Message Context
-   10.1. Request Context Fields
-   10.1.1. Expect
-   10.1.2. From
-   10.1.3. Referer
-   10.1.4. TE
-   10.1.5. User-Agent
-   10.2. Response Context Fields
-   10.2.1. Allow
-   10.2.2. Location
-   10.2.3. Retry-After
-   10.2.4. Server 11. HTTP Authentication
-   11.1. Authentication Scheme
-   11.2. Authentication Parameters
-   11.3. Challenge and Response
-   11.4. Credentials
-   11.5. Establishing a Protection Space (Realm)
-   11.6. Authenticating Users to Origin Servers
-   11.6.1. WWW-Authenticate
-   11.6.2. Authorization
-   11.6.3. Authentication-Info
-   11.7. Authenticating Clients to Proxies
-   11.7.1. Proxy-Authenticate
-   11.7.2. Proxy-Authorization
-   11.7.3. Proxy-Authentication-Info 12. Content Negotiation
-   12.1. Proactive Negotiation
-   12.2. Reactive Negotiation
-   12.3. Request Content Negotiation
-   12.4. Content Negotiation Field Features
-   12.4.1. Absence
-   12.4.2. Quality Values
-   12.4.3. Wildcard Values
-   12.5. Content Negotiation Fields
-   12.5.1. Accept
-   12.5.2. Accept-Charset
-   12.5.3. Accept-Encoding
-   12.5.4. Accept-Language
-   12.5.5. Vary 13. Conditional Requests
-   13.1. Preconditions
-   13.1.1. If-Match
-   13.1.2. If-None-Match
-   13.1.3. If-Modified-Since
-   13.1.4. If-Unmodified-Since
-   13.1.5. If-Range
-   13.2. Evaluation of Preconditions
-   13.2.1. When to Evaluate
-   13.2.2. Precedence of Preconditions 14. Range Requests
-   14.1. Range Units
-   14.1.1. Range Specifiers
-   14.1.2. Byte Ranges
-   14.2. Range
-   14.3. Accept-Ranges
-   14.4. Content-Range
-   14.5. Partial PUT
-   14.6. Media Type multipart/byteranges 15. Status Codes
-   15.1. Overview of Status Codes
-   15.2. Informational 1xx
-   15.2.1. 100 Continue
-   15.2.2. 101 Switching Protocols
-   15.3. Successful 2xx
-   15.3.1. 200 OK
-   15.3.2. 201 Created
-   15.3.3. 202 Accepted
-   15.3.4. 203 Non-Authoritative Information
-   15.3.5. 204 No Content
-   15.3.6. 205 Reset Content
-   15.3.7. 206 Partial Content
-   15.3.7.1. Single Part
-   15.3.7.2. Multiple Parts
-   15.3.7.3. Combining Parts
-   15.4. Redirection 3xx
-   15.4.1. 300 Multiple Choices
-   15.4.2. 301 Moved Permanently
-   15.4.3. 302 Found
-   15.4.4. 303 See Other
-   15.4.5. 304 Not Modified
-   15.4.6. 305 Use Proxy
-   15.4.7. 306 (Unused)
-   15.4.8. 307 Temporary Redirect
-   15.4.9. 308 Permanent Redirect
-   15.5. Client Error 4xx
-   15.5.1. 400 Bad Request
-   15.5.2. 401 Unauthorized
-   15.5.3. 402 Payment Required
-   15.5.4. 403 Forbidden
-   15.5.5. 404 Not Found
-   15.5.6. 405 Method Not Allowed
-   15.5.7. 406 Not Acceptable
-   15.5.8. 407 Proxy Authentication Required
-   15.5.9. 408 Request Timeout
-   15.5.10. 409 Conflict
-   15.5.11. 410 Gone
-   15.5.12. 411 Length Required
-   15.5.13. 412 Precondition Failed
-   15.5.14. 413 Content Too Large
-   15.5.15. 414 URI Too Long
-   15.5.16. 415 Unsupported Media Type
-   15.5.17. 416 Range Not Satisfiable
-   15.5.18. 417 Expectation Failed
-   15.5.19. 418 (Unused)
-   15.5.20. 421 Misdirected Request
-   15.5.21. 422 Unprocessable Content
-   15.5.22. 426 Upgrade Required
-   15.6. Server Error 5xx
-   15.6.1. 500 Internal Server Error
-   15.6.2. 501 Not Implemented
-   15.6.3. 502 Bad Gateway
-   15.6.4. 503 Service Unavailable
-   15.6.5. 504 Gateway Timeout
-   15.6.6. 505 HTTP Version Not Supported 16. Extending HTTP
-   16.1. Method Extensibility
-   16.1.1. Method Registry
-   16.1.2. Considerations for New Methods
-   16.2. Status Code Extensibility
-   16.2.1. Status Code Registry
-   16.2.2. Considerations for New Status Codes
-   16.3. Field Extensibility
-   16.3.1. Field Name Registry
-   16.3.2. Considerations for New Fields
-   16.3.2.1. Considerations for New Field Names
-   16.3.2.2. Considerations for New Field Values
-   16.4. Authentication Scheme Extensibility
-   16.4.1. Authentication Scheme Registry
-   16.4.2. Considerations for New Authentication Schemes
-   16.5. Range Unit Extensibility
-   16.5.1. Range Unit Registry
-   16.5.2. Considerations for New Range Units
-   16.6. Content Coding Extensibility
-   16.6.1. Content Coding Registry
-   16.6.2. Considerations for New Content Codings
-   16.7. Upgrade Token Registry 17. Security Considerations
-   17.1. Establishing Authority
-   17.2. Risks of Intermediaries
-   17.3. Attacks Based on File and Path Names
-   17.4. Attacks Based on Command, Code, or Query Injection
-   17.5. Attacks via Protocol Element Length
-   17.6. Attacks Using Shared-Dictionary Compression
-   17.7. Disclosure of Personal Information
-   17.8. Privacy of Server Log Information
-   17.9. Disclosure of Sensitive Information in URIs
-   17.10. Application Handling of Field Names
-   17.11. Disclosure of Fragment after Redirects
-   17.12. Disclosure of Product Information
-   17.13. Browser Fingerprinting
-   17.14. Validator Retention
-   17.15. Denial-of-Service Attacks Using Range
-   17.16. Authentication Considerations
-   17.16.1. Confidentiality of Credentials
-   17.16.2. Credentials and Idle Clients
-   17.16.3. Protection Spaces
-   17.16.4. Additional Response Fields 18. IANA Considerations
-   18.1. URI Scheme Registration
-   18.2. Method Registration
-   18.3. Status Code Registration
-   18.4. Field Name Registration
-   18.5. Authentication Scheme Registration
-   18.6. Content Coding Registration
-   18.7. Range Unit Registration
-   18.8. Media Type Registration
-   18.9. Port Registration
-   18.10. Upgrade Token Registration
+[9. 메소드들](#9-메소드들)
+
+- [9.1. 개요](#91-개요)
+  9.2. Common Method Properties
+  9.2.1. Safe Methods
+  9.2.2. Idempotent Methods
+  9.2.3. Methods and Caching
+  9.3. Method Definitions
+  9.3.1. GET
+  9.3.2. HEAD
+  9.3.3. POST
+  9.3.4. PUT
+  9.3.5. DELETE
+  9.3.6. CONNECT
+  9.3.7. OPTIONS
+  9.3.8. TRACE 10. Message Context
+  10.1. Request Context Fields
+  10.1.1. Expect
+  10.1.2. From
+  10.1.3. Referer
+  10.1.4. TE
+  10.1.5. User-Agent
+  10.2. Response Context Fields
+  10.2.1. Allow
+  10.2.2. Location
+  10.2.3. Retry-After
+  10.2.4. Server 11. HTTP Authentication
+  11.1. Authentication Scheme
+  11.2. Authentication Parameters
+  11.3. Challenge and Response
+  11.4. Credentials
+  11.5. Establishing a Protection Space (Realm)
+  11.6. Authenticating Users to Origin Servers
+  11.6.1. WWW-Authenticate
+  11.6.2. Authorization
+  11.6.3. Authentication-Info
+  11.7. Authenticating Clients to Proxies
+  11.7.1. Proxy-Authenticate
+  11.7.2. Proxy-Authorization
+  11.7.3. Proxy-Authentication-Info 12. Content Negotiation
+  12.1. Proactive Negotiation
+  12.2. Reactive Negotiation
+  12.3. Request Content Negotiation
+  12.4. Content Negotiation Field Features
+  12.4.1. Absence
+  12.4.2. Quality Values
+  12.4.3. Wildcard Values
+  12.5. Content Negotiation Fields
+  12.5.1. Accept
+  12.5.2. Accept-Charset
+  12.5.3. Accept-Encoding
+  12.5.4. Accept-Language
+  12.5.5. Vary 13. Conditional Requests
+  13.1. Preconditions
+  13.1.1. If-Match
+  13.1.2. If-None-Match
+  13.1.3. If-Modified-Since
+  13.1.4. If-Unmodified-Since
+  13.1.5. If-Range
+  13.2. Evaluation of Preconditions
+  13.2.1. When to Evaluate
+  13.2.2. Precedence of Preconditions 14. Range Requests
+  14.1. Range Units
+  14.1.1. Range Specifiers
+  14.1.2. Byte Ranges
+  14.2. Range
+  14.3. Accept-Ranges
+  14.4. Content-Range
+  14.5. Partial PUT
+  14.6. Media Type multipart/byteranges 15. Status Codes
+  15.1. Overview of Status Codes
+  15.2. Informational 1xx
+  15.2.1. 100 Continue
+  15.2.2. 101 Switching Protocols
+  15.3. Successful 2xx
+  15.3.1. 200 OK
+  15.3.2. 201 Created
+  15.3.3. 202 Accepted
+  15.3.4. 203 Non-Authoritative Information
+  15.3.5. 204 No Content
+  15.3.6. 205 Reset Content
+  15.3.7. 206 Partial Content
+  15.3.7.1. Single Part
+  15.3.7.2. Multiple Parts
+  15.3.7.3. Combining Parts
+  15.4. Redirection 3xx
+  15.4.1. 300 Multiple Choices
+  15.4.2. 301 Moved Permanently
+  15.4.3. 302 Found
+  15.4.4. 303 See Other
+  15.4.5. 304 Not Modified
+  15.4.6. 305 Use Proxy
+  15.4.7. 306 (Unused)
+  15.4.8. 307 Temporary Redirect
+  15.4.9. 308 Permanent Redirect
+  15.5. Client Error 4xx
+  15.5.1. 400 Bad Request
+  15.5.2. 401 Unauthorized
+  15.5.3. 402 Payment Required
+  15.5.4. 403 Forbidden
+  15.5.5. 404 Not Found
+  15.5.6. 405 Method Not Allowed
+  15.5.7. 406 Not Acceptable
+  15.5.8. 407 Proxy Authentication Required
+  15.5.9. 408 Request Timeout
+  15.5.10. 409 Conflict
+  15.5.11. 410 Gone
+  15.5.12. 411 Length Required
+  15.5.13. 412 Precondition Failed
+  15.5.14. 413 Content Too Large
+  15.5.15. 414 URI Too Long
+  15.5.16. 415 Unsupported Media Type
+  15.5.17. 416 Range Not Satisfiable
+  15.5.18. 417 Expectation Failed
+  15.5.19. 418 (Unused)
+  15.5.20. 421 Misdirected Request
+  15.5.21. 422 Unprocessable Content
+  15.5.22. 426 Upgrade Required
+  15.6. Server Error 5xx
+  15.6.1. 500 Internal Server Error
+  15.6.2. 501 Not Implemented
+  15.6.3. 502 Bad Gateway
+  15.6.4. 503 Service Unavailable
+  15.6.5. 504 Gateway Timeout
+  15.6.6. 505 HTTP Version Not Supported 16. Extending HTTP
+  16.1. Method Extensibility
+  16.1.1. Method Registry
+  16.1.2. Considerations for New Methods
+  16.2. Status Code Extensibility
+  16.2.1. Status Code Registry
+  16.2.2. Considerations for New Status Codes
+  16.3. Field Extensibility
+  16.3.1. Field Name Registry
+  16.3.2. Considerations for New Fields
+  16.3.2.1. Considerations for New Field Names
+  16.3.2.2. Considerations for New Field Values
+  16.4. Authentication Scheme Extensibility
+  16.4.1. Authentication Scheme Registry
+  16.4.2. Considerations for New Authentication Schemes
+  16.5. Range Unit Extensibility
+  16.5.1. Range Unit Registry
+  16.5.2. Considerations for New Range Units
+  16.6. Content Coding Extensibility
+  16.6.1. Content Coding Registry
+  16.6.2. Considerations for New Content Codings
+  16.7. Upgrade Token Registry 17. Security Considerations
+  17.1. Establishing Authority
+  17.2. Risks of Intermediaries
+  17.3. Attacks Based on File and Path Names
+  17.4. Attacks Based on Command, Code, or Query Injection
+  17.5. Attacks via Protocol Element Length
+  17.6. Attacks Using Shared-Dictionary Compression
+  17.7. Disclosure of Personal Information
+  17.8. Privacy of Server Log Information
+  17.9. Disclosure of Sensitive Information in URIs
+  17.10. Application Handling of Field Names
+  17.11. Disclosure of Fragment after Redirects
+  17.12. Disclosure of Product Information
+  17.13. Browser Fingerprinting
+  17.14. Validator Retention
+  17.15. Denial-of-Service Attacks Using Range
+  17.16. Authentication Considerations
+  17.16.1. Confidentiality of Credentials
+  17.16.2. Credentials and Idle Clients
+  17.16.3. Protection Spaces
+  17.16.4. Additional Response Fields 18. IANA Considerations
+  18.1. URI Scheme Registration
+  18.2. Method Registration
+  18.3. Status Code Registration
+  18.4. Field Name Registration
+  18.5. Authentication Scheme Registration
+  18.6. Content Coding Registration
+  18.7. Range Unit Registration
+  18.8. Media Type Registration
+  18.9. Port Registration
+  18.10. Upgrade Token Registration
 
 [19. 레퍼런스](#19-레퍼런스)
 
@@ -655,14 +656,9 @@ URI 레퍼런스는 요청들을 타게팅하는 데, 리다이렉트를 나타�
 
 URI 레퍼런스를 허용하는 HTTP의 각 프로토콜 요소는 자체적인 ABNF 프로덕션 안에서 엘리먼트가 레퍼런스(URI-레퍼런스)의 어떤 형태라도 허용하는지, 절대적 형태(절대-URI)의 URI만 허용하는지, 경로와 선택적 쿼리 구성요소들(partial-URI)만 허용하는지, 혹은 위의 것들의 어떤 조합을 허용하는지 나타낼 것이다. 만약 그렇지 않으면, URI 레퍼런스들은 타겟 URI에 대해 상대적으로 파싱된다(7.1절).
 
-모든 발신자들과 수신자들을, 최소한, 프로토콜 요소들에서 8000 옥텟 이상의 길이를 지원하도록 권장된다(RECOMMENDED). 이는 어떤 구조들과 on-wire 표현들(예를 들어, HTTP/1.1의 요청 라인)이 어떤 경우들에서는 반드시 더 클 것이라는 의미를 내포한다.
+모든 발신자들과 수신자들은, 최소한, 프로토콜 요소들에서 8000 옥텟 이상의 길이를 지원하도록 권장된다(RECOMMENDED). 이는 어떤 구조들과 on-wire 표현들(예를 들어, HTTP/1.1의 요청 라인)이 어떤 경우들에서는 반드시 더 클 것이라는 의미를 내포한다.
 
 ### 4.2. HTTP와 연관된 URI 체계들
-
-IANA maintains the registry of URI Schemes [BCP35] at
-<https://www.iana.org/assignments/uri-schemes/>. Although requests
-might target any URI scheme, the following schemes are inherent to
-HTTP servers:
 
 IANA는 <<https://www.iana.org/assignments/uri-schemes/>>에서 URI 체계 등록[[BCP35](https://www.rfc-editor.org/info/bcp35)]을 유지 관리한다. 비록 어느 URI 체계든 요청이 목표로 삼을 수 있지만, 다음의 체계들은 HTTP 서버에게는 내재적이다.
 
@@ -1894,92 +1890,48 @@ gzip 콘텐츠 코딩을 사용한 다른 표현은 다음과 같을 것이다:
 
 **Note:** 콘텐츠 코딩들은 표현 데이터의 속성이므로, 콘텐츠-인코딩된 표현을 위한 강한 엔티티 태그는 캐시 업데이트와 범위 요청들에서의 잠재적인 충돌들을 방지하기 위해 인코딩되지 않은 표현의 엔티티 태그로부터 구분되어야 한다. 반대로, 전송 코딩들([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 7절)은 오직 메시지 전송 동안에만 적용되며 구분되는 엔티티 태그들로 나타나지는 않는다.
 
-## 9. Methods
+## 9. 메소드들
 
-### 9.1. Overview
+### 9.1. 개요
 
-The request method token is the primary source of request semantics;
-it indicates the purpose for which the client has made this request
-and what is expected by the client as a successful result.
+요청 메소드 토큰은 요청 의미체계에서 중요한 소스다; 그것은 클라이언트가 해당 요청을 만든 목적과 클라이언트가 성공적인 결과로서 기대하는 것을 나타낸다.
 
-The request method's semantics might be further specialized by the
-semantics of some header fields when present in a request if those
-additional semantics do not conflict with the method. For example, a
-client can send conditional request header fields (Section 13.1) to
-make the requested action conditional on the current state of the
-target resource.
+요청 메소드의 의미체계는 요청에 존재하는 일부 헤더 필드들의 추가적인 의미체계가 메소드와 충돌하지 않는다면 그것들에 의해 더욱 특화될 수 있다. 예를 들어, 클라이언트는 요청된 액션을 타겟 리소스의 현재 상태에 대한 조건부로 만들기 위해 조건부 요청 헤더 필드들을 보낼 수 있다(13.1절).
 
-HTTP is designed to be usable as an interface to distributed object
-systems. The request method invokes an action to be applied to a
-target resource in much the same way that a remote method invocation
-can be sent to an identified object.
+HTTP는 분산 오브젝트 시스템들에 대한 인터페이스로서 사용될 수 있도록 설계됐다. 요청 메소드는 타겟 리소스에 적용될 액션을 일으키는데 이는 원격 메소드 호출이 식별된 오브젝트로 보내질 수 있는 방식과 매우 유사하다.
 
      method = token
 
-The method token is case-sensitive because it might be used as a
-gateway to object-based systems with case-sensitive method names. By
-convention, standardized methods are defined in all-uppercase US-
-ASCII letters.
+메소드 토큰은 대소문자를 구별하며 이는 그것이 대소문자를 구별하는 메소드 이름들을 가지는 오브젝트 기반 시스템들에 대한 게이트웨이로 사용될 수 있기 때문이다. 관례적으로, 표준화된 메소드들은 모두 대문자인 US-ASCII 문자들로 정의된다.
 
-Unlike distributed objects, the standardized request methods in HTTP
-are not resource-specific, since uniform interfaces provide for
-better visibility and reuse in network-based systems [REST]. Once
-defined, a standardized method ought to have the same semantics when
-applied to any resource, though each resource determines for itself
-whether those semantics are implemented or allowed.
+분산 오브젝트들과는 달리, HTTP의 표준화된 요청 메소드들은 리소스에 특정적이지 않으며, 이는 균일한 인터페이스들이 네트워크 기반 시스템들에서 더 좋은 가시성과 재사용성을 제공하기 때문이다[[REST](https://roy.gbiv.com/pubs/dissertation/top.htm)]. 한번 정의되면, 표준화된 메소드는 어떤 리소스에 적용되든지 같은 의미체계를 가져야 하지만, 각 리소스는 스스로 그 의미체계들이 구현되거나 허용되는지를 결정한다.
 
-This specification defines a number of standardized methods that are
-commonly used in HTTP, as outlined by the following table.
+이 사양은 HTTP에서 흔히 쓰이는 많은 표준화 메소드들을 정의하며, 다음 표에 요약되어 있다.
 
-+=========+============================================+=========+
-| Method | Description | Section |
-| Name | | |
-+=========+============================================+=========+
-| GET | Transfer a current representation of the | 9.3.1 |
-| | target resource. | |
-+---------+--------------------------------------------+---------+
-| HEAD | Same as GET, but do not transfer the | 9.3.2 |
-| | response content. | |
-+---------+--------------------------------------------+---------+
-| POST | Perform resource-specific processing on | 9.3.3 |
-| | the request content. | |
-+---------+--------------------------------------------+---------+
-| PUT | Replace all current representations of the | 9.3.4 |
-| | target resource with the request content. | |
-+---------+--------------------------------------------+---------+
-| DELETE | Remove all current representations of the | 9.3.5 |
-| | target resource. | |
-+---------+--------------------------------------------+---------+
-| CONNECT | Establish a tunnel to the server | 9.3.6 |
-| | identified by the target resource. | |
-+---------+--------------------------------------------+---------+
-| OPTIONS | Describe the communication options for the | 9.3.7 |
-| | target resource. | |
-+---------+--------------------------------------------+---------+
-| TRACE | Perform a message loop-back test along the | 9.3.8 |
-| | path to the target resource. | |
-+---------+--------------------------------------------+---------+
+<center>
 
-                                Table 4
+| Method  | Description                        | Section | Name                        |
+| ------- | ---------------------------------- | ------- | --------------------------- |
+| GET     | ~의 현재 표현 전송                 | 9.3.1   | 타겟 리소스                 |
+| HEAD    | GET과 같지만, ~를 전송하지 않기    | 9.3.2   | 응답 콘텐츠                 |
+| POST    | ~에 대해 리소스별 처리 수행        | 9.3.3   | 요청 콘텐츠                 |
+| PUT     | ~의 모든 현재 표현들을 ~로 대체    | 9.3.4   | 타겟 리소스를 요청 콘텐츠로 |
+| DELETE  | ~의 모든 현재 표현들을 삭제        | 9.3.5   | 타겟 리소스                 |
+| CONNECT | ~한 서버에 대한 터널 수립          | 9.3.6   | 타겟 리소스에 의해 식별되는 |
+| OPTIONS | ~에 대한 통신 옵션들을 설명        | 9.3.7   | 타겟 리소스                 |
+| TRACE   | ~를 따라 메시지 루프백 테스트 스행 | 9.3.8   | 타겟 리소스로의 경로        |
 
-All general-purpose servers MUST support the methods GET and HEAD.
-All other methods are OPTIONAL.
+Table 4
 
-The set of methods allowed by a target resource can be listed in an
-Allow header field (Section 10.2.1). However, the set of allowed
-methods can change dynamically. An origin server that receives a
-request method that is unrecognized or not implemented SHOULD respond
-with the 501 (Not Implemented) status code. An origin server that
-receives a request method that is recognized and implemented, but not
-allowed for the target resource, SHOULD respond with the 405 (Method
-Not Allowed) status code.
+</center>
 
-Additional methods, outside the scope of this specification, have
-been specified for use in HTTP. All such methods ought to be
-registered within the "Hypertext Transfer Protocol (HTTP) Method
-Registry", as described in Section 16.1.
+모든 범용 서버들은 반드시(MUST) GET과 HEAD 메소드들을 지원해야 한다. 다른 모든 메소드들은 선택적(OPTIONAL)이다.
 
-9.2. Common Method Properties
+타겟 리소스에 의해 허용된 메소드들의 집합은 Allow 헤더 필드에 나열될 수 있다(10.2.1절). 그러나, 허용된 메소드들의 집합은 동적으로 변할 수 있다. 인식되지 않거나 구현되지 않은 요청 메소드를 수신한 오리진 서버는 웬만하면(SHOULD) 501(Not Implemented) 상태 코드로 응답해야 한다. 인식되고 구현된, 하지만 타겟 리소스에 대해 허용되지는 않은 요청 메소드를 수신한 오리진 서버는, 웬만하면(SHOULD) 405(Method Not Allowed) 상태 코드로 응답해야 한다.
+
+이 사양의 범위 밖의, 추가적인 메소드들은, HTTP에서 사용하도록 지정됐다. 그러한 모든 메소드들은 "Hypertext Transfer Protocol(HTTP) Method Registry"내에 등록되어야 하며, 관련 내용은 16.1절에서 기술된다.
+
+### 9.2. 공통 메소드 속성들
 
 9.2.1. Safe Methods
 
