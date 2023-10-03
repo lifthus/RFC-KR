@@ -5450,41 +5450,21 @@ GET 요청에 대한 303 응답은 origin 서버가 HTTP를 통해 서버가 전
 
 HEAD 요청에 대한 응답을 제외하고 303 응답의 표현에는 Location 헤더 필드에 제공된 동일한 URI 참조에 대한 하이퍼링크가 포함된 짧은 하이퍼텍스트 메모가 포함되어야 한다.
 
-15.4.5. 304 Not Modified
+#### 15.4.5. 304 Not Modified
 
-The 304 (Not Modified) status code indicates that a conditional GET
-or HEAD request has been received and would have resulted in a 200
-(OK) response if it were not for the fact that the condition
-evaluated to false. In other words, there is no need for the server
-to transfer a representation of the target resource because the
-request indicates that the client, which made the request
-conditional, already has a valid representation; the server is
-therefore redirecting the client to make use of that stored
-representation as if it were the content of a 200 (OK) response.
+304 (Not Modified) 상태 코드는 조건부 GET 또는 HEAD 요청이 수신되었으며 조건이 거짓으로 평가되지 않았다면 200 (OK) 응답을 받았을 것으로 나타낸다. 즉, 조건부 요청을 한 클라이언트가 이미 유효한 표현을 가지고 있기 때문에 서버가 대상 리소스의 표현을 전송할 필요가 없다; 따라서 서버는 클라이언트가 저장된 표현을 마치 200 (OK) 응답의 내용인 것 처럼 사용라도록 리다이렉션하는 것이다.
 
-The server generating a 304 response MUST generate any of the
-following header fields that would have been sent in a 200 (OK)
-response to the same request:
+304 응답을 생성하는 서버는 동일한 요청에 대해 200 (OK) 응답으로 전송되는 다음 헤더 필드 중 하나를 반드시(MUST) 생성해야 한다:
 
 - Content-Location, Date, ETag, and Vary
 
 - Cache-Control and Expires (see [CACHING])
 
-Since the goal of a 304 response is to minimize information transfer
-when the recipient already has one or more cached representations, a
-sender SHOULD NOT generate representation metadata other than the
-above listed fields unless said metadata exists for the purpose of
-guiding cache updates (e.g., Last-Modified might be useful if the
-response does not have an ETag field).
+304 응답의 목표는 수신자가 이미 하나 이상의 캐시된 표현을 가지고 있을 때 정보 전달을 최소화하는 것 이기 때문에, 송신자는 캐시 업데이트를 안내하기 위한 목적으로 해당 메타데이터가 존재하지 않는 한 나열된 필드 이외의 표현 메타데이터를 웬만해서는(SHOULD NOT) 생성해서는 안 된다 (예: 응답에 ETag 필드가 없는 경우 Last-Modified가 유용할 수 있음).
 
-Requirements on a cache that receives a 304 response are defined in
-Section 4.3.4 of [CACHING]. If the conditional request originated
-with an outbound client, such as a user agent with its own cache
-sending a conditional GET to a shared proxy, then the proxy SHOULD
-forward the 304 response to that client.
+304 응답을 수신하는 캐시에 대한 요구 사항은 [CACHING] 4.3.4절에 정의되어 있다. 조건부 요청이 자신의 캐시가 있는 사용자 에이전트가 공유 프록시로 조건부 GET을 전송하는 것과 같이 outbound 클라이언트에서 발생한 경우, 프록시는 304 응답을 해당 클라이언트로 웬만하면(SHOULD) 전달해야 한다.
 
-A 304 response is terminated by the end of the header section; it
-cannot contain content or trailers.
+304 응답은 헤더 섹션이 끝날때 종료된다; 이것은 콘텐츠나 트레일러를 포함할 수 없다.
 
 15.4.6. 305 Use Proxy
 
