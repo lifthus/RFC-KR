@@ -5480,32 +5480,17 @@ HEAD 요청에 대한 응답을 제외하고 303 응답의 표현에는 Location
 
 서버는 다른 URI에 대한 URI 참조를 포함된 Location 헤더 필드를 응답에 웬만하면(SHOULD) 생성해야 한다. 사용자 에이전트는 자동 리다이렉션을 위해 Location 필드 값을 아마(MAY) 사용할 수 있다. 서버의 응답 콘텐츠는 일반적으로 다른 URI로 연결되는 하이퍼링크가 포함된 짧은 하이퍼텍스트 메모를 포함한다.
 
-15.4.9. 308 Permanent Redirect
+#### 15.4.9. 308 Permanent Redirect
 
-The 308 (Permanent Redirect) status code indicates that the target
-resource has been assigned a new permanent URI and any future
-references to this resource ought to use one of the enclosed URIs.
-The server is suggesting that a user agent with link-editing
-capability can permanently replace references to the target URI with
-one of the new references sent by the server. However, this
-suggestion is usually ignored unless the user agent is actively
-editing references (e.g., engaged in authoring content), the
-connection is secured, and the origin server is a trusted authority
-for the content being edited.
+308 (Permanent Redirect) 상태 코드는 대상 리소스에 새로운 영구 URI가 할당되었음을 나타내며 향후 이 리소스에 대한 모든 참조는 동봉된 URI 중 하나를 사용해야 한다. 서버는 링크 편집 기능이 있는 사용자 에이전트가 대상 URI에 대한 참조를 서버가 전송한 새로운 참조 중 하나로 영구적으로 대체할 수 있다고 제안하고 있다. 그러나, 사용자 에이전트가 참조를 적극적으로 편집하고 있고 (예: 콘텐츠 작성에 관여 중), 연결이 보안되어 있고, origin 서버가 편집 중인 콘텐츠에 대해 신뢰할 수 있는 기관이 아닌 한 이 제안은 보통 무시된다.
 
-The server SHOULD generate a Location header field in the response
-containing a preferred URI reference for the new permanent URI. The
-user agent MAY use the Location field value for automatic
-redirection. The server's response content usually contains a short
-hypertext note with a hyperlink to the new URI(s).
+서버는 새로운 영구 URI에 대한 URI 참조가 포함된 Location 헤더 필드를 응답에 웬만하면(SHOULD) 생성해야 한다. 사용자 에이전트는 자동 리다이렉션을 위해 Location 필드 값을 아마(MAY) 사용할 수 있다. 서버의 응답 콘텐츠에는 일반적으로 새로운 URI로 연결되는 하이퍼링크가 포함된 짧은 하이퍼텍스트 메모가 포함된다.
 
-A 308 response is heuristically cacheable; i.e., unless otherwise
-indicated by the method definition or explicit cache controls (see
-Section 4.2.2 of [CACHING]).
+308 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [CACHING]) heuristic하게 캐시 할 수 있다.
 
-      |  *Note:* This status code is much younger (June 2014) than its
-      |  sibling codes and thus might not be recognized everywhere.  See
-      |  Section 4 of [RFC7538] for deployment considerations.
+      |  *Note:* 이 상태 코드는 sibling 코드들보다 휠씬 나중이므로 (2014년 6월) 
+      |  모든 곳에서 인식되지 않을 수 있다.
+      |  배포 고려 사항은 [RFC7538] 4절을 참조한다.
 
 15.5. Client Error 4xx
 
