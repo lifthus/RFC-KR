@@ -5492,14 +5492,9 @@ HEAD 요청에 대한 응답을 제외하고 303 응답의 표현에는 Location
       |  모든 곳에서 인식되지 않을 수 있다.
       |  배포 고려 사항은 [RFC7538] 4절을 참조한다.
 
-15.5. Client Error 4xx
+### 15.5. Client Error 4xx
 
-The 4xx (Client Error) class of status code indicates that the client
-seems to have erred. Except when responding to a HEAD request, the
-server SHOULD send a representation containing an explanation of the
-error situation, and whether it is a temporary or permanent
-condition. These status codes are applicable to any request method.
-User agents SHOULD display any included representation to the user.
+상태 코드의 4xx (Client Error) 클래스는 클라이언트에 에러가 발생했음을 나타낸다. HEAD 요청에 응답하는 경우를 제외하고, 서버는 에러 상황에 대한 설명과 그것이 일시적인 상태인지 영구적인 상태인지에 대한 설명이 포함된 표현을 보내야 한다. 이러한 상태 코드는 모든 요청 방식에 적용할 수 있다. 사용자 에이전트는 포함된 표현을 사용자에게 웬만하면(SHOULD) 표시해야 한다.
 
 15.5.1. 400 Bad Request
 
