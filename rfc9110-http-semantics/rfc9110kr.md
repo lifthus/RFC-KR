@@ -5470,10 +5470,9 @@ HEAD 요청에 대한 응답을 제외하고 303 응답의 표현에는 Location
 
 305 (Use Proxy) 상태 코드는 이 명세서의 이전 버전에서 정의되었으며 현재는 더 이상 사용되지 않는다 ([RFC7231]의 부록 B).
 
-15.4.7. 306 (Unused)
+#### 15.4.7. 306 (Unused)
 
-The 306 status code was defined in a previous version of this
-specification, is no longer used, and the code is reserved.
+306 상태 코드는 이 명세서의 이전 버전에서 정의되었으며 더 이상 사용되지 않으며 코드는 예약되어 있다.
 
 15.4.8. 307 Temporary Redirect
 
