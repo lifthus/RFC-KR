@@ -5474,20 +5474,11 @@ HEAD 요청에 대한 응답을 제외하고 303 응답의 표현에는 Location
 
 306 상태 코드는 이 명세서의 이전 버전에서 정의되었으며 더 이상 사용되지 않으며 코드는 예약되어 있다.
 
-15.4.8. 307 Temporary Redirect
+#### 15.4.8. 307 Temporary Redirect
 
-The 307 (Temporary Redirect) status code indicates that the target
-resource resides temporarily under a different URI and the user agent
-MUST NOT change the request method if it performs an automatic
-redirection to that URI. Since the redirection can change over time,
-the client ought to continue using the original target URI for future
-requests.
+307 (Temporary Redirect) 상태 코드는 대상 리소스가 일시적으로 다른 URI에 존재하는 것을 나타내며, 사용자 에이전트가 해당 URI로 자동 리다이렉션을 수행하는 경우 요청 방법을 절대(MUST NOT) 변경해서는 안 된다는 것을 나타낸다. 리다이렉션은 시간이 지남에 따라 변경될 수 있기 때문에, 클라이언트는 향후 요청을 위해 원래 대상 URI를 계속 사용해야 한다.
 
-The server SHOULD generate a Location header field in the response
-containing a URI reference for the different URI. The user agent MAY
-use the Location field value for automatic redirection. The server's
-response content usually contains a short hypertext note with a
-hyperlink to the different URI(s).
+서버는 다른 URI에 대한 URI 참조를 포함된 Location 헤더 필드를 응답에 웬만하면(SHOULD) 생성해야 한다. 사용자 에이전트는 자동 리다이렉션을 위해 Location 필드 값을 아마(MAY) 사용할 수 있다. 서버의 응답 콘텐츠는 일반적으로 다른 URI로 연결되는 하이퍼링크가 포함된 짧은 하이퍼텍스트 메모를 포함한다.
 
 15.4.9. 308 Permanent Redirect
 
