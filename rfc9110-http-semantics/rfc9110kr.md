@@ -5440,38 +5440,15 @@ HEAD 이외의 요청 메소드의 경우, 서버는 사용자 또는 사용자 
       |  이 동장을 원하지 않는 경우 307 (Temporary Redirect) 상태 코드를
       |  대신 사용할 수 있다.
 
-15.4.4. 303 See Other
+#### 15.4.4. 303 See Other
 
-The 303 (See Other) status code indicates that the server is
-redirecting the user agent to a different resource, as indicated by a
-URI in the Location header field, which is intended to provide an
-indirect response to the original request. A user agent can perform
-a retrieval request targeting that URI (a GET or HEAD request if
-using HTTP), which might also be redirected, and present the eventual
-result as an answer to the original request. Note that the new URI
-in the Location header field is not considered equivalent to the
-target URI.
+303 (See Other) 상태 코드는 서버가 사용자 에이전트를 다른 리소스로 리다이렉션하고 있음을 나타내며, 이것은 원래 요청에 대한 간접 응답을 제공하기 위해 Location 헤더 필드에 있는 URI로 표시된다. 사용자 에이전트는 리다이렉션될 수도 있는 해당 URI(HTTP를 사용하는 경우 GET 또는 HEAD 요청) 를 대상으로 검색 요청을 수행하여, 최종 결과를 원래 요청에 대한 응답으로 표시할 수 있다. Location 헤더 필드에 있는 새로운 URI는 대상 URI와 동등한 것으로 간주되지 않는다는 점에 유의하라.
 
-This status code is applicable to any HTTP method. It is primarily
-used to allow the output of a POST action to redirect the user agent
-to a different resource, since doing so provides the information
-corresponding to the POST response as a resource that can be
-separately identified, bookmarked, and cached.
+이 상태 코드는 모든 HTTP 메소드에 적용할 수 있다. 주로 POST 액션의 출력이 사용자 에이전트를 다른 리소스로 리다이렉션할 수 있도록 하는데 사용되는데, 이는 POST 응답에 해당하는 정보를 별도로 식별, 북마크 및 캐시할 수 있는 리소스로 제공하기 때문이다.
 
-A 303 response to a GET request indicates that the origin server does
-not have a representation of the target resource that can be
-transferred by the server over HTTP. However, the Location field
-value refers to a resource that is descriptive of the target
-resource, such that making a retrieval request on that other resource
-might result in a representation that is useful to recipients without
-implying that it represents the original target resource. Note that
-answers to the questions of what can be represented, what
-representations are adequate, and what might be a useful description
-are outside the scope of HTTP.
+GET 요청에 대한 303 응답은 origin 서버가 HTTP를 통해 서버가 전송할 수 있는 대상 리소스의 표현을 가지고 있지 않음을 나타낸다. 그러나, Location 필드 값은 대상 리소스를 설명하는 리소스를 참조하므로 다른 리소스에 대한 검색 요청을 하면 원래 대상 리소스를 나타내지 않으면서도 수신자에게 유용한 표현이 될 수 있다. 무엇을 표현할 수 있는지, 어떤 표현지 적절한지, 무엇이 유용한 설명이 될 수 있는지에 대한 질문에 대한 답은 HTTP의 범위를 벗어난다는 점에 유의하라.
 
-Except for responses to a HEAD request, the representation of a 303
-response ought to contain a short hypertext note with a hyperlink to
-the same URI reference provided in the Location header field.
+HEAD 요청에 대한 응답을 제외하고 303 응답의 표현에는 Location 헤더 필드에 제공된 동일한 URI 참조에 대한 하이퍼링크가 포함된 짧은 하이퍼텍스트 메모가 포함되어야 한다.
 
 15.4.5. 304 Not Modified
 
