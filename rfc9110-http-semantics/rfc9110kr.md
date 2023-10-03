@@ -5466,10 +5466,9 @@ HEAD 요청에 대한 응답을 제외하고 303 응답의 표현에는 Location
 
 304 응답은 헤더 섹션이 끝날때 종료된다; 이것은 콘텐츠나 트레일러를 포함할 수 없다.
 
-15.4.6. 305 Use Proxy
+#### 15.4.6. 305 Use Proxy
 
-The 305 (Use Proxy) status code was defined in a previous version of
-this specification and is now deprecated (Appendix B of [RFC7231]).
+305 (Use Proxy) 상태 코드는 이 명세서의 이전 버전에서 정의되었으며 현재는 더 이상 사용되지 않는다 ([RFC7231]의 부록 B).
 
 15.4.7. 306 (Unused)
 
