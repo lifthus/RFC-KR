@@ -5496,12 +5496,9 @@ HEAD 요청에 대한 응답을 제외하고 303 응답의 표현에는 Location
 
 상태 코드의 4xx (Client Error) 클래스는 클라이언트에 에러가 발생했음을 나타낸다. HEAD 요청에 응답하는 경우를 제외하고, 서버는 에러 상황에 대한 설명과 그것이 일시적인 상태인지 영구적인 상태인지에 대한 설명이 포함된 표현을 보내야 한다. 이러한 상태 코드는 모든 요청 방식에 적용할 수 있다. 사용자 에이전트는 포함된 표현을 사용자에게 웬만하면(SHOULD) 표시해야 한다.
 
-15.5.1. 400 Bad Request
+#### 15.5.1. 400 Bad Request
 
-The 400 (Bad Request) status code indicates that the server cannot or
-will not process the request due to something that is perceived to be
-a client error (e.g., malformed request syntax, invalid request
-message framing, or deceptive request routing).
+400 (Bad Request) 상태 코드는 클라이언트 오류로 인식되는 문제(예: 잘못된 구문 요청, 잘못된 요청 메세지 프레이밍 또는 잘못된 요청 라우팅) 로 인해 서버가 요청을 처리할 수 없거나 처리하지 않음을 나타낸다.
 
 15.5.2. 401 Unauthorized
 
