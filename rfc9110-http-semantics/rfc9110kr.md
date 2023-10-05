@@ -1933,55 +1933,21 @@ Table 4
 
 ### 9.2. 공통 메소드 속성들
 
-9.2.1. Safe Methods
+#### 9.2.1. 안전한 메소드들
 
-Request methods are considered "safe" if their defined semantics are
-essentially read-only; i.e., the client does not request, and does
-not expect, any state change on the origin server as a result of
-applying a safe method to a target resource. Likewise, reasonable
-use of a safe method is not expected to cause any harm, loss of
-property, or unusual burden on the origin server.
+메소드들은 만약 그 정의된 의미 체계가 본질적으로 read-only인 경우 "안전한" 것으로 간주된다; 즉, 클라이언트는 타겟 리소스에 대해 안전한 메소드를 적용하는 결과로서 오리진 서버에 어떠한 변경도 요청하지 않고, 기대하지 않는다. 마찬가지로, 안전한 메소드의 합리적인 사용은 오리진 서버에 대해 어떠한 해로움, 속성의 손실, 혹은 일반적이지 않은 부담을 일으키지 않을 것으로 기대된다.
 
-This definition of safe methods does not prevent an implementation
-from including behavior that is potentially harmful, that is not
-entirely read-only, or that causes side effects while invoking a safe
-method. What is important, however, is that the client did not
-request that additional behavior and cannot be held accountable for
-it. For example, most servers append request information to access
-log files at the completion of every response, regardless of the
-method, and that is considered safe even though the log storage might
-become full and cause the server to fail. Likewise, a safe request
-initiated by selecting an advertisement on the Web will often have
-the side effect of charging an advertising account.
+안전한 메소드들의 정의는 구현체가 완전히 read-only가 아닌, 혹은 안전한 메소드를 호출하는 동안 사이드 이펙트들을 초래하는, 잠재적으로 해로운 행동을 포함하는 것을 막지는 않는다. 중요한 것은, 그러나, 클라이언트가 그 추가적인 행동을 요청하지 않았고 그것에 대한 책임을 질 수 없다는 것이다. 예를 들어, 메소드와 관계 없이, 대부분의 서버들은 모든 응답의 완료 시에 로그 파일들에 접근하기 위해 요청 정보들을 추가하며, 이는 로그 저장소가 가득 차고 서버가 실패할 수 있더라도 안전한 것으로 간주된다. 마찬가지로, 웹의 광고를 선택함으로써 시작된 한 안전한 요청은 종종 광고 계정에 대한 요금 청구 같은 사이드 이펙트를 가질 것이다.
 
-Of the request methods defined by this specification, the GET, HEAD,
-OPTIONS, and TRACE methods are defined to be safe.
+이 사양서에 의해 정의된 요청 메소드들 중, GET, HEAD, OPTIONS, 그리고 TRACE 메소드는 안전한 것으로 정의된다.
 
-The purpose of distinguishing between safe and unsafe methods is to
-allow automated retrieval processes (spiders) and cache performance
-optimization (pre-fetching) to work without fear of causing harm. In
-addition, it allows a user agent to apply appropriate constraints on
-the automated use of unsafe methods when processing potentially
-untrusted content.
+안전한 것과 안전하지 않은 메소드들 간에 구분하는 것의 목적은 자동화된 검색 프로세스들(스파이더들)과 캐시 성능 최적화(pre-fetching)가 해를 일으킬 두려움 없이 작동하도록 하기 위함이다. 추가로, 이는 유저 에이전트가 잠재적으로 신뢰할 수 없는 콘텐츠를 처리할 때 안전하지 않은 메소드들의 자동화된 사용에 대한 적절한 제약들을 적용할 수 있도록 한다.
 
-A user agent SHOULD distinguish between safe and unsafe methods when
-presenting potential actions to a user, such that the user can be
-made aware of an unsafe action before it is requested.
+유저 에이전트는 웬만하면(SHOULD) 유저에게 잠재적인 액션들을 제시할 때 안전한 것과 안전하지 않은 메소드들을 구분하여, 그것이 요청되기 전에 유저가 안전하지 않은 액션에 대해 인지할 수 있도록 해야 한다.
 
-When a resource is constructed such that parameters within the target
-URI have the effect of selecting an action, it is the resource
-owner's responsibility to ensure that the action is consistent with
-the request method semantics. For example, it is common for Web-
-based content editing software to use actions within query
-parameters, such as "page?do=delete". If the purpose of such a
-resource is to perform an unsafe action, then the resource owner MUST
-disable or disallow that action when it is accessed using a safe
-request method. Failure to do so will result in unfortunate side
-effects when automated processes perform a GET on every URI reference
-for the sake of link maintenance, pre-fetching, building a search
-index, etc.
+타겟 URI 내의 파라미터들이 액션을 선택하는 효과를 가진 리소스가 구성됐을 때, 해당 액션이 요청 메소드의 의미체계와 일관성 있는지를 보장하는 것은 리소스 오너의 책임이다. 예를 들어, 웹-기반 콘텐츠 수정 소프트웨어에 있어, "page?do=delete"와 같은 쿼리 파라미터들 내에서 액션들을 사용하는 경우는 흔하다. 만약 그러한 리소스의 목적이 안전하지 않은 액션을 수행하기 위함이라면, 그러한 액션이 안전한 요청 메소드를 통해 접근됐을 때 리소스 오너는 반드시(MUST) 해당 액션을 비활성화하거나 불허해야 한다. 그렇게 하는데 실패하는 것은 자동화된 프로세스들이 링크 유지, pre-fetching, 검색 인덱스 구축 등을 위해 모든 URI 레퍼런스에 대해 GET을 수행할 때 불행한 부작용들을 초래할 것이다.
 
-9.2.2. Idempotent Methods
+#### 9.2.2. 멱등성 메소드들
 
 A request method is considered "idempotent" if the intended effect on
 the server of multiple identical requests with that method is the
