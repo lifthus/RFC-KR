@@ -5500,22 +5500,11 @@ HEAD 요청에 대한 응답을 제외하고 303 응답의 표현에는 Location
 
 400 (Bad Request) 상태 코드는 클라이언트 오류로 인식되는 문제(예: 잘못된 구문 요청, 잘못된 요청 메세지 프레이밍 또는 잘못된 요청 라우팅) 로 인해 서버가 요청을 처리할 수 없거나 처리하지 않음을 나타낸다.
 
-15.5.2. 401 Unauthorized
+#### 15.5.2. 401 Unauthorized
 
-The 401 (Unauthorized) status code indicates that the request has not
-been applied because it lacks valid authentication credentials for
-the target resource. The server generating a 401 response MUST send
-a WWW-Authenticate header field (Section 11.6.1) containing at least
-one challenge applicable to the target resource.
+401 (Unauthorized) 상태 코드는 대상 리소스에 대한 유효한 인증 자격 증명이 없기 때문에 요청이 적용되지 않았음을 나타낸다. 401 응답을 생성하는 서버는 대상 리소스에 적용가능한 챌린지를 하나 이상 포함하는 WWW-Authenticate 헤더 필드 (11.6.1절)를 반드시(MUST) 전송해야 한다.
 
-If the request included authentication credentials, then the 401
-response indicates that authorization has been refused for those
-credentials. The user agent MAY repeat the request with a new or
-replaced Authorization header field (Section 11.6.2). If the 401
-response contains the same challenge as the prior response, and the
-user agent has already attempted authentication at least once, then
-the user agent SHOULD present the enclosed representation to the
-user, since it usually contains relevant diagnostic information.
+요청에 인증 자격 증명이 포함되었다면, 401 응답은 해당 자격 증명에 대한 권한 부여가 거부되었음을 나타낸다. 사용자 에이전트는 새롭거나 대체된 Authorization 헤더 필드를 사용하여 요청을 아마(MAY) 반복할 수 있다 (11.6.2절). 401 응답이 이전 응답과 동일한 챌린지를 포함하고, 사용자 에이전트가 이미 한 번 이상 인증을 시도한 경우, 사용자 에이전트는 일반적으로 관련 진단 정보가 포함되어 있으므로 동봉된 표현을 사용자에게 왠만하면(SHOULD) 제시해야 한다.
 
 15.5.3. 402 Payment Required
 
