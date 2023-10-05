@@ -184,179 +184,181 @@ than English.
 [9. 메소드들](#9-메소드들)
 
 - [9.1. 개요](#91-개요)
-  9.2. Common Method Properties
-  9.2.1. Safe Methods
-  9.2.2. Idempotent Methods
-  9.2.3. Methods and Caching
-  9.3. Method Definitions
-  9.3.1. GET
-  9.3.2. HEAD
-  9.3.3. POST
-  9.3.4. PUT
-  9.3.5. DELETE
-  9.3.6. CONNECT
-  9.3.7. OPTIONS
-  9.3.8. TRACE 10. Message Context
-  10.1. Request Context Fields
-  10.1.1. Expect
-  10.1.2. From
-  10.1.3. Referer
-  10.1.4. TE
-  10.1.5. User-Agent
-  10.2. Response Context Fields
-  10.2.1. Allow
-  10.2.2. Location
-  10.2.3. Retry-After
-  10.2.4. Server 11. HTTP Authentication
-  11.1. Authentication Scheme
-  11.2. Authentication Parameters
-  11.3. Challenge and Response
-  11.4. Credentials
-  11.5. Establishing a Protection Space (Realm)
-  11.6. Authenticating Users to Origin Servers
-  11.6.1. WWW-Authenticate
-  11.6.2. Authorization
-  11.6.3. Authentication-Info
-  11.7. Authenticating Clients to Proxies
-  11.7.1. Proxy-Authenticate
-  11.7.2. Proxy-Authorization
-  11.7.3. Proxy-Authentication-Info 12. Content Negotiation
-  12.1. Proactive Negotiation
-  12.2. Reactive Negotiation
-  12.3. Request Content Negotiation
-  12.4. Content Negotiation Field Features
-  12.4.1. Absence
-  12.4.2. Quality Values
-  12.4.3. Wildcard Values
-  12.5. Content Negotiation Fields
-  12.5.1. Accept
-  12.5.2. Accept-Charset
-  12.5.3. Accept-Encoding
-  12.5.4. Accept-Language
-  12.5.5. Vary 13. Conditional Requests
-  13.1. Preconditions
-  13.1.1. If-Match
-  13.1.2. If-None-Match
-  13.1.3. If-Modified-Since
-  13.1.4. If-Unmodified-Since
-  13.1.5. If-Range
-  13.2. Evaluation of Preconditions
-  13.2.1. When to Evaluate
-  13.2.2. Precedence of Preconditions 14. Range Requests
-  14.1. Range Units
-  14.1.1. Range Specifiers
-  14.1.2. Byte Ranges
-  14.2. Range
-  14.3. Accept-Ranges
-  14.4. Content-Range
-  14.5. Partial PUT
-  14.6. Media Type multipart/byteranges 15. Status Codes
-  15.1. Overview of Status Codes
-  15.2. Informational 1xx
-  15.2.1. 100 Continue
-  15.2.2. 101 Switching Protocols
-  15.3. Successful 2xx
-  15.3.1. 200 OK
-  15.3.2. 201 Created
-  15.3.3. 202 Accepted
-  15.3.4. 203 Non-Authoritative Information
-  15.3.5. 204 No Content
-  15.3.6. 205 Reset Content
-  15.3.7. 206 Partial Content
-  15.3.7.1. Single Part
-  15.3.7.2. Multiple Parts
-  15.3.7.3. Combining Parts
-  15.4. Redirection 3xx
-  15.4.1. 300 Multiple Choices
-  15.4.2. 301 Moved Permanently
-  15.4.3. 302 Found
-  15.4.4. 303 See Other
-  15.4.5. 304 Not Modified
-  15.4.6. 305 Use Proxy
-  15.4.7. 306 (Unused)
-  15.4.8. 307 Temporary Redirect
-  15.4.9. 308 Permanent Redirect
-  15.5. Client Error 4xx
-  15.5.1. 400 Bad Request
-  15.5.2. 401 Unauthorized
-  15.5.3. 402 Payment Required
-  15.5.4. 403 Forbidden
-  15.5.5. 404 Not Found
-  15.5.6. 405 Method Not Allowed
-  15.5.7. 406 Not Acceptable
-  15.5.8. 407 Proxy Authentication Required
-  15.5.9. 408 Request Timeout
-  15.5.10. 409 Conflict
-  15.5.11. 410 Gone
-  15.5.12. 411 Length Required
-  15.5.13. 412 Precondition Failed
-  15.5.14. 413 Content Too Large
-  15.5.15. 414 URI Too Long
-  15.5.16. 415 Unsupported Media Type
-  15.5.17. 416 Range Not Satisfiable
-  15.5.18. 417 Expectation Failed
-  15.5.19. 418 (Unused)
-  15.5.20. 421 Misdirected Request
-  15.5.21. 422 Unprocessable Content
-  15.5.22. 426 Upgrade Required
-  15.6. Server Error 5xx
-  15.6.1. 500 Internal Server Error
-  15.6.2. 501 Not Implemented
-  15.6.3. 502 Bad Gateway
-  15.6.4. 503 Service Unavailable
-  15.6.5. 504 Gateway Timeout
-  15.6.6. 505 HTTP Version Not Supported 16. Extending HTTP
-  16.1. Method Extensibility
-  16.1.1. Method Registry
-  16.1.2. Considerations for New Methods
-  16.2. Status Code Extensibility
-  16.2.1. Status Code Registry
-  16.2.2. Considerations for New Status Codes
-  16.3. Field Extensibility
-  16.3.1. Field Name Registry
-  16.3.2. Considerations for New Fields
-  16.3.2.1. Considerations for New Field Names
-  16.3.2.2. Considerations for New Field Values
-  16.4. Authentication Scheme Extensibility
-  16.4.1. Authentication Scheme Registry
-  16.4.2. Considerations for New Authentication Schemes
-  16.5. Range Unit Extensibility
-  16.5.1. Range Unit Registry
-  16.5.2. Considerations for New Range Units
-  16.6. Content Coding Extensibility
-  16.6.1. Content Coding Registry
-  16.6.2. Considerations for New Content Codings
-  16.7. Upgrade Token Registry 17. Security Considerations
-  17.1. Establishing Authority
-  17.2. Risks of Intermediaries
-  17.3. Attacks Based on File and Path Names
-  17.4. Attacks Based on Command, Code, or Query Injection
-  17.5. Attacks via Protocol Element Length
-  17.6. Attacks Using Shared-Dictionary Compression
-  17.7. Disclosure of Personal Information
-  17.8. Privacy of Server Log Information
-  17.9. Disclosure of Sensitive Information in URIs
-  17.10. Application Handling of Field Names
-  17.11. Disclosure of Fragment after Redirects
-  17.12. Disclosure of Product Information
-  17.13. Browser Fingerprinting
-  17.14. Validator Retention
-  17.15. Denial-of-Service Attacks Using Range
-  17.16. Authentication Considerations
-  17.16.1. Confidentiality of Credentials
-  17.16.2. Credentials and Idle Clients
-  17.16.3. Protection Spaces
-  17.16.4. Additional Response Fields 18. IANA Considerations
-  18.1. URI Scheme Registration
-  18.2. Method Registration
-  18.3. Status Code Registration
-  18.4. Field Name Registration
-  18.5. Authentication Scheme Registration
-  18.6. Content Coding Registration
-  18.7. Range Unit Registration
-  18.8. Media Type Registration
-  18.9. Port Registration
-  18.10. Upgrade Token Registration
+- - [9.2. 공통 메소드 속성들](#92-공통-메소드-속성들)
+- - - [9.2.1. 안전한 메소드들](#921-안전한-메소드들)
+- - - [9.2.2. 멱등성 메소드들](#922-멱등성-메소드들)
+- - - [9.2.3. 메소드들과 캐싱](#923-메소드들과-캐싱)
+- [9.3 메소드 정의들](#93-메소드-정의들)
+- - - [9.3.1. GET](#931-get)
+- - - [9.3.2. HEAD](#932-head)
+- - - [9.3.3. POST](#933-post)
+- - - [9.3.4. PUT](#934-put)
+- - - [9.3.5. DELETE](#935-delete)
+- - - [9.3.6. CONNECT](#936-connect)
+- - - [9.3.7. OPTIONS](#937-options)
+- - - [9.3.8. TRACE](#938-trace)
+
+[10. 메시지 콘텍스트](#10-메시지-콘텍스트)
+10.1. Request Context Fields
+10.1.1. Expect
+10.1.2. From
+10.1.3. Referer
+10.1.4. TE
+10.1.5. User-Agent
+10.2. Response Context Fields
+10.2.1. Allow
+10.2.2. Location
+10.2.3. Retry-After
+10.2.4. Server 11. HTTP Authentication
+11.1. Authentication Scheme
+11.2. Authentication Parameters
+11.3. Challenge and Response
+11.4. Credentials
+11.5. Establishing a Protection Space (Realm)
+11.6. Authenticating Users to Origin Servers
+11.6.1. WWW-Authenticate
+11.6.2. Authorization
+11.6.3. Authentication-Info
+11.7. Authenticating Clients to Proxies
+11.7.1. Proxy-Authenticate
+11.7.2. Proxy-Authorization
+11.7.3. Proxy-Authentication-Info 12. Content Negotiation
+12.1. Proactive Negotiation
+12.2. Reactive Negotiation
+12.3. Request Content Negotiation
+12.4. Content Negotiation Field Features
+12.4.1. Absence
+12.4.2. Quality Values
+12.4.3. Wildcard Values
+12.5. Content Negotiation Fields
+12.5.1. Accept
+12.5.2. Accept-Charset
+12.5.3. Accept-Encoding
+12.5.4. Accept-Language
+12.5.5. Vary 13. Conditional Requests
+13.1. Preconditions
+13.1.1. If-Match
+13.1.2. If-None-Match
+13.1.3. If-Modified-Since
+13.1.4. If-Unmodified-Since
+13.1.5. If-Range
+13.2. Evaluation of Preconditions
+13.2.1. When to Evaluate
+13.2.2. Precedence of Preconditions 14. Range Requests
+14.1. Range Units
+14.1.1. Range Specifiers
+14.1.2. Byte Ranges
+14.2. Range
+14.3. Accept-Ranges
+14.4. Content-Range
+14.5. Partial PUT
+14.6. Media Type multipart/byteranges 15. Status Codes
+15.1. Overview of Status Codes
+15.2. Informational 1xx
+15.2.1. 100 Continue
+15.2.2. 101 Switching Protocols
+15.3. Successful 2xx
+15.3.1. 200 OK
+15.3.2. 201 Created
+15.3.3. 202 Accepted
+15.3.4. 203 Non-Authoritative Information
+15.3.5. 204 No Content
+15.3.6. 205 Reset Content
+15.3.7. 206 Partial Content
+15.3.7.1. Single Part
+15.3.7.2. Multiple Parts
+15.3.7.3. Combining Parts
+15.4. Redirection 3xx
+15.4.1. 300 Multiple Choices
+15.4.2. 301 Moved Permanently
+15.4.3. 302 Found
+15.4.4. 303 See Other
+15.4.5. 304 Not Modified
+15.4.6. 305 Use Proxy
+15.4.7. 306 (Unused)
+15.4.8. 307 Temporary Redirect
+15.4.9. 308 Permanent Redirect
+15.5. Client Error 4xx
+15.5.1. 400 Bad Request
+15.5.2. 401 Unauthorized
+15.5.3. 402 Payment Required
+15.5.4. 403 Forbidden
+15.5.5. 404 Not Found
+15.5.6. 405 Method Not Allowed
+15.5.7. 406 Not Acceptable
+15.5.8. 407 Proxy Authentication Required
+15.5.9. 408 Request Timeout
+15.5.10. 409 Conflict
+15.5.11. 410 Gone
+15.5.12. 411 Length Required
+15.5.13. 412 Precondition Failed
+15.5.14. 413 Content Too Large
+15.5.15. 414 URI Too Long
+15.5.16. 415 Unsupported Media Type
+15.5.17. 416 Range Not Satisfiable
+15.5.18. 417 Expectation Failed
+15.5.19. 418 (Unused)
+15.5.20. 421 Misdirected Request
+15.5.21. 422 Unprocessable Content
+15.5.22. 426 Upgrade Required
+15.6. Server Error 5xx
+15.6.1. 500 Internal Server Error
+15.6.2. 501 Not Implemented
+15.6.3. 502 Bad Gateway
+15.6.4. 503 Service Unavailable
+15.6.5. 504 Gateway Timeout
+15.6.6. 505 HTTP Version Not Supported 16. Extending HTTP
+16.1. Method Extensibility
+16.1.1. Method Registry
+16.1.2. Considerations for New Methods
+16.2. Status Code Extensibility
+16.2.1. Status Code Registry
+16.2.2. Considerations for New Status Codes
+16.3. Field Extensibility
+16.3.1. Field Name Registry
+16.3.2. Considerations for New Fields
+16.3.2.1. Considerations for New Field Names
+16.3.2.2. Considerations for New Field Values
+16.4. Authentication Scheme Extensibility
+16.4.1. Authentication Scheme Registry
+16.4.2. Considerations for New Authentication Schemes
+16.5. Range Unit Extensibility
+16.5.1. Range Unit Registry
+16.5.2. Considerations for New Range Units
+16.6. Content Coding Extensibility
+16.6.1. Content Coding Registry
+16.6.2. Considerations for New Content Codings
+16.7. Upgrade Token Registry 17. Security Considerations
+17.1. Establishing Authority
+17.2. Risks of Intermediaries
+17.3. Attacks Based on File and Path Names
+17.4. Attacks Based on Command, Code, or Query Injection
+17.5. Attacks via Protocol Element Length
+17.6. Attacks Using Shared-Dictionary Compression
+17.7. Disclosure of Personal Information
+17.8. Privacy of Server Log Information
+17.9. Disclosure of Sensitive Information in URIs
+17.10. Application Handling of Field Names
+17.11. Disclosure of Fragment after Redirects
+17.12. Disclosure of Product Information
+17.13. Browser Fingerprinting
+17.14. Validator Retention
+17.15. Denial-of-Service Attacks Using Range
+17.16. Authentication Considerations
+17.16.1. Confidentiality of Credentials
+17.16.2. Credentials and Idle Clients
+17.16.3. Protection Spaces
+17.16.4. Additional Response Fields 18. IANA Considerations
+18.1. URI Scheme Registration
+18.2. Method Registration
+18.3. Status Code Registration
+18.4. Field Name Registration
+18.5. Authentication Scheme Registration
+18.6. Content Coding Registration
+18.7. Range Unit Registration
+18.8. Media Type Registration
+18.9. Port Registration
+18.10. Upgrade Token Registration
 
 [19. 레퍼런스](#19-레퍼런스)
 
@@ -1992,7 +1994,7 @@ particularly if an idle persistent connection was used.
 A proxy MUST NOT automatically retry non-idempotent requests. A
 client SHOULD NOT automatically retry a failed automatic retry.
 
-9.2.3. Methods and Caching
+#### 9.2.3. 메소드들과 캐싱
 
 For a cache to store and use a response, the associated method needs
 to explicitly allow caching and to detail under what conditions a
@@ -2004,9 +2006,9 @@ This specification defines caching semantics for GET, HEAD, and POST,
 although the overwhelming majority of cache implementations only
 support GET and HEAD.
 
-9.3. Method Definitions
+### 9.3. 메소드 정의들
 
-9.3.1. GET
+##### 9.3.1. GET
 
 The GET method requests transfer of a current selected representation
 for the target resource. A successful response reflects the quality
@@ -2071,7 +2073,7 @@ response, using the POST method (Section 9.3.3) instead of GET can
 transmit such information in the request content rather than within
 the target URI.
 
-9.3.2. HEAD
+##### 9.3.2. HEAD
 
 The HEAD method is identical to GET except that the server MUST NOT
 send content in the response. HEAD is used to obtain metadata about
@@ -2111,7 +2113,7 @@ Cache-Control header field (Section 5.2 of [CACHING]). A HEAD
 response might also affect previously cached responses to GET; see
 Section 4.3.5 of [CACHING].
 
-9.3.3. POST
+##### 9.3.3. POST
 
 The POST method requests that the target resource process the
 representation enclosed in the request according to the resource's
@@ -2160,7 +2162,7 @@ and transferring the representation via a method more amenable to
 shared caching, though at the cost of an extra request if the user
 agent does not already have the representation cached.
 
-9.3.4. PUT
+##### 9.3.4. PUT
 
 The PUT method requests that the state of the target resource be
 created or replaced with the state defined by the representation
@@ -2283,7 +2285,7 @@ request passes through a cache that has one or more stored responses
 for the target URI, those stored responses will be invalidated (see
 Section 4.4 of [CACHING]).
 
-9.3.5. DELETE
+##### 9.3.5. DELETE
 
 The DELETE method requests that the origin server remove the
 association between the target resource and its current
@@ -2345,7 +2347,7 @@ DELETE request passes through a cache that has one or more stored
 responses for the target URI, those stored responses will be
 invalidated (see Section 4.4 of [CACHING]).
 
-9.3.6. CONNECT
+##### 9.3.6. CONNECT
 
 The CONNECT method requests that the recipient establish a tunnel to
 the destination origin server identified by the request target and,
@@ -2420,7 +2422,7 @@ is specific to the version of HTTP in use.
 
 Responses to the CONNECT method are not cacheable.
 
-9.3.7. OPTIONS
+##### 9.3.7. OPTIONS
 
 The OPTIONS method requests information about the communication
 options available for the target resource, at either the origin
@@ -2463,7 +2465,7 @@ such content.
 
 Responses to the OPTIONS method are not cacheable.
 
-9.3.8. TRACE
+##### 9.3.8. TRACE
 
 The TRACE method requests a remote, application-level loop-back of
 the request message. The final recipient of the request SHOULD
@@ -2494,7 +2496,7 @@ A client MUST NOT send content in a TRACE request.
 
 Responses to the TRACE method are not cacheable.
 
-10. Message Context
+## 10. 메시지 콘텍스트
 
 10.1. Request Context Fields
 
