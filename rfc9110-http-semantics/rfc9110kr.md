@@ -5506,9 +5506,9 @@ HEAD 요청에 대한 응답을 제외하고 303 응답의 표현에는 Location
 
 요청에 인증 자격 증명이 포함되었다면, 401 응답은 해당 자격 증명에 대한 권한 부여가 거부되었음을 나타낸다. 사용자 에이전트는 새롭거나 대체된 Authorization 헤더 필드를 사용하여 요청을 아마(MAY) 반복할 수 있다 (11.6.2절). 401 응답이 이전 응답과 동일한 챌린지를 포함하고, 사용자 에이전트가 이미 한 번 이상 인증을 시도한 경우, 사용자 에이전트는 일반적으로 관련 진단 정보가 포함되어 있으므로 동봉된 표현을 사용자에게 왠만하면(SHOULD) 제시해야 한다.
 
-15.5.3. 402 Payment Required
+#### 15.5.3. 402 Payment Required
 
-The 402 (Payment Required) status code is reserved for future use.
+402 (Payment Required) 상태 코드는 나중에 사용할 수 있도록 예약되어 있다.
 
 15.5.4. 403 Forbidden
 
