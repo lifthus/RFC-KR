@@ -1951,48 +1951,19 @@ Table 4
 
 #### 9.2.2. 멱등성 메소드들
 
-A request method is considered "idempotent" if the intended effect on
-the server of multiple identical requests with that method is the
-same as the effect for a single such request. Of the request methods
-defined by this specification, PUT, DELETE, and safe request methods
-are idempotent.
+한 요청 메소드는 만약 서버에 대해 해당 메소드로의 여러 동일한 요청들의 의도된 효과가 그러한 단일 요청과 같다면 "멱등"하다고 간주된다. 이 사양에 의해 정의된 요청 메소드들 중에는, PUT, DELETE, 그리고 안전한 메소드들이 멱등하다.
 
-Like the definition of safe, the idempotent property only applies to
-what has been requested by the user; a server is free to log each
-request separately, retain a revision control history, or implement
-other non-idempotent side effects for each idempotent request.
+안전함에 대한 정의 처럼, 멱등 속성은 오직 유저에 의해 요청된 것에만 적용된다; 서버는 각 요청을 따로 로깅하거나, 개정 제어 히스토리를 유지하거나, 혹은 각 멱등 요청에 대해 다른 비멱등 사이드 이펙트들을 구현하는데 있어 자유롭다.
 
-Idempotent methods are distinguished because the request can be
-repeated automatically if a communication failure occurs before the
-client is able to read the server's response. For example, if a
-client sends a PUT request and the underlying connection is closed
-before any response is received, then the client can establish a new
-connection and retry the idempotent request. It knows that repeating
-the request will have the same intended effect, even if the original
-request succeeded, though the response might differ.
+멱등성 메소드들은 클라이언트가 서버의 응답을 읽을 수 있기 전에 통신 실패가 발생한다면 요청이 자동으로 반복될 수 있기 때문에 구분된다. 예를 들어, 만약 클라이언트가 PUT 요청을 보내고 응답이 수신되기 전에 기반 요청이 닫힌다면,, 클라이언트는 새로운 연결을 수립하고 해당 멱등성 요청을 재시도할 수 있다. 클라이언트는, 원래 요청이 성공했더라도, 응답은 다를 수 있지만, 해당 요청을 반복하는 것이 똑같이 의도된 효과를 가질 것임을 알고 있다.
 
-A client SHOULD NOT automatically retry a request with a non-
-idempotent method unless it has some means to know that the request
-semantics are actually idempotent, regardless of the method, or some
-means to detect that the original request was never applied.
+클라이언트는 요청의 의미체계가 실제로는 멱등하다는 것을 알 수 있는 어떤 수단이나, 메소드와 관계 없이, 혹은 원래 요청이 절대 적용되지 않았다는 것을 감지할 어떤 수단을 가지지 않은 이상 웬만해서는(SHOULD NOT) 비멱등 메소드 요청을 재시도해서는 안된다.
 
-For example, a user agent can repeat a POST request automatically if
-it knows (through design or configuration) that the request is safe
-for that resource. Likewise, a user agent designed specifically to
-operate on a version control repository might be able to recover from
-partial failure conditions by checking the target resource
-revision(s) after a failed connection, reverting or fixing any
-changes that were partially applied, and then automatically retrying
-the requests that failed.
+예를 들어, 만약 유저 에이전트가 어떤 리소스에 대한 요청이 안전하다는 것을 알고 있다면(설계나 설정을 통해) POST 요청을 자동으로 재시도할 수 있다. 마찬가지로, 특별히 버전 컨트롤 레포지토리 상에서 작동하도록 설계된 유저 에이전트는, 실패한 연결 이후의 타겟 리소스 개정(들)을 체크하고, 부분적으로 적용된 어느 변경이든 되돌리거나 고치며, 자동으로 실패한 해당 요청들을 재시도함으로써 부분 실패 조건들로부터 회복할 수도 있다.
 
-Some clients take a riskier approach and attempt to guess when an
-automatic retry is possible. For example, a client might
-automatically retry a POST request if the underlying transport
-connection closed before any part of a response is received,
-particularly if an idle persistent connection was used.
+일부 클라이언트들은 더 위험한 접근을 취하며 자동 재시도가 가능한 때를 추측한다. 예를 들어, 클라이언트는 응답의 어느 부분이든 수신되기 전에 기반 전송 연결이 닫힌 경우, 특히 유휴 상태의 지속적인 연결이 사용됐다면 자동으로 POST 요청을 재시도할 수도 있다.
 
-A proxy MUST NOT automatically retry non-idempotent requests. A
-client SHOULD NOT automatically retry a failed automatic retry.
+프록시는 절대(MUST NOT) 자동으로 비멱등 요청들을 재시도해서는 안된다. 클라이언트는 웬만해서는(SHOULD NOT) 실패한 자동 재시도를 자동으로 재시도해서는 안된다.
 
 #### 9.2.3. 메소드들과 캐싱
 
