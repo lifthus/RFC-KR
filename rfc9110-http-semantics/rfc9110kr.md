@@ -1969,10 +1969,6 @@ Table 4
 
 응답을 저장하고 사용하기 위한 캐시를 위해, 관련된 메소드는 명시적으로 캐싱을 허용하고 어떤 조건들 아래서 요청이 후속 요청들을 만족시키기 위해 사용될 수 있는지 자세히 설명해야 한다; 그렇게 하지 않은 메소드 정의는 캐시될 수 없다. 추가적인 요구사항들은 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]을 참조하라.
 
-This specification defines caching semantics for GET, HEAD, and POST,
-although the overwhelming majority of cache implementations only
-support GET and HEAD.
-
 캐시 구현들의 압도적 다수가 오로지 GET과 HEAD만 지원하긴 하지만, 이 사양은 GET, HEAD, 그리고 POST를 위한 캐싱 의미체계를 정의한다.
 
 ### 9.3. 메소드 정의들
