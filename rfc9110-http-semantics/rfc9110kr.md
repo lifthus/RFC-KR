@@ -5524,17 +5524,11 @@ HEAD 요청에 대한 응답을 제외하고 303 응답의 표현에는 Location
 
 404 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [CACHING]) heuristic하게 캐시 할 수 있다.
 
-15.5.6. 405 Method Not Allowed
+#### 15.5.6. 405 Method Not Allowed
 
-The 405 (Method Not Allowed) status code indicates that the method
-received in the request-line is known by the origin server but not
-supported by the target resource. The origin server MUST generate an
-Allow header field in a 405 response containing a list of the target
-resource's currently supported methods.
+405 (Method Not Allowed) 상태 코드는 요청 라인에서 수신된 메소드가 origin 서버에서는 알고있지만 대상 리소스에서는 지원되지 않음을 나타낸다. origin 서버는 대상 리소스의 현재 지원되는 메소드 목록이 포함된 405 응답에 Allow 헤더 필드를 반드시(MUST) 생성해야 합니다.
 
-A 405 response is heuristically cacheable; i.e., unless otherwise
-indicated by the method definition or explicit cache controls (see
-Section 4.2.2 of [CACHING]).
+405 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [CACHING]) heuristic하게 캐시 할 수 있다.
 
 15.5.7. 406 Not Acceptable
 
