@@ -1993,43 +1993,13 @@ GET을 사용하는 형태의 쿼리 필드들과 같이 유저-제공 정보로
 
 ##### 9.3.2. HEAD
 
-The HEAD method is identical to GET except that the server MUST NOT
-send content in the response. HEAD is used to obtain metadata about
-the selected representation without transferring its representation
-data, often for the sake of testing hypertext links or finding recent
-modifications.
+HEAD 메소드는 서버가 절대(MUST NOT) 응답에 콘텐츠를 보내면 안된다는 것만 빼고 GET이랑 동일하다. HEAD는 종종 하이퍼텍스트 링크들을 테스트하거나 최근 수정들을 찾기 위해, 선택된 표현에 관한 메타데이터를 그 표현 데이터는 없이 획득하기 위해 사용된다.
 
-The server SHOULD send the same header fields in response to a HEAD
-request as it would have sent if the request method had been GET.
-However, a server MAY omit header fields for which a value is
-determined only while generating the content. For example, some
-servers buffer a dynamic response to GET until a minimum amount of
-data is generated so that they can more efficiently delimit small
-responses or make late decisions with regard to content selection.
-Such a response to GET might contain Content-Length and Vary fields,
-for example, that are not generated within a HEAD response. These
-minor inconsistencies are considered preferable to generating and
-discarding the content for a HEAD request, since HEAD is usually
-requested for the sake of efficiency.
+서버는 웬만하면(SHOULD) 요청 메소드가 GET이었다면 보내졌을 것과 같은 헤더 필드들을 HEAD 요청의 응답으로 보내야 한다. 그러나, 서버는 아마(MAY) 오직 콘텐츠를 생성하는 동안 결정되는 헤더 필드들은 생략할 수 있을 것이다. 예를 들어, 일부 서버들은 최소량의 데이터가 생성될 때까지 GET에 대해 동적 응답을 버퍼링하여 그들이 더 효율적으로 작은 응답들을 구분하거나 콘텐츠 선택에 관한 늦은 결정들을 할 수 있게 한다. GET에 대한 그러한 응답은, 예를 들어, HEAD 응답 내에 생성되지 않은 Content-Length와 Vary 필드들을 포함할 수 있다. 이러한 사소한 불일치들은 HEAD 요청을 위한 콘텐츠를 생성하고 폐기하는 것보다 선호되는데, 이는 HEAD가 보통 효율성을 위해 요청되기 때문이다.
 
-Although request message framing is independent of the method used,
-content received in a HEAD request has no generally defined
-semantics, cannot alter the meaning or target of the request, and
-might lead some implementations to reject the request and close the
-connection because of its potential as a request smuggling attack
-(Section 11.2 of [HTTP/1.1]). A client SHOULD NOT generate content
-in a HEAD request unless it is made directly to an origin server that
-has previously indicated, in or out of band, that such a request has
-a purpose and will be adequately supported. An origin server SHOULD
-NOT rely on private agreements to receive content, since participants
-in HTTP communication are often unaware of intermediaries along the
-request chain.
+요청 메시지 프레이밍이 사용된 메소드와 독립적이긴 하지만, HEAD에서 수신된 콘텐츠는 일반적으로 정의된 의미체계를 가지지 않고, 요청의 의미나 타겟을 변경할 수 없으며, 그리고 일부 구현체들이 요청을 거부하고 연결을 닫도록 이끌 수 있는데 이는 그것의 request smuggling attack으로서의 잠재성 때문이다([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 11.2절). 클라이언트는, in-band나 out-of-band와 관계없이, 콘텐츠를 포함하는 요청이 목적을 가지며 적절히 지원될 것이라고 미리 나타낸 오리진 서버에게 직접적으로 하는 것이 아닌 한 웬만해서는(SHOULD NOT) HEAD 요청에 콘텐츠를 생성해서는 안된다. 오리진 서버는 웬만해서는(SHOULD NOT) 콘텐츠를 수신하는 데 있어 사적인 합의들에 의존해서는 안되는데, 이는 HTTP 통신의 참여자들이 종종 요청 체인을 따른 중개자들을 인식하지 못하기 때문이다.
 
-The response to a HEAD request is cacheable; a cache MAY use it to
-satisfy subsequent HEAD requests unless otherwise indicated by the
-Cache-Control header field (Section 5.2 of [CACHING]). A HEAD
-response might also affect previously cached responses to GET; see
-Section 4.3.5 of [CACHING].
+HEAD 요청에 대한 응답은 캐시 가능하다; 캐시는 Cache-Control 헤더 필드에 의해 따로 지정되지 않은 한([[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 5.2절) 아마(MAY) 이후의 HEAD 요청들을 만족시키기 위해 그것을 사용할 수 있을 것이다. HEAD 응답은 또한 이전에 캐시된 GET에 대한 응답들에 영향을 미칠지 모른다; [[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 4.3.5절을 참조하라.
 
 ##### 9.3.3. POST
 
