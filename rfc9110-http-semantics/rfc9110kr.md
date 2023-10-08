@@ -1951,167 +1951,55 @@ Table 4
 
 #### 9.2.2. 멱등성 메소드들
 
-A request method is considered "idempotent" if the intended effect on
-the server of multiple identical requests with that method is the
-same as the effect for a single such request. Of the request methods
-defined by this specification, PUT, DELETE, and safe request methods
-are idempotent.
+한 요청 메소드는 만약 서버에 대해 해당 메소드로의 여러 동일한 요청들의 의도된 효과가 그러한 단일 요청과 같다면 "멱등"하다고 간주된다. 이 사양에 의해 정의된 요청 메소드들 중에는, PUT, DELETE, 그리고 안전한 메소드들이 멱등하다.
 
-Like the definition of safe, the idempotent property only applies to
-what has been requested by the user; a server is free to log each
-request separately, retain a revision control history, or implement
-other non-idempotent side effects for each idempotent request.
+안전함에 대한 정의 처럼, 멱등 속성은 오직 유저에 의해 요청된 것에만 적용된다; 서버는 각 요청을 따로 로깅하거나, 개정 제어 히스토리를 유지하거나, 혹은 각 멱등 요청에 대해 다른 비멱등 사이드 이펙트들을 구현하는데 있어 자유롭다.
 
-Idempotent methods are distinguished because the request can be
-repeated automatically if a communication failure occurs before the
-client is able to read the server's response. For example, if a
-client sends a PUT request and the underlying connection is closed
-before any response is received, then the client can establish a new
-connection and retry the idempotent request. It knows that repeating
-the request will have the same intended effect, even if the original
-request succeeded, though the response might differ.
+멱등성 메소드들은 클라이언트가 서버의 응답을 읽을 수 있기 전에 통신 실패가 발생한다면 요청이 자동으로 반복될 수 있기 때문에 구분된다. 예를 들어, 만약 클라이언트가 PUT 요청을 보내고 응답이 수신되기 전에 기반 요청이 닫힌다면,, 클라이언트는 새로운 연결을 수립하고 해당 멱등성 요청을 재시도할 수 있다. 클라이언트는, 원래 요청이 성공했더라도, 응답은 다를 수 있지만, 해당 요청을 반복하는 것이 똑같이 의도된 효과를 가질 것임을 알고 있다.
 
-A client SHOULD NOT automatically retry a request with a non-
-idempotent method unless it has some means to know that the request
-semantics are actually idempotent, regardless of the method, or some
-means to detect that the original request was never applied.
+클라이언트는 요청의 의미체계가 실제로는 멱등하다는 것을 알 수 있는 어떤 수단이나, 메소드와 관계 없이, 혹은 원래 요청이 절대 적용되지 않았다는 것을 감지할 어떤 수단을 가지지 않은 이상 웬만해서는(SHOULD NOT) 비멱등 메소드 요청을 재시도해서는 안된다.
 
-For example, a user agent can repeat a POST request automatically if
-it knows (through design or configuration) that the request is safe
-for that resource. Likewise, a user agent designed specifically to
-operate on a version control repository might be able to recover from
-partial failure conditions by checking the target resource
-revision(s) after a failed connection, reverting or fixing any
-changes that were partially applied, and then automatically retrying
-the requests that failed.
+예를 들어, 만약 유저 에이전트가 어떤 리소스에 대한 요청이 안전하다는 것을 알고 있다면(설계나 설정을 통해) POST 요청을 자동으로 재시도할 수 있다. 마찬가지로, 특별히 버전 컨트롤 레포지토리 상에서 작동하도록 설계된 유저 에이전트는, 실패한 연결 이후의 타겟 리소스 개정(들)을 체크하고, 부분적으로 적용된 어느 변경이든 되돌리거나 고치며, 자동으로 실패한 해당 요청들을 재시도함으로써 부분 실패 조건들로부터 회복할 수도 있다.
 
-Some clients take a riskier approach and attempt to guess when an
-automatic retry is possible. For example, a client might
-automatically retry a POST request if the underlying transport
-connection closed before any part of a response is received,
-particularly if an idle persistent connection was used.
+일부 클라이언트들은 더 위험한 접근을 취하며 자동 재시도가 가능한 때를 추측한다. 예를 들어, 클라이언트는 응답의 어느 부분이든 수신되기 전에 기반 전송 연결이 닫힌 경우, 특히 유휴 상태의 지속적인 연결이 사용됐다면 자동으로 POST 요청을 재시도할 수도 있다.
 
-A proxy MUST NOT automatically retry non-idempotent requests. A
-client SHOULD NOT automatically retry a failed automatic retry.
+프록시는 절대(MUST NOT) 자동으로 비멱등 요청들을 재시도해서는 안된다. 클라이언트는 웬만해서는(SHOULD NOT) 실패한 자동 재시도를 자동으로 재시도해서는 안된다.
 
 #### 9.2.3. 메소드들과 캐싱
 
-For a cache to store and use a response, the associated method needs
-to explicitly allow caching and to detail under what conditions a
-response can be used to satisfy subsequent requests; a method
-definition that does not do so cannot be cached. For additional
-requirements see [CACHING].
+응답을 저장하고 사용하기 위한 캐시를 위해, 관련된 메소드는 명시적으로 캐싱을 허용하고 어떤 조건들 아래서 요청이 후속 요청들을 만족시키기 위해 사용될 수 있는지 자세히 설명해야 한다; 그렇게 하지 않은 메소드 정의는 캐시될 수 없다. 추가적인 요구사항들은 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]을 참조하라.
 
-This specification defines caching semantics for GET, HEAD, and POST,
-although the overwhelming majority of cache implementations only
-support GET and HEAD.
+캐시 구현들의 압도적 다수가 오로지 GET과 HEAD만 지원하긴 하지만, 이 사양은 GET, HEAD, 그리고 POST를 위한 캐싱 의미체계를 정의한다.
 
 ### 9.3. 메소드 정의들
 
 ##### 9.3.1. GET
 
-The GET method requests transfer of a current selected representation
-for the target resource. A successful response reflects the quality
-of "sameness" identified by the target URI (Section 1.2.2 of [URI]).
-Hence, retrieving identifiable information via HTTP is usually
-performed by making a GET request on an identifier associated with
-the potential for providing that information in a 200 (OK) response.
+GET 메소드는 타겟 리소스에 대한 현재 선택된 표현의 전송을 요청한다. 성공적인 응답은 타겟 URI([[URI](https://www.rfc-editor.org/info/rfc3986)]의 1.2.2절)에 의해 식별되는 "동일성"이라는 성질을 반영한다. 이리하여, HTTP를 통해 식별 가능한 정보를 얻는 것은 보통 200(OK) 응답에서 해당 정보를 제공할 잠재성과 연관된 식별자에 대해 GET 요청을 함으로써 수행된다.
 
-GET is the primary mechanism of information retrieval and the focus
-of almost all performance optimizations. Applications that produce a
-URI for each important resource can benefit from those optimizations
-while enabling their reuse by other applications, creating a network
-effect that promotes further expansion of the Web.
+GET은 정보 획득의 주요한 메커니즘이고 거의 모든 성능 최적화들의 집중점이다. 중요한 각 리소스들에 대해 URI를 생성하는 애플리케이션들은 그러한 최적화들이 다른 애플리케이션들에 의해 재사용될 수 있도록 되어 있는동안 웹이 더 확장되도록 촉진하며, 그것들로 부터 이득을 볼 수 있다.
 
-It is tempting to think of resource identifiers as remote file system
-pathnames and of representations as being a copy of the contents of
-such files. In fact, that is how many resources are implemented (see
-Section 17.3 for related security considerations). However, there
-are no such limitations in practice.
+리소스 식별자들을 원격 파일 시스템의 경로명들로 생각하고 표현들은 그러한 파일 콘텐츠들의 카피로 생각하는 것은 그럴듯하다. 실제로, 그것이 많은 리소스들이 구현된 방식이다(관련된 보안 사항들을 위해 17.3절을 참조하라). 그러나, 실무에 그러한 제한들이 있는 것은 아니다.
 
-The HTTP interface for a resource is just as likely to be implemented
-as a tree of content objects, a programmatic view on various database
-records, or a gateway to other information systems. Even when the
-URI mapping mechanism is tied to a file system, an origin server
-might be configured to execute the files with the request as input
-and send the output as the representation rather than transfer the
-files directly. Regardless, only the origin server needs to know how
-each resource identifier corresponds to an implementation and how
-that implementation manages to select and send a current
-representation of the target resource.
+리소스를 위한 HTTP 인터페이스는 콘텐츠 오브젝트들의 트리, 다양한 데이터베이스 레코드들에 대한 프로그램적인 뷰, 혹은 다른 정보 시스템들로의 게이트웨이처럼 구현될 가능성이 높다. URI 매핑 메커니즘이 파일 시스템에 묶여 있을 때 조차, 오리진 서버는 해당 파일들을 직접 전송하는 대신 요청을 입력으로 하여 파일들을 실행하고 출력을 표현으로 보내도록 구성될 수도 있다. 그와 관계 없이, 오직 오리진 서버만이 각 리소스 식별자들이 어떻게 구현으로 매핑되고 해당 구현이 어떻게 타겟 리소스의 현재 상태를 선택하고 전송하는지 알 필요가 있다.
 
-A client can alter the semantics of GET to be a "range request",
-requesting transfer of only some part(s) of the selected
-representation, by sending a Range header field in the request
-(Section 14.2).
+클라이언트는, Range 헤더 필드를 요청에 보냄으로써(14.2절), 오직 선택된 표현의 일부분(들)만 전송하도록 요청하는, "range request"로 GET의 의미체계를 변경할 수 있다.
 
-Although request message framing is independent of the method used,
-content received in a GET request has no generally defined semantics,
-cannot alter the meaning or target of the request, and might lead
-some implementations to reject the request and close the connection
-because of its potential as a request smuggling attack (Section 11.2
-of [HTTP/1.1]). A client SHOULD NOT generate content in a GET
-request unless it is made directly to an origin server that has
-previously indicated, in or out of band, that such a request has a
-purpose and will be adequately supported. An origin server SHOULD
-NOT rely on private agreements to receive content, since participants
-in HTTP communication are often unaware of intermediaries along the
-request chain.
+요청 메시지 프레이밍은 사용된 메소드와는 독립적이긴 하지만, GET 요청에서 수신된 콘텐츠는 어떤 일반적으로 정의된 의미체계를 가지지 않고, 해당 요청의 의미나 타겟을 변경할 수 없으며, 그리고 일부 구현체들이 해당 요청을 거부하고 연결을 종료하도록 이끌 수 있는데 이는 그것의 request smuggling attack으로서의 잠재성 때문이다([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 11.2절). 클라이언트는, in-band나 out-of-band와 관계없이, 콘텐츠를 가진 GET 요청이 목적을 가지고 있고 적절하게 지원될 것이라고 이전에 나타낸 오리진 서버로 직접 하는 게 아닌 한 웬만해서는(SHOULD NOT) GET 요청에 콘텐츠를 생성해서는 안된다. 오리진 서버는 웬만해서는(SHOULD NOT) 콘텐츠를 수신하는 데 있어 사적인 합의들에 의존해서는 안되는데, 이는 HTTP 통신의 참여자들이 종종 요청 체인을 따라 이어지는 중개자들을 인식하지 못하기 때문이다.
 
-The response to a GET request is cacheable; a cache MAY use it to
-satisfy subsequent GET and HEAD requests unless otherwise indicated
-by the Cache-Control header field (Section 5.2 of [CACHING]).
+GET 요청에 대한 응답은 캐시 가능하다; 캐시는 Cache-Control 헤더 필드에 의해 따로 나타내지지 않은 한([[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 5.2절) 아마(MAY) 그것을 이어지는 GET과 HEAD 요청들을 만족시키기 위해 사용할 수 있을 것이다.
 
-When information retrieval is performed with a mechanism that
-constructs a target URI from user-provided information, such as the
-query fields of a form using GET, potentially sensitive data might be
-provided that would not be appropriate for disclosure within a URI
-(see Section 17.9). In some cases, the data can be filtered or
-transformed such that it would not reveal such information. In
-others, particularly when there is no benefit from caching a
-response, using the POST method (Section 9.3.3) instead of GET can
-transmit such information in the request content rather than within
-the target URI.
+GET을 사용하는 형태의 쿼리 필드들과 같이 유저-제공 정보로부터의 타겟 URI를 구성하는 메커니즘으로 정보 획득이 수행될 때, 잠재적으로 URI 내에서 공개되기에 적절치 않을 수 있는 민감한 데이터가 제공될지 모른다(17.9절 참조). 일부 케이스들에서, 해당 데이터는 그러한 정보를 드러내지 않도록 필터링되거나 변형될 수 있다. 다른 경우들에, 특히 응답을 캐싱하는 것으로부터 이득이 없을 때, POST 메소드(9.3.3절)를 GET 대신 사용하면 그러한 정보를 타겟 URI 내부가 아닌 요청 콘텐츠로 전송할 수 있다.
 
 ##### 9.3.2. HEAD
 
-The HEAD method is identical to GET except that the server MUST NOT
-send content in the response. HEAD is used to obtain metadata about
-the selected representation without transferring its representation
-data, often for the sake of testing hypertext links or finding recent
-modifications.
+HEAD 메소드는 서버가 절대(MUST NOT) 응답에 콘텐츠를 보내면 안된다는 것만 빼고 GET이랑 동일하다. HEAD는 종종 하이퍼텍스트 링크들을 테스트하거나 최근 수정들을 찾기 위해, 선택된 표현에 관한 메타데이터를 그 표현 데이터는 없이 획득하기 위해 사용된다.
 
-The server SHOULD send the same header fields in response to a HEAD
-request as it would have sent if the request method had been GET.
-However, a server MAY omit header fields for which a value is
-determined only while generating the content. For example, some
-servers buffer a dynamic response to GET until a minimum amount of
-data is generated so that they can more efficiently delimit small
-responses or make late decisions with regard to content selection.
-Such a response to GET might contain Content-Length and Vary fields,
-for example, that are not generated within a HEAD response. These
-minor inconsistencies are considered preferable to generating and
-discarding the content for a HEAD request, since HEAD is usually
-requested for the sake of efficiency.
+서버는 웬만하면(SHOULD) 요청 메소드가 GET이었다면 보내졌을 것과 같은 헤더 필드들을 HEAD 요청의 응답으로 보내야 한다. 그러나, 서버는 아마(MAY) 오직 콘텐츠를 생성하는 동안 결정되는 헤더 필드들은 생략할 수 있을 것이다. 예를 들어, 일부 서버들은 최소량의 데이터가 생성될 때까지 GET에 대한 동적 응답을 버퍼링하여 그들이 더 효율적으로 작은 응답들을 구분하거나 콘텐츠 선택에 관한 늦은 결정들을 할 수 있게 한다. GET에 대한 그러한 응답은, 예를 들어, HEAD 응답 내에 생성되지 않은 Content-Length와 Vary 필드들을 포함할 수 있다. 이러한 사소한 불일치들은 HEAD 요청을 위한 콘텐츠를 생성하고 폐기하는 것보다 선호되는데, 이는 HEAD가 보통 효율성을 위해 요청되기 때문이다.
 
-Although request message framing is independent of the method used,
-content received in a HEAD request has no generally defined
-semantics, cannot alter the meaning or target of the request, and
-might lead some implementations to reject the request and close the
-connection because of its potential as a request smuggling attack
-(Section 11.2 of [HTTP/1.1]). A client SHOULD NOT generate content
-in a HEAD request unless it is made directly to an origin server that
-has previously indicated, in or out of band, that such a request has
-a purpose and will be adequately supported. An origin server SHOULD
-NOT rely on private agreements to receive content, since participants
-in HTTP communication are often unaware of intermediaries along the
-request chain.
+요청 메시지 프레이밍이 사용된 메소드와 독립적이긴 하지만, HEAD에서 수신된 콘텐츠는 일반적으로 정의된 의미체계를 가지지 않고, 요청의 의미나 타겟을 변경할 수 없으며, 그리고 일부 구현체들이 요청을 거부하고 연결을 닫도록 이끌 수 있는데 이는 그것의 request smuggling attack으로서의 잠재성 때문이다([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 11.2절). 클라이언트는, in-band나 out-of-band와 관계없이, 콘텐츠를 포함하는 요청이 목적을 가지며 적절히 지원될 것이라고 미리 나타낸 오리진 서버에게 직접적으로 하는 것이 아닌 한 웬만해서는(SHOULD NOT) HEAD 요청에 콘텐츠를 생성해서는 안된다. 오리진 서버는 웬만해서는(SHOULD NOT) 콘텐츠를 수신하는 데 있어 사적인 합의들에 의존해서는 안되는데, 이는 HTTP 통신의 참여자들이 종종 요청 체인을 따른 중개자들을 인식하지 못하기 때문이다.
 
-The response to a HEAD request is cacheable; a cache MAY use it to
-satisfy subsequent HEAD requests unless otherwise indicated by the
-Cache-Control header field (Section 5.2 of [CACHING]). A HEAD
-response might also affect previously cached responses to GET; see
-Section 4.3.5 of [CACHING].
+HEAD 요청에 대한 응답은 캐시 가능하다; 캐시는 Cache-Control 헤더 필드에 의해 따로 지정되지 않은 한([[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 5.2절) 아마(MAY) 이후의 HEAD 요청들을 만족시키기 위해 그것을 사용할 수 있을 것이다. HEAD 응답은 또한 이전에 캐시된 GET에 대한 응답들에 영향을 미칠지 모른다; [[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 4.3.5절을 참조하라.
 
 ##### 9.3.3. POST
 
