@@ -1975,68 +1975,21 @@ Table 4
 
 ##### 9.3.1. GET
 
-The GET method requests transfer of a current selected representation
-for the target resource. A successful response reflects the quality
-of "sameness" identified by the target URI (Section 1.2.2 of [URI]).
-Hence, retrieving identifiable information via HTTP is usually
-performed by making a GET request on an identifier associated with
-the potential for providing that information in a 200 (OK) response.
+GET 메소드는 타겟 리소스에 대한 현재 선택된 표현의 전송을 요청한다. 성공적인 응답은 타겟 URI([[URI](https://www.rfc-editor.org/info/rfc3986)]의 1.2.2절)에 의해 식별되는 "동일성"이라는 성질을 반영한다. 이리하여, HTTP를 통해 식별 가능한 정보를 얻는 것은 보통 200(OK) 응답에서 해당 정보를 제공할 잠재성과 연관된 식별자에 대해 GET 요청을 함으로써 수행된다.
 
-GET is the primary mechanism of information retrieval and the focus
-of almost all performance optimizations. Applications that produce a
-URI for each important resource can benefit from those optimizations
-while enabling their reuse by other applications, creating a network
-effect that promotes further expansion of the Web.
+GET은 정보 획득의 주요한 메커니즘이고 거의 모든 성능 최적화들의 집중점이다. 중요한 각 리소스들에 대해 URI를 생성하는 애플리케이션들은 그러한 최적화들이 다른 애플리케이션들에 의해 재사용될 수 있도록 되어 있는동안 웹이 더 확장되도록 촉진하며, 그것들로 부터 이득을 볼 수 있다.
 
-It is tempting to think of resource identifiers as remote file system
-pathnames and of representations as being a copy of the contents of
-such files. In fact, that is how many resources are implemented (see
-Section 17.3 for related security considerations). However, there
-are no such limitations in practice.
+리소스 식별자들을 원격 파일 시스템의 경로명들로 생각하고 표현들은 그러한 파일 콘텐츠들의 카피로 생각하는 것은 그럴듯하다. 실제로, 그것이 많은 리소스들이 구현된 방식이다(관련된 보안 사항들을 위해 17.3절을 참조하라). 그러나, 실무에 그러한 제한들이 있는 것은 아니다.
 
-The HTTP interface for a resource is just as likely to be implemented
-as a tree of content objects, a programmatic view on various database
-records, or a gateway to other information systems. Even when the
-URI mapping mechanism is tied to a file system, an origin server
-might be configured to execute the files with the request as input
-and send the output as the representation rather than transfer the
-files directly. Regardless, only the origin server needs to know how
-each resource identifier corresponds to an implementation and how
-that implementation manages to select and send a current
-representation of the target resource.
+리소스를 위한 HTTP 인터페이스는 콘텐츠 오브젝트들의 트리, 다양한 데이터베이스 레코드들에 대한 프로그램적인 뷰, 혹은 다른 정보 시스템들로의 게이트웨이처럼 구현될 가능성이 높다. URI 매핑 메커니즘이 파일 시스템에 묶여 있을 때 조차, 오리진 서버는 해당 파일들을 직접 전송하는 대신 요청을 입력으로 하여 파일들을 실행하고 출력을 표현으로 보내도록 구성될 수도 있다. 그와 관계 없이, 오직 오리진 서버만이 각 리소스 식별자들이 어떻게 구현으로 매핑되고 해당 구현이 어떻게 타겟 리소스의 현재 상태를 선택하고 전송하는지 알 필요가 있다.
 
-A client can alter the semantics of GET to be a "range request",
-requesting transfer of only some part(s) of the selected
-representation, by sending a Range header field in the request
-(Section 14.2).
+클라이언트는, Range 헤더 필드를 요청에 보냄으로써(14.2절), 오직 선택된 표현의 일부분(들)만 전송하도록 요청하는, "range request"로 GET의 의미체계를 변경할 수 있다.
 
-Although request message framing is independent of the method used,
-content received in a GET request has no generally defined semantics,
-cannot alter the meaning or target of the request, and might lead
-some implementations to reject the request and close the connection
-because of its potential as a request smuggling attack (Section 11.2
-of [HTTP/1.1]). A client SHOULD NOT generate content in a GET
-request unless it is made directly to an origin server that has
-previously indicated, in or out of band, that such a request has a
-purpose and will be adequately supported. An origin server SHOULD
-NOT rely on private agreements to receive content, since participants
-in HTTP communication are often unaware of intermediaries along the
-request chain.
+요청 메시지 프레이밍은 사용된 메소드와는 독립적이긴 하지만, GET 요청에서 수신된 콘텐츠는 어떤 일반적으로 정의된 의미체계를 가지지 않고, 해당 요청의 의미나 타겟을 변경할 수 없으며, 그리고 일부 구현체들이 해당 요청을 거부하고 연결을 종료하도록 이끌 수 있는데 이는 그것의 request smuggling attack으로서의 잠재성 때문이다([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 11.2절). 클라이언트는, in-band나 out-of-band와 관계없이, 콘텐츠를 가진 GET 요청이 목적을 가지고 있고 적절하게 지원될 것이라고 이전에 나타낸 오리진 서버로 직접 하는 게 아닌 한 웬만해서는(SHOULD NOT) GET 요청에 콘텐츠를 생성해서는 안된다. 오리진 서버는 웬만해서는(SHOULD NOT) 콘텐츠를 수신하는 데 있어 사적인 합의들에 의존해서는 안되는데, 이는 HTTP 통신의 참여자들이 종종 요청 체인을 따라 이어지는 중개자들을 인식하지 못하기 때문이다.
 
-The response to a GET request is cacheable; a cache MAY use it to
-satisfy subsequent GET and HEAD requests unless otherwise indicated
-by the Cache-Control header field (Section 5.2 of [CACHING]).
+GET 요청에 대한 응답은 캐시 가능하다; 캐시는 Cache-Control 헤더 필드에 의해 따로 나타내지지 않은 한([[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 5.2절) 아마(MAY) 그것을 이어지는 GET과 HEAD 요청들을 만족시키기 위해 사용할 수 있을 것이다.
 
-When information retrieval is performed with a mechanism that
-constructs a target URI from user-provided information, such as the
-query fields of a form using GET, potentially sensitive data might be
-provided that would not be appropriate for disclosure within a URI
-(see Section 17.9). In some cases, the data can be filtered or
-transformed such that it would not reveal such information. In
-others, particularly when there is no benefit from caching a
-response, using the POST method (Section 9.3.3) instead of GET can
-transmit such information in the request content rather than within
-the target URI.
+GET을 사용하는 형태의 쿼리 필드들과 같이 유저-제공 정보로부터의 타겟 URI를 구성하는 메커니즘으로 정보 획득이 수행될 때, 잠재적으로 URI 내에서 공개되기에 적절치 않을 수 있는 민감한 데이터가 제공될지 모른다(17.9절 참조). 일부 케이스들에서, 해당 데이터는 그러한 정보를 드러내지 않도록 필터링되거나 변형될 수 있다. 다른 경우들에, 특히 응답을 캐싱하는 것으로부터 이득이 없을 때, POST 메소드(9.3.3절)를 GET 대신 사용하면 그러한 정보를 타겟 URI 내부가 아닌 요청 콘텐츠로 전송할 수 있다.
 
 ##### 9.3.2. HEAD
 
