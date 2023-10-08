@@ -5510,23 +5510,13 @@ HEAD 요청에 대한 응답을 제외하고 303 응답의 표현에는 Location
 
 402 (Payment Required) 상태 코드는 나중에 사용할 수 있도록 예약되어 있다.
 
-15.5.4. 403 Forbidden
+#### 15.5.4. 403 Forbidden
 
-The 403 (Forbidden) status code indicates that the server understood
-the request but refuses to fulfill it. A server that wishes to make
-public why the request has been forbidden can describe that reason in
-the response content (if any).
+403 (Forbidden) 상태 코드는 서버가 요청을 이해했지만 이것을 수행 거부했음을 나타낸다. 요청이 금지된 이유를 공개하려는 서버는 응답 콘텐츠에 해당 이유를 설명할 수 있다 (있는 경우)
 
-If authentication credentials were provided in the request, the
-server considers them insufficient to grant access. The client
-SHOULD NOT automatically repeat the request with the same
-credentials. The client MAY repeat the request with new or different
-credentials. However, a request might be forbidden for reasons
-unrelated to the credentials.
+클라이언트는 동일한 자격 증명으로 요청을 웬만하면(SHOULD) 자동으로 반복해서는 안 된다. 클라리언트는 새로운 자격 증명 또는 다른 자격 증명을 사용하여 아마(MAY) 요청울 반복 할 수 있다. 그러나, 자격 증명과 관련이 없는 이유로 요청이 금지될 수 있다.
 
-An origin server that wishes to "hide" the current existence of a
-forbidden target resource MAY instead respond with a status code of
-404 (Not Found).
+금지된 대상 리소스의 현재 존재를 “숨기려는” origin 서버는 대신 404 (Not Found)의 상태 코드로 응답 할 수 있다.
 
 15.5.5. 404 Not Found
 
