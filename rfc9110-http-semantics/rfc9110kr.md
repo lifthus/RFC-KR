@@ -5518,19 +5518,11 @@ HEAD 요청에 대한 응답을 제외하고 303 응답의 표현에는 Location
 
 금지된 대상 리소스의 현재 존재를 “숨기려는” origin 서버는 대신 404 (Not Found)의 상태 코드로 응답 할 수 있다.
 
-15.5.5. 404 Not Found
+#### 15.5.5. 404 Not Found
 
-The 404 (Not Found) status code indicates that the origin server did
-not find a current representation for the target resource or is not
-willing to disclose that one exists. A 404 status code does not
-indicate whether this lack of representation is temporary or
-permanent; the 410 (Gone) status code is preferred over 404 if the
-origin server knows, presumably through some configurable means, that
-the condition is likely to be permanent.
+404 (Not Found) 상태 코드는 origin 서버가 대상 리소스에 대한 현재 표현을 찾지 못했거나 해당 리소스가 존재한다는 사실을 공개하지 않음을 나타낸다. 404 상태 코드는 이러한 표현 부족이 일시적인 것인지 영구적인 것인지는 나타내지 않습니다; origin 서버가 구성 가능한 수단을 통해, 조건이 영구적일 가능성이 높다는 것을 알고 있는 경우, 404보다 410 (Gone) 상태 코드가 선호된다.
 
-A 404 response is heuristically cacheable; i.e., unless otherwise
-indicated by the method definition or explicit cache controls (see
-Section 4.2.2 of [CACHING]).
+404 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [CACHING]) heuristic하게 캐시 할 수 있다.
 
 15.5.6. 405 Method Not Allowed
 
