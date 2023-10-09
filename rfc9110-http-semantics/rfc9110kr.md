@@ -171,196 +171,199 @@ than English.
 - - [8.5.1. 언어 태그들](#851-언어-태그들)
 - [8.6. Content-Length](#86-content-length)
 - [8.7. Content-Location](#87-content-location)
-- [8.8. Validator 필드들](#88-validator-필드들)
-- - [8.8.1. Weak versus Strong]()
-- - [8.8.2. Last-Modified]()
-- - - [8.8.2.1. Generation]()
-- - -[ 8.8.2.2. Comparison]()
-- - [8.8.3. ETag]()
-- - - [8.8.3.1. Generation]()
-- - - [8.8.3.2. Comparison]()
-- - - [8.8.3.3. Example: Entity Tags Varying on Content-Negotiated Resources]()
+- [8.8. 검증자 필드들](#88-검증자-필드들)
+- - [8.8.1. 약한 것 대 강한 것](#881-약한-것-대-강한-것)
+- - [8.8.2. Last-Modified](#882-last-modified)
+- - - [8.8.2.1. 생성](#8821-생성)
+- - -[ 8.8.2.2. 비교](#8822-비교)
+- - [8.8.3. ETag](#883-etag)
+- - - [8.8.3.1. 생성](#8831-생성)
+- - - [8.8.3.2. 비교](#8832-비교)
+- - - [8.8.3.3. 예시: 콘텐츠-협상된 리소스들에서의 다양한 엔티티 태그들](#8833-예시-콘텐츠-협상된-리소스들에서의-다양한-엔티티-태그들)
 
-9. Methods
-   9.1. Overview
-   9.2. Common Method Properties
-   9.2.1. Safe Methods
-   9.2.2. Idempotent Methods
-   9.2.3. Methods and Caching
-   9.3. Method Definitions
-   9.3.1. GET
-   9.3.2. HEAD
-   9.3.3. POST
-   9.3.4. PUT
-   9.3.5. DELETE
-   9.3.6. CONNECT
-   9.3.7. OPTIONS
-   9.3.8. TRACE 10. Message Context
-   10.1. Request Context Fields
-   10.1.1. Expect
-   10.1.2. From
-   10.1.3. Referer
-   10.1.4. TE
-   10.1.5. User-Agent
-   10.2. Response Context Fields
-   10.2.1. Allow
-   10.2.2. Location
-   10.2.3. Retry-After
-   10.2.4. Server 11. HTTP Authentication
-   11.1. Authentication Scheme
-   11.2. Authentication Parameters
-   11.3. Challenge and Response
-   11.4. Credentials
-   11.5. Establishing a Protection Space (Realm)
-   11.6. Authenticating Users to Origin Servers
-   11.6.1. WWW-Authenticate
-   11.6.2. Authorization
-   11.6.3. Authentication-Info
-   11.7. Authenticating Clients to Proxies
-   11.7.1. Proxy-Authenticate
-   11.7.2. Proxy-Authorization
-   11.7.3. Proxy-Authentication-Info 12. Content Negotiation
-   12.1. Proactive Negotiation
-   12.2. Reactive Negotiation
-   12.3. Request Content Negotiation
-   12.4. Content Negotiation Field Features
-   12.4.1. Absence
-   12.4.2. Quality Values
-   12.4.3. Wildcard Values
-   12.5. Content Negotiation Fields
-   12.5.1. Accept
-   12.5.2. Accept-Charset
-   12.5.3. Accept-Encoding
-   12.5.4. Accept-Language
-   12.5.5. Vary 13. Conditional Requests
-   13.1. Preconditions
-   13.1.1. If-Match
-   13.1.2. If-None-Match
-   13.1.3. If-Modified-Since
-   13.1.4. If-Unmodified-Since
-   13.1.5. If-Range
-   13.2. Evaluation of Preconditions
-   13.2.1. When to Evaluate
-   13.2.2. Precedence of Preconditions 14. Range Requests
-   14.1. Range Units
-   14.1.1. Range Specifiers
-   14.1.2. Byte Ranges
-   14.2. Range
-   14.3. Accept-Ranges
-   14.4. Content-Range
-   14.5. Partial PUT
-   14.6. Media Type multipart/byteranges
+[9. 메소드들](#9-메소드들)
+
+- [9.1. 개요](#91-개요)
+- - [9.2. 공통 메소드 속성들](#92-공통-메소드-속성들)
+- - - [9.2.1. 안전한 메소드들](#921-안전한-메소드들)
+- - - [9.2.2. 멱등성 메소드들](#922-멱등성-메소드들)
+- - - [9.2.3. 메소드들과 캐싱](#923-메소드들과-캐싱)
+- [9.3 메소드 정의들](#93-메소드-정의들)
+- - - [9.3.1. GET](#931-get)
+- - - [9.3.2. HEAD](#932-head)
+- - - [9.3.3. POST](#933-post)
+- - - [9.3.4. PUT](#934-put)
+- - - [9.3.5. DELETE](#935-delete)
+- - - [9.3.6. CONNECT](#936-connect)
+- - - [9.3.7. OPTIONS](#937-options)
+- - - [9.3.8. TRACE](#938-trace)
+
+[10. 메시지 콘텍스트](#10-메시지-콘텍스트)
+10.1. Request Context Fields
+10.1.1. Expect
+10.1.2. From
+10.1.3. Referer
+10.1.4. TE
+10.1.5. User-Agent
+10.2. Response Context Fields
+10.2.1. Allow
+10.2.2. Location
+10.2.3. Retry-After
+10.2.4. Server 11. HTTP Authentication
+11.1. Authentication Scheme
+11.2. Authentication Parameters
+11.3. Challenge and Response
+11.4. Credentials
+11.5. Establishing a Protection Space (Realm)
+11.6. Authenticating Users to Origin Servers
+11.6.1. WWW-Authenticate
+11.6.2. Authorization
+11.6.3. Authentication-Info
+11.7. Authenticating Clients to Proxies
+11.7.1. Proxy-Authenticate
+11.7.2. Proxy-Authorization
+11.7.3. Proxy-Authentication-Info 12. Content Negotiation
+12.1. Proactive Negotiation
+12.2. Reactive Negotiation
+12.3. Request Content Negotiation
+12.4. Content Negotiation Field Features
+12.4.1. Absence
+12.4.2. Quality Values
+12.4.3. Wildcard Values
+12.5. Content Negotiation Fields
+12.5.1. Accept
+12.5.2. Accept-Charset
+12.5.3. Accept-Encoding
+12.5.4. Accept-Language
+12.5.5. Vary 13. Conditional Requests
+13.1. Preconditions
+13.1.1. If-Match
+13.1.2. If-None-Match
+13.1.3. If-Modified-Since
+13.1.4. If-Unmodified-Since
+13.1.5. If-Range
+13.2. Evaluation of Preconditions
+13.2.1. When to Evaluate
+13.2.2. Precedence of Preconditions 14. Range Requests
+14.1. Range Units
+14.1.1. Range Specifiers
+14.1.2. Byte Ranges
+14.2. Range
+14.3. Accept-Ranges
+14.4. Content-Range
+14.5. Partial PUT
+14.6. Media Type multipart/byteranges
    
 [15. 상태 코드](#15-상태-코드)
 
-   - [15.1. 상태 코드의 개요](#151-상태-코드의-개요)
-   - [15.2. Informational 1xx](#152-Informational-1xx)
-   - - [15.2.1. 100 Continue](#1521-100-Continue)
-   - - [15.2.2. 101 Switching Protocols](#1522-101-Switching-Protocols)
-   - [15.3. Successful 2xx](#153-Successful-2xx)
-   - - [15.3.1. 200 OK](#1531-200-OK)
-   - - [15.3.2. 201 Created](#1532-201-Created)
-   - - [15.3.3. 202 Accepted](#1533-202-Accepted)
-   - - [15.3.4. 203 Non-Authoritative Information ](#1534-203-Non-Authoritative-Information )
-   - - [15.3.5. 204 No Content ](#1535-204-No-Content)
-   - - [15.3.6. 205 Reset Content](#1536-205-Reset-Content)
-   - - [15.3.7. 206 Partial Content](#1537-206-Partial-Content)
-   - - - [15.3.7.1. Single Part](#15371-Single-Part)
-   - - - [15.3.7.2. Multiple Parts](#15372-Multiple-Parts)
-   - - - [15.3.7.3. Combining Parts](#15373-Combining-Parts)
-   - [15.4. Redirection 3xx](#154-Redirection-3xx)
-   - - [15.4.1. 300 Multiple Choices](#1541-300-Multiple-Choices)
-   - - [15.4.2. 301 Moved Permanently](#1542-301-Moved-Permanently)
-   - - [15.4.3. 302 Found](#1543-Found)
-   - - [15.4.4. 303 See Other](#1544-303-See-Other)
-   - - [15.4.5. 304 Not Modified](#1545-304-Not-Modified)
-   - - [15.4.6. 305 Use Proxy](#1546-305-Use-Proxy)
-   - - [15.4.7. 306 (Unused)](#1547-306-(Unused))
-   - - [15.4.8. 307 Temporary Redirect](#1548-307-Temporary-Redirect)
-   - - [15.4.9. 308 Permanent Redirect](#1549-308-Permanent-Redirect)
-   - [15.5. Client Error 4xx](#155-Client-Error-4xx)
-   - - [15.5.1. 400 Bad Request](#1551-400-Bad-Request)
-   - - [15.5.2. 401 Unauthorized](#1552-401-Unauthorized)
-   - - [15.5.3. 402 Payment Required](#1553-402-Payment-Required)
-   - - [15.5.4. 403 Forbidden](#1554-403-Forbidden)
-   - - [15.5.5. 404 Not Found](#1555-404-Not-Found)
-   - - [15.5.6. 405 Method Not Allowed](#1556-405-Method-Not-Allowed)
-   - - [15.5.7. 406 Not Acceptable](#1557-406-Not-Acceptable)
-   - - [15.5.8. 407 Proxy Authentication Required](#1558-407-Proxy-Authentication-Required)
-   - - [15.5.9. 408 Request Timeout](#1559-408-Request-Timeout)
-   - - [15.5.10. 409 Conflict](#15510-409-Conflict)
-   - - [15.5.11. 410 Gone](#15511-410-Gone)
-   - - [15.5.12. 411 Length Required](#15512-411-Length-Required)
-   - - [15.5.13. 412 Precondition Failed](#15513-412-Precondition-Failed)
-   - - [15.5.14. 413 Content Too Large](#15514-413-Content-Too-Large)
-   - - [15.5.15. 414 URI Too Long](#15515-414-URI-Too-Long)
-   - - [15.5.16. 415 Unsupported Media Type](#15516-415-Unsupported-Media-Type)
-   - - [15.5.17. 416 Range Not Satisfiable](#15517-416-Range-Not-Satisfiable)
-   - - [15.5.18. 417 Expectation Failed](#15518-417-Expectation-Failed)
-   - - [15.5.19. 418 (Unused)](#15519-418-(Unused))
-   - - [15.5.20. 421 Misdirected Request](#15520-421-Misdirected-Request)
-   - - [15.5.21. 422 Unprocessable Content](#15521-422-Unprocessable-Content)
-   - - [15.5.22. 426 Upgrade Required](#15522-426-Upgrade-Required)
-   - [15.6. Server Error 5xx](#156-Server-Error-5xx)
-   - - [15.6.1. 500 Internal Server Error](#1561-500-Internal-Server-Error)
-   - - [15.6.2. 501 Not Implemented](#1562-501-Not-Implemented)
-   - - [15.6.3. 502 Bad Gateway](#1563-502-Bad-Gateway)
-   - - [15.6.4. 503 Service Unavailable](#1564-503-Service-Unavailable)
-   - - [15.6.5. 504 Gateway Timeout](#1565-504-Gateway-Timeout)
-   - - [15.6.6. 505 HTTP Version Not Supported](#1566-505-HTTP-Version-Not-Supported)
+- [15.1. 상태 코드의 개요](#151-상태-코드의-개요)
+- [15.2. Informational 1xx](#152-Informational-1xx)
+- - [15.2.1. 100 Continue](#1521-100-Continue)
+- - [15.2.2. 101 Switching Protocols](#1522-101-Switching-Protocols)
+- [15.3. Successful 2xx](#153-Successful-2xx)
+- - [15.3.1. 200 OK](#1531-200-OK)
+- - [15.3.2. 201 Created](#1532-201-Created)
+- - [15.3.3. 202 Accepted](#1533-202-Accepted)
+- - [15.3.4. 203 Non-Authoritative Information ](#1534-203-Non-Authoritative-Information )
+- - [15.3.5. 204 No Content ](#1535-204-No-Content)
+- - [15.3.6. 205 Reset Content](#1536-205-Reset-Content)
+- - [15.3.7. 206 Partial Content](#1537-206-Partial-Content)
+- - - [15.3.7.1. Single Part](#15371-Single-Part)
+- - - [15.3.7.2. Multiple Parts](#15372-Multiple-Parts)
+- - - [15.3.7.3. Combining Parts](#15373-Combining-Parts)
+- [15.4. Redirection 3xx](#154-Redirection-3xx)
+- - [15.4.1. 300 Multiple Choices](#1541-300-Multiple-Choices)
+- - [15.4.2. 301 Moved Permanently](#1542-301-Moved-Permanently)
+- - [15.4.3. 302 Found](#1543-Found)
+- - [15.4.4. 303 See Other](#1544-303-See-Other)
+- - [15.4.5. 304 Not Modified](#1545-304-Not-Modified)
+- - [15.4.6. 305 Use Proxy](#1546-305-Use-Proxy)
+- - [15.4.7. 306 (Unused)](#1547-306-(Unused))
+- - [15.4.8. 307 Temporary Redirect](#1548-307-Temporary-Redirect)
+- - [15.4.9. 308 Permanent Redirect](#1549-308-Permanent-Redirect)
+- [15.5. Client Error 4xx](#155-Client-Error-4xx)
+- - [15.5.1. 400 Bad Request](#1551-400-Bad-Request)
+- - [15.5.2. 401 Unauthorized](#1552-401-Unauthorized)
+- - [15.5.3. 402 Payment Required](#1553-402-Payment-Required)
+- - [15.5.4. 403 Forbidden](#1554-403-Forbidden)
+- - [15.5.5. 404 Not Found](#1555-404-Not-Found)
+- - [15.5.6. 405 Method Not Allowed](#1556-405-Method-Not-Allowed)
+- - [15.5.7. 406 Not Acceptable](#1557-406-Not-Acceptable)
+- - [15.5.8. 407 Proxy Authentication Required](#1558-407-Proxy-Authentication-Required)
+- - [15.5.9. 408 Request Timeout](#1559-408-Request-Timeout)
+- - [15.5.10. 409 Conflict](#15510-409-Conflict)
+- - [15.5.11. 410 Gone](#15511-410-Gone)
+- - [15.5.12. 411 Length Required](#15512-411-Length-Required)
+- - [15.5.13. 412 Precondition Failed](#15513-412-Precondition-Failed)
+- - [15.5.14. 413 Content Too Large](#15514-413-Content-Too-Large)
+- - [15.5.15. 414 URI Too Long](#15515-414-URI-Too-Long)
+- - [15.5.16. 415 Unsupported Media Type](#15516-415-Unsupported-Media-Type)
+- - [15.5.17. 416 Range Not Satisfiable](#15517-416-Range-Not-Satisfiable)
+- - [15.5.18. 417 Expectation Failed](#15518-417-Expectation-Failed)
+- - [15.5.19. 418 (Unused)](#15519-418-(Unused))
+- - [15.5.20. 421 Misdirected Request](#15520-421-Misdirected-Request)
+- - [15.5.21. 422 Unprocessable Content](#15521-422-Unprocessable-Content)
+- - [15.5.22. 426 Upgrade Required](#15522-426-Upgrade-Required)
+- [15.6. Server Error 5xx](#156-Server-Error-5xx)
+- - [15.6.1. 500 Internal Server Error](#1561-500-Internal-Server-Error)
+- - [15.6.2. 501 Not Implemented](#1562-501-Not-Implemented)
+- - [15.6.3. 502 Bad Gateway](#1563-502-Bad-Gateway)
+- - [15.6.4. 503 Service Unavailable](#1564-503-Service-Unavailable)
+- - [15.6.5. 504 Gateway Timeout](#1565-504-Gateway-Timeout)
+- - [15.6.6. 505 HTTP Version Not Supported](#1566-505-HTTP-Version-Not-Supported)
    
    16. Extending HTTP
-   16.1. Method Extensibility
-   16.1.1. Method Registry
-   16.1.2. Considerations for New Methods
-   16.2. Status Code Extensibility
-   16.2.1. Status Code Registry
-   16.2.2. Considerations for New Status Codes
-   16.3. Field Extensibility
-   16.3.1. Field Name Registry
-   16.3.2. Considerations for New Fields
-   16.3.2.1. Considerations for New Field Names
-   16.3.2.2. Considerations for New Field Values
-   16.4. Authentication Scheme Extensibility
-   16.4.1. Authentication Scheme Registry
-   16.4.2. Considerations for New Authentication Schemes
-   16.5. Range Unit Extensibility
-   16.5.1. Range Unit Registry
-   16.5.2. Considerations for New Range Units
-   16.6. Content Coding Extensibility
-   16.6.1. Content Coding Registry
-   16.6.2. Considerations for New Content Codings
-   16.7. Upgrade Token Registry 17. Security Considerations
-   17.1. Establishing Authority
-   17.2. Risks of Intermediaries
-   17.3. Attacks Based on File and Path Names
-   17.4. Attacks Based on Command, Code, or Query Injection
-   17.5. Attacks via Protocol Element Length
-   17.6. Attacks Using Shared-Dictionary Compression
-   17.7. Disclosure of Personal Information
-   17.8. Privacy of Server Log Information
-   17.9. Disclosure of Sensitive Information in URIs
-   17.10. Application Handling of Field Names
-   17.11. Disclosure of Fragment after Redirects
-   17.12. Disclosure of Product Information
-   17.13. Browser Fingerprinting
-   17.14. Validator Retention
-   17.15. Denial-of-Service Attacks Using Range
-   17.16. Authentication Considerations
-   17.16.1. Confidentiality of Credentials
-   17.16.2. Credentials and Idle Clients
-   17.16.3. Protection Spaces
-   17.16.4. Additional Response Fields 18. IANA Considerations
-   18.1. URI Scheme Registration
-   18.2. Method Registration
-   18.3. Status Code Registration
-   18.4. Field Name Registration
-   18.5. Authentication Scheme Registration
-   18.6. Content Coding Registration
-   18.7. Range Unit Registration
-   18.8. Media Type Registration
-   18.9. Port Registration
-   18.10. Upgrade Token Registration
+16.1. Method Extensibility
+16.1.1. Method Registry
+16.1.2. Considerations for New Methods
+16.2. Status Code Extensibility
+16.2.1. Status Code Registry
+16.2.2. Considerations for New Status Codes
+16.3. Field Extensibility
+16.3.1. Field Name Registry
+16.3.2. Considerations for New Fields
+16.3.2.1. Considerations for New Field Names
+16.3.2.2. Considerations for New Field Values
+16.4. Authentication Scheme Extensibility
+16.4.1. Authentication Scheme Registry
+16.4.2. Considerations for New Authentication Schemes
+16.5. Range Unit Extensibility
+16.5.1. Range Unit Registry
+16.5.2. Considerations for New Range Units
+16.6. Content Coding Extensibility
+16.6.1. Content Coding Registry
+16.6.2. Considerations for New Content Codings
+16.7. Upgrade Token Registry 17. Security Considerations
+17.1. Establishing Authority
+17.2. Risks of Intermediaries
+17.3. Attacks Based on File and Path Names
+17.4. Attacks Based on Command, Code, or Query Injection
+17.5. Attacks via Protocol Element Length
+17.6. Attacks Using Shared-Dictionary Compression
+17.7. Disclosure of Personal Information
+17.8. Privacy of Server Log Information
+17.9. Disclosure of Sensitive Information in URIs
+17.10. Application Handling of Field Names
+17.11. Disclosure of Fragment after Redirects
+17.12. Disclosure of Product Information
+17.13. Browser Fingerprinting
+17.14. Validator Retention
+17.15. Denial-of-Service Attacks Using Range
+17.16. Authentication Considerations
+17.16.1. Confidentiality of Credentials
+17.16.2. Credentials and Idle Clients
+17.16.3. Protection Spaces
+17.16.4. Additional Response Fields 18. IANA Considerations
+18.1. URI Scheme Registration
+18.2. Method Registration
+18.3. Status Code Registration
+18.4. Field Name Registration
+18.5. Authentication Scheme Registration
+18.6. Content Coding Registration
+18.7. Range Unit Registration
+18.8. Media Type Registration
+18.9. Port Registration
+18.10. Upgrade Token Registration
 
 [19. 레퍼런스](#19-레퍼런스)
 
@@ -386,7 +389,7 @@ Authors' Addresses
 
 ### 1.1. 목적
 
-Hypertext Transfer Protocol (HTTP)는 네트워크 기반 하이퍼텍스트 정보 시스템과 유연하게 상호작용할 수 있도록 일반적인 인터페이스, 확장 가능한 의미체계, 자기설명적 메시지를 가지는 무상태성, 애플리케이션-레벨, 요청/응답 프로토콜들 중 하나다.
+Hypertext Transfer Protocol(HTTP)는 네트워크 기반 하이퍼텍스트 정보 시스템과 유연하게 상호작용할 수 있도록 일반적인 인터페이스, 확장 가능한 의미체계, 자기설명적 메시지를 가지는 무상태성, 애플리케이션-레벨, 요청/응답 프로토콜들 중 하나다.
 
 HTTP는 균일한 인터페이스를 제시함으로써 제공되는 리소스의 타입과 관계 없는 클라이언트에게 서비스가 정확히 어떻게 구현됐는가를 숨긴다. 비슷하게, 서버는 각 클라이언트의 목적을 알 필요가 없다: 하나의 요청은 특정 타입의 클라이언트나 미리 결정된 애플리케이션이 진행되는 단계의 순서 같은 것과 관계없이 각각 별도로 고려될 수 있다. 이는 다른 많은 상황들에서 효율적으로 사용될 수 있는 범용적인 구현을 가능하게 하며, 상호작용의 복잡도를 줄이고, 시간이 지남에 따라 (각 엔드포인트가) 독립적으로 발전할 수 있도록 한다.
 
@@ -396,7 +399,7 @@ HTTP는 또한 중개 프로토콜로 사용될 수 있도록 설계됐는데, �
 
 ### 1.2. 역사와 발전
 
-HTTP는 1990년에 등장한 이후로 World Wide Web에서 주요한 정보 전송 프로토콜로 사용되고 있다. 처음에는 단 하나의 메소드 (GET)로 주어진 경로명에 의해 식별되며 해당 경로에 있을 것을 것으로 추정되는 하이퍼텍스트 문서의 전송을 요청하는 짧은 지연시간의 요청을 위한 단순한 메커니즘으로 시작됐다. 웹이 성장하면서, HTTP는 요청과 응답을 메시지에 포함시키고, MIME 같은 미디어 타입을 사용해 임의의 데이터 포맷을 전송하고, 중개자를 통해 요청을 라우팅할 수 있도록 확장됐다. 이러한 프로토콜들은 결국 HTTP/0.9와 HTTP/1.0으로 정의됐다. ([RFC1945](https://datatracker.ietf.org/doc/html/rfc1945) 참조)
+HTTP는 1990년에 등장한 이후로 World Wide Web에서 주요한 정보 전송 프로토콜로 사용되고 있다. 처음에는 단 하나의 메소드(GET)로 주어진 경로명에 의해 식별되며 해당 경로에 있을 것을 것으로 추정되는 하이퍼텍스트 문서의 전송을 요청하는 짧은 지연시간의 요청을 위한 단순한 메커니즘으로 시작됐다. 웹이 성장하면서, HTTP는 요청과 응답을 메시지에 포함시키고, MIME 같은 미디어 타입을 사용해 임의의 데이터 포맷을 전송하고, 중개자를 통해 요청을 라우팅할 수 있도록 확장됐다. 이러한 프로토콜들은 결국 HTTP/0.9와 HTTP/1.0으로 정의됐다. ([RFC1945](https://datatracker.ietf.org/doc/html/rfc1945) 참조)
 
 HTTP/1.1은 원래의 텍스트 기반 메시징 구문과의 호환성을 유지하고, 상호운용성과 황장성, 인터넷에서의 견고함은 더 강화시키면서 위 프로토콜의 기능들을 다듬도록 설계됐다. 여기에는 고정된, 그리고 동적인 (어떤 단위로 묶인) 콘텐츠 데이터를 길이에 기반해 구분하는 것, 콘텐츠 협상을 위한 일관적인 프레임워크, 조건부 요청을 위한 불투명한 유효성 검사, 더 나은 캐시 일관성을 위한 캐시 제어, 부분 갱신을 위한 범위 요청, 그리고 기본적으로 지속되는 연결이 포함된다. HTTP/1.1은 1995년에 처음 소개되어 1997년에 표준 트랙(Standards Track)으로 발표됐고[[RFC2068](https://datatracker.ietf.org/doc/html/rfc2068)], 1999년에 개정됐으며[[RFC2616](https://datatracker.ietf.org/doc/html/rfc2616)], 2014년에 재개정됐다([[RFC7230](https://datatracker.ietf.org/doc/html/rfc7230)] 에서 [[RFC7235](https://datatracker.ietf.org/doc/html/rfc7235)])
 
@@ -404,7 +407,7 @@ HTTP/2([RFC7540](https://datatracker.ietf.org/doc/html/rfc7540))에서는 충분
 
 HTTP의 세가지 모든 major 버전들은 이 문서에서 정의된 의미체계에 의존한다. 이들은 사용하는 상황에 따라 각각 이점과 한계점이 있기 때문에 서로를 완전히 폐기하지는 않는다. 이들의 구현에 대해서는 각각의 특정한 상황에 따라 가장 적합한 전송 방식과 메시징 구문이 선택되기를 기대된다.
 
-이 HTTP에 대한 개정은 각 major 프로토콜 버전들이 같은 핵심적인 의미체계를 공유하며 독립적으로 진행하도록 하기 위해 의미체계 정의 (이 문서)와 캐싱([RFC7234](https://datatracker.ietf.org/doc/html/rfc7234))을 현재 HTTP/1.1 메시징 구문([RFC7231](https://datatracker.ietf.org/doc/html/rfc7231))에서 분리한다.
+이 HTTP에 대한 개정은 각 major 프로토콜 버전들이 같은 핵심적인 의미체계를 공유하며 독립적으로 진행하도록 하기 위해 의미체계 정의(이 문서)와 캐싱([[CACHING](https://www.rfc-editor.org/info/rfc9111)])을 현재 HTTP/1.1 메시징 구문([[RFC7231](https://datatracker.ietf.org/doc/html/rfc7231)])에서 분리한다.
 
 ### 1.3. 핵심 의미체계
 
@@ -490,7 +493,7 @@ HTTP에 속하는 많은 프로토콜 요소들의 적절한 길이라 하면, �
 
 ### 2.5. 프로토콜 버전
 
-HTTP 버전 넘버는 "."(마침표 혹은 소수점)으로 구분되는 두 십진수로 구성된다. 첫번째 숫자(메이저 버전)는 메시징 구문을 가리키는 반면, 두번째 숫자(마이너 버전)은 발신자가 따르는(이후 통신에서 이해할 수 있는) 메이저 버전에서 가장 높은 마이너 버전을 가리킨다.
+HTTP 버전 넘버는 "."(마침표 혹은 소수점)으로 구분되는 두 십진수로 구성된다. 첫번째 숫자(메이저 버전)는 메시징 구문을 가리키는 반면, 두번째 숫자(마이너 버전)는 발신자가 따르는(이후 통신에서 이해할 수 있는) 메이저 버전에서 가장 높은 마이너 버전을 가리킨다.
 
 HTTP 핵심 의미체계가 프로토콜 버전에 따라 바뀌지는 않지만, "통신 선로 상에서" 그 표현은 바뀔 수 있고, 따라서 HTTP 버전 넘버는 연결 형식에 호환되지 않는 변경이 생길 때 바뀐다. 추가로, HTTP는 정의된 확장 포인트들(16절)을 이용해 프로토콜 버전을 바꾸지 않으면서 점진적이고, 이전 버전과 호환 가능한 프로토콜의 변화를 허용한다.
 
@@ -500,7 +503,7 @@ HTTP의 메이저 버전 넘버는 호환되지 않는 메시지 구문이 도�
 
 마이너 버전은 발신자가 프로토콜의 이전 버전과 호환되는 일부만 사용한다고 해도 발신자의 통신 기능들을 알리게 되는데, 이는 수신자가 응답(서버에 의한)이나 이후의 요청(클라이언트에 의한)에서 더 발전된 기능들이 사용될 수 있음을 알게 한다.
 
-HTTP의 메이저 버전이 어떤 마이너 버전도 정의하고 있지 않을 때, 마이너 버전은 "0"으로 암시된다. "0"은 마이너 버전 식별자가 필요한 요소들 내에서 해당 프로토콜을 언급할 때 사용된다.
+HTTP의 메이저 버전이 어떤 마이너 버전도 정의하고 있지 않을 때, 마이너 버전은 "0"으로 암시된다. "0"은 마이너 버전 식별자가 필요한 요소들 내에서 해당 프로토콜 자체를 언급할 때 사용된다.
 
 ## 3. 용어와 핵심 개념들
 
@@ -512,11 +515,11 @@ HTTP 요청의 타겟은 "리소스"라고 불린다. HTTP는 리소스의 성�
 
 HTTP의 설계 목적 중 하나는 리소스의 식별을 리소스 의미체계로부터 분리하는 것인데, 이는 요청 메소드(9절)와 몇몇 요청 수정 헤더 필드에 요청 의미체계를 부여함으로써 가능해진다. 리소스는 요청을 요청의 메소드의 의미체계와 일치하지 않는 방식으로 다룰 수 없다. 예를 들어, 리소스의 URI는 안전하지 않은 의미체계를 내포할 수도 있지만, 클라이언트는 리소스가 안전한 메소드(9.2.1절)의 요청을 처리할 때는 안전하지 않은 행동을 피할 것으로 기대할 수 있다.
 
-HTTP는 타겟 리소스(7.1절)와 리소스들 간의 관계를 나타내기 위해 Uniform Resource Identifier([RFC3986](https://datatracker.ietf.org/doc/html/rfc3986)) 표준에 의존한다.
+HTTP는 타겟 리소스(7.1절)와 리소스들 간의 관계를 나타내기 위해 Uniform Resource Identifier([URI](https://datatracker.ietf.org/doc/html/rfc3986)) 표준에 의존한다.
 
 ### 3.2. 표현
 
-"표현"은 주어진 리소스의 과거나 현재의 상태, 혹은 바라는 상태를 프로토콜을 통해 손쉽게 통신할 수 있는 형태로 반영하게 돼있는 정보다. 표현은 표현 메타데이터의 집합과 잠재적으로 제한되지 않은 표현 데이터 스트림으로 구성된다 (8절).
+"표현"은 주어진 리소스의 과거나 현재의 상태, 혹은 바라는 상태를 프로토콜을 통해 손쉽게 통신할 수 있는 형태로 반영하게 돼있는 정보다. 표현은 표현 메타데이터의 집합과 잠재적으로 제한되지 않은 표현 데이터 스트림으로 구성된다(8절).
 
 HTTP는 통신을 리소스를 전송하는 것 자체가 아니라 전송 가능한 리소스 상태의 표현에 대한 것으로 정의함으로써 균일한 인터페이스 뒤로 "정보 은닉"할 수 있도록 한다. 이는 잠재적으로 메시지가 생성된 시점의 리소스를 나타내는 정보를 제공하면서, "광안리 해변의 현재 날씨" 같은 일시적인 기능들을 포함해, URI에 의해 식별되는 리소스가 무엇이든 될 수 있게 한다[[REST](https://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm)].
 
@@ -570,7 +573,7 @@ HTTP는 한 연결에 걸쳐 "메시지들"을 교환하기 위한 무상태성 
 
 ### 3.7. 중개자
 
-HTTP는 요청을 충족시키기 위해 연결 체인에 걸쳐 중개자들을 개입시키는 것을 허용한다. 대표적인 세 갖; HTTP "중개자"가 있다: 프록시, 게이트웨이, 그리고 터널. 일부 케이스들에서는, 단 하나의 중개자가 각 요청의 성질에 따라 행동을 스위칭하면서 오리진 서버, 프록시, 게이트웨이나 터널의 역할을 할 수도 있다.
+HTTP는 요청을 충족시키기 위해 연결 체인에 걸쳐 중개자들을 개입시키는 것을 허용한다. 대표적인 세 가지 HTTP "중개자"가 있다: 프록시, 게이트웨이, 그리고 터널. 일부 케이스들에서는, 단 하나의 중개자가 각 요청의 성질에 따라 행동을 스위칭하면서 오리진 서버, 프록시, 게이트웨이나 터널의 역할을 할 수도 있다.
 
             >             >             >             >
        UA =========== A =========== B =========== C =========== O
@@ -641,7 +644,7 @@ Uniform Resource Identifiers(URI, [RFC3986](https://datatracker.ietf.org/doc/htm
 
 ### 4.1 URI 레퍼런스
 
-URI 레퍼런스는 요청들을 타게팅하는데, 리다이렉트를 나타내는데, 그리고 관계들을 정의하는데 사용된다.
+URI 레퍼런스는 요청들을 타게팅하는 데, 리다이렉트를 나타내는 데, 그리고 관계들을 정의하는 데 사용된다.
 
 "URI-레퍼런스", "절대-URI", "상대-파트", "권한", "포트", "호스트", "path-abempty", "세그먼트", 그리고 "쿼리"의 정의들은 일반 URI 구문으로부터 채택됐다. "절대-경로" 규칙은 비어있지 않은 경로 구성요소를 포함할 수 있는 프로토콜 요소들을 위해 정의됐다. (이 규칙은 RFC 3986의 path-abempty 규칙과 살짝 다른데, 그 규칙은 빈 경로를 허용하고, "//"로 시작하는 경로를 허용하지 않는 절대 경로 규칙도 허용한다.) "부분 URI" 규칙은 상대 경로를 포함할 수 있지만 프레그먼트 구성요소는 포함할 수 없는 프로토콜 요소들을 위해 정의됐다.
 
@@ -660,14 +663,9 @@ URI 레퍼런스는 요청들을 타게팅하는데, 리다이렉트를 나타�
 
 URI 레퍼런스를 허용하는 HTTP의 각 프로토콜 요소는 자체적인 ABNF 프로덕션 안에서 엘리먼트가 레퍼런스(URI-레퍼런스)의 어떤 형태라도 허용하는지, 절대적 형태(절대-URI)의 URI만 허용하는지, 경로와 선택적 쿼리 구성요소들(partial-URI)만 허용하는지, 혹은 위의 것들의 어떤 조합을 허용하는지 나타낼 것이다. 만약 그렇지 않으면, URI 레퍼런스들은 타겟 URI에 대해 상대적으로 파싱된다(7.1절).
 
-모든 발신자들과 수신자들을, 최소한, 프로토콜 요소들에서 8000 옥텟 이상의 길이를 지원하도록 권장된다(RECOMMENDED). 이는 어떤 구조들과 on-wire 표현들(예를 들어, HTTP/1.1의 요청 라인)이 어떤 경우들에서는 반드시 더 클 것이라는 의미를 내포한다.
+모든 발신자들과 수신자들은, 최소한, 프로토콜 요소들에서 8000 옥텟 이상의 길이를 지원하도록 권장된다(RECOMMENDED). 이는 어떤 구조들과 on-wire 표현들(예를 들어, HTTP/1.1의 요청 라인)이 어떤 경우들에서는 반드시 더 클 것이라는 의미를 내포한다.
 
 ### 4.2. HTTP와 연관된 URI 체계들
-
-IANA maintains the registry of URI Schemes [BCP35] at
-<https://www.iana.org/assignments/uri-schemes/>. Although requests
-might target any URI scheme, the following schemes are inherent to
-HTTP servers:
 
 IANA는 <<https://www.iana.org/assignments/uri-schemes/>>에서 URI 체계 등록[[BCP35](https://www.rfc-editor.org/info/bcp35)]을 유지 관리한다. 비록 어느 URI 체계든 요청이 목표로 삼을 수 있지만, 다음의 체계들은 HTTP 서버에게는 내재적이다.
 
@@ -777,9 +775,6 @@ HTTP는 동등함을 결정하기 위해 특별한 메소드를 사용하는 것
 
 두 오리진은 그들이 사용하는 체계, 호스트, 또는 포트가 다르면 구분된다. 구별되는 두 오리진이 같은 개체에 의해 제어되는게 확실할 때 조차, 오리진들 아래의 두 네임스페이스들은 해당 오리진에 대해 권한있는 서버에 의해 명시적으로 별칭이 지정되지 않은 한 구별된다.
 
-Origin is also used within HTML and related Web protocols, beyond the
-scope of this document, as described in [RFC6454].
-
 오리진은 또한, 이 문서의 범위를 넘어, [[RFC6454](https://datatracker.ietf.org/doc/html/rfc6454)]에 서술된대로, HTML 그리고 그와 관련된 웹 프로토콜에서도 사용된다.
 
 ### 4.3.2. http 오리진들
@@ -820,7 +815,7 @@ HTTP/2와 HTTP/3에서는, 클라이언트는 URI 오리진의 호스트가 서�
 
 일반적으로, 클라이언트는 반드시(MUST) [[RFC6125](https://datatracker.ietf.org/doc/html/rfc6125)]의 6절에 정의된 검증 프로세스를 사용해 서비스의 신원을 검증해야 한다. 클라이언트는 반드시(MUST) 서비스의 호스트로부터 참조 신원을 구성해야 한다: 만약 호스트가 IP 주소 그대로라면(4.3.5절), 참조 신원은 IP-ID이고, 그렇지 않다면 호스트는 이름이고 참조 신원은 DNS-ID이다.
 
-CN-ID 타입의 참조 신원을 절대(MUST NOT) 클라이언트에 의해 사용되어서는 안된다. [[RFC6125](https://datatracker.ietf.org/doc/html/rfc6125)]의 6.2.1절에 나와있는대로, CN-ID 타입의 참조 신원은 더 오래된 클라이언트들에 의해 사용될지 모른다.
+CN-ID 타입의 참조 신원은 절대(MUST NOT) 클라이언트에 의해 사용되어서는 안된다. [[RFC6125](https://datatracker.ietf.org/doc/html/rfc6125)]의 6.2.1절에 나와있는대로, CN-ID 타입의 참조 신원은 더 오래된 클라이언트들에 의해 사용될지 모른다.
 
 클라이언트는 특별히 대체된 형태의 서버 신원 검증을 받도록 설정될 수도 있다. 예를 들어, 클라이언트는 서비스가 타겟 URI의 오리진에 매치되는 대신 다른 형태의 특정한 인증서(혹은 외부적으로 정의된 참조 신원과 매칭되는 인증서)를 제시할 것이라는 기대와 함께, 주소와 호스트명이 동적인 서버에 연결하려 할 수도 있다.
 
@@ -875,7 +870,7 @@ HTTP는 미리 등록된 키 네임스페이스와 함께 확장 가능한 이�
 
 이는, 아래의 잘 알려진 예외는 별개로, 발신자는 해당 필드의 정의에서 다중 필드 라인 값이 콤마로 구분되는 리스트로 재조합되도록 허용되지 않는다면(즉, 최소 하나의 필드 정의의 대안이 5.6.1절에 정의된 #(values)의 ABNF룰과 같은, 콤마로 구분되는 리스트를 허용하지 않으면), 절대(MUST NOT) 메시지 내에서 같은 이름의 여러 필드 라인들을 생성하거나 같은 이름이 이미 존재할 때 그 이름의 필드 라인을 덧붙여서는 안됨을 의미한다.
 
-_Note:_ 실무적으로, "Set-Cookie" 헤더 필드 ([[COOKIE](https://www.rfc-editor.org/info/rfc6265)]) 종종 응답 메시지에서 여러 필드 라인에거쳐 나타나고, 리스트 구문을 사용하지 않고, 위의 같은 필드 이름의 여러 필드 라인들에 대한 요구사항들을 위반한다. 그것이 하나의 필드 값으로 조합될 수 없기 때문에, 수신자들은 "Set-Cookie"를 필드들을 처리하며 특별한 케이스로 다뤄야 한다. (자세한 건 [[Kri2001](http://arxiv.org/abs/cs.SE/0105018)의 부록 A.2.3을 참조하라)
+**Note:** 실무적으로, "Set-Cookie" 헤더 필드([[COOKIE](https://www.rfc-editor.org/info/rfc6265)])는 종종 응답 메시지에서 여러 필드 라인에거쳐 나타나고, 리스트 구문을 사용하지 않고, 위의 같은 필드 이름의 여러 필드 라인들에 대한 요구사항들을 위반한다. 그것이 하나의 필드 값으로 조합될 수 없기 때문에, 수신자들은 "Set-Cookie"를 필드들을 처리하며 특별한 케이스로 다뤄야 한다. (자세한 건 [[Kri2001](http://arxiv.org/abs/cs.SE/0105018)의 부록 A.2.3을 참조하라)
 
 한 섹션에서 수신한 다른 이름을 가진 필드 라인들의 순서는 그리 중요하지 않다. 그러나, 구현체들이 가능한 빨리 메시지를 핸들링할지 말지 결정할 수 있도록, 요청의 Host나 응답의 Date 같은, 추가적인 제어 데이터를 포함하는 헤더 필드들을 먼저 보내는 것이 좋은 관행이다.
 
@@ -921,7 +916,7 @@ CR, LF, 혹은 NUL 문자들을 포함하는 필드 값들은 유효하지 않�
 
 많은 필드들(8.3절에 정의된, Content-Type 같은)은 파라미터 값으로 따옴표 없는 경우(token) 그리고 따옴표 있는 경우(quoted-string)의 구문을 허용하는 파라미터들을 위해 공통적인 구문을 사용한다(5.6.6절). 공통적인 구문의 사용은 수신자들로 하여금 기존의 파서 구성 요소들을 재사용할 수 있도록 한다. 두 형태 모두 허용할 때는, 파라미터 값의 의미는 token으로 받았든 quoted string으로 받았든 동일해야 한다.
 
-_Note:_ 필드 값 구문을 정의하기 위해, 이 사양서는 해당 필드의 값에 허용된 문법을 정의하기 위해 해당 필드 이름을 따른 ABNF 룰을 사용한다(해당 값이 기반 메시지 구문에서 추출되고 여러 인스턴스들이 list로 조합된 후).
+**Note:** 필드 값 구문을 정의하기 위해, 이 사양서는 해당 필드의 값에 허용된 문법을 정의하기 위해 해당 필드 이름을 따른 ABNF 룰을 사용한다(해당 값이 기반 메시지 구문에서 추출되고 여러 인스턴스들이 list로 조합된 후).
 
 ### 5.6. 필드 값들을 정의하기 위한 공통 규칙들
 
@@ -960,16 +955,13 @@ _Note:_ 필드 값 구문을 정의하기 위해, 이 사양서는 해당 필드
      example-list      = 1#example-list-elmt
      example-list-elmt = token ; see Section 5.6.2
 
-Then the following are valid values for example-list (not including
-the double quotes, which are present for delimitation only):
-
 또 다음은 example-list에 대해 유효한 값들이다(쌍따옴표들은 오로지 구분을 위해서 존재하니까 제외하고):
 
      "foo,bar"
      "foo ,bar,"
      "foo , ,bar,charlie"
 
-반대로, 다음 값들은, 최소 하나의 비어이씾 않은 요소가 example-list 프로덕션에 의해 요구되기 때문에, 유효하지 않다:
+반대로, 다음 값들은, 최소 하나의 비어있지 않은 요소가 example-list 프로덕션에 의해 요구되기 때문에, 유효하지 않다:
 
      ""
      ","
@@ -990,7 +982,7 @@ the double quotes, which are present for delimitation only):
 
 #### 5.6.3. 공백
 
-이 사양서는 ㅅ헤 가지 규칙을 사용해 선형 공백의 사용을 나타낸다: OWS(선택적 공백), RWS(필수 공백), 그리고 BWS("나쁜" 공백).
+이 사양서는 세 가지 규칙을 사용해 선형 공백의 사용을 나타낸다: OWS(선택적 공백), RWS(필수 공백), 그리고 BWS("나쁜" 공백).
 
 OWS 규칙은 0개 이상의 선형 공백 옥텟이 나타날지 모르는 곳에서 사용된다. 선택적 공백이 가독성 향상을 위해 선호되는 프로토콜 요소들에 대해서, 발신자는 웬만하면(SHOULD) 선택적 공백을 단일 SP로 생성해야 한다; 그게 아니면, 발신자는 내부의 메시지 필터링 중에 유효하지 않거나 원하지 않는 프로토콜 요소들을 덮어쓸 필요가 있을 때를 제외하고는 웬만해서는(SHOULD NOT) 선택적 공백을 생성해서는 안된다.
 
@@ -1011,7 +1003,7 @@ BWS는 의미가 없다. BWS로 정의된 것으로 알려진 어떤 콘텐츠�
 
 #### 5.6.4. 인용된 문자열
 
-한 텍스트 문자열이 인용 부홀호 묶여 있으면 그것은 단일 값으로 파싱된다.
+한 텍스트 문자열이 인용 부호로 묶여 있으면 그것은 단일 값으로 파싱된다.
 
      quoted-string  = DQUOTE *( qdtext / quoted-pair ) DQUOTE
      qdtext         = HTAB / SP / %x21 / %x23-5B / %x5D-7E / obs-text
@@ -1042,7 +1034,7 @@ BWS는 의미가 없다. BWS로 정의된 것으로 알려진 어떤 콘텐츠�
 
 토큰 프로덕션과 매치되는 한 파라미터 값은 토큰으로써 혹은 quoted-string 내에서 전송될 수 있다. 인용된 것과 안된 값들은 동등하다.
 
-_Note:_ 파라미터는 "=" 문자 주변에 공백("나쁜" 공백 조차)을 허용하지 않는다.
+**Note:** 파라미터는 "=" 문자 주변에 공백("나쁜" 공백 조차)을 허용하지 않는다.
 
 #### 5.6.7. Date/Time 포맷
 
@@ -1116,7 +1108,7 @@ rfc850-date 포맷, 즉 숫자 두 개로 연도를 표현하는 형태의 타�
 
 타임스탬프 값의 수신자들은 필드 정의에 의해 딱히 제한된 게 아니라면 타임스탬프를 파싱하는데 있어 강력하게 하도록 권장된다. 예를 들어, 메시지들은 종종 Internet Message Format에 의해 정의된 어떤 날짜와 시간 사양이든 생설할 수도 있는 HTTP가 아닌 소스로 부터 HTTP를 통해 포워딩된다.
 
-_Note:_ 타임스탬프 포맷들을 위한 HTTP 요구사항들은 그것들이 프로토콜 스트림 내에서 사용될 때만 적용된다. 구현체들까지 사용자에게 보여주거나, 요청 로깅 등등을 위해 그러한 포맷들을 사용할 필요는 없다.
+**Note:** 타임스탬프 포맷들을 위한 HTTP 요구사항들은 그것들이 프로토콜 스트림 내에서 사용될 때만 적용된다. 구현체들까지 사용자에게 보여주거나, 요청 로깅 등등을 위해 그러한 포맷들을 사용할 필요는 없다.
 
 ## 6. 메시지 추상화
 
@@ -1168,19 +1160,19 @@ HTTP/1.1([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)])과 그 이전 �
 
 ### 6.3. 헤더 필드
 
-콘텐츠보다 빨리 발신되거나 수신된 필드들(5절)은 "헤더 필드"라고 불린다(혹은 구어체 적으로 그냥 "헤더").
+콘텐츠보다 빨리 발신되거나 수신된 필드들(5절)은 "헤더 필드"라고 불린다(혹은 구어체적으로 그냥 "헤더").
 
 메시지의 "헤더 섹션"은 헤더 필드 라인들의 시퀀스로 구성된다. 각 헤더 필드는 메시지 의미를 수정하거나 확장할 수도, 발신자에 대해 기술할 수도, 콘텐츠를 정의할 수도, 혹은 추가적인 콘텍스트를 제공할 수도 있다.
 
-_Note:_ 우리는 오직 헤더 섹션에서 보내지는 것이 허용됐을 때만 명명된 필드들을 특별히 "헤더 필드"라고 부른다.
+**Note:** 우리는 오직 헤더 섹션에서 보내지는 것이 허용됐을 때만 명명된 필드들을 특별히 "헤더 필드"라고 부른다.
 
 ### 6.4. 콘텐츠
 
-HTTP 메시지는 메시지 "콘텐츠"로 종종 완전한 혹은 부분적인 표현을 전송한다: 메시지 프레이밍에 의해 묘사된대로, 헤더 섹션 이후에 보내지는 옥텟들의 스트림.
+HTTP 메시지는 메시지 "콘텐츠"로 종종 완전한 혹은 부분적인 표현을 전송한다: 메시지 프레이밍에 의해 기술된대로, 헤더 섹션 이후에 보내지는 옥텟들의 스트림.
 
 콘텐츠에 대한 이 추상적인 정의는 메시지 프레이밍으로부터 추출된 후의 데이터를 반영한다. 예를 들어, HTTP/1.1 메시지 바디([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 6절)는 chunked transfer coding -- 데이터 청크들의 시퀀스, 길이가 0인 하나의 청크, 그리고 트레일러 섹션 -- 으로 인코딩된 데이터 스트림으로 구성될 수 있는 반면 같은 메시지의 콘텐츠는 오직 transfer coding이 디코딩되고 난 후의 데이터 스트림만 포함한다; 청크 길이, 청크 프레이밍 구문, 혹은 트레일러 필드를 포함하지 않는다(6.5절).
 
-_Note:_ 일부 필드 이름들은 "Content-"라는 접두사를 가진다. 이는 비공식적인 관행이다; 이 필드들 중 일부가, 위에 정의된 것 처럼 메시지의 콘텐츠를 가리키는 반면, 이외의 것들은 선택된 표현(3.2절)으로 범위가 지정된다. 명확히 하기 위해 각 필드의 정의를 참고해라.
+**Note:** 일부 필드 이름들은 "Content-"라는 접두사를 가진다. 이는 비공식적인 관행이다; 이 필드들 중 일부가, 위에 정의된 것 처럼 메시지의 콘텐츠를 가리키는 반면, 이외의 것들은 선택된 표현(3.2절)으로 범위가 지정된다. 명확히 하기 위해 각 필드의 정의를 참고해라.
 
 #### 6.4.1. 콘텐츠 의미체계
 
@@ -1274,7 +1266,7 @@ clock을 가진 오리진 서버는(5.6.7절에 정의된대로) 반드시(MUST)
 
 clock을 가지지 않은 오리진 서버는 절대(MUST NOT) Date 헤더 필드를 생성해서는 안된다.
 
-Date 헤더 필드가 없는 응답 메시지를 받는 clock을 가진 수신자는 메시지가 캐시되거나 다운스트름으로 포워드된다면 반드시(MUST) 그것을 수신한 시간을 기록하고 상응하는 Date 헤더 필드를 메시지의 헤더 섹션에 추가해야 한다.
+Date 헤더 필드가 없는 응답 메시지를 받는 clock을 가진 수신자는 메시지가 캐시되거나 다운스트림으로 포워드된다면 반드시(MUST) 그것을 수신한 시간을 기록하고 상응하는 Date 헤더 필드를 메시지의 헤더 섹션에 추가해야 한다.
 
 clock을 가진 수신자가 유효하지 않은 Date 헤더 필드를 가진 응답을 수신한다면 아마(MAY) 그 값을 응답을 수신한 시간으로 교체할 수 있을 것이다.
 
@@ -1312,9 +1304,9 @@ URI 레퍼런스는 "타겟 URI"를 획득하기 위해 그것의 절대 형태�
 
 자세한 건 각각의 메소드 정의들을 참고하라. 이 형태들은 절대(MUST NOT) 다른 메소들에서는 사용되서는 안된다.
 
-클라이언트 요청을 수신했을 때, 서버는 그들의 로컬 설정과 수신된 연결 컨텍스에 따라 수신된 컴포넌트들로부터 타겟 URI를 재구성한다. 이 재구성은 각 메이저 프로토콜 버전에 따라 특정되어 있다. 예를 들어, [[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 3.3절은 서버가 어떻게 HTTP/1.1 요청의 타겟 URI를 결정하는지 정의한다.
+클라이언트 요청을 수신했을 때, 서버는 그들의 로컬 설정과 수신된 연결 컨텍스트에 따라 수신된 컴포넌트들로부터 타겟 URI를 재구성한다. 이 재구성은 각 메이저 프로토콜 버전에 따라 특정되어 있다. 예를 들어, [[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 3.3절은 서버가 어떻게 HTTP/1.1 요청의 타겟 URI를 결정하는지 정의한다.
 
-_Note:_ 이전의 사양들은 재구성된 타겟 URI를, "effective request URI"라는 별개의 개념으로 정의했었다.
+**Note:** 이전의 사양들은 재구성된 타겟 URI를, "effective request URI"라는 별개의 개념으로 정의했었다.
 
 ### 7.2. Host와 :authority
 
@@ -1432,7 +1424,7 @@ Max-Forwards 값은 해당 메시지가 포워드될 수 있는 남은 횟수를
 
 #### 7.6.3. Via
 
-"Via" 헤더 필드는 유저 에이전트와 서버 사이(요청들에서) 혹은 오리진서버와 클라이언트 사이(응답들에서)에 중간 프로토콜들과 수신자들이 존재한다는 것을 나타내는데, email의 "Received" 헤더 필드([[RFC5322](https://www.rfc-editor.org/info/rfc5322)]의 3.6.7절)와 비슷하다. Via는 메시지 포워딩을 추적하고, 요청 루프를 회피하고, 요청/응답 체인에 거친 발신자들의 프로토콜 수용 능력을 식별하는데 사용될 수 있다.
+"Via" 헤더 필드는 유저 에이전트와 서버 사이(요청들에서) 혹은 오리진 서버와 클라이언트 사이(응답들에서)에 중간 프로토콜들과 수신자들이 존재한다는 것을 나타내는데, email의 "Received" 헤더 필드([[RFC5322](https://www.rfc-editor.org/info/rfc5322)]의 3.6.7절)와 비슷하다. Via는 메시지 포워딩을 추적하고, 요청 루프를 회피하고, 요청/응답 체인에 거친 발신자들의 프로토콜 수용 능력을 식별하는데 사용될 수 있다.
 
      Via = #( received-protocol RWS received-by [ RWS comment ] )
 
@@ -1485,7 +1477,7 @@ HTTP-to-HTTP 프록시는 의미론적으로 유의미한 방식으로 메시지
 
 ### 7.8. Upgrade
 
-"Upgrade" 헤더 필드는 같은 연결 상에서 HTTP/1.1으로 부터 다른 어떤 프로토콜로 전환하기 위한 간단한 메커니즘을 제공하도록 의도되어 있다.
+"Upgrade" 헤더 필드는 같은 연결 상에서 HTTP/1.1로부터 다른 어떤 프로토콜로 전환하기 위한 간단한 메커니즘을 제공하도록 의도되어 있다.
 
 클라이언트는 아마(MAY) 요청의 Upgrade 헤더 필드에 프로토콜 이름들의 리스트를 포함해 보내 서버가 하나 이상의 지정된 프로토콜들로 스위칭하도록 제안할 수 있고, 그 우선순위는 앞에 나열될 수록 높으며, 서버는 최종 응답을 보내기 전에 스위칭할 수 있다. 서버는 아마(MAY) 수신한 Upgrade 헤더 필드를 해당 연결에서 기존 프로토콜을 사용하는 것을 계속하길 바라면 그냥 무시할 수 있을 것이다. Upgrade는 확실한 프로토콜 변경을 요구하는 수단이 아니다.
 
@@ -1572,10 +1564,6 @@ tupe과 subtype 토큰들은 대소문자를 구별하지 않는다.
 
 type/subtype은 아마(MAY) 세미콜론으로 구분되는 이름/값 쌍의 파라미터들(5.6.6절)로 이어질 수 있을 것이다. 파라미터의 존재 혹은 부재는 미디어 타입의 처리에 있어 의미가 있을 수도 있으며, 이는 미디어 타입 레지스트리 내의 정의에 따른다. 파라미터 값들은 대소문자를 구분 할 수도 있고 안할 수도 있는데 이는 파라미터 이름의 의미체계에 따른다.
 
-For example, the following media types are equivalent in describing HTML text data encoded in the UTF-8 character encoding scheme, but
-the first is preferred for consistency (the "charset" parameter value
-is defined as being case-insensitive in [RFC2046], Section 4.1.2):
-
 예를 들어, 다음 미디어 타입들은 UTF-8 문자 인코딩 체계로 인코딩된 HTML 텍스트 데이터를 설명하는데 있어 동등하지만, 일관성을 위해 첫번째 것이 선호된다("charset" 파라미터 값은 대소문자를 구별하지 않는 것으로 [[RFC2046](https://www.rfc-editor.org/info/rfc2046)], 4.1.2절에 정의되어 있다.):
 
      text/html;charset=utf-8
@@ -1591,7 +1579,7 @@ HTTP는 텍스트 표현의 문자 인코딩 체계([[RFC6365](https://www.rfc-e
 
 Charset 이름들은 [[RFC2978](https://www.rfc-editor.org/info/rfc2978)]의 2절에 정의된 절차들에 따라 IANA "Character Sets" 레지스트리(<https://www.iana.org/assignments/character-sets>)에 등록되어야 한다.
 
-_Note:_ 이론적으로, charset 이름들은 [[RFC2978](https://www.rfc-editor.org/info/rfc2978)]의 2.3절에 정의된 "mime-charset" ABNF 룰에 의해 정의 된다([[Err1912](https://www.rfc-editor.org/errata/eid1912)]에 정정된대로). 해당 규칙은 "token"에 포함되지 않은 두 문자("{"와 "}")를 허용하지만, 이 문서가 작성되는 시점에 등록된 어떠한 charset도 중괄호를 포함하지 않는다([[Err5433](https://www.rfc-editor.org/errata/eid5433)] 참조).
+**Note:** 이론적으로, charset 이름들은 [[RFC2978](https://www.rfc-editor.org/info/rfc2978)]의 2.3절에 정의된 "mime-charset" ABNF 룰에 의해 정의 된다([[Err1912](https://www.rfc-editor.org/errata/eid1912)]에 정정된대로). 해당 규칙은 "token"에 포함되지 않은 두 문자("{"와 "}")를 허용하지만, 이 문서가 작성되는 시점에 등록된 어떠한 charset도 중괄호를 포함하지 않는다([[Err5433](https://www.rfc-editor.org/errata/eid5433)] 참조).
 
 #### 8.3.3. Multipart Types
 
@@ -1637,7 +1625,7 @@ Transfer-Encoding([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 6.1�
 
 "deflate" 코딩은 "zlib" 데이터 포맷[[RFC1950](https://www.rfc-editor.org/info/rfc1950)]이고 Lampel-Ziv(LZ77) 압축 알고리즘과 Huffman coding의 조합을 사용하는 "deflate" 압축된 데이터스트림[[RFC1951](https://www.rfc-editor.org/info/rfc1951)]을 포함한다.
 
-_Note:_ 일부 준수하지 않는 구현체들은 "deflate" 압축된 데이터를 zlib wrapper 없이 보내기도 한다.
+**Note:** 일부 준수하지 않는 구현체들은 "deflate" 압축된 데이터를 zlib wrapper 없이 보내기도 한다.
 
 ##### 8.4.1.3. Gzip Coding
 
@@ -1660,9 +1648,6 @@ Content-Language: da
      Content-Language: mi, en
 
 그러나, 그저 표현 내에 여러 언어들이 나타나는 것이 다국어를 구사하는 청중을 대상으로 함을 의미하지는 않는다. "A First Lesson in Latin"과 같은, 분명히 영어를 구사하는 청중들이 사용하도록 의도된, 초급 언어 입문서가 그 예시가 될 것이다. 이 경우, Content-Language는 적절히 "en"만을 포함해야 한다.
-
-Content-Language MAY be applied to any media type -- it is not
-limited to textual documents.
 
 Content-Language는 아마(MAY) 어떠한 미디어 타입에 대해서도 적용될 수 있을 것이다 -- 텍스트 문서들로만 제한되어 있지 않다.
 
@@ -1718,9 +1703,9 @@ HTTP/1.1에서 Content-Length는 메시지 경계 결정을 위해 사용되기 
 
 Content-Location 값은 타겟 URI에 대한 대체가 아니다(7.1절). 표현 메타데이터다. [[RFC2557](https://www.rfc-editor.org/info/rfc2557)]의 4절에 MIME body parts를 위해 정의된 같은 이름의 헤더 필드와 같은 구문과 의미체계를 가지고 있다. 그러나, HTTP 메시지에서 나타나는 그 모습은 HTTP 수신자들에 대해 약간 특별한 암시들을 갖는다.
 
-만약 Content-Length가 2xx(Successful) 응답 메시지에 포함되고 그 값이(절대 형태로 전환된 후) 타겟 URI와 같은 URI를 참조한다면, 수신자는 아마(MAY) 그 콘텐츠가 메시지 발생 날짜에 의해 나타내진 시점의 해당 리소스에 대한 현재 표현이라고 간주할 수 있을 것이다. GET(9.3.1절) 혹은 HEAD(9.3.2절) 요청에 대해서는, 이것이 Content-Location이 서버에 의해 제공되지 않을 때의 기본 의미체계와 같다. PUT(9.3.4절)이나 POST(9.3.3절) 같은 상태-변화 요청에 대해서는, 서버의 응답이 해당 리소스의 새로운 표현을 포함한다는 것을 암시하여, 오직 행동에 대해 보고하기만 하는 표현들로부터 그것을 구분한다("It worked!" 같은). 이는 상태를 작성하는 애플리케이션들이 추가적인 GET 요청에 대한 필요 없이 그들의 로컬 카피들을 업데이트하도록 한다.
+만약 Content-Location이 2xx(Successful) 응답 메시지에 포함되고 그 값이(절대 형태로 전환된 후) 타겟 URI와 같은 URI를 참조한다면, 수신자는 아마(MAY) 그 콘텐츠가 메시지 발생 날짜에 의해 나타내진 시점의 해당 리소스에 대한 현재 표현이라고 간주할 수 있을 것이다. GET(9.3.1절) 혹은 HEAD(9.3.2절) 요청에 대해서는, 이것이 Content-Location이 서버에 의해 제공되지 않을 때의 기본 의미체계와 같다. PUT(9.3.4절)이나 POST(9.3.3절) 같은 상태-변화 요청에 대해서는, 서버의 응답이 해당 리소스의 새로운 표현을 포함한다는 것을 암시하여, 오직 행동에 대해 보고하기만 하는 표현들로부터 그것을 구분한다("It worked!" 같은). 이는 상태를 작성하는 애플리케이션들이 추가적인 GET 요청에 대한 필요 없이 그들의 로컬 카피들을 업데이트하도록 한다.
 
-만약 Content-Length가 2xx(Successful) 응답 메시지에 포함되며 그 필드 값이 타겟 URI와 다른 URI를 참조한다면, 오리진 서버는 해당 URI가 동봉된 표현에 해당하는 다른 리소스를 위한 식별자라고 주장하는 것이다. 그러한 주장은 오직 두 식별자들 모두 HTTP를 통해 프로그램적으로 결정될 수 없는, 같은 리소스 소유자를 공유할 때만 신뢰할 수 있다.
+만약 Content-Location이 2xx(Successful) 응답 메시지에 포함되며 그 필드 값이 타겟 URI와 다른 URI를 참조한다면, 오리진 서버는 해당 URI가 동봉된 표현에 해당하는 다른 리소스를 위한 식별자라고 주장하는 것이다. 그러한 주장은 오직 두 식별자들 모두 HTTP를 통해 프로그램적으로 결정될 수 없는, 같은 리소스 소유자를 공유할 때만 신뢰할 수 있다.
 
 - GET이나 HEAD 요청에 대해, 이는 타겟 URI가 콘텐츠 협상 대상이 되는 리소스를 가리키고 있고 Content-Location 필드 값은 선택된 표현에 대해 더 구체적인 식별자라는 것을 나타낸다.
 
@@ -1734,206 +1719,87 @@ Content-Location 값은 타겟 URI에 대한 대체가 아니다(7.1절). 표현
 
 예를 들어, 클라이언트가 협상된 리소스에 PUT 요청을 하고 오리진 서버가 해당 PUT을 수용한다면(리디렉션 없이), 해당 리소스의 새로운 상태는 해당 PUT에서 공급된 햔 표현과 일관적일 것으로 기대된다; Content-Location은 협상된 표현들 중 오직 하나만 업데이트 하기 위한 콘텐츠 역선택 식별자의 형태로 사용될 수 없댜. 만약 유저 에이전트가 후자의 의미체계를 원했다면, PUT을 해당 Content-Location URI에 직접 적용했을 것이다.
 
-### 8.8. Validator 필드들
+### 8.8. 검증자 필드들
 
-리소스 메타데이터는 조건부 요청을 만들기 위해 전제 조건(13.12절) 내에서 사용될 수 있다면 "validator"라고 불린다. Validator 필드들은 선택된 표현에 대한 현재 validator를 전달한다(3.2절).
+리소스 메타데이터는 조건부 요청을 만들기 위해 전제 조건(13.12절) 내에서 사용될 수 있다면 "검증자"라고 불린다. 검증자 필드들은 선택된 표현에 대한 현재 검증자를 전달한다(3.2절).
 
-안전한 요청들에 대한 응답들에서, validator 필드들은 오리진 서버가 응답을 핸들링하는 동안 선택한 표현을 설명한다. 메소드와 상태 코드 의미 체계에 따라, 주어진 응답에 대해 선택된 표현이 필연적으로 응답 콘텐츠로 동봉된 표현과 동일하진 않으니, 이를 명심하라.
+안전한 요청들에 대한 응답들에서, 검증자 필드들은 오리진 서버가 응답을 핸들링하는 동안 선택한 표현을 설명한다. 메소드와 상태 코드 의미 체계에 따라, 주어진 응답에 대해 선택된 표현이 필연적으로 응답 콘텐츠로 동봉된 표현과 동일하진 않으니, 이를 명심하라.
 
-상태-변화 요청에 대한 성공적인 응답에서, validator 필드들은 요청을 처리한 결과로서 이전에 선택된 표현을 대체한 새로운 표현을 설명한다.
+상태-변화 요청에 대한 성공적인 응답에서, 검증자 필드들은 요청을 처리한 결과로서 이전에 선택된 표현을 대체한 새로운 표현을 설명한다.
 
-예를 들어, 201(Created) 응답의 ETag 필드는 새로이 생성된 리소스의 표현의 엔티티 태그를 전달하여, 그 엔티티 태그가 나중의 조건부 요청들에서 "lost update" 문제를 예방하기 위한 validator로 쓰이도록 한다.
+예를 들어, 201(Created) 응답의 ETag 필드는 새로이 생성된 리소스의 표현의 엔티티 태그를 전달하여, 그 엔티티 태그가 나중의 조건부 요청들에서 "lost update" 문제를 예방하기 위한 검증자로 쓰이도록 한다.
 
 이 사양서는 리소스 상태를 관측하고 전제 조건을 테스트하는데 흔히 사용되는 두 형태의 메타데이터를 정의 한다: 수정 날짜들(8.8.2절)과 불투명 엔티티 태그들(8.8.3절). 리소스 상태를 반영하는 추가적인 메타데이터는 HTTP의 다양한 확장들에 의해 정의되어 있으며, Web Distributed Authoring and Versioning[[WEBDAV](https://www.rfc-editor.org/info/rfc4918)] 같은 것이 있고, 이 사양의 범위를 넘어선다.
 
-#### 8.8.1. Weak versus Strong
+#### 8.8.1. 약한 것 대 강한 것
 
-Validators come in two flavors: strong or weak. Weak validators are
-easy to generate but are far less useful for comparisons. Strong
-validators are ideal for comparisons but can be very difficult (and
-occasionally impossible) to generate efficiently. Rather than impose
-that all forms of resource adhere to the same strength of validator,
-HTTP exposes the type of validator in use and imposes restrictions on
-when weak validators can be used as preconditions.
+검증자들은 두 가지 형태로 나타난다: 강하거나 약하거나. 약한 검증자들은 생성하기 쉽지만 비교에 있어서 훨씬 덜 유용하다. 강한 검증자들은 비교에 이상적이지만 효율적으로 생성하기 매우 어려울 수 있다(그리고 가끔은 불가능하다). 모든 형태의 리소스가 같은 강도의 검증자를 고수하도록 강제하기 보다, HTTP는 사용되는 검증자의 타입을 노출하고 약한 검증자들이 전제 조건으로 사용될 수 있을 때에 대한 제한을 부과한다.
 
-A "strong validator" is representation metadata that changes value
-whenever a change occurs to the representation data that would be
-observable in the content of a 200 (OK) response to GET.
+"강한 검증자"는 GET에 대한 200(OK) 응답의 콘텐츠에서 관측될 수 있는 표현 데이터에 변경이 발생할 때마다 그 값이 변경되는 표현 메타데이터다.
 
-A strong validator might change for reasons other than a change to
-the representation data, such as when a semantically significant part
-of the representation metadata is changed (e.g., Content-Type), but
-it is in the best interests of the origin server to only change the
-value when it is necessary to invalidate the stored responses held by
-remote caches and authoring tools.
+강한 검증자는 표현 데이터의 변경 외의 이유들에 의해서도 변경될 수 있는데, 표현 메타데이터의 의미적으로 중요한 일부분이 변경될 때(예를 들어, Content-Type)가 그러하지만, 오리진 서버에게는 오직 원격 캐시들과 authoring tool들에 의해 저장된 응답들을 무효화시켜야 할 때만 그 값을 변경하는 것이 최선이다.
 
-Cache entries might persist for arbitrarily long periods, regardless
-of expiration times. Thus, a cache might attempt to validate an
-entry using a validator that it obtained in the distant past. A
-strong validator is unique across all versions of all representations
-associated with a particular resource over time. However, there is
-no implication of uniqueness across representations of different
-resources (i.e., the same strong validator might be in use for
-representations of multiple resources at the same time and does not
-imply that those representations are equivalent).
+캐시 엔트리들은 임의적으로 긴 기간동안 유지될 수 있을 것이며, 이는 유효 기간과 관련 없을 수 있다. 이리하여, 캐시는 먼 과거에 얻은 검증자를 사용해 엔트리를 검증하려 할 수 있을 것이다. 강한 검증자는 특정 리소스와 연관된 시간이 지남에 따른 모든 표현들의 모든 버전들에 걸쳐 유일하다. 그러나, 다른 리소스들의 표현들에 걸친 유일함에 관한 암시는 존재하지 않는다(즉, 같은 강한 검증자는 동시에 여러 리소스들의 표현들에 사용되면서 그 표현들이 동등하다는 것을 암시하지는 않을 수 있다).
 
-There are a variety of strong validators used in practice. The best
-are based on strict revision control, wherein each change to a
-representation always results in a unique node name and revision
-identifier being assigned before the representation is made
-accessible to GET. A collision-resistant hash function applied to
-the representation data is also sufficient if the data is available
-prior to the response header fields being sent and the digest does
-not need to be recalculated every time a validation request is
-received. However, if a resource has distinct representations that
-differ only in their metadata, such as might occur with content
-negotiation over media types that happen to share the same data
-format, then the origin server needs to incorporate additional
-information in the validator to distinguish those representations.
+실무적으로 사용되는 다양한 강한 검증자들이 존재한다. 그중 최고는 엄격한 개정 통제에 기반하며, 표현에 대한 각 변경은 항상 표현이 GET에 대해 접근가능해지기 전에 할당되는 유일한 노드 이름과 개정 식별자로 나타나게 된다. 표현 데이터에 적용되는 충돌-저항 해시 함수는 또한 데이터가 응답 헤더 필드들이 보내지기 전에 가용하고 digest가 검증 요청이 수신될 때마다 매번 다시 계산되지 않아도 된다면 충분하다. 그러나, 리소스가 오직 그 메타데이터만 다른 별도의 표현들을 가지고 있다면, 그런 경우는 같은 데이터 포맷을 공유하기 위해 발생하는 미디어 타입들에 관한 콘텐츠 협상에서 발생할 수 있는데, 그러면 오리진 서버는 그러한 표현들을 구분하기 위해 검증자에 추가적인 정보를 포함할 필요가 있다.
 
-In contrast, a "weak validator" is representation metadata that might
-not change for every change to the representation data. This
-weakness might be due to limitations in how the value is calculated
-(e.g., clock resolution), an inability to ensure uniqueness for all
-possible representations of the resource, or a desire of the resource
-owner to group representations by some self-determined set of
-equivalency rather than unique sequences of data.
+반면에, "약한 검증자"는 표현 데이터에 대한 모든 변경마다 변하지는 않을 수 있는 표현 메타데이터다. 이러한 약함은 값이 계산되는 방식의 제한(예를 들어, 시계 정확도), 리소스의 모든 가능한 표현들에 대해 유일함을 보장하지 못하는 것, 혹은 데이터의 유일한 시퀀스들 보다 어떤 자기-결정된 등가 집합에 의해 표현들을 그룹화하길 원하는 리소스 오너의 바람에 기인할 수 있다.
 
-An origin server SHOULD change a weak entity tag whenever it
-considers prior representations to be unacceptable as a substitute
-for the current representation. In other words, a weak entity tag
-ought to change whenever the origin server wants caches to invalidate
-old responses.
+오리진 서버는 언제든 이전 표현들이 현재 표현을 위한 대체로서 받아들일 수 없을 때는 웬만하면(SHOULD) 약한 엔티티 태그를 변경해야 한다. 다시 말해, 약한 엔티티 태그는 오리진 서버가 캐시들이 오래된 응답들을 무효화하길 원할 때 마다 변경되어야 한다.
 
-For example, the representation of a weather report that changes in
-content every second, based on dynamic measurements, might be grouped
-into sets of equivalent representations (from the origin server's
-perspective) with the same weak validator in order to allow cached
-representations to be valid for a reasonable period of time (perhaps
-adjusted dynamically based on server load or weather quality).
-Likewise, a representation's modification time, if defined with only
-one-second resolution, might be a weak validator if it is possible
-for the representation to be modified twice during a single second
-and retrieved between those modifications.
+예를 들어, 동적 측정에 기반한, 매 초마다 콘텐츠가 변경되는 날씨 보고서의 표현은, 캐시된 표현들이 합리적인 기간(아마 서버 부하나 날씨 상태에 따라 동적으로 조정될 것)동안 유효할 수 있도록 같은 약한 검증자를 가진 동등한 표현들(오리진 서버의 관점에서)의 집합들로 그룹화될 수 있을 것이다. 마찬가지로, 한 표현의 수정 시각은, 오직 1초의 정확도로만 정의된 경우, 만약 표현이 1초 동안 두 번 수정되고 그 사이에 획득될 수 있다면 약한 검증자가 될 수 있다.
 
-Likewise, a validator is weak if it is shared by two or more
-representations of a given resource at the same time, unless those
-representations have identical representation data. For example, if
-the origin server sends the same validator for a representation with
-a gzip content coding applied as it does for a representation with no
-content coding, then that validator is weak. However, two
-simultaneous representations might share the same strong validator if
-they differ only in the representation metadata, such as when two
-different media types are available for the same representation data.
+마찬가지로, 동시에 주어진 리소스의 두 개 이상의 표현들에 의해 공유된다면 검증자는 약하다고 할 수 있으며, 그 표현들이 동일한 표현 데이터를 가지고 있다면 그렇지 않다. 예를 들어, 오리진 서버가 콘텐츠 코딩이 없는 표현 처럼 적용된 gzip 콘텐츠 코딩의 표현을 위해 같은 검증자를 보낸다면, 검증자는 약하다 할 수 있다. 그러나, 두 동시 표현들은, 다른 두 미디어 타입들이 같은 표현 데이터에 대해 가용한 것 처럼 오직 그 표현 메타데이터만 다르다면 같은 강한 검증자를 공유할 수 있다.
 
-Strong validators are usable for all conditional requests, including
-cache validation, partial content ranges, and "lost update"
-avoidance. Weak validators are only usable when the client does not
-require exact equality with previously obtained representation data,
-such as when validating a cache entry or limiting a web traversal to
-recent changes.
+강한 검증자들은, 캐시 검증, 부분 콘텐츠 범위, 그리고 "lost update" 회피를 포함하여, 모든 조건부 요청들에 대해 사용 가능하다. 약한 검증자들은 오직 클라이언트가 이전에 얻은 표현 데이터와 정확히 동일한 것을 요구하지 않을 때만 사용 가능하며, 캐시 엔트리를 검증하거나 최근 변경에 대한 웹 탐색을 제한할 때가 그러하다.
 
 #### 8.8.2. Last-Modified
 
-The "Last-Modified" header field in a response provides a timestamp
-indicating the date and time at which the origin server believes the
-selected representation was last modified, as determined at the
-conclusion of handling the request.
+응답의 "Last-Modified" 헤더 필드는 요청 핸들링의 결과로서 결정된대로, 오리진 서버가 선택된 표현이 마지막으로 수정됐다고 믿는 날짜와 시간을 나타내는 타임스탬프를 제공한다.
 
      Last-Modified = HTTP-date
 
-An example of its use is
+그 사용 예는
 
 Last-Modified: Tue, 15 Nov 1994 12:45:26 GMT
 
-##### 8.8.2.1. Generation
+##### 8.8.2.1. 생성
 
-An origin server SHOULD send Last-Modified for any selected
-representation for which a last modification date can be reasonably
-and consistently determined, since its use in conditional requests
-and evaluating cache freshness ([CACHING]) can substantially reduce
-unnecessary transfers and significantly improve service availability
-and scalability.
+오리진 서버는 웬만하면(SHOULD) 어느 선택된 표현이든 마지막 수정 날짜가 합리적이고 일관적이게 결정될 수 있다면 Last-Modified를 보내야 하며, 이는 조건부 요청들과 캐시 신선도 평가([[CACHING](https://www.rfc-editor.org/info/rfc9111)])에서 사용되면 불필요한 전송들을 대폭 줄이고 서비스 가용성과 확장성을 의미있는 수준으로 향상시킬 수 있기 때문이다.
 
-A representation is typically the sum of many parts behind the
-resource interface. The last-modified time would usually be the most
-recent time that any of those parts were changed. How that value is
-determined for any given resource is an implementation detail beyond
-the scope of this specification.
+전형적으로 표현은 리소스 인터페이스 뒤 많은 파트들의 합체다. 마지막 수정 시간은 보통 그 파트들 중 어느 것이든 변경된 가장 최근의 시간일 것이다. 어느 주어진 리소스에서든 그 값이 결정되는 방식은 이 사양서의 범위를 넘어서는 구현 세부사항이다.
 
-An origin server SHOULD obtain the Last-Modified value of the
-representation as close as possible to the time that it generates the
-Date field value for its response. This allows a recipient to make
-an accurate assessment of the representation's modification time,
-especially if the representation changes near the time that the
-response is generated.
+오리진 서버는 웬만하면(SHOULD) 표현의 Last-Modified 값을 가능한 응답의 Date 필드 값을 생성할 때와 최대한 가까운 시점에 획득해야 한다. 이는 수신자가 표현의 수정 시간에 대해 정확한 평가를 내릴 수 있도록 하며, 특히 표현이 응답이 생성되는 것과 가까운 시점에 변경될 때 그러하다.
 
-An origin server with a clock (as defined in Section 5.6.7) MUST NOT
-generate a Last-Modified date that is later than the server's time of
-message origination (Date, Section 6.6.1). If the last modification
-time is derived from implementation-specific metadata that evaluates
-to some time in the future, according to the origin server's clock,
-then the origin server MUST replace that value with the message
-origination date. This prevents a future modification date from
-having an adverse impact on cache validation.
+클락을 가진 오리진 서버는(5.6.7절에 정의된대로) 절대(MUST NOT) 서버의 메시지 생성 시간보다 늦은 Last-Modified 날짜를 생성해서는 안된다(Date, 6.6.1절). 만약 마지막 수정 시간이 미래의 어느 시점으로 평가되는 구현별 메타데이터에서 파생된다면, 오리진 서버의 클락을 따라, 오리진 서버는 반드시(MUST) 해당 값을 메시지 생성 날짜로 대체해야 한다. 이는 미래 수정 날짜가 캐시 검증에 부정적인 영향을 미치는 것을 방지한다.
 
-An origin server without a clock MUST NOT generate a Last-Modified
-date for a response unless that date value was assigned to the
-resource by some other system (presumably one with a clock).
+클락을 가지지 않은 오리진 서버는 날짜 값이 다른 어떤 시스템(아마 클락을 가진)에 의해 해당 리소스에 따로 할당된게 아니라면 절대(MUST NOT) 응답에 Last-Modified 날짜를 생성해서는 안된다.
 
-##### 8.8.2.2. Comparison
+##### 8.8.2.2. 비교
 
-A Last-Modified time, when used as a validator in a request, is
-implicitly weak unless it is possible to deduce that it is strong,
-using the following rules:
+Last-Modified 시간이, 요청에서 검증자로 사용될 때, 다음 규칙들을 사용해, 강한 것이라고 추측할 수 있는게 아니라면 암시적으로 약한 검증자가 된다.
 
-- The validator is being compared by an origin server to the actual
-  current validator for the representation and,
+- 검증자가 오리진 서버에 의해 해당 표현을 위한 현재의 실제 검증자와 비교되고,
 
-- That origin server reliably knows that the associated
-  representation did not change twice during the second covered by
-  the presented validator;
+- 해당 오리진 서버는 해당 연관된 표현이 제시된 검증자에 의해 두번째로 다뤄지는 동안 두번 변경되지 않았음을 확실히 알고 있다;
 
-or
+혹은
 
-- The validator is about to be used by a client in an
-  If-Modified-Since, If-Unmodified-Since, or If-Range header field,
-  because the client has a cache entry for the associated
-  representation, and
+- 검증자가 곧 클라이언트에 의해 If-Modified-Since, If-Unmodified-Since, 혹은 If-Range 헤더 필드에서 사용될 것이고, 그 이유는 클라이언트가 연관된 표현에 대한 캐시 엔트리를 가지고 있기 때문이며, 그리고
 
-- That cache entry includes a Date value which is at least one
-  second after the Last-Modified value and the client has reason to
-  believe that they were generated by the same clock or that there
-  is enough difference between the Last-Modified and Date values to
-  make clock synchronization issues unlikely;
+- 해당 캐시 엔트리가 Last-Modified 보다 최소 1초 이후의 Date 값을 포함하고 해당 클라이언트는 그것들이 같은 클락에 의해 생성되었거나 Last-Modified와 Date 값들 사이에 클락 동기화 이슈들이 일어나지 않을만큼의 충분한 차이가 있다고 믿을 이유를 가지고 있다;
 
-or
+혹은
 
-- The validator is being compared by an intermediate cache to the
-  validator stored in its cache entry for the representation, and
+- 검증자가 중간 캐시에 의해 해당 표현을 위한 캐시 엔트리에 저장된 검증자와 비교되며, 그리고
 
-- That cache entry includes a Date value which is at least one
-  second after the Last-Modified value and the cache has reason to
-  believe that they were generated by the same clock or that there
-  is enough difference between the Last-Modified and Date values to
-  make clock synchronization issues unlikely.
+- 해당 캐시 엔트리는 Last-Modified 값 보다 최소 1초 이후의 Date 값을 포함하고 해당 캐시가 그것들이 같은 클락에 의해 생성되었거나 Last-Modified와 Date 값들 사이에 클락 동기화 이슈들이 일어나지 않을만큼의 충분한 차이가 있다고 믿을 이유를 가지고 있다.
 
-This method relies on the fact that if two different responses were
-sent by the origin server during the same second, but both had the
-same Last-Modified time, then at least one of those responses would
-have a Date value equal to its Last-Modified time.
+이 방법은 만약 다른 두 응답들이 같은 초(second)에 오리진 서버에 의해 보내졌지만, 둘 다 같은 Last-Modified 시간을 가졌다면, 적어도 그 응답들 중 하나는 그 Last-Modified 시간과 일치하는 Date 값을 가졌을 것이라는 사실에 의존한다.
 
 #### 8.8.3. ETag
 
-The "ETag" field in a response provides the current entity tag for
-the selected representation, as determined at the conclusion of
-handling the request. An entity tag is an opaque validator for
-differentiating between multiple representations of the same
-resource, regardless of whether those multiple representations are
-due to resource state changes over time, content negotiation
-resulting in multiple representations being valid at the same time,
-or both. An entity tag consists of an opaque quoted string, possibly
-prefixed by a weakness indicator.
+응답의 "ETag" 필드는 요청을 핸들링한 결과에서 결정된대로, 선택된 표현에 대한 현재 엔티티 태그를 제공한다. 엔티티 태그는 같은 리소스의 여러 표현들을 구별하기 위한 불투명한 검증자이며, 이는 그 여러 표현들이 시간에 따른 리소스 상태 변화들에 의한 것인지, 동시에 유효하게 되는 여러 표현들로 나타나는 콘텐츠 협상에 의한 것인지, 혹은 둘 다에 의한 것인지는 관계 없다. 엔티티 태그는 약함을 나타내는 접두사로 시작할 수 있는, 불투명한 인용 문자열로 구성된다.
 
      ETag       = entity-tag
 
@@ -1941,444 +1807,206 @@ prefixed by a weakness indicator.
      weak       = %s"W/"
      opaque-tag = DQUOTE *etagc DQUOTE
      etagc      = %x21 / %x23-7E / obs-text
-                ; VCHAR except double quotes, plus obs-text
+                ; 쌍따옴표를 제외한 VCHAR, 더하기 obs-text
 
-      |  *Note:* Previously, opaque-tag was defined to be a quoted-
-      |  string ([RFC2616], Section 3.11); thus, some recipients might
-      |  perform backslash unescaping.  Servers therefore ought to avoid
-      |  backslash characters in entity tags.
+**Note:** 이전에, opaque-tag는 quoted-string으로 정의됐었다([[RFC2616](https://www.rfc-editor.org/info/rfc2616), 3.11절]); 그러므로, 일부 수신자들은 백슬래시 언이스케이핑을 수행할 수 있을 것이다. 서버는 따라서 엔티티 태그들에서 백슬래시 문자들을 피해야 한다.
 
-An entity tag can be more reliable for validation than a modification
-date in situations where it is inconvenient to store modification
-dates, where the one-second resolution of HTTP-date values is not
-sufficient, or where modification dates are not consistently
-maintained.
+엔티티 태그는 수정 날짜들을 저장하기 불편하거나, HTTP-date 값들의 1초 수준 정확도가 충분치 않거나, 혹은 수정 날짜들이 일관적으로 유지되지 않는 상황들에서 수정 날짜보다 검증에 있어 더 신뢰성 있을 수 있다.
 
-Examples:
+예시:
 
 ETag: "xyzzy"
 ETag: W/"xyzzy"
 ETag: ""
 
-An entity tag can be either a weak or strong validator, with strong
-being the default. If an origin server provides an entity tag for a
-representation and the generation of that entity tag does not satisfy
-all of the characteristics of a strong validator (Section 8.8.1),
-then the origin server MUST mark the entity tag as weak by prefixing
-its opaque value with "W/" (case-sensitive).
+엔티티 태그는 약하거나 강한 검증자 모두 될 수 있으며, 강한 상태가 기본이다. 만약 오리진 서버가 표현을 위한 엔티티 태그를 제공하고 그 엔티티 태그의 생성이 강한 검증자의 모든 특성들을 만족시키지 못한다면(8.8.1절), 오리진 서버는 반드시(MUST) 해당 엔티티 태그의 불투명 값에 "W/"(대소문자 구별) 접두사를 붙임으로써 약한 것으로 표시해야 한다.
 
-A sender MAY send the ETag field in a trailer section (see
-Section 6.5). However, since trailers are often ignored, it is
-preferable to send ETag as a header field unless the entity tag is
-generated while sending the content.
+발신자는 아마(MAY) 트레일러 섹션에 ETag 필드를 보낼 수 있을 것이다(6.5절 참조). 그러나, 트레일러들은 종종 무시되기 때문에, 해당 엔티티 태그가 콘텐츠를 보내는 동안 생성된게 아니라면 헤더 필드에 ETag를 보내는 것을 선호할 수 있다.
 
-##### 8.8.3.1. Generation
+##### 8.8.3.1. 생성
 
-The principle behind entity tags is that only the service author
-knows the implementation of a resource well enough to select the most
-accurate and efficient validation mechanism for that resource, and
-that any such mechanism can be mapped to a simple sequence of octets
-for easy comparison. Since the value is opaque, there is no need for
-the client to be aware of how each entity tag is constructed.
+엔티티 태그들 뒤에 있는 원리는 오직 서비스 작성자만이 해당 리소스를 위한 가장 정확하고 효율적인 검증 메커니즘을 선택할 수 있을 정도로 충분히 리소스의 구현을 알고 있으며, 그러한 어떤 메커니즘이든 쉬운 비교를 위해 간단한 옥텟들의 시퀀스로 매핑될 수 있다는 것이다. 값이 불투명하기 때문에, 클라이언트는 각 엔티티 태그가 어떻게 생성되는지 알 필요가 없다.
 
-For example, a resource that has implementation-specific versioning
-applied to all changes might use an internal revision number, perhaps
-combined with a variance identifier for content negotiation, to
-accurately differentiate between representations. Other
-implementations might use a collision-resistant hash of
-representation content, a combination of various file attributes, or
-a modification timestamp that has sub-second resolution.
+예를 들어, 모든 변경들에 적용된 구현별 버저닝을 가진 리소스는, 아마 콘텐츠 협상을 위한 변경 식별자와 조합되어, 표현들을 정확히 구별하기 위해 내부적인 개정 번호를 사용할 수 있을 것이다. 다른 구현체들은 표현 콘텐츠의 충돌-저항 해시, 다양한 파일 속성들의 조합, 혹은 sub-second 정확도를 가진 타임스탬프 수정을 사용할 수도 있다.
 
-An origin server SHOULD send an ETag for any selected representation
-for which detection of changes can be reasonably and consistently
-determined, since the entity tag's use in conditional requests and
-evaluating cache freshness ([CACHING]) can substantially reduce
-unnecessary transfers and significantly improve service availability,
-scalability, and reliability.
+오리진 서버는 웬만하면(SHOULD) 변경의 감지가 합리적이고 일관적으로 결정될 수 있다면 어떤 선택된 표현이든 ETag를 보내야 하며, 이는 조건부 요청들과 캐시 신선도 평가([[CACHING](https://www.rfc-editor.org/info/rfc9111)])에서의 엔티티 태그 사용이 불필요한 전송들을 대폭 줄이고 서비스의 가용성, 확장성, 그리고 신뢰성을 의미있는 수준으로 향상시킬 수 있기 때문이다.
 
-##### 8.8.3.2. Comparison
+##### 8.8.3.2. 비교
 
-There are two entity tag comparison functions, depending on whether
-or not the comparison context allows the use of weak validators:
+비교 컨텐스트에서 약한 검증자들의 사용이 허용되는지에 따라, 두 가지 엔티티 태그 비교 함수들이 존재한다.
 
-"Strong comparison": two entity tags are equivalent if both are not
-weak and their opaque-tags match character-by-character.
+"강한 비교": 두 엔티티 태그들은 만약 둘 다 약하지 않고 그것들의 불투명-태그들이 문자마다 매치되면 동등하다.
 
-"Weak comparison": two entity tags are equivalent if their opaque-
-tags match character-by-character, regardless of either or both
-being tagged as "weak".
+"약한 비교": 두 엔티티 태그들은 그것들의 불투명-태그들이 문자마다 매치되면, 그것들 중 하나 혹은 둘 다 "약한 것"으로 태그됐는지와는 관계 없이 동등하다.
 
-The example below shows the results for a set of entity tag pairs and
-both the weak and strong comparison function results:
+아래의 예시는 엔티티 태그 쌍들의 집합에 대한 약한 그리고 강한 비교 함수 둘 다의 결과들을 보여준다:
 
-+========+========+===================+=================+
+<center>
+
 | ETag 1 | ETag 2 | Strong Comparison | Weak Comparison |
-+========+========+===================+=================+
-| W/"1" | W/"1" | no match | match |
-+--------+--------+-------------------+-----------------+
-| W/"1" | W/"2" | no match | no match |
-+--------+--------+-------------------+-----------------+
-| W/"1" | "1" | no match | match |
-+--------+--------+-------------------+-----------------+
-| "1" | "1" | match | match |
-+--------+--------+-------------------+-----------------+
+| ------ | ------ | ----------------- | --------------- |
+| W/"1"  | W/"1"  | 불일치            | 일치            |
+| W/"1"  | W/"2"  | 불일치            | 불일치          |
+| W/"1"  | "1"    | 불일치            | 일치            |
+| "1"    | "1"    | 일치              | 일치            |
 
-                            Table 3
+Table 3
 
-##### 8.8.3.3. Example: Entity Tags Varying on Content-Negotiated Resources
+</center>
 
-Consider a resource that is subject to content negotiation
-(Section 12), and where the representations sent in response to a GET
-request vary based on the Accept-Encoding request header field
-(Section 12.5.3):
+##### 8.8.3.3. 예시: 콘텐츠-협상된 리소스들에서의 다양한 엔티티 태그들
+
+콘텐츠 협상의 대상이 되는 한 리소스를 고려해보자(12절), 그리고 GET 요청에 대한 응답에서 보내진 표현들이 Accept-Encoding 요청 헤더 필드에 기반하여 다양하게 있다고 하자(12.5.3절):
 
 > > Request:
 
-GET /index HTTP/1.1
-Host: www.example.com
-Accept-Encoding: gzip
+     GET /index HTTP/1.1
+     Host: www.example.com
+     Accept-Encoding: gzip
 
-In this case, the response might or might not use the gzip content
-coding. If it does not, the response might look like:
-
-> > Response:
-
-HTTP/1.1 200 OK
-Date: Fri, 26 Mar 2010 00:05:00 GMT
-ETag: "123-a"
-Content-Length: 70
-Vary: Accept-Encoding
-Content-Type: text/plain
-
-Hello World!
-Hello World!
-Hello World!
-Hello World!
-Hello World!
-
-An alternative representation that does use gzip content coding would
-be:
+이 경우에, 응답은 gzip 콘텐츠 코딩을 사용할 수도 안할 수도 있다. 만약 사용하지 않으면, 응답은 다음과 같이 보일 수 있을 것이다:
 
 > > Response:
 
-HTTP/1.1 200 OK
-Date: Fri, 26 Mar 2010 00:05:00 GMT
-ETag: "123-b"
-Content-Length: 43
-Vary: Accept-Encoding
-Content-Type: text/plain
-Content-Encoding: gzip
+     HTTP/1.1 200 OK
+     Date: Fri, 26 Mar 2010 00:05:00 GMT
+     ETag: "123-a"
+     Content-Length: 70
+     Vary: Accept-Encoding
+     Content-Type: text/plain
 
-...binary data...
+     Hello World!
+     Hello World!
+     Hello World!
+     Hello World!
+     Hello World!
 
-      |  *Note:* Content codings are a property of the representation
-      |  data, so a strong entity tag for a content-encoded
-      |  representation has to be distinct from the entity tag of an
-      |  unencoded representation to prevent potential conflicts during
-      |  cache updates and range requests.  In contrast, transfer
-      |  codings (Section 7 of [HTTP/1.1]) apply only during message
-      |  transfer and do not result in distinct entity tags.
+gzip 콘텐츠 코딩을 사용한 다른 표현은 다음과 같을 것이다:
 
-## 9. Methods
+> > Response:
 
-### 9.1. Overview
+     HTTP/1.1 200 OK
+     Date: Fri, 26 Mar 2010 00:05:00 GMT
+     ETag: "123-b"
+     Content-Length: 43
+     Vary: Accept-Encoding
+     Content-Type: text/plain
+     Content-Encoding: gzip
 
-The request method token is the primary source of request semantics;
-it indicates the purpose for which the client has made this request
-and what is expected by the client as a successful result.
+     ...binary data...
 
-The request method's semantics might be further specialized by the
-semantics of some header fields when present in a request if those
-additional semantics do not conflict with the method. For example, a
-client can send conditional request header fields (Section 13.1) to
-make the requested action conditional on the current state of the
-target resource.
+**Note:** 콘텐츠 코딩들은 표현 데이터의 속성이므로, 콘텐츠-인코딩된 표현을 위한 강한 엔티티 태그는 캐시 업데이트와 범위 요청들에서의 잠재적인 충돌들을 방지하기 위해 인코딩되지 않은 표현의 엔티티 태그로부터 구분되어야 한다. 반대로, 전송 코딩들([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 7절)은 오직 메시지 전송 동안에만 적용되며 구분되는 엔티티 태그들로 나타나지는 않는다.
 
-HTTP is designed to be usable as an interface to distributed object
-systems. The request method invokes an action to be applied to a
-target resource in much the same way that a remote method invocation
-can be sent to an identified object.
+## 9. 메소드들
+
+### 9.1. 개요
+
+요청 메소드 토큰은 요청 의미체계에서 중요한 소스다; 그것은 클라이언트가 해당 요청을 만든 목적과 클라이언트가 성공적인 결과로서 기대하는 것을 나타낸다.
+
+요청 메소드의 의미체계는 요청에 존재하는 일부 헤더 필드들의 추가적인 의미체계가 메소드와 충돌하지 않는다면 그것들에 의해 더욱 특화될 수 있다. 예를 들어, 클라이언트는 요청된 액션을 타겟 리소스의 현재 상태에 대한 조건부로 만들기 위해 조건부 요청 헤더 필드들을 보낼 수 있다(13.1절).
+
+HTTP는 분산 오브젝트 시스템들에 대한 인터페이스로서 사용될 수 있도록 설계됐다. 요청 메소드는 타겟 리소스에 적용될 액션을 일으키는데 이는 원격 메소드 호출이 식별된 오브젝트로 보내질 수 있는 방식과 매우 유사하다.
 
      method = token
 
-The method token is case-sensitive because it might be used as a
-gateway to object-based systems with case-sensitive method names. By
-convention, standardized methods are defined in all-uppercase US-
-ASCII letters.
+메소드 토큰은 대소문자를 구별하며 이는 그것이 대소문자를 구별하는 메소드 이름들을 가지는 오브젝트 기반 시스템들에 대한 게이트웨이로 사용될 수 있기 때문이다. 관례적으로, 표준화된 메소드들은 모두 대문자인 US-ASCII 문자들로 정의된다.
 
-Unlike distributed objects, the standardized request methods in HTTP
-are not resource-specific, since uniform interfaces provide for
-better visibility and reuse in network-based systems [REST]. Once
-defined, a standardized method ought to have the same semantics when
-applied to any resource, though each resource determines for itself
-whether those semantics are implemented or allowed.
+분산 오브젝트들과는 달리, HTTP의 표준화된 요청 메소드들은 리소스에 특정적이지 않으며, 이는 균일한 인터페이스들이 네트워크 기반 시스템들에서 더 좋은 가시성과 재사용성을 제공하기 때문이다[[REST](https://roy.gbiv.com/pubs/dissertation/top.htm)]. 한번 정의되면, 표준화된 메소드는 어떤 리소스에 적용되든지 같은 의미체계를 가져야 하지만, 각 리소스는 스스로 그 의미체계들이 구현되거나 허용되는지를 결정한다.
 
-This specification defines a number of standardized methods that are
-commonly used in HTTP, as outlined by the following table.
+이 사양은 HTTP에서 흔히 쓰이는 많은 표준화 메소드들을 정의하며, 다음 표에 요약되어 있다.
 
-+=========+============================================+=========+
-| Method | Description | Section |
-| Name | | |
-+=========+============================================+=========+
-| GET | Transfer a current representation of the | 9.3.1 |
-| | target resource. | |
-+---------+--------------------------------------------+---------+
-| HEAD | Same as GET, but do not transfer the | 9.3.2 |
-| | response content. | |
-+---------+--------------------------------------------+---------+
-| POST | Perform resource-specific processing on | 9.3.3 |
-| | the request content. | |
-+---------+--------------------------------------------+---------+
-| PUT | Replace all current representations of the | 9.3.4 |
-| | target resource with the request content. | |
-+---------+--------------------------------------------+---------+
-| DELETE | Remove all current representations of the | 9.3.5 |
-| | target resource. | |
-+---------+--------------------------------------------+---------+
-| CONNECT | Establish a tunnel to the server | 9.3.6 |
-| | identified by the target resource. | |
-+---------+--------------------------------------------+---------+
-| OPTIONS | Describe the communication options for the | 9.3.7 |
-| | target resource. | |
-+---------+--------------------------------------------+---------+
-| TRACE | Perform a message loop-back test along the | 9.3.8 |
-| | path to the target resource. | |
-+---------+--------------------------------------------+---------+
+<center>
 
-                                Table 4
+| Method  | Description                        | Section | Name                        |
+| ------- | ---------------------------------- | ------- | --------------------------- |
+| GET     | ~의 현재 표현 전송                 | 9.3.1   | 타겟 리소스                 |
+| HEAD    | GET과 같지만, ~를 전송하지 않기    | 9.3.2   | 응답 콘텐츠                 |
+| POST    | ~에 대해 리소스별 처리 수행        | 9.3.3   | 요청 콘텐츠                 |
+| PUT     | ~의 모든 현재 표현들을 ~로 대체    | 9.3.4   | 타겟 리소스를 요청 콘텐츠로 |
+| DELETE  | ~의 모든 현재 표현들을 삭제        | 9.3.5   | 타겟 리소스                 |
+| CONNECT | ~한 서버에 대한 터널 수립          | 9.3.6   | 타겟 리소스에 의해 식별되는 |
+| OPTIONS | ~에 대한 통신 옵션들을 설명        | 9.3.7   | 타겟 리소스                 |
+| TRACE   | ~를 따라 메시지 루프백 테스트 스행 | 9.3.8   | 타겟 리소스로의 경로        |
 
-All general-purpose servers MUST support the methods GET and HEAD.
-All other methods are OPTIONAL.
+Table 4
 
-The set of methods allowed by a target resource can be listed in an
-Allow header field (Section 10.2.1). However, the set of allowed
-methods can change dynamically. An origin server that receives a
-request method that is unrecognized or not implemented SHOULD respond
-with the 501 (Not Implemented) status code. An origin server that
-receives a request method that is recognized and implemented, but not
-allowed for the target resource, SHOULD respond with the 405 (Method
-Not Allowed) status code.
+</center>
 
-Additional methods, outside the scope of this specification, have
-been specified for use in HTTP. All such methods ought to be
-registered within the "Hypertext Transfer Protocol (HTTP) Method
-Registry", as described in Section 16.1.
+모든 범용 서버들은 반드시(MUST) GET과 HEAD 메소드들을 지원해야 한다. 다른 모든 메소드들은 선택적(OPTIONAL)이다.
 
-9.2. Common Method Properties
+타겟 리소스에 의해 허용된 메소드들의 집합은 Allow 헤더 필드에 나열될 수 있다(10.2.1절). 그러나, 허용된 메소드들의 집합은 동적으로 변할 수 있다. 인식되지 않거나 구현되지 않은 요청 메소드를 수신한 오리진 서버는 웬만하면(SHOULD) 501(Not Implemented) 상태 코드로 응답해야 한다. 인식되고 구현된, 하지만 타겟 리소스에 대해 허용되지는 않은 요청 메소드를 수신한 오리진 서버는, 웬만하면(SHOULD) 405(Method Not Allowed) 상태 코드로 응답해야 한다.
 
-9.2.1. Safe Methods
+이 사양의 범위 밖의, 추가적인 메소드들은, HTTP에서 사용하도록 지정됐다. 그러한 모든 메소드들은 "Hypertext Transfer Protocol(HTTP) Method Registry"내에 등록되어야 하며, 관련 내용은 16.1절에서 기술된다.
 
-Request methods are considered "safe" if their defined semantics are
-essentially read-only; i.e., the client does not request, and does
-not expect, any state change on the origin server as a result of
-applying a safe method to a target resource. Likewise, reasonable
-use of a safe method is not expected to cause any harm, loss of
-property, or unusual burden on the origin server.
+### 9.2. 공통 메소드 속성들
 
-This definition of safe methods does not prevent an implementation
-from including behavior that is potentially harmful, that is not
-entirely read-only, or that causes side effects while invoking a safe
-method. What is important, however, is that the client did not
-request that additional behavior and cannot be held accountable for
-it. For example, most servers append request information to access
-log files at the completion of every response, regardless of the
-method, and that is considered safe even though the log storage might
-become full and cause the server to fail. Likewise, a safe request
-initiated by selecting an advertisement on the Web will often have
-the side effect of charging an advertising account.
+#### 9.2.1. 안전한 메소드들
 
-Of the request methods defined by this specification, the GET, HEAD,
-OPTIONS, and TRACE methods are defined to be safe.
+메소드들은 만약 그 정의된 의미 체계가 본질적으로 read-only인 경우 "안전한" 것으로 간주된다; 즉, 클라이언트는 타겟 리소스에 대해 안전한 메소드를 적용하는 결과로서 오리진 서버에 어떠한 변경도 요청하지 않고, 기대하지 않는다. 마찬가지로, 안전한 메소드의 합리적인 사용은 오리진 서버에 대해 어떠한 해로움, 속성의 손실, 혹은 일반적이지 않은 부담을 일으키지 않을 것으로 기대된다.
 
-The purpose of distinguishing between safe and unsafe methods is to
-allow automated retrieval processes (spiders) and cache performance
-optimization (pre-fetching) to work without fear of causing harm. In
-addition, it allows a user agent to apply appropriate constraints on
-the automated use of unsafe methods when processing potentially
-untrusted content.
+안전한 메소드들의 정의는 구현체가 완전히 read-only가 아닌, 혹은 안전한 메소드를 호출하는 동안 사이드 이펙트들을 초래하는, 잠재적으로 해로운 행동을 포함하는 것을 막지는 않는다. 중요한 것은, 그러나, 클라이언트가 그 추가적인 행동을 요청하지 않았고 그것에 대한 책임을 질 수 없다는 것이다. 예를 들어, 메소드와 관계 없이, 대부분의 서버들은 모든 응답의 완료 시에 로그 파일들에 접근하기 위해 요청 정보들을 추가하며, 이는 로그 저장소가 가득 차고 서버가 실패할 수 있더라도 안전한 것으로 간주된다. 마찬가지로, 웹의 광고를 선택함으로써 시작된 한 안전한 요청은 종종 광고 계정에 대한 요금 청구 같은 사이드 이펙트를 가질 것이다.
 
-A user agent SHOULD distinguish between safe and unsafe methods when
-presenting potential actions to a user, such that the user can be
-made aware of an unsafe action before it is requested.
+이 사양서에 의해 정의된 요청 메소드들 중, GET, HEAD, OPTIONS, 그리고 TRACE 메소드는 안전한 것으로 정의된다.
 
-When a resource is constructed such that parameters within the target
-URI have the effect of selecting an action, it is the resource
-owner's responsibility to ensure that the action is consistent with
-the request method semantics. For example, it is common for Web-
-based content editing software to use actions within query
-parameters, such as "page?do=delete". If the purpose of such a
-resource is to perform an unsafe action, then the resource owner MUST
-disable or disallow that action when it is accessed using a safe
-request method. Failure to do so will result in unfortunate side
-effects when automated processes perform a GET on every URI reference
-for the sake of link maintenance, pre-fetching, building a search
-index, etc.
+안전한 것과 안전하지 않은 메소드들 간에 구분하는 것의 목적은 자동화된 검색 프로세스들(스파이더들)과 캐시 성능 최적화(pre-fetching)가 해를 일으킬 두려움 없이 작동하도록 하기 위함이다. 추가로, 이는 유저 에이전트가 잠재적으로 신뢰할 수 없는 콘텐츠를 처리할 때 안전하지 않은 메소드들의 자동화된 사용에 대한 적절한 제약들을 적용할 수 있도록 한다.
 
-9.2.2. Idempotent Methods
+유저 에이전트는 웬만하면(SHOULD) 유저에게 잠재적인 액션들을 제시할 때 안전한 것과 안전하지 않은 메소드들을 구분하여, 그것이 요청되기 전에 유저가 안전하지 않은 액션에 대해 인지할 수 있도록 해야 한다.
 
-A request method is considered "idempotent" if the intended effect on
-the server of multiple identical requests with that method is the
-same as the effect for a single such request. Of the request methods
-defined by this specification, PUT, DELETE, and safe request methods
-are idempotent.
+타겟 URI 내의 파라미터들이 액션을 선택하는 효과를 가진 리소스가 구성됐을 때, 해당 액션이 요청 메소드의 의미체계와 일관성 있는지를 보장하는 것은 리소스 오너의 책임이다. 예를 들어, 웹-기반 콘텐츠 수정 소프트웨어에 있어, "page?do=delete"와 같은 쿼리 파라미터들 내에서 액션들을 사용하는 경우는 흔하다. 만약 그러한 리소스의 목적이 안전하지 않은 액션을 수행하기 위함이라면, 그러한 액션이 안전한 요청 메소드를 통해 접근됐을 때 리소스 오너는 반드시(MUST) 해당 액션을 비활성화하거나 불허해야 한다. 그렇게 하는데 실패하는 것은 자동화된 프로세스들이 링크 유지, pre-fetching, 검색 인덱스 구축 등을 위해 모든 URI 레퍼런스에 대해 GET을 수행할 때 불행한 부작용들을 초래할 것이다.
 
-Like the definition of safe, the idempotent property only applies to
-what has been requested by the user; a server is free to log each
-request separately, retain a revision control history, or implement
-other non-idempotent side effects for each idempotent request.
+#### 9.2.2. 멱등성 메소드들
 
-Idempotent methods are distinguished because the request can be
-repeated automatically if a communication failure occurs before the
-client is able to read the server's response. For example, if a
-client sends a PUT request and the underlying connection is closed
-before any response is received, then the client can establish a new
-connection and retry the idempotent request. It knows that repeating
-the request will have the same intended effect, even if the original
-request succeeded, though the response might differ.
+한 요청 메소드는 만약 서버에 대해 해당 메소드로의 여러 동일한 요청들의 의도된 효과가 그러한 단일 요청과 같다면 "멱등"하다고 간주된다. 이 사양에 의해 정의된 요청 메소드들 중에는, PUT, DELETE, 그리고 안전한 메소드들이 멱등하다.
 
-A client SHOULD NOT automatically retry a request with a non-
-idempotent method unless it has some means to know that the request
-semantics are actually idempotent, regardless of the method, or some
-means to detect that the original request was never applied.
+안전함에 대한 정의 처럼, 멱등 속성은 오직 유저에 의해 요청된 것에만 적용된다; 서버는 각 요청을 따로 로깅하거나, 개정 제어 히스토리를 유지하거나, 혹은 각 멱등 요청에 대해 다른 비멱등 사이드 이펙트들을 구현하는데 있어 자유롭다.
 
-For example, a user agent can repeat a POST request automatically if
-it knows (through design or configuration) that the request is safe
-for that resource. Likewise, a user agent designed specifically to
-operate on a version control repository might be able to recover from
-partial failure conditions by checking the target resource
-revision(s) after a failed connection, reverting or fixing any
-changes that were partially applied, and then automatically retrying
-the requests that failed.
+멱등성 메소드들은 클라이언트가 서버의 응답을 읽을 수 있기 전에 통신 실패가 발생한다면 요청이 자동으로 반복될 수 있기 때문에 구분된다. 예를 들어, 만약 클라이언트가 PUT 요청을 보내고 응답이 수신되기 전에 기반 요청이 닫힌다면,, 클라이언트는 새로운 연결을 수립하고 해당 멱등성 요청을 재시도할 수 있다. 클라이언트는, 원래 요청이 성공했더라도, 응답은 다를 수 있지만, 해당 요청을 반복하는 것이 똑같이 의도된 효과를 가질 것임을 알고 있다.
 
-Some clients take a riskier approach and attempt to guess when an
-automatic retry is possible. For example, a client might
-automatically retry a POST request if the underlying transport
-connection closed before any part of a response is received,
-particularly if an idle persistent connection was used.
+클라이언트는 요청의 의미체계가 실제로는 멱등하다는 것을 알 수 있는 어떤 수단이나, 메소드와 관계 없이, 혹은 원래 요청이 절대 적용되지 않았다는 것을 감지할 어떤 수단을 가지지 않은 이상 웬만해서는(SHOULD NOT) 비멱등 메소드 요청을 재시도해서는 안된다.
 
-A proxy MUST NOT automatically retry non-idempotent requests. A
-client SHOULD NOT automatically retry a failed automatic retry.
+예를 들어, 만약 유저 에이전트가 어떤 리소스에 대한 요청이 안전하다는 것을 알고 있다면(설계나 설정을 통해) POST 요청을 자동으로 재시도할 수 있다. 마찬가지로, 특별히 버전 컨트롤 레포지토리 상에서 작동하도록 설계된 유저 에이전트는, 실패한 연결 이후의 타겟 리소스 개정(들)을 체크하고, 부분적으로 적용된 어느 변경이든 되돌리거나 고치며, 자동으로 실패한 해당 요청들을 재시도함으로써 부분 실패 조건들로부터 회복할 수도 있다.
 
-9.2.3. Methods and Caching
+일부 클라이언트들은 더 위험한 접근을 취하며 자동 재시도가 가능한 때를 추측한다. 예를 들어, 클라이언트는 응답의 어느 부분이든 수신되기 전에 기반 전송 연결이 닫힌 경우, 특히 유휴 상태의 지속적인 연결이 사용됐다면 자동으로 POST 요청을 재시도할 수도 있다.
 
-For a cache to store and use a response, the associated method needs
-to explicitly allow caching and to detail under what conditions a
-response can be used to satisfy subsequent requests; a method
-definition that does not do so cannot be cached. For additional
-requirements see [CACHING].
+프록시는 절대(MUST NOT) 자동으로 비멱등 요청들을 재시도해서는 안된다. 클라이언트는 웬만해서는(SHOULD NOT) 실패한 자동 재시도를 자동으로 재시도해서는 안된다.
 
-This specification defines caching semantics for GET, HEAD, and POST,
-although the overwhelming majority of cache implementations only
-support GET and HEAD.
+#### 9.2.3. 메소드들과 캐싱
 
-9.3. Method Definitions
+응답을 저장하고 사용하기 위한 캐시를 위해, 관련된 메소드는 명시적으로 캐싱을 허용하고 어떤 조건들 아래서 요청이 후속 요청들을 만족시키기 위해 사용될 수 있는지 자세히 설명해야 한다; 그렇게 하지 않은 메소드 정의는 캐시될 수 없다. 추가적인 요구사항들은 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]을 참조하라.
 
-9.3.1. GET
+캐시 구현들의 압도적 다수가 오로지 GET과 HEAD만 지원하긴 하지만, 이 사양은 GET, HEAD, 그리고 POST를 위한 캐싱 의미체계를 정의한다.
 
-The GET method requests transfer of a current selected representation
-for the target resource. A successful response reflects the quality
-of "sameness" identified by the target URI (Section 1.2.2 of [URI]).
-Hence, retrieving identifiable information via HTTP is usually
-performed by making a GET request on an identifier associated with
-the potential for providing that information in a 200 (OK) response.
+### 9.3. 메소드 정의들
 
-GET is the primary mechanism of information retrieval and the focus
-of almost all performance optimizations. Applications that produce a
-URI for each important resource can benefit from those optimizations
-while enabling their reuse by other applications, creating a network
-effect that promotes further expansion of the Web.
+##### 9.3.1. GET
 
-It is tempting to think of resource identifiers as remote file system
-pathnames and of representations as being a copy of the contents of
-such files. In fact, that is how many resources are implemented (see
-Section 17.3 for related security considerations). However, there
-are no such limitations in practice.
+GET 메소드는 타겟 리소스에 대한 현재 선택된 표현의 전송을 요청한다. 성공적인 응답은 타겟 URI([[URI](https://www.rfc-editor.org/info/rfc3986)]의 1.2.2절)에 의해 식별되는 "동일성"이라는 성질을 반영한다. 이리하여, HTTP를 통해 식별 가능한 정보를 얻는 것은 보통 200(OK) 응답에서 해당 정보를 제공할 잠재성과 연관된 식별자에 대해 GET 요청을 함으로써 수행된다.
 
-The HTTP interface for a resource is just as likely to be implemented
-as a tree of content objects, a programmatic view on various database
-records, or a gateway to other information systems. Even when the
-URI mapping mechanism is tied to a file system, an origin server
-might be configured to execute the files with the request as input
-and send the output as the representation rather than transfer the
-files directly. Regardless, only the origin server needs to know how
-each resource identifier corresponds to an implementation and how
-that implementation manages to select and send a current
-representation of the target resource.
+GET은 정보 획득의 주요한 메커니즘이고 거의 모든 성능 최적화들의 집중점이다. 중요한 각 리소스들에 대해 URI를 생성하는 애플리케이션들은 그러한 최적화들이 다른 애플리케이션들에 의해 재사용될 수 있도록 되어 있는동안 웹이 더 확장되도록 촉진하며, 그것들로 부터 이득을 볼 수 있다.
 
-A client can alter the semantics of GET to be a "range request",
-requesting transfer of only some part(s) of the selected
-representation, by sending a Range header field in the request
-(Section 14.2).
+리소스 식별자들을 원격 파일 시스템의 경로명들로 생각하고 표현들은 그러한 파일 콘텐츠들의 카피로 생각하는 것은 그럴듯하다. 실제로, 그것이 많은 리소스들이 구현된 방식이다(관련된 보안 사항들을 위해 17.3절을 참조하라). 그러나, 실무에 그러한 제한들이 있는 것은 아니다.
 
-Although request message framing is independent of the method used,
-content received in a GET request has no generally defined semantics,
-cannot alter the meaning or target of the request, and might lead
-some implementations to reject the request and close the connection
-because of its potential as a request smuggling attack (Section 11.2
-of [HTTP/1.1]). A client SHOULD NOT generate content in a GET
-request unless it is made directly to an origin server that has
-previously indicated, in or out of band, that such a request has a
-purpose and will be adequately supported. An origin server SHOULD
-NOT rely on private agreements to receive content, since participants
-in HTTP communication are often unaware of intermediaries along the
-request chain.
+리소스를 위한 HTTP 인터페이스는 콘텐츠 오브젝트들의 트리, 다양한 데이터베이스 레코드들에 대한 프로그램적인 뷰, 혹은 다른 정보 시스템들로의 게이트웨이처럼 구현될 가능성이 높다. URI 매핑 메커니즘이 파일 시스템에 묶여 있을 때 조차, 오리진 서버는 해당 파일들을 직접 전송하는 대신 요청을 입력으로 하여 파일들을 실행하고 출력을 표현으로 보내도록 구성될 수도 있다. 그와 관계 없이, 오직 오리진 서버만이 각 리소스 식별자들이 어떻게 구현으로 매핑되고 해당 구현이 어떻게 타겟 리소스의 현재 상태를 선택하고 전송하는지 알 필요가 있다.
 
-The response to a GET request is cacheable; a cache MAY use it to
-satisfy subsequent GET and HEAD requests unless otherwise indicated
-by the Cache-Control header field (Section 5.2 of [CACHING]).
+클라이언트는, Range 헤더 필드를 요청에 보냄으로써(14.2절), 오직 선택된 표현의 일부분(들)만 전송하도록 요청하는, "range request"로 GET의 의미체계를 변경할 수 있다.
 
-When information retrieval is performed with a mechanism that
-constructs a target URI from user-provided information, such as the
-query fields of a form using GET, potentially sensitive data might be
-provided that would not be appropriate for disclosure within a URI
-(see Section 17.9). In some cases, the data can be filtered or
-transformed such that it would not reveal such information. In
-others, particularly when there is no benefit from caching a
-response, using the POST method (Section 9.3.3) instead of GET can
-transmit such information in the request content rather than within
-the target URI.
+요청 메시지 프레이밍은 사용된 메소드와는 독립적이긴 하지만, GET 요청에서 수신된 콘텐츠는 어떤 일반적으로 정의된 의미체계를 가지지 않고, 해당 요청의 의미나 타겟을 변경할 수 없으며, 그리고 일부 구현체들이 해당 요청을 거부하고 연결을 종료하도록 이끌 수 있는데 이는 그것의 request smuggling attack으로서의 잠재성 때문이다([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 11.2절). 클라이언트는, in-band나 out-of-band와 관계없이, 콘텐츠를 가진 GET 요청이 목적을 가지고 있고 적절하게 지원될 것이라고 이전에 나타낸 오리진 서버로 직접 하는 게 아닌 한 웬만해서는(SHOULD NOT) GET 요청에 콘텐츠를 생성해서는 안된다. 오리진 서버는 웬만해서는(SHOULD NOT) 콘텐츠를 수신하는 데 있어 사적인 합의들에 의존해서는 안되는데, 이는 HTTP 통신의 참여자들이 종종 요청 체인을 따라 이어지는 중개자들을 인식하지 못하기 때문이다.
 
-9.3.2. HEAD
+GET 요청에 대한 응답은 캐시 가능하다; 캐시는 Cache-Control 헤더 필드에 의해 따로 나타내지지 않은 한([[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 5.2절) 아마(MAY) 그것을 이어지는 GET과 HEAD 요청들을 만족시키기 위해 사용할 수 있을 것이다.
 
-The HEAD method is identical to GET except that the server MUST NOT
-send content in the response. HEAD is used to obtain metadata about
-the selected representation without transferring its representation
-data, often for the sake of testing hypertext links or finding recent
-modifications.
+GET을 사용하는 형태의 쿼리 필드들과 같이 유저-제공 정보로부터의 타겟 URI를 구성하는 메커니즘으로 정보 획득이 수행될 때, 잠재적으로 URI 내에서 공개되기에 적절치 않을 수 있는 민감한 데이터가 제공될지 모른다(17.9절 참조). 일부 케이스들에서, 해당 데이터는 그러한 정보를 드러내지 않도록 필터링되거나 변형될 수 있다. 다른 경우들에, 특히 응답을 캐싱하는 것으로부터 이득이 없을 때, POST 메소드(9.3.3절)를 GET 대신 사용하면 그러한 정보를 타겟 URI 내부가 아닌 요청 콘텐츠로 전송할 수 있다.
 
-The server SHOULD send the same header fields in response to a HEAD
-request as it would have sent if the request method had been GET.
-However, a server MAY omit header fields for which a value is
-determined only while generating the content. For example, some
-servers buffer a dynamic response to GET until a minimum amount of
-data is generated so that they can more efficiently delimit small
-responses or make late decisions with regard to content selection.
-Such a response to GET might contain Content-Length and Vary fields,
-for example, that are not generated within a HEAD response. These
-minor inconsistencies are considered preferable to generating and
-discarding the content for a HEAD request, since HEAD is usually
-requested for the sake of efficiency.
+##### 9.3.2. HEAD
 
-Although request message framing is independent of the method used,
-content received in a HEAD request has no generally defined
-semantics, cannot alter the meaning or target of the request, and
-might lead some implementations to reject the request and close the
-connection because of its potential as a request smuggling attack
-(Section 11.2 of [HTTP/1.1]). A client SHOULD NOT generate content
-in a HEAD request unless it is made directly to an origin server that
-has previously indicated, in or out of band, that such a request has
-a purpose and will be adequately supported. An origin server SHOULD
-NOT rely on private agreements to receive content, since participants
-in HTTP communication are often unaware of intermediaries along the
-request chain.
+HEAD 메소드는 서버가 절대(MUST NOT) 응답에 콘텐츠를 보내면 안된다는 것만 빼고 GET이랑 동일하다. HEAD는 종종 하이퍼텍스트 링크들을 테스트하거나 최근 수정들을 찾기 위해, 선택된 표현에 관한 메타데이터를 그 표현 데이터는 없이 획득하기 위해 사용된다.
 
-The response to a HEAD request is cacheable; a cache MAY use it to
-satisfy subsequent HEAD requests unless otherwise indicated by the
-Cache-Control header field (Section 5.2 of [CACHING]). A HEAD
-response might also affect previously cached responses to GET; see
-Section 4.3.5 of [CACHING].
+서버는 웬만하면(SHOULD) 요청 메소드가 GET이었다면 보내졌을 것과 같은 헤더 필드들을 HEAD 요청의 응답으로 보내야 한다. 그러나, 서버는 아마(MAY) 오직 콘텐츠를 생성하는 동안 결정되는 헤더 필드들은 생략할 수 있을 것이다. 예를 들어, 일부 서버들은 최소량의 데이터가 생성될 때까지 GET에 대한 동적 응답을 버퍼링하여 그들이 더 효율적으로 작은 응답들을 구분하거나 콘텐츠 선택에 관한 늦은 결정들을 할 수 있게 한다. GET에 대한 그러한 응답은, 예를 들어, HEAD 응답 내에 생성되지 않은 Content-Length와 Vary 필드들을 포함할 수 있다. 이러한 사소한 불일치들은 HEAD 요청을 위한 콘텐츠를 생성하고 폐기하는 것보다 선호되는데, 이는 HEAD가 보통 효율성을 위해 요청되기 때문이다.
 
-9.3.3. POST
+요청 메시지 프레이밍이 사용된 메소드와 독립적이긴 하지만, HEAD에서 수신된 콘텐츠는 일반적으로 정의된 의미체계를 가지지 않고, 요청의 의미나 타겟을 변경할 수 없으며, 그리고 일부 구현체들이 요청을 거부하고 연결을 닫도록 이끌 수 있는데 이는 그것의 request smuggling attack으로서의 잠재성 때문이다([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 11.2절). 클라이언트는, in-band나 out-of-band와 관계없이, 콘텐츠를 포함하는 요청이 목적을 가지며 적절히 지원될 것이라고 미리 나타낸 오리진 서버에게 직접적으로 하는 것이 아닌 한 웬만해서는(SHOULD NOT) HEAD 요청에 콘텐츠를 생성해서는 안된다. 오리진 서버는 웬만해서는(SHOULD NOT) 콘텐츠를 수신하는 데 있어 사적인 합의들에 의존해서는 안되는데, 이는 HTTP 통신의 참여자들이 종종 요청 체인을 따른 중개자들을 인식하지 못하기 때문이다.
+
+HEAD 요청에 대한 응답은 캐시 가능하다; 캐시는 Cache-Control 헤더 필드에 의해 따로 지정되지 않은 한([[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 5.2절) 아마(MAY) 이후의 HEAD 요청들을 만족시키기 위해 그것을 사용할 수 있을 것이다. HEAD 응답은 또한 이전에 캐시된 GET에 대한 응답들에 영향을 미칠지 모른다; [[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 4.3.5절을 참조하라.
+
+##### 9.3.3. POST
 
 The POST method requests that the target resource process the
 representation enclosed in the request according to the resource's
@@ -2427,7 +2055,7 @@ and transferring the representation via a method more amenable to
 shared caching, though at the cost of an extra request if the user
 agent does not already have the representation cached.
 
-9.3.4. PUT
+##### 9.3.4. PUT
 
 The PUT method requests that the state of the target resource be
 created or replaced with the state defined by the representation
@@ -2550,7 +2178,7 @@ request passes through a cache that has one or more stored responses
 for the target URI, those stored responses will be invalidated (see
 Section 4.4 of [CACHING]).
 
-9.3.5. DELETE
+##### 9.3.5. DELETE
 
 The DELETE method requests that the origin server remove the
 association between the target resource and its current
@@ -2612,7 +2240,7 @@ DELETE request passes through a cache that has one or more stored
 responses for the target URI, those stored responses will be
 invalidated (see Section 4.4 of [CACHING]).
 
-9.3.6. CONNECT
+##### 9.3.6. CONNECT
 
 The CONNECT method requests that the recipient establish a tunnel to
 the destination origin server identified by the request target and,
@@ -2687,7 +2315,7 @@ is specific to the version of HTTP in use.
 
 Responses to the CONNECT method are not cacheable.
 
-9.3.7. OPTIONS
+##### 9.3.7. OPTIONS
 
 The OPTIONS method requests information about the communication
 options available for the target resource, at either the origin
@@ -2730,7 +2358,7 @@ such content.
 
 Responses to the OPTIONS method are not cacheable.
 
-9.3.8. TRACE
+##### 9.3.8. TRACE
 
 The TRACE method requests a remote, application-level loop-back of
 the request message. The final recipient of the request SHOULD
@@ -2761,7 +2389,7 @@ A client MUST NOT send content in a TRACE request.
 
 Responses to the TRACE method are not cacheable.
 
-10. Message Context
+## 10. 메시지 콘텍스트
 
 10.1. Request Context Fields
 
