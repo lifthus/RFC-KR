@@ -2003,52 +2003,23 @@ HEAD 요청에 대한 응답은 캐시 가능하다; 캐시는 Cache-Control 헤
 
 ##### 9.3.3. POST
 
-The POST method requests that the target resource process the
-representation enclosed in the request according to the resource's
-own specific semantics. For example, POST is used for the following
-functions (among others):
+POST 메소드는 타겟 리소스가 리소스의 특정한 의미체계에 따라 요청에 포함된 표현을 처리할 것을 요청한다. 예를 들어, POST는 (특히) 다음 기능들을 위해 사용된다:
 
-- Providing a block of data, such as the fields entered into an HTML
-  form, to a data-handling process;
+- HTML 폼에 입력된 필드들 같은 데이터 블록을 데이터-처리 프로세스에 제공;
 
-- Posting a message to a bulletin board, newsgroup, mailing list,
-  blog, or similar group of articles;
+- 게시판, 뉴스그룹, 메일링 리스트, 블로그, 혹은 비슷한 기사들의 그룹에 메시지를 게시
 
-- Creating a new resource that has yet to be identified by the
-  origin server; and
+- 아직 오리진 서버에 의해 식별되지 않은 새로운 리소스를 생성; 그리고
 
-- Appending data to a resource's existing representation(s).
+- 리소스의 기존 표현(들)에 데이터를 추가.
 
-An origin server indicates response semantics by choosing an
-appropriate status code depending on the result of processing the
-POST request; almost all of the status codes defined by this
-specification could be received in a response to POST (the exceptions
-being 206 (Partial Content), 304 (Not Modified), and 416 (Range Not
-Satisfiable)).
+오리진 서버는 POST 요청을 처리한 결과에 따라 적절한 상태 코드를 선택함으로써 응답의 의미체계를 나타낸다; 이 사양에 의해 정의된 거의 모든 상태 코드들은 POST에 대한 응답에서 수신될 수 있다(예외는 206(Partial Content), 304(Not Modified), 그리고 416(Range Not Satisfiable)).
 
-If one or more resources has been created on the origin server as a
-result of successfully processing a POST request, the origin server
-SHOULD send a 201 (Created) response containing a Location header
-field that provides an identifier for the primary resource created
-(Section 10.2.2) and a representation that describes the status of
-the request while referring to the new resource(s).
+만약 POST 요청의 성공적인 처리의 결과로서 오리진 서버에 하나 이상의 리소스들이 생성됐다면, 오리진 서버는 웬만하면(SHOULD) 201(Created) 응답에 생성된 주된 리소스에 대한 식별자를 제공하는 Location 헤더 필드(10.2.2절)와 새로운 리소스(들)을 참조하면서 요청의 상태를 기술하는 표현을 포함해 보내야 한다.
 
-Responses to POST requests are only cacheable when they include
-explicit freshness information (see Section 4.2.1 of [CACHING]) and a
-Content-Location header field that has the same value as the POST's
-target URI (Section 8.7). A cached POST response can be reused to
-satisfy a later GET or HEAD request. In contrast, a POST request
-cannot be satisfied by a cached POST response because POST is
-potentially unsafe; see Section 4 of [CACHING].
+POST 요청들에 대한 응답들은 오직 그것들이 명시적으로 신선도 정보([[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 4.2.1절 참조)와 POST의 타겟 URI와 같은 값을 가진 Content-Location 헤더 필드를 포함할 때만 캐시 가능하다(8.7절). 캐시된 POST 응답은 나중의 GET이나 HEAD 요청을 만족시키는 데 재사용될 수 있다. 반대로, POST 요청은 캐시된 POST에 의해 충족될 수 없는데 이는 POST가 잠재적으로 안전하지 않기 때문이다; [[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 4절을 참조하라.
 
-If the result of processing a POST would be equivalent to a
-representation of an existing resource, an origin server MAY redirect
-the user agent to that resource by sending a 303 (See Other) response
-with the existing resource's identifier in the Location field. This
-has the benefits of providing the user agent a resource identifier
-and transferring the representation via a method more amenable to
-shared caching, though at the cost of an extra request if the user
-agent does not already have the representation cached.
+만약 POST를 처리한 결과가 기존 리소스의 표현과 동등할 것 같으면, 오리진 서버는 아마(MAY) Location 필드에 기존 리소스의 식별자와 함께 303(See Other) 응답을 보냄으로써 유저 에이전트를 해당 리소스로 리다이렉트할 수 있을 것이다. 이는 유저 에이전트에게 리소스 식별자를 제공하고, 만약 유저 에이전트가 미리 캐시된 표현을 가지고 있다면 추가 요청 비용이 있겠지만 표현을 공유 캐싱에 더 적합한 메소드를 통해 전달하는 이점을 가진다.
 
 ##### 9.3.4. PUT
 
