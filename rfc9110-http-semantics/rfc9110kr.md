@@ -252,62 +252,67 @@ than English.
 14.3. Accept-Ranges
 14.4. Content-Range
 14.5. Partial PUT
-14.6. Media Type multipart/byteranges 15. Status Codes
-15.1. Overview of Status Codes
-15.2. Informational 1xx
-15.2.1. 100 Continue
-15.2.2. 101 Switching Protocols
-15.3. Successful 2xx
-15.3.1. 200 OK
-15.3.2. 201 Created
-15.3.3. 202 Accepted
-15.3.4. 203 Non-Authoritative Information
-15.3.5. 204 No Content
-15.3.6. 205 Reset Content
-15.3.7. 206 Partial Content
-15.3.7.1. Single Part
-15.3.7.2. Multiple Parts
-15.3.7.3. Combining Parts
-15.4. Redirection 3xx
-15.4.1. 300 Multiple Choices
-15.4.2. 301 Moved Permanently
-15.4.3. 302 Found
-15.4.4. 303 See Other
-15.4.5. 304 Not Modified
-15.4.6. 305 Use Proxy
-15.4.7. 306 (Unused)
-15.4.8. 307 Temporary Redirect
-15.4.9. 308 Permanent Redirect
-15.5. Client Error 4xx
-15.5.1. 400 Bad Request
-15.5.2. 401 Unauthorized
-15.5.3. 402 Payment Required
-15.5.4. 403 Forbidden
-15.5.5. 404 Not Found
-15.5.6. 405 Method Not Allowed
-15.5.7. 406 Not Acceptable
-15.5.8. 407 Proxy Authentication Required
-15.5.9. 408 Request Timeout
-15.5.10. 409 Conflict
-15.5.11. 410 Gone
-15.5.12. 411 Length Required
-15.5.13. 412 Precondition Failed
-15.5.14. 413 Content Too Large
-15.5.15. 414 URI Too Long
-15.5.16. 415 Unsupported Media Type
-15.5.17. 416 Range Not Satisfiable
-15.5.18. 417 Expectation Failed
-15.5.19. 418 (Unused)
-15.5.20. 421 Misdirected Request
-15.5.21. 422 Unprocessable Content
-15.5.22. 426 Upgrade Required
-15.6. Server Error 5xx
-15.6.1. 500 Internal Server Error
-15.6.2. 501 Not Implemented
-15.6.3. 502 Bad Gateway
-15.6.4. 503 Service Unavailable
-15.6.5. 504 Gateway Timeout
-15.6.6. 505 HTTP Version Not Supported 16. Extending HTTP
+14.6. Media Type multipart/byteranges
+   
+[15. 상태 코드](#15-상태-코드)
+
+- [15.1. 상태 코드의 개요](#151-상태-코드의-개요)
+- [15.2. Informational 1xx](#152-Informational-1xx)
+- - [15.2.1. 100 Continue](#1521-100-Continue)
+- - [15.2.2. 101 Switching Protocols](#1522-101-Switching-Protocols)
+- [15.3. Successful 2xx](#153-Successful-2xx)
+- - [15.3.1. 200 OK](#1531-200-OK)
+- - [15.3.2. 201 Created](#1532-201-Created)
+- - [15.3.3. 202 Accepted](#1533-202-Accepted)
+- - [15.3.4. 203 Non-Authoritative Information](#1534-203-Non-Authoritative-Information)
+- - [15.3.5. 204 No Content ](#1535-204-No-Content)
+- - [15.3.6. 205 Reset Content](#1536-205-Reset-Content)
+- - [15.3.7. 206 Partial Content](#1537-206-Partial-Content)
+- - - [15.3.7.1. Single Part](#15371-Single-Part)
+- - - [15.3.7.2. Multiple Parts](#15372-Multiple-Parts)
+- - - [15.3.7.3. Combining Parts](#15373-Combining-Parts)
+- [15.4. Redirection 3xx](#154-Redirection-3xx)
+- - [15.4.1. 300 Multiple Choices](#1541-300-Multiple-Choices)
+- - [15.4.2. 301 Moved Permanently](#1542-301-Moved-Permanently)
+- - [15.4.3. 302 Found](#1543-Found)
+- - [15.4.4. 303 See Other](#1544-303-See-Other)
+- - [15.4.5. 304 Not Modified](#1545-304-Not-Modified)
+- - [15.4.6. 305 Use Proxy](#1546-305-Use-Proxy)
+- - [15.4.7. 306 (Unused)](#1547-306-(Unused))
+- - [15.4.8. 307 Temporary Redirect](#1548-307-Temporary-Redirect)
+- - [15.4.9. 308 Permanent Redirect](#1549-308-Permanent-Redirect)
+- [15.5. Client Error 4xx](#155-Client-Error-4xx)
+- - [15.5.1. 400 Bad Request](#1551-400-Bad-Request)
+- - [15.5.2. 401 Unauthorized](#1552-401-Unauthorized)
+- - [15.5.3. 402 Payment Required](#1553-402-Payment-Required)
+- - [15.5.4. 403 Forbidden](#1554-403-Forbidden)
+- - [15.5.5. 404 Not Found](#1555-404-Not-Found)
+- - [15.5.6. 405 Method Not Allowed](#1556-405-Method-Not-Allowed)
+- - [15.5.7. 406 Not Acceptable](#1557-406-Not-Acceptable)
+- - [15.5.8. 407 Proxy Authentication Required](#1558-407-Proxy-Authentication-Required)
+- - [15.5.9. 408 Request Timeout](#1559-408-Request-Timeout)
+- - [15.5.10. 409 Conflict](#15510-409-Conflict)
+- - [15.5.11. 410 Gone](#15511-410-Gone)
+- - [15.5.12. 411 Length Required](#15512-411-Length-Required)
+- - [15.5.13. 412 Precondition Failed](#15513-412-Precondition-Failed)
+- - [15.5.14. 413 Content Too Large](#15514-413-Content-Too-Large)
+- - [15.5.15. 414 URI Too Long](#15515-414-URI-Too-Long)
+- - [15.5.16. 415 Unsupported Media Type](#15516-415-Unsupported-Media-Type)
+- - [15.5.17. 416 Range Not Satisfiable](#15517-416-Range-Not-Satisfiable)
+- - [15.5.18. 417 Expectation Failed](#15518-417-Expectation-Failed)
+- - [15.5.19. 418 (Unused)](#15519-418-(Unused))
+- - [15.5.20. 421 Misdirected Request](#15520-421-Misdirected-Request)
+- - [15.5.21. 422 Unprocessable Content](#15521-422-Unprocessable-Content)
+- - [15.5.22. 426 Upgrade Required](#15522-426-Upgrade-Required)
+- [15.6. Server Error 5xx](#156-Server-Error-5xx)
+- - [15.6.1. 500 Internal Server Error](#1561-500-Internal-Server-Error)
+- - [15.6.2. 501 Not Implemented](#1562-501-Not-Implemented)
+- - [15.6.3. 502 Bad Gateway](#1563-502-Bad-Gateway)
+- - [15.6.4. 503 Service Unavailable](#1564-503-Service-Unavailable)
+- - [15.6.5. 504 Gateway Timeout](#1565-504-Gateway-Timeout)
+- - [15.6.6. 505 HTTP Version Not Supported](#1566-505-HTTP-Version-Not-Supported)
+   
+   16. Extending HTTP
 16.1. Method Extensibility
 16.1.1. Method Registry
 16.1.2. Considerations for New Methods
@@ -4765,331 +4770,161 @@ Author: See Authors' Addresses section.
 
 Change controller: IESG
 
-15. Status Codes
+## 15. 상태 코드
 
-The status code of a response is a three-digit integer code that
-describes the result of the request and the semantics of the
-response, including whether the request was successful and what
-content is enclosed (if any). All valid status codes are within the
-range of 100 to 599, inclusive.
+응답의 상태 코드는 요청의 결과와 요청이 성공했는지의 여부 및 어떤 콘텐츠가 동봉되어 있는지를(있는 경우) 포함한 응답의 의미를 설명하는 세 자리 정수 코드다. 모든 유효한 상태 코드는 100부터 599까지의 범위 내에 있다.
 
-The first digit of the status code defines the class of response.
-The last two digits do not have any categorization role. There are
-five values for the first digit:
+상태 코드의 첫 번째 자리는 응답의 클래스를 정의한다. 마지막 두 자리는 분류 역할이 없다. 첫 번째 숫자에는 다섯 가지의 정보가 있다:
 
-- 1xx (Informational): The request was received, continuing process
+- 1xx (Informational): 요청을 받았고, 처리를 계속 한다.
 
-- 2xx (Successful): The request was successfully received,
-  understood, and accepted
+- 2xx (Successful): 요청을 성공적으로 받았고, 이해했고, 승인했다.
 
-- 3xx (Redirection): Further action needs to be taken in order to
-  complete the request
+- 3xx (Redirection): 요청을 완료하려면 추가 조치가 필요하다.
 
-- 4xx (Client Error): The request contains bad syntax or cannot be
-  fulfilled
+- 4xx (Client Error): 요청에 잘못된 구문이 포함되어 있거나 수행할 수 없다.
 
-- 5xx (Server Error): The server failed to fulfill an apparently
-  valid request
+- 5xx (Server Error): 서버가 명백히 유효한 요청을 수행하지 못했다.
 
-HTTP status codes are extensible. A client is not required to
-understand the meaning of all registered status codes, though such
-understanding is obviously desirable. However, a client MUST
-understand the class of any status code, as indicated by the first
-digit, and treat an unrecognized status code as being equivalent to
-the x00 status code of that class.
+HTTP 상태 코드는 확장 가능하다.클라이언트는 등록된 모른 상태 코드의 의미를 이해할 필요는 없지만, 이해하는것이 분명히 바람직하다. 그러나, 클라이언트는 반드시(MUST) 첫 번째 숫자로 표시된 상태코드의 클래스를 이해하고 인식할 수 없는 상태 코드를 해당 클래스의 x00 상태 코드와 동등한 것으로 처리해야 한다.
 
-For example, if a client receives an unrecognized status code of 471,
-it can see from the first digit that there was something wrong with
-its request and treat the response as if it had received a 400 (Bad
-Request) status code. The response message will usually contain a
-representation that explains the status.
+예시로, 클라이언트가 471이라는 인식되지 않는 상태 코드를 받은 경우, 첫 번째 숫자를 통해 요청에 문제가 있음을 파악하고 응답을 400(Bad Request) 상태 코드를 받은 것처럼 처리할 수 있다. 응답 메시지에는 일반적으로 상태를 설명하는 표현이 포함된다.
 
-Values outside the range 100..599 are invalid. Implementations often
-use three-digit integer values outside of that range (i.e., 600..999)
-for internal communication of non-HTTP status (e.g., library errors).
-A client that receives a response with an invalid status code SHOULD
-process the response as if it had a 5xx (Server Error) status code.
+100..599 범위를 벗어난 값은 유효하지 않다. 구현에서는 종종 HTTP가 아닌 상태의 내부 통신을 위해 해당 범위를 벗어난 세 자리 정수 값을(예: 600..999) 사용하는 경우가 많다. (예: 라이브러리 에러) 유효하지않은 상태 코드를 가진 응답을 수신한 클라이언트는 왠만하면(SHOULD) 5xx(Server Error) 상태 코드를 가진 것처럼 응답을 처리해야 한다.
 
-A single request can have multiple associated responses: zero or more
-"interim" (non-final) responses with status codes in the
-"informational" (1xx) range, followed by exactly one "final" response
-with a status code in one of the other ranges.
+단일 요청은 여러 개의 관련 응답이 있을 수 있다: 상태 코드가 “정보”(1xx) 범위인 “중간”(최종이 아님) 응답이 0개 이상이고, 다른 범위 중 하나의 상태 코드가 있는 “최종” 응답이 정확히 하나만 있는 경우다.
 
-15.1. Overview of Status Codes
+### 15.1. 상태 코드의 개요
 
-The status codes listed below are defined in this specification. The
-reason phrases listed here are only recommendations -- they can be
-replaced by local equivalents or left out altogether without
-affecting the protocol.
+아래에 나열된 상태 코드는 본 명세서에 정의되어 있다. 여기에 나열된 이유 문구는 권장 사항일 뿐이다 — 프로토콜에 영향을 주지 않고 로컬에 상응하는 문구로 대체하거나 아예 생략할 수 있다.
 
-Responses with status codes that are defined as heuristically
-cacheable (e.g., 200, 203, 204, 206, 300, 301, 308, 404, 405, 410,
-414, and 501 in this specification) can be reused by a cache with
-heuristic expiration unless otherwise indicated by the method
-definition or explicit cache controls [CACHING]; all other status
-codes are not heuristically cacheable.
+Heuristic하게 캐시 가능한 것으로 정의된 상태 코드를 갖는 응답은 (예: 본 명세서에서 200, 203, 204, 206, 300, 301, 308, 404, 405, 410, 414, 501) 메서드 정의 또는 명시적 캐시 컨트롤[[CACHING](https://www.rfc-editor.org/info/rfc9111)]; 에 달리 명시되지 않는 한 Heuristic 만료를 갖는 캐시에 의해 재사용될 수 있으며, 다른 모든 상태 코드들은 Heuristic하게 캐시할 수 없다.
 
-Additional status codes, outside the scope of this specification,
-have been specified for use in HTTP. All such status codes ought to
-be registered within the "Hypertext Transfer Protocol (HTTP) Status
-Code Registry", as described in Section 16.2.
+본 명세서의 범위를 벗어난 추가적인 상태 코드는 HTTP에서 사용하도록 규정되어 있다. 이러한 모든 상태 코드는 16.2절에 설명된 것과 같이 “Hypertext Transfer Protocol (HTTP) Status Code Registry”에 등록해야 한다.
 
-15.2. Informational 1xx
+### 15.2. Informational 1xx
 
-The 1xx (Informational) class of status code indicates an interim
-response for communicating connection status or request progress
-prior to completing the requested action and sending a final
-response. Since HTTP/1.0 did not define any 1xx status codes, a
-server MUST NOT send a 1xx response to an HTTP/1.0 client.
+1xx(Informational) 상태 코드 클래스는 요청된 작업을 완료하고 최종 응답을 전송하기 전에 연결 상태 또는 요청 진행 상황을 전달하기 위한 중간 응답을 나타낸다. HTTP/1.0 은 어떠한 1xx 상태 코드가 정의되어 있지 않으므로, 서버는 HTTP/1.0 클라이언트에 1xx 응답을 절대(MUST NOT) 전송해서는 안 된다.
 
-A 1xx response is terminated by the end of the header section; it
-cannot contain content or trailers.
+1xx 응답은 헤더 섹션이 끝날 때 종료되며, 콘텐츠나 트레일러를 포함 할 수 없다.
 
-A client MUST be able to parse one or more 1xx responses received
-prior to a final response, even if the client does not expect one. A
-user agent MAY ignore unexpected 1xx responses.
+클라이언트는 최종 응답 전에 수신된 하나 이상의 1xx 응답을 클라이언트가 예상하지 못하더라도 반드시(MUST) 파싱할 수 있어야 한다. 유저 에이전트는 예상치 못한 1xx 응답을 아마(MAY) 무시할 수 있다.
 
-A proxy MUST forward 1xx responses unless the proxy itself requested
-the generation of the 1xx response. For example, if a proxy adds an
-"Expect: 100-continue" header field when it forwards a request, then
-it need not forward the corresponding 100 (Continue) response(s).
+프록시는 프록시 자체적으로 1xx 응답 생성을 요청한 게 아닌 한 반드시(MUST) 1xx 응답을 전달해야 한다. 예를 들어 프록시가 요청을 전달할 때 “Expect: 100-continue” 헤더 필드를 추가하는 경우, 해당 100(Continue) 응답을 포워딩할 필요가 없다.
 
-15.2.1. 100 Continue
+#### 15.2.1. 100 Continue
 
-The 100 (Continue) status code indicates that the initial part of a
-request has been received and has not yet been rejected by the
-server. The server intends to send a final response after the
-request has been fully received and acted upon.
+100(Continue) 상태 코드는 요청의 초기 부분이 수신되었으나 아직 서버에 의해 거절되지 않았음을 나타낸다. 서버는 요청을 완전히 수신하고 조치된 후에 최종 응답을 전송하고자 한다.
 
-When the request contains an Expect header field that includes a
-100-continue expectation, the 100 response indicates that the server
-wishes to receive the request content, as described in
-Section 10.1.1. The client ought to continue sending the request and
-discard the 100 response.
+요청에 100-continue 기대가 포함된 Expect 헤더 필드를 포함하는 경우, 100 응답은 10.1.1절에 설명된 대로 서버가 요청 콘텐츠를 수신하기를 원한다는 것을 나타낸다. 클라이언트는 요청을 계속 전송하고 100 응답을 폐기해야 한다.
 
-If the request did not contain an Expect header field containing the
-100-continue expectation, the client can simply discard this interim
-response.
+요청에 100-continue 기대가 포함된 Expect 헤더 필드가 포함되지 않은 경우, 클라이언트는 이 임시 응답을 간단히 폐기할 수 있다.
 
-15.2.2. 101 Switching Protocols
+#### 15.2.2. 101 Switching Protocols
 
-The 101 (Switching Protocols) status code indicates that the server
-understands and is willing to comply with the client's request, via
-the Upgrade header field (Section 7.8), for a change in the
-application protocol being used on this connection. The server MUST
-generate an Upgrade header field in the response that indicates which
-protocol(s) will be in effect after this response.
+101(Switching Protocols) 상태 코드는 서버가 Upgrade 헤더 필드(7.8절)를 통해 이 연결에서 사용 중인 애플리케이션 프로토콜의 변경에 대한 클라이언트의 요청을 이해하고, 이를 준수할 것임을 나타낸다. 서버는 반드시(MUST) 응답 후에 어떤 프로토콜이 적용될 것인지를 나타내는 Upgrade 헤더 필드를 응답에 생성해야 한다.
 
-It is assumed that the server will only agree to switch protocols
-when it is advantageous to do so. For example, switching to a newer
-version of HTTP might be advantageous over older versions, and
-switching to a real-time, synchronous protocol might be advantageous
-when delivering resources that use such features.
+서버는 프로토콜을 전환하는 것이 유리할 때만 프로토콜 전환에 동의한다고 가정한다. 예를 들어, 최신 버전의 HTTP로 전환하는 것이 이전 버전보다 유리할 수 있으며, 이러한 기능을 사용하는 리소스를 제공할 때 실시간 동기 프로토콜로 전환하는 것이 유리할 수 있다.
 
-15.3. Successful 2xx
+### 15.3. Successful 2xx
 
-The 2xx (Successful) class of status code indicates that the client's
-request was successfully received, understood, and accepted.
+상태 코드의 2xx (Successful) 클래스는 클라이언트의 요청이 성공적으로 수신, 이해 및 수락되었음을 나타낸다.
 
-15.3.1. 200 OK
+#### 15.3.1. 200 OK
 
-The 200 (OK) status code indicates that the request has succeeded.
-The content sent in a 200 response depends on the request method.
-For the methods defined by this specification, the intended meaning
-of the content can be summarized as:
+200(OK) 상태 코드는 요청이 성공했음을 나타낸다.
+200 응답으로 전송되는 내용은 요청 메소드에 따라 다르다.
+본 명세서에서 정의된 메소드의 경우, 콘텐츠의 의도된 의미는 다음과 같이 요약할 수 있다:
 
 +================+============================================+
-| Request Method | Response content is a representation of: |
+| Request Method | 응답 콘텐츠는 다음을 나타낸다: |
 +================+============================================+
-| GET | the target resource |
+| GET | 타켓 리소스 |
 +----------------+--------------------------------------------+
-| HEAD | the target resource, like GET, but without |
-| | transferring the representation data |
+| HEAD | GET과 같이 대상 리소스를 전송하지만 표현 데이터는 전송하지 않는다. |
 +----------------+--------------------------------------------+
-| POST | the status of, or results obtained from, |
-| | the action |
+| POST | 작업의 상태 또는 작업으로부터 얻은 결과 |
 +----------------+--------------------------------------------+
-| PUT, DELETE | the status of the action |
+| PUT, DELETE | 작업의 상태 |
 +----------------+--------------------------------------------+
-| OPTIONS | communication options for the target |
-| | resource |
+| OPTIONS | 대상 리소스에 대한 통신 옵션 |
 +----------------+--------------------------------------------+
-| TRACE | the request message as received by the |
-| | server returning the trace |
+| TRACE | trace를 반환하는 서버에 의해 수신된 요청 메시지 |
 +----------------+--------------------------------------------+
 
                                Table 6
 
-Aside from responses to CONNECT, a 200 response is expected to
-contain message content unless the message framing explicitly
-indicates that the content has zero length. If some aspect of the
-request indicates a preference for no content upon success, the
-origin server ought to send a 204 (No Content) response instead. For
-CONNECT, there is no content because the successful result is a
-tunnel, which begins immediately after the 200 response header
-section.
+CONNECT에 대한 응답과 별도로, 메세지 프레임에 콘텐츠 길이가 0임을 명시적으로 표시하지 않는 한 200 응답은 메세지 콘텐츠를 포함할 것으로 예상한다. 요청의 일부 측면이 성공 시 콘텐츠가 없는 것을 선호하는 경우, origin 서버는 대신 204 (No Content) 응답을 전송해야 한다. CONNECT의 경우, 성공적인 결과는 200 응답 헤더 섹션 바로 뒤에 시작되는 터널이므로 콘텐츠가 없다.
 
-A 200 response is heuristically cacheable; i.e., unless otherwise
-indicated by the method definition or explicit cache controls (see
-Section 4.2.2 of [CACHING]).
+200 응답은 메소드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 heuristic 하게 캐시할 수 있다. ([[CACHING](https://www.rfc-editor.org/info/rfc9111)] 4.2.2절 참조)
 
-In 200 responses to GET or HEAD, an origin server SHOULD send any
-available validator fields (Section 8.8) for the selected
-representation, with both a strong entity tag and a Last-Modified
-date being preferred.
+GET이나 HEAD에 대한 200 응답들에서, 오리진 서버는 웬만하면(SHOULD) 선택된 표현에 대해 어떤식으로든 가용한 검증자 필드들(8.8절)을 보내야하며, 강한 엔티티 태그와 Last-Modified 날짜 둘 다 같이하는 것이 선호된다.
 
-In 200 responses to state-changing methods, any validator fields
-(Section 8.8) sent in the response convey the current validators for
-the new representation formed as a result of successfully applying
-the request semantics. Note that the PUT method (Section 9.3.4) has
-additional requirements that might preclude sending such validators.
+상태 변경 메소드에 대한 200 응답에서, 응답에 전송된 임의의 검증자 필드 (8.8절)는 요청 semantics를 성공적으로 적용한 결과로 형성된 새로운 표현에 대한 현재 검증자를 전달한다. PUT 방식 (9.3.4절)에는 이러한 검증자의 전송을 방해할 수 있는 추가 요구 사항이 있다는 점을 유의하라.
 
-15.3.2. 201 Created
+#### 15.3.2. 201 Created
 
-The 201 (Created) status code indicates that the request has been
-fulfilled and has resulted in one or more new resources being
-created. The primary resource created by the request is identified
-by either a Location header field in the response or, if no Location
-header field is received, by the target URI.
+201(Created) 상태 코드는 요청이 완료되어 하나 이상의 새로운 리소스가 생성되었음을 나타낸다. 요청에 의해 생성된 기본 리소스는 응답의 Location 헤더 필드 또는 Location 헤더 필드가 수신되지 않은 경우 타켓 URI로 식별된다.
 
-The 201 response content typically describes and links to the
-resource(s) created. Any validator fields (Section 8.8) sent in the
-response convey the current validators for a new representation
-created by the request. Note that the PUT method (Section 9.3.4) has
-additional requirements that might preclude sending such validators.
+201 응답 콘텐츠는 일반적으로 생성된 리소스에 대한 설명 및 링크를 제공한다. 응답에 전송된 모든 검증자 필드 (8.8절) 는 요청에 의해 생성된 새로운 표현에 대한 현재 검증자를 전달한다. PUT 방식 (9.3.4절) 에는 이러한 검증자의 전송을 방해할 수 있는 추가 요구 사항이 있음에 유의한다.
 
-15.3.3. 202 Accepted
+#### 15.3.3. 202 Accepted
 
-The 202 (Accepted) status code indicates that the request has been
-accepted for processing, but the processing has not been completed.
-The request might or might not eventually be acted upon, as it might
-be disallowed when processing actually takes place. There is no
-facility in HTTP for re-sending a status code from an asynchronous
-operation.
+202 (Accepted) 상태 코드는 요청이 처리를 위해 수락되었지만 처리가 완료되지 않았음을 나타낸다. 요청이 실제로 처리될 때 허용되지 않을 수 있기 때문에 요청이 처리될 수도 있고 처리되지 않을 수도 있다. HTTP에는 비동기 작업에서 상태 코드를 다시 전송하는 기능이 없다.
 
-The 202 response is intentionally noncommittal. Its purpose is to
-allow a server to accept a request for some other process (perhaps a
-batch-oriented process that is only run once per day) without
-requiring that the user agent's connection to the server persist
-until the process is completed. The representation sent with this
-response ought to describe the request's current status and point to
-(or embed) a status monitor that can provide the user with an
-estimate of when the request will be fulfilled.
+202 응답은 의도적으로 커밋되지 않는다. 그 목적은 서버가 어떤 다른 프로세스(아마 하루에 한번만 실행되는 배치 지향 프로세스)에 대한 요청을 받아들이고 서버에 대한 해당 유저 에이전트의 연결이 해당 프로세스가 끝날 때 까지 지속되도록 요구할 필요가 없도록 하기 위함이다. 이 응답과 함께 보내진 표현은 요청의 현재 상태를 기술하고 요청이 언제 충족될지에 대한 추정을 유저에게 제공할 수 있는 상태 모니터를 가리켜야(혹은 포함해야) 한다.
 
-15.3.4. 203 Non-Authoritative Information
+#### 15.3.4. 203 Non-Authoritative Information
 
-The 203 (Non-Authoritative Information) status code indicates that
-the request was successful but the enclosed content has been modified
-from that of the origin server's 200 (OK) response by a transforming
-proxy (Section 7.7). This status code allows the proxy to notify
-recipients when a transformation has been applied, since that
-knowledge might impact later decisions regarding the content. For
-example, future cache validation requests for the content might only
-be applicable along the same request path (through the same proxies).
+203 (Non-Authoritative Information) 상태 코드는 요청이 성공했지만 변환 프록시에 의해 원본 서버의 200 (OK) 응답에서 동봉된 콘텐츠가 수정되었음을 나타낸다 (7.7절). 이 상태 코드를 통해 프록시는 변환이 적용되었을 때 수신자에게 알릴 수 있고, 이 지식은 나중에 콘텐츠와 관련된 의사 결정에 영향을 미칠 수 있다. 예를 들어, 콘텐츠에 대한 향후 캐시 유효성 검사 요청은 동일한 요청 경로 (동일한 프록시를 통해) 를 통해서만 적용할 수 있다.
 
-A 203 response is heuristically cacheable; i.e., unless otherwise
-indicated by the method definition or explicit cache controls (see
-Section 4.2.2 of [CACHING]).
+203 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]) heuristic하게 캐시 할 수 있다.
 
-15.3.5. 204 No Content
+#### 15.3.5. 204 No Content
 
-The 204 (No Content) status code indicates that the server has
-successfully fulfilled the request and that there is no additional
-content to send in the response content. Metadata in the response
-header fields refer to the target resource and its selected
-representation after the requested action was applied.
+204 (No Content) 상태 코드는 서버가 성공적으로 요청을 처리했고, 응답 콘텐츠에서 보낼 추가 콘텐츠가 없음을 나타낸다. 응답 헤더 필드의 메타데이터는 대상 리소스와 요청된 작업이 적용된 후 선택한 표현을 참조한다.
 
-For example, if a 204 status code is received in response to a PUT
-request and the response contains an ETag field, then the PUT was
-successful and the ETag field value contains the entity tag for the
-new representation of that target resource.
+예를 들어, PUT 요청에 대한 응답으로 204 상태 코드가 수신되고 응답에 ETag 필드가 포함된 경우, PUT이 성공했으며 ETag 필드 값에 대상 리소스의 새로운 표현을 위한 엔티티 태그가 포함한다.
 
-The 204 response allows a server to indicate that the action has been
-successfully applied to the target resource, while implying that the
-user agent does not need to traverse away from its current "document
-view" (if any). The server assumes that the user agent will provide
-some indication of the success to its user, in accord with its own
-interface, and apply any new or updated metadata in the response to
-its active representation.
+204 응답을 통해 서버는 대상 리소스에 성공적으로 적용되었음을 나타낼 수 있게 하고, 동시에 유저 에이전트가 현재의 “document view” (있는 경우)에서 이동할 필요가 없음을 암시한다. 서버는 유저 에이전트가 자제 인터페이스에 따라 사용자에게 성공 여부를 표시하고 활성 표현에 대한 응답으로 새로운 메타데이터 또는 업데이트된 메타데이터를 적용할 것으로 가정한다.
 
-For example, a 204 status code is commonly used with document editing
-interfaces corresponding to a "save" action, such that the document
-being saved remains available to the user for editing. It is also
-frequently used with interfaces that expect automated data transfers
-to be prevalent, such as within distributed version control systems.
+예를 들어, 204 상태 코드는 일반적으로 “저장” 작업에 해당하는 문서 편집 인터페이스에 사용되며, 저장중인 문서는 사용자가 편집을 위해 사용할 수 있도록 한다. 또한 분산 버전 관리 시스템과 같이 자동화된 데이터 전송이 보편화 될 것으로 예상되는 인터페이스에서도 자주 사용된다.
 
-A 204 response is terminated by the end of the header section; it
-cannot contain content or trailers.
+204 응답은 헤더 섹션의 끝에 의해 종료된다; 그것은 콘텐츠나 트레일러를 포함할 수 없다.
 
-A 204 response is heuristically cacheable; i.e., unless otherwise
-indicated by the method definition or explicit cache controls (see
-Section 4.2.2 of [CACHING]).
+204 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]) heuristic하게 캐시 할 수 있다.
 
-15.3.6. 205 Reset Content
 
-The 205 (Reset Content) status code indicates that the server has
-fulfilled the request and desires that the user agent reset the
-"document view", which caused the request to be sent, to its original
-state as received from the origin server.
+#### 15.3.6. 205 Reset Content
 
-This response is intended to support a common data entry use case
-where the user receives content that supports data entry (a form,
-notepad, canvas, etc.), enters or manipulates data in that space,
-causes the entered data to be submitted in a request, and then the
-data entry mechanism is reset for the next entry so that the user can
-easily initiate another input action.
+205 (Reset Content) 상태 코드는 서버가 요청을 이행했고 유저 에이전트가 오리진 서버에서 수신하는대로, 보내진 요청을 유발한, "document view"를 원래 상태로 재설정하기를 원한다는 것을 나타낸다.
 
-Since the 205 status code implies that no additional content will be
-provided, a server MUST NOT generate content in a 205 response.
+이 응답은 사용자가 데이터 입력을 지원하는 컨텐츠(양식, 메모장, 캔버스 등)를 수신하고, 해당 공간에 데이터를 입력하거나 조작하여, 입력된 데이터가 요청에 제출되도록 한 다음, 사용자가 다른 입력 작업을 쉽게 시작할 수 있도록 다음 입력을 위해 데이터 입력 메커니즘이 재설정되는 일반적인 데이터 입력 사용 사례를 지원하기 위한 것이다.
 
-15.3.7. 206 Partial Content
 
-The 206 (Partial Content) status code indicates that the server is
-successfully fulfilling a range request for the target resource by
-transferring one or more parts of the selected representation.
+205 상태 코드는 추가 콘텐츠가 제공되지 않음을 의미하므로, 서버는 205 응답으로 콘텐츠를 절대(MUST NOT) 생성해서는 안 된다.
 
-A server that supports range requests (Section 14) will usually
-attempt to satisfy all of the requested ranges, since sending less
-data will likely result in another client request for the remainder.
-However, a server might want to send only a subset of the data
-requested for reasons of its own, such as temporary unavailability,
-cache efficiency, load balancing, etc. Since a 206 response is self-
-descriptive, the client can still understand a response that only
-partially satisfies its range request.
+#### 15.3.7. 206 Partial Content
 
-A client MUST inspect a 206 response's Content-Type and Content-Range
-field(s) to determine what parts are enclosed and whether additional
-requests are needed.
+206 (Partial Content) 상태 코드는 서버가 선택한 표현의 하나 이상의 부분을 전송하여 대상 리소스에 대한 범위 요청을 성공적으로 수행하고 있음을 나타낸다.
 
-A server that generates a 206 response MUST generate the following
-header fields, in addition to those required in the subsections
-below, if the field would have been sent in a 200 (OK) response to
-the same request: Date, Cache-Control, ETag, Expires,
-Content-Location, and Vary.
+범위 요청을 지원하는 서버 (14절) 는 일반적으로 요청된 모든 범위를 충족하려고 시도하는데, 이는 데이터를 적게 보내면 나머지 부분에 대한 또 다른 클라이언트 요청이 발생할 가능성이 있기 때문이다. 그러나 서버는 일시적인 사용 불가, 캐시 효율성, 로드 밸런싱등과 같은 이유로 요청된 데이터의 일부만 전송하고자 할 수 있다. 206 응답은 자기 설명적이기 때문에, 클라이언트는 범위 요청을 부분적으로만 만족시키는 응답을 이해할 수 있다.
 
-A Content-Length header field present in a 206 response indicates the
-number of octets in the content of this message, which is usually not
-the complete length of the selected representation. Each
-Content-Range header field includes information about the selected
-representation's complete length.
+클라이언트는 206 응답의 콘텐츠 유형 및 콘텐츠 범위 필드를 검사하여 어떤 부분이 포함되는지, 추가 요청이 필요한지 여부를 반드시(MUST) 확인해야 한다.
 
-A sender that generates a 206 response to a request with an If-Range
-header field SHOULD NOT generate other representation header fields
-beyond those required because the client already has a prior response
-containing those header fields. Otherwise, a sender MUST generate
-all of the representation header fields that would have been sent in
-a 200 (OK) response to the same request.
+206 응답을 생성하는 서버는 다음 헤더 필드들이 같은 요청에 대한 200(OK) 응답에서 보내졌을 것이라면 반드시(MUST) 해당 헤더 필드들을, 아래 하위 절들에서 요구되는 것들 외에 추가로, 생성해야 한다: Date, Cache-Control, ETag, Expires,
+Content-Location, 그리고 Vary.
 
-A 206 response is heuristically cacheable; i.e., unless otherwise
-indicated by explicit cache controls (see Section 4.2.2 of
-[CACHING]).
 
-15.3.7.1. Single Part
+206 응답에 있는 Content-Length 헤더 필드는 이 메세지 콘텐츠의 옥텟 수를 나타내며, 일반적으로 선택한 표현의 전체 길이가 아니다. 각 Content-Range 헤더 필드는 선택한 표현의 전체 길이에 대한 정보가 포함를 포함한다.
 
-If a single part is being transferred, the server generating the 206
-response MUST generate a Content-Range header field, describing what
-range of the selected representation is enclosed, and a content
-consisting of the range. For example:
+If-Range 헤더 필드를 갖는 요청에 대한 206 응답을 생성하는 발신자는 클라이언트가 이미 해당 헤더 필드를 포함하는 이전 응답을 가지고 있기 때문에 요구되는 것 이상의 다른 표현 헤더 필드를 웬만해서는(SHOULD NOT) 생성해서는 안 된다. 그렇지 않으면 발신자는 동일한 요청에 대해 200(OK) 응답으로 전송되었을 모든 표현 헤더 필드를 반드시(MUST) 생성해야 한다.
+
+206 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]) heuristic하게 캐시 할 수 있다.
+
+##### 15.3.7.1. Single Part
+
+만약 단일 부분이 전송되는 경우, 206 응답을 생성하는 서버는, 선택한 표현의 어떤 범위가 포함되는지를 기술하는 Content-Range 헤더 필드 및 범위로 구성되는 콘텐츠틑 반드시(MUST) 생성해야 한다. 예를 들어:
 
 HTTP/1.1 206 Partial Content
 Date: Wed, 15 Nov 1995 06:25:24 GMT
@@ -5100,23 +4935,11 @@ Content-Type: image/gif
 
 ... 26012 bytes of partial image data ...
 
-15.3.7.2. Multiple Parts
+##### 15.3.7.2. Multiple Parts
 
-If multiple parts are being transferred, the server generating the
-206 response MUST generate "multipart/byteranges" content, as defined
-in Section 14.6, and a Content-Type header field containing the
-"multipart/byteranges" media type and its required boundary
-parameter. To avoid confusion with single-part responses, a server
-MUST NOT generate a Content-Range header field in the HTTP header
-section of a multiple part response (this field will be sent in each
-part instead).
+여러 부분이 전송되는 경우, 206 응답을 생성하는 서버는 14.6절에 정의된 대로 “multipart/byteranges” 콘텐츠를 생성하고, “multipart/byteranges” 미디어 타입 및 필수 경계 매개변수를 포함하는 Content-Type 헤더 필드를 반드시(MUST) 생성해야 한다. 단일 부분 응답과의 혼동을 방지하기 위해 서버는 다중 파트 응답의 HTTP 헤더 섹션에 Content-Range 헤더 필드를 생성해서는 안된다 (이 필드는 대신 각 파트에 전송된다).
 
-Within the header area of each body part in the multipart content,
-the server MUST generate a Content-Range header field corresponding
-to the range being enclosed in that body part. If the selected
-representation would have had a Content-Type header field in a 200
-(OK) response, the server SHOULD generate that same Content-Type
-header field in the header area of each body part. For example:
+다중 파트 콘텐츠의 각 body 부분의 헤더 영역 내에서, 서버는 해당 body 부분으로 둘러싸인 범위에 해당하는 Content-Range 헤더 필드를 생성해야 한다. 만약 선택한 표현에 200(OK) 응답에서 Content-Type 헤더 필드가 있다면, 서버는 각 body 부분의 헤더 영역에 동일한 Content-Type 헤더 필드를 생성해야 한다. 예를 들어:
 
 HTTP/1.1 206 Partial Content
 Date: Wed, 15 Nov 1995 06:25:24 GMT
@@ -5136,458 +4959,186 @@ Content-Range: bytes 7000-7999/8000
 ...the second range
 --THIS_STRING_SEPARATES--
 
-When multiple ranges are requested, a server MAY coalesce any of the
-ranges that overlap, or that are separated by a gap that is smaller
-than the overhead of sending multiple parts, regardless of the order
-in which the corresponding range-spec appeared in the received Range
-header field. Since the typical overhead between each part of a
-"multipart/byteranges" is around 80 bytes, depending on the selected
-representation's media type and the chosen boundary parameter length,
-it can be less efficient to transfer many small disjoint parts than
-it is to transfer the entire selected representation.
-
-A server MUST NOT generate a multipart response to a request for a
-single range, since a client that does not request multiple parts
-might not support multipart responses. However, a server MAY
-generate a "multipart/byteranges" response with only a single body
-part if multiple ranges were requested and only one range was found
-to be satisfiable or only one range remained after coalescing. A
-client that cannot process a "multipart/byteranges" response MUST NOT
-generate a request that asks for multiple ranges.
-
-A server that generates a multipart response SHOULD send the parts in
-the same order that the corresponding range-spec appeared in the
-received Range header field, excluding those ranges that were deemed
-unsatisfiable or that were coalesced into other ranges. A client
-that receives a multipart response MUST inspect the Content-Range
-header field present in each body part in order to determine which
-range is contained in that body part; a client cannot rely on
-receiving the same ranges that it requested, nor the same order that
-it requested.
-
-15.3.7.3. Combining Parts
-
-A response might transfer only a subrange of a representation if the
-connection closed prematurely or if the request used one or more
-Range specifications. After several such transfers, a client might
-have received several ranges of the same representation. These
-ranges can only be safely combined if they all have in common the
-same strong validator (Section 8.8.1).
-
-A client that has received multiple partial responses to GET requests
-on a target resource MAY combine those responses into a larger
-continuous range if they share the same strong validator.
-
-If the most recent response is an incomplete 200 (OK) response, then
-the header fields of that response are used for any combined response
-and replace those of the matching stored responses.
-
-If the most recent response is a 206 (Partial Content) response and
-at least one of the matching stored responses is a 200 (OK), then the
-combined response header fields consist of the most recent 200
-response's header fields. If all of the matching stored responses
-are 206 responses, then the stored response with the most recent
-header fields is used as the source of header fields for the combined
-response, except that the client MUST use other header fields
-provided in the new response, aside from Content-Range, to replace
-all instances of the corresponding header fields in the stored
-response.
-
-The combined response content consists of the union of partial
-content ranges within the new response and all of the matching stored
-responses. If the union consists of the entire range of the
-representation, then the client MUST process the combined response as
-if it were a complete 200 (OK) response, including a Content-Length
-header field that reflects the complete length. Otherwise, the
-client MUST process the set of continuous ranges as one of the
-following: an incomplete 200 (OK) response if the combined response
-is a prefix of the representation, a single 206 (Partial Content)
-response containing "multipart/byteranges" content, or multiple 206
-(Partial Content) responses, each with one continuous range that is
-indicated by a Content-Range header field.
-
-15.4. Redirection 3xx
-
-The 3xx (Redirection) class of status code indicates that further
-action needs to be taken by the user agent in order to fulfill the
-request. There are several types of redirects:
-
-1.  Redirects that indicate this resource might be available at a
-    different URI, as provided by the Location header field, as in
-    the status codes 301 (Moved Permanently), 302 (Found), 307
-    (Temporary Redirect), and 308 (Permanent Redirect).
-
-2.  Redirection that offers a choice among matching resources capable
-    of representing this resource, as in the 300 (Multiple Choices)
-    status code.
-
-3.  Redirection to a different resource, identified by the Location
-    header field, that can represent an indirect response to the
-    request, as in the 303 (See Other) status code.
-
-4.  Redirection to a previously stored result, as in the 304 (Not
-    Modified) status code.
-
-    | _Note:_ In HTTP/1.0, the status codes 301 (Moved Permanently)
-    | and 302 (Found) were originally defined as method-preserving
-    | ([HTTP/1.0], Section 9.3) to match their implementation at
-    | CERN; 303 (See Other) was defined for a redirection that
-    | changed its method to GET. However, early user agents split on
-    | whether to redirect POST requests as POST (according to then-
-    | current specification) or as GET (the safer alternative when
-    | redirected to a different site). Prevailing practice
-    | eventually converged on changing the method to GET. 307
-    | (Temporary Redirect) and 308 (Permanent Redirect) [RFC7538]
-    | were later added to unambiguously indicate method-preserving
-    | redirects, and status codes 301 and 302 have been adjusted to
-    | allow a POST request to be redirected as GET.
-
-If a Location header field (Section 10.2.2) is provided, the user
-agent MAY automatically redirect its request to the URI referenced by
-the Location field value, even if the specific status code is not
-understood. Automatic redirection needs to be done with care for
-methods not known to be safe, as defined in Section 9.2.1, since the
-user might not wish to redirect an unsafe request.
-
-When automatically following a redirected request, the user agent
-SHOULD resend the original request message with the following
-modifications:
-
-1.  Replace the target URI with the URI referenced by the redirection
-    response's Location header field value after resolving it
-    relative to the original request's target URI.
-
-2.  Remove header fields that were automatically generated by the
-    implementation, replacing them with updated values as appropriate
-    to the new request. This includes:
-
-    1.  Connection-specific header fields (see Section 7.6.1),
-
-    2.  Header fields specific to the client's proxy configuration,
-        including (but not limited to) Proxy-Authorization,
-
-    3.  Origin-specific header fields (if any), including (but not
-        limited to) Host,
-
-    4.  Validating header fields that were added by the
-        implementation's cache (e.g., If-None-Match,
-        If-Modified-Since), and
-
-    5.  Resource-specific header fields, including (but not limited
-        to) Referer, Origin, Authorization, and Cookie.
-
-3.  Consider removing header fields that were not automatically
-    generated by the implementation (i.e., those present in the
-    request because they were added by the calling context) where
-    there are security implications; this includes but is not limited
-    to Authorization and Cookie.
-
-4.  Change the request method according to the redirecting status
-    code's semantics, if applicable.
-
-5.  If the request method has been changed to GET or HEAD, remove
-    content-specific header fields, including (but not limited to)
-    Content-Encoding, Content-Language, Content-Location,
-    Content-Type, Content-Length, Digest, Last-Modified.
-
-A client SHOULD detect and intervene in cyclical redirections (i.e.,
-"infinite" redirection loops).
-
-      |  *Note:* An earlier version of this specification recommended a
-      |  maximum of five redirections ([RFC2068], Section 10.3).
-      |  Content developers need to be aware that some clients might
-      |  implement such a fixed limitation.
-
-15.4.1. 300 Multiple Choices
-
-The 300 (Multiple Choices) status code indicates that the target
-resource has more than one representation, each with its own more
-specific identifier, and information about the alternatives is being
-provided so that the user (or user agent) can select a preferred
-representation by redirecting its request to one or more of those
-identifiers. In other words, the server desires that the user agent
-engage in reactive negotiation to select the most appropriate
-representation(s) for its needs (Section 12).
-
-If the server has a preferred choice, the server SHOULD generate a
-Location header field containing a preferred choice's URI reference.
-The user agent MAY use the Location field value for automatic
-redirection.
-
-For request methods other than HEAD, the server SHOULD generate
-content in the 300 response containing a list of representation
-metadata and URI reference(s) from which the user or user agent can
-choose the one most preferred. The user agent MAY make a selection
-from that list automatically if it understands the provided media
-type. A specific format for automatic selection is not defined by
-this specification because HTTP tries to remain orthogonal to the
-definition of its content. In practice, the representation is
-provided in some easily parsed format believed to be acceptable to
-the user agent, as determined by shared design or content
-negotiation, or in some commonly accepted hypertext format.
-
-A 300 response is heuristically cacheable; i.e., unless otherwise
-indicated by the method definition or explicit cache controls (see
-Section 4.2.2 of [CACHING]).
-
-      |  *Note:* The original proposal for the 300 status code defined
-      |  the URI header field as providing a list of alternative
-      |  representations, such that it would be usable for 200, 300, and
-      |  406 responses and be transferred in responses to the HEAD
-      |  method.  However, lack of deployment and disagreement over
-      |  syntax led to both URI and Alternates (a subsequent proposal)
-      |  being dropped from this specification.  It is possible to
-      |  communicate the list as a Link header field value [RFC8288]
-      |  whose members have a relationship of "alternate", though
-      |  deployment is a chicken-and-egg problem.
-
-15.4.2. 301 Moved Permanently
-
-The 301 (Moved Permanently) status code indicates that the target
-resource has been assigned a new permanent URI and any future
-references to this resource ought to use one of the enclosed URIs.
-The server is suggesting that a user agent with link-editing
-capability can permanently replace references to the target URI with
-one of the new references sent by the server. However, this
-suggestion is usually ignored unless the user agent is actively
-editing references (e.g., engaged in authoring content), the
-connection is secured, and the origin server is a trusted authority
-for the content being edited.
-
-The server SHOULD generate a Location header field in the response
-containing a preferred URI reference for the new permanent URI. The
-user agent MAY use the Location field value for automatic
-redirection. The server's response content usually contains a short
-hypertext note with a hyperlink to the new URI(s).
-
-      |  *Note:* For historical reasons, a user agent MAY change the
-      |  request method from POST to GET for the subsequent request.  If
-      |  this behavior is undesired, the 308 (Permanent Redirect) status
-      |  code can be used instead.
-
-A 301 response is heuristically cacheable; i.e., unless otherwise
-indicated by the method definition or explicit cache controls (see
-Section 4.2.2 of [CACHING]).
-
-15.4.3. 302 Found
-
-The 302 (Found) status code indicates that the target resource
-resides temporarily under a different URI. Since the redirection
-might be altered on occasion, the client ought to continue to use the
-target URI for future requests.
-
-The server SHOULD generate a Location header field in the response
-containing a URI reference for the different URI. The user agent MAY
-use the Location field value for automatic redirection. The server's
-response content usually contains a short hypertext note with a
-hyperlink to the different URI(s).
-
-      |  *Note:* For historical reasons, a user agent MAY change the
-      |  request method from POST to GET for the subsequent request.  If
-      |  this behavior is undesired, the 307 (Temporary Redirect) status
-      |  code can be used instead.
-
-15.4.4. 303 See Other
-
-The 303 (See Other) status code indicates that the server is
-redirecting the user agent to a different resource, as indicated by a
-URI in the Location header field, which is intended to provide an
-indirect response to the original request. A user agent can perform
-a retrieval request targeting that URI (a GET or HEAD request if
-using HTTP), which might also be redirected, and present the eventual
-result as an answer to the original request. Note that the new URI
-in the Location header field is not considered equivalent to the
-target URI.
-
-This status code is applicable to any HTTP method. It is primarily
-used to allow the output of a POST action to redirect the user agent
-to a different resource, since doing so provides the information
-corresponding to the POST response as a resource that can be
-separately identified, bookmarked, and cached.
-
-A 303 response to a GET request indicates that the origin server does
-not have a representation of the target resource that can be
-transferred by the server over HTTP. However, the Location field
-value refers to a resource that is descriptive of the target
-resource, such that making a retrieval request on that other resource
-might result in a representation that is useful to recipients without
-implying that it represents the original target resource. Note that
-answers to the questions of what can be represented, what
-representations are adequate, and what might be a useful description
-are outside the scope of HTTP.
-
-Except for responses to a HEAD request, the representation of a 303
-response ought to contain a short hypertext note with a hyperlink to
-the same URI reference provided in the Location header field.
-
-15.4.5. 304 Not Modified
-
-The 304 (Not Modified) status code indicates that a conditional GET
-or HEAD request has been received and would have resulted in a 200
-(OK) response if it were not for the fact that the condition
-evaluated to false. In other words, there is no need for the server
-to transfer a representation of the target resource because the
-request indicates that the client, which made the request
-conditional, already has a valid representation; the server is
-therefore redirecting the client to make use of that stored
-representation as if it were the content of a 200 (OK) response.
-
-The server generating a 304 response MUST generate any of the
-following header fields that would have been sent in a 200 (OK)
-response to the same request:
-
-- Content-Location, Date, ETag, and Vary
-
-- Cache-Control and Expires (see [CACHING])
-
-Since the goal of a 304 response is to minimize information transfer
-when the recipient already has one or more cached representations, a
-sender SHOULD NOT generate representation metadata other than the
-above listed fields unless said metadata exists for the purpose of
-guiding cache updates (e.g., Last-Modified might be useful if the
-response does not have an ETag field).
-
-Requirements on a cache that receives a 304 response are defined in
-Section 4.3.4 of [CACHING]. If the conditional request originated
-with an outbound client, such as a user agent with its own cache
-sending a conditional GET to a shared proxy, then the proxy SHOULD
-forward the 304 response to that client.
-
-A 304 response is terminated by the end of the header section; it
-cannot contain content or trailers.
-
-15.4.6. 305 Use Proxy
-
-The 305 (Use Proxy) status code was defined in a previous version of
-this specification and is now deprecated (Appendix B of [RFC7231]).
-
-15.4.7. 306 (Unused)
-
-The 306 status code was defined in a previous version of this
-specification, is no longer used, and the code is reserved.
-
-15.4.8. 307 Temporary Redirect
-
-The 307 (Temporary Redirect) status code indicates that the target
-resource resides temporarily under a different URI and the user agent
-MUST NOT change the request method if it performs an automatic
-redirection to that URI. Since the redirection can change over time,
-the client ought to continue using the original target URI for future
-requests.
-
-The server SHOULD generate a Location header field in the response
-containing a URI reference for the different URI. The user agent MAY
-use the Location field value for automatic redirection. The server's
-response content usually contains a short hypertext note with a
-hyperlink to the different URI(s).
-
-15.4.9. 308 Permanent Redirect
-
-The 308 (Permanent Redirect) status code indicates that the target
-resource has been assigned a new permanent URI and any future
-references to this resource ought to use one of the enclosed URIs.
-The server is suggesting that a user agent with link-editing
-capability can permanently replace references to the target URI with
-one of the new references sent by the server. However, this
-suggestion is usually ignored unless the user agent is actively
-editing references (e.g., engaged in authoring content), the
-connection is secured, and the origin server is a trusted authority
-for the content being edited.
-
-The server SHOULD generate a Location header field in the response
-containing a preferred URI reference for the new permanent URI. The
-user agent MAY use the Location field value for automatic
-redirection. The server's response content usually contains a short
-hypertext note with a hyperlink to the new URI(s).
-
-A 308 response is heuristically cacheable; i.e., unless otherwise
-indicated by the method definition or explicit cache controls (see
-Section 4.2.2 of [CACHING]).
-
-      |  *Note:* This status code is much younger (June 2014) than its
-      |  sibling codes and thus might not be recognized everywhere.  See
-      |  Section 4 of [RFC7538] for deployment considerations.
-
-15.5. Client Error 4xx
-
-The 4xx (Client Error) class of status code indicates that the client
-seems to have erred. Except when responding to a HEAD request, the
-server SHOULD send a representation containing an explanation of the
-error situation, and whether it is a temporary or permanent
-condition. These status codes are applicable to any request method.
-User agents SHOULD display any included representation to the user.
-
-15.5.1. 400 Bad Request
-
-The 400 (Bad Request) status code indicates that the server cannot or
-will not process the request due to something that is perceived to be
-a client error (e.g., malformed request syntax, invalid request
-message framing, or deceptive request routing).
-
-15.5.2. 401 Unauthorized
-
-The 401 (Unauthorized) status code indicates that the request has not
-been applied because it lacks valid authentication credentials for
-the target resource. The server generating a 401 response MUST send
-a WWW-Authenticate header field (Section 11.6.1) containing at least
-one challenge applicable to the target resource.
-
-If the request included authentication credentials, then the 401
-response indicates that authorization has been refused for those
-credentials. The user agent MAY repeat the request with a new or
-replaced Authorization header field (Section 11.6.2). If the 401
-response contains the same challenge as the prior response, and the
-user agent has already attempted authentication at least once, then
-the user agent SHOULD present the enclosed representation to the
-user, since it usually contains relevant diagnostic information.
-
-15.5.3. 402 Payment Required
-
-The 402 (Payment Required) status code is reserved for future use.
-
-15.5.4. 403 Forbidden
-
-The 403 (Forbidden) status code indicates that the server understood
-the request but refuses to fulfill it. A server that wishes to make
-public why the request has been forbidden can describe that reason in
-the response content (if any).
-
-If authentication credentials were provided in the request, the
-server considers them insufficient to grant access. The client
-SHOULD NOT automatically repeat the request with the same
-credentials. The client MAY repeat the request with new or different
-credentials. However, a request might be forbidden for reasons
-unrelated to the credentials.
-
-An origin server that wishes to "hide" the current existence of a
-forbidden target resource MAY instead respond with a status code of
-404 (Not Found).
-
-15.5.5. 404 Not Found
-
-The 404 (Not Found) status code indicates that the origin server did
-not find a current representation for the target resource or is not
-willing to disclose that one exists. A 404 status code does not
-indicate whether this lack of representation is temporary or
-permanent; the 410 (Gone) status code is preferred over 404 if the
-origin server knows, presumably through some configurable means, that
-the condition is likely to be permanent.
-
-A 404 response is heuristically cacheable; i.e., unless otherwise
-indicated by the method definition or explicit cache controls (see
-Section 4.2.2 of [CACHING]).
-
-15.5.6. 405 Method Not Allowed
-
-The 405 (Method Not Allowed) status code indicates that the method
-received in the request-line is known by the origin server but not
-supported by the target resource. The origin server MUST generate an
-Allow header field in a 405 response containing a list of the target
-resource's currently supported methods.
-
-A 405 response is heuristically cacheable; i.e., unless otherwise
-indicated by the method definition or explicit cache controls (see
-Section 4.2.2 of [CACHING]).
+여러 범위들이 요청될 때, 서버는 아마(MAY) 겹치거나, 혹은 여러 파트들을 보낼 때의 오버헤드 보다 작은 간격으로 나눠진 어느 범위들이든 합칠 수 있을 것이며, 수신된 Range 헤더 필드에서 해당하는 range-spec이 나타나는 순서와는 관계 없다. "multiple/byteranges"의 각 파트들 사이의 전형적인 오버헤드는 80 바이트 정도이기 때문에, 선택된 표현의 미디어 타입과 선택된 경계 파라미터 길이에 따라, 선택된 표현의 전체를 전송하는 것보다 분리된 많은 작은 부분들을 전송하는 것이 덜 효율적일 수 있다.
+
+여러 부분을 요청하지 않는 클라이언트는 다중 부분 응답을 지원하지 않을 수 있으므로 서버는 단일 범위에 대한 요청에 대해 다중 부분 응답을 절대(MUST NOT) 생성해서는 안 된다. 그러나, 여러 범위가 요청되었으나 하나의 범위만이 만족스러운 것으로 확인되거나 합쳐진 후 하나의 범위만 남은 경우 서버는 단일 body 부분으로만 "multipart/byteranges" 응답을 아마(MAY) 생성할 수 있다. "multipart/byteranges” 응답을 처리할 수 없는 클라이언트는 다중 범위를 요청하는 요청을 절대(MUST NOT) 생성해서는 안 된다.
+
+다중 파트 응답을 생성하는 서버는 수신된 범위 헤더 필드에 대한 범위 사양이 표시된 순서대로 파트를 웬만하면(SHOULD) 보내야 하며, 만족스럽지 않은 것으로 간주되거나 다른 범위로 합쳐진 범위는 제외해야 한다. 다중 파트 응답을 수신하는 클라이언트는 각 body 파트에 있는 Content-Range 헤더 필드를 반드시(MUST) 검사하여 해당 body 파트에 포함된 범위를 확인해야 한다; 클라이언트는 요청한 것과 동일한 범위나, 동일한 순서를 받을 것이라고 확신할 수 없다.
+
+##### 15.3.7.3. Combining Parts
+
+연결이 조기에 종료되거나 요청이 하나 이상의 Range 지정들을 사용한 경우 응답은 오직 표현의 한 부분 범위만 전송할 수 있을 것이다. 몇 번의 그러한 전송 후에, 클라이언트는 같은 표현의 여러 범위들을 수신했을지 모른다. 이 범위들은 오직 그것들이 공통적으로 같은 강한 검증자(8.8.1절)를 가지고 있어야만 안전하게 조합될 수 있다.
+
+타켓 리소스에 대한 GET 요청에 대해 여러 부분을 받은 클라이언트는 동일한 강력한 검증자를 공유하는 경우 아마(MAY) 해당 응답을 더 큰 연속 범위로 결합할 수 있을 것이다.
+
+가장 최근 응답이 불완전한 200(OK) 응답인 경우, 해당 응답의 헤더 필드는 결합된 모든 응답에 사용되며 일치하는 저장된 응답의 헤더 필드를 대체한다.
+
+가장 최근 응답이 206(Partial Content) 응답이고 일치하는 저장된 응답들 중 최소 하나가 200(OK)인 경우, 조합된 응답 헤더 필드들은 가장 최근의 200 응답의 헤더 필드들로 구성된다. 만약 일치하는 저장된 모든 응답들이 206 응답들이라면, 가장 최근의 헤더 필드들과 함께 저장된 응답이 조합된 응답을 위한 헤더 필드들의 소스로 사용되며, 단 클라이언트는, Content-Range 외에, 저장된 응답의 해당하는 헤더 필드들의 모든 인스턴스들을 대체하기 위해서는 반드시(MUST) 새로운 응답에서 제공된 다른 헤더 필드들을 사용해야 한다.
+
+조합된 응답 콘텐츠는 새로운 응답 내의 부분 콘텐츠 범위들과 모든 일치하는 저장된 응답들의 결합으로 구성된다. 만약 결합이 표현의 모든 범위로 구성된다면, 클라이언트는 반드시(MUST) 조합된 응답을, 완전한 길이를 반영하는 Content-Length 헤더 필드를 포함해, 완전한 200(OK) 응답인 것 처럼 처리해야 한다. 그렇지 않으면, 클라이언트는 반드시(MUST) 연속적인 범위들의 집합을 다음 중 하나로 처리해야 한다: 조합된 응답이 표현의 접두사인 경우 불완전한 200(OK) 응답으로, 혹은 "multipart/byteranges" 콘텐츠를 포함하는 단일 206(Partial Content)이나, 각각 Content-Range 헤더 필드에 의해 지정된 한 연속적인 범위로 된, 여러 206(Partial Content) 응답들로.
+
+
+
+### 15.4. Redirection 3xx
+
+상태 코드의 3xx (Redirection) 클래스는 요청을 이행하기 위해 유저 에이전트가 추가 조치를 취할 필요가 있음을 나타낸다. redirects에는 여러 유형이 있다:
+
+1.  301 (Moved Permanently), 302 (Found), 307 (Temporary Redirect), 그리고 308 (Permanent Redirect)에서와 같이, Location 헤더 필드에 의해 제공된대로, 해당 리소스가 다른 URI에서 가용할지 모른다는 것을 나타내는 리다이렉트들.
+
+2.  300(Multiple Choices) 상태 코드에서와 같이, 해당 리소스를 표현할 수 있는 일치하는 리소스들 중의 선택을 제공하는 리다이렉션.
+
+3.  303(See Other) 상태 코드에서와 같이, 요청에 대한 간접적인 응답을 나타낼 수 있는, Location 헤더 필드에 의해 식별되는, 다른 리소스로의 리다이렉션.
+
+4.  304(Not Modified) 상태 코드에서와 같이, 이전에 저장된 결과로의 리다이렉션.
+
+**Note:** HTTP/1.0에서 상태 코드 301 (Moved Permanently) 과 302 (Found)는 원래 메서드 보존 ([[HTTP/1.0](https://www.rfc-editor.org/info/rfc1945)], 9.3절)으로 정의되어 CERN에서의 구현과 일치하고,303 (See Other)은 메서드를 GET으로 변경한 리다이렉션을 위해 정의되었다. 그러나, 초기 유저 에이전트는 POST 요청을 POST로 리다이렉션할지 (당시 사양에 따라) 아니면 GET으로 리다이렉션할지 (다른 사이트로 리다이렉션할 때 더 안전한 대안) 에 대해 의견이 분분했다. 결국 일반적인 관행은 GET으로 방법을 변경하는 것으로 수렴되었다. 이후 메소드 보존 리다이렉션을 명확하게 표시하기 위해307 (Temporary Redirect) 및 308 (Permanent Redirect) [[RFC7538](https://www.rfc-editor.org/info/rfc8288)]이 추가되었고, 상태 코드 301 및 302는 POST 요청을 GET으로 리다이렉트되도록 조정되었다.
+
+Location 헤더 필드 (10.2.2절) 가 제공되면, 유저 에이전트는 특정 상태 코드를 이해하지 못하더라도 Location 필드 값에 참조된 URI로 요청을 아마(MAY) 자동으로 리다이렉션할 수 있다. 사용자가 안전하지 않은 요청을 리다이렉션하고 싶지 않을 수 있으므로 9.2.1절에 정의된 대로 안전하지 않은 방법에 대해서는 자동 리다이렉션을 신중하게 수행해야 한다.
+
+리다이렉션된 요청을 자동으로 따르는 경우, 유저 에이전트는 원래 요청 메세지를 다음과 같이 수정하여 웬만하면(SHOULD) 다음과 같이 수정하여 다시 전송해야 한다:
+
+1.  원본 요청의 타겟 URI를 기준으로 확인한 후 리디렉션 응답의 Location 헤더 필드 값에서 참조하는 URI로 타겟 URI를 바꾼다.
+
+2.  구현에 의해 자동으로 생성된 헤더 필드를 제거하고, 새로운 요청에 적합한 업데이트된 값으로 대체한다. 여기에는 다음이 포함된다:
+
+    1.  Connection-specific 헤더 필드 (7.6.1절 참조),
+
+    2.  Proxy-Authorization을 포함하여(이에 제한되지 않음), 클라이언트의 프록시 구성과 관련된 헤더 필드,
+
+    3.  Origin-별 헤더 필드(있는 경우), Host를 포함한(이에 제한되지 않음),
+
+    4.  구현 캐시에 의해 추가된 헤더 필드(예: If-None-Match, If-Modified-Since) 검증 헤더 필드, 및
+
+    5.  리소스별 헤더 필드, Referer, Origin, Authorization, 및 Cookie를 포함한다(이에 제한되지 않음).
+
+3.  보안에 영향을 미치는 경우 구현에 의해 자동으로 생성되지 않은 헤더 필드(즉, 호출 컨텍스트에 의해 추가되어 요청에 존재하는 필드) 를 제거하는 것을 고려하라. 여기에는 Authorization 및 Cookie가 포함되지만 이에 제한되지 않는다.
+
+4.  해당하는 경우, 리다이렉션 상태 코드의 semantics에 따라 요청 방법을 변경한다.
+
+5.  요청 메소드가 GET 또는 HEAD로 변경된 경우, Content-Encoding, Content-Language, Content-Location, Content-Type, Content-Length, Digest, Last-Modified (이에 제한되지 않음) 콘텐츠별 헤더 필드를 제거한다.
+
+클라이언트는 순환적 리다이렉션(즉, “무한” 리다이렉션 루프) 을 웬만하면(SHOULD) 감지하고 개입해야 한다.
+
+**Note:**  이 사양의 이전 버전에서는 최대 5개의 리다이렉션을 권장했다([[RFC2068](https://www.rfc-editor.org/info/rfc2068)], 10.3절).콘텐츠 개발자들은 일부 클라이언트가 이러한 고정된 제한을 구현할 수 있다는 점을 인지할 필요가 있다.
+
+#### 15.4.1. 300 Multiple Choices
+
+300 (Multiple Choices) 상태 코드는 타겟 리소스에 각각 더 구체적인 식별자가 있는 하나 이상의 표현이 있고, 유저 (또는 유저 에이전트)가 요청을 하나 이상의 식별자로 리다이렉션하여 선호하는 표현을 선택할 수 있도록 정보가 제공되고 있음을 나타낸다. 즉. 서버는 사용자 에이전트가 자신의 요구에 가장 적합한 표현(들)을 선택하기 위해 반응형 협상에 참여하기를 원한다 (12절).
+
+서버에 선호하는 선택, 서버가 선호하는 선택이 있는 경우, 서버는 기본 설정의 URI 참조가 포함된 Location 헤더 필드를 웬만하면(SHOULD) 생성해야 한다. 사용자는 아마(MAY) 자동 리디렉션을 위해 Location 헤더 필드를 사용할 수 있을 것이다.
+
+HEAD 이외의 요청 메소드의 경우, 서버는 유저 또는 유저 에이전트가 가장 선호하는 것을 선택할 수 있는 표현 메타데이터 및 URI 참조 목록이 포함된 콘텐츠를 300응답에 웬만하면(SHOULD) 생성해야 한다. 유저 에이전트가 제공된 미디어 유형을 이해하는 경우 해당 목록에서 자동으로 아마(MAY) 선택할 수 있다. HTTP는 콘텐츠의 정의에 직교를 유지하려고 하기 때문에 자동 선택을 위한 특정 형식은 이 사양에 정의되어 있지 않다. 실제로 표현은 공유 디자인 또는 콘텐츠 협상에 의해 결정된 대로 유저 에이전트가 수용 가능한 것으로 간주되는 쉽게 파싱된 형식 또는 일반적으로 받아들여지는 하이퍼텍스트 형식으로 제공된다.
+
+300 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]) heuristic하게 캐시 할 수 있다.
+
+**Note:** 300 상태 코드에 대한 원래 제안에서는 URI 헤더 필드가 200, 300 및 406 응답에 사용할 수 있고 HEAD 메소드에 대한 응답으로 전송될 수 있도록 대체 표현 목록을 제공하는 것으로 정의했다. representations, such that it would be usable for 200, 300, and그러나, 배포의 부족과 구문에 대한 의견 불일치로 인해 URI와 Alternates (후속 제안)는 이 명세서에서 삭제  되었다. 구성원들이 “alternate” 관계를 갖는 링크 헤더 필드 값 [[RFC8288](https://www.rfc-editor.org/info/rfc8288)]으로 목록을 전달할 수 도 있지만, 배포는 닭과 달걀의 문제다.
+
+#### 15.4.2. 301 Moved Permanently
+
+301 (Moved Permanently) 상태 코드는 타겟 리소스에 새로운 영구 URI가 할당되었음을 나타내며 이 리소스에 대한 향후 참조는 동봉된 URI 중 하나를 사용해야 한다. 서버는 링크 편집 기능이 있는 유저 에이전트가 타겟 URI에 대한 참조를 서버가 보낸 새로운 참조 중 하나로 영구적으로 대체할 수 있다고 제안한다. 그러나, 유저 에이전트가 참조를 적극적으로 편집하고 (예: 콘텐츠 작성에 관여), 연결이 보안되어 있고, origin 서버가 편집 중인 콘텐츠에 대해 신뢰할 수 있는 권한이 아닌 한 이 제한은 보통 무시된다.
+
+
+서버는 새로운 영구 URI에 대한 선호되는 URI 참조가 포함된 응답에 Location 헤더 필드를 웬만하면(SHOULD) 생성해야 한다. 유저 에이전트는 자동 리다이렉션을 위해 Location 필드 값을 아마(MAY) 사용할 수 있다. 서버의 응답 콘텐츠에는 보통 새로운 URI로 연결되는 하이퍼링크가 포함된 짧은 하이퍼텍스트 메모가 포함된다.
+
+**Note:** 과거의 이유로, 유저 에이전트는 후속 요청에 대해요청 방식을 POST에서 GET으로 아마(MAY) 변경할 수 있다. 이 동장을 원하지 않는 경우 308 (Permanent Redirect) 상태 코드를대신 사용할 수 있다.
+
+301 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]) heuristic하게 캐시 할 수 있다.
+
+#### 15.4.3. 302 Found
+
+302 (Found) 상태 코드는 타겟 리소스가 일시적으로 다른 URI에 존재함울 나타낸다. 리다이렉션은 종종 변경될 수 있기 때문에, 클라이언트는 향후 요청을 위해 타겟 URI를 계속 사용해야 한다.
+
+서버는 다른 URI에 대한 URI 참조가 포함된 응답에 Location 헤더 필드를 웬만하면(SHOULD) 생성해야 한다. 유저 에이전트는 자동 리다이렉션을 위해 Location 필드 값을 사용할 수 있다. 서버의 응답 콘텐츠에는 일반적으로 다른 URI로 연결되는 하이퍼링크가 포함된 짧은 하이퍼텍스트 메모가 포함되어 있다.
+
+**Note:** 과거의 이유로, 유저 에이전트는 후속 요청에 대해요청 방식을 POST에서 GET으로 아마(MAY) 변경할 수 있다. 이 동장을 원하지 않는 경우 307 (Temporary Redirect) 상태 코드를대신 사용할 수 있다.
+
+#### 15.4.4. 303 See Other
+
+303 (See Other) 상태 코드는 서버가 유저 에이전트를 다른 리소스로 리다이렉션하고 있음을 나타내며, 이것은 원래 요청에 대한 간접 응답을 제공하기 위해 Location 헤더 필드에 있는 URI로 표시된다. 유저 에이전트는 리다이렉션될 수도 있는 해당 URI(HTTP를 사용하는 경우 GET 또는 HEAD 요청) 를 대상으로 검색 요청을 수행하여, 최종 결과를 원래 요청에 대한 응답으로 표시할 수 있다. Location 헤더 필드에 있는 새로운 URI는 타겟 URI와 동등한 것으로 간주되지 않는다는 점에 유의하라.
+
+이 상태 코드는 모든 HTTP 메소드에 적용할 수 있다. 주로 POST 액션의 출력이 유저 에이전트를 다른 리소스로 리다이렉션할 수 있도록 하는데 사용되는데, 이는 POST 응답에 해당하는 정보를 별도로 식별, 북마크 및 캐시할 수 있는 리소스로 제공하기 때문이다.
+
+GET 요청에 대한 303 응답은 origin 서버가 HTTP를 통해 서버가 전송할 수 있는 타겟 리소스의 표현을 가지고 있지 않음을 나타낸다. 그러나, Location 필드 값은 타겟 리소스를 설명하는 리소스를 참조하므로 다른 리소스에 대한 검색 요청을 하면 원래 타겟 리소스를 나타내지 않으면서도 수신자에게 유용한 표현이 될 수 있다. 무엇을 표현할 수 있는지, 어떤 표현이 적절한지, 무엇이 유용한 설명이 될 수 있는지에 대한 질문에 대한 답은 HTTP의 범위를 벗어난다는 점에 유의하라.
+
+HEAD 요청에 대한 응답을 제외하고 303 응답의 표현에는 Location 헤더 필드에 제공된 동일한 URI 참조에 대한 하이퍼링크가 포함된 짧은 하이퍼텍스트 메모가 포함되어야 한다.
+
+#### 15.4.5. 304 Not Modified
+
+304(Not Modified) 상태 코드는 조건부 GET 혹은 HEAD 요청이 수신됐고 만약 조건이 거짓으로 평가된 사실이 없다면 200(OK) 응답을 발생시켰을 것임을 나타낸다. 다시 말해, 서버는 타겟 리소스의 표현을 전송할 필요 없으며 이는 요청이 요청을 조건부로 만든, 클라이언트가, 이미 유효한 표현을 가졌음을 나타내기 때문이다; 서버는 이리하여 저장된 표현을 200(OK) 응답의 콘텐츠인 것 처럼 사용하도록 클라이언트를 리다이렉트한다.
+
+304 응답을 생성하는 서버는 다음 헤더 필드들 중 같은 요청에 대한 200(OK) 응답에서 전송되었을 어느 것이라도 반드시(MUST) 생성해야 한다.
+
+- Content-Location, Date, ETag, 그리고 Vary
+
+- Cache-Control 그리고 Expires (see [[CACHING](https://www.rfc-editor.org/info/rfc9111)])
+
+304 응답의 목표는 수신자가 이미 하나 이상의 캐시된 표현을 가지고 있을 때 정보 전달을 최소화하는 것 이기 때문에, 송신자는 캐시 업데이트를 안내하기 위한 목적으로 해당 메타데이터가 존재하지 않는 한 위에 나열된 필드 이외의 표현 메타데이터를 웬만해서는(SHOULD NOT) 생성해서는 안 된다 (예: 응답에 ETag 필드가 없는 경우 Last-Modified가 유용할 수 있음).
+
+304 응답을 수신하는 캐시에 대한 요구 사항은 [[CACHING](https://www.rfc-editor.org/info/rfc9111)] 4.3.4절에 정의되어 있다. 조건부 요청이 자신의 캐시가 있는 유저 에이전트가 공유 프록시로 조건부 GET을 전송하는 것과 같이 outbound 클라이언트에서 발생한 경우, 프록시는 304 응답을 해당 클라이언트로 웬만하면(SHOULD) 전달해야 한다.
+
+304 응답은 헤더 섹션이 끝날때 종료된다; 이것은 콘텐츠나 트레일러를 포함할 수 없다.
+
+#### 15.4.6. 305 Use Proxy
+
+305 (Use Proxy) 상태 코드는 이 명세서의 이전 버전에서 정의되었으며 현재는 더 이상 사용되지 않는다 ([[RFC7231](https://www.rfc-editor.org/info/rfc7231)]의 부록 B).
+
+#### 15.4.7. 306 (Unused)
+
+306 상태 코드는 이 명세서의 이전 버전에서 정의되었으며 더 이상 사용되지 않으며 코드는 예약되어 있다.
+
+#### 15.4.8. 307 Temporary Redirect
+
+307 (Temporary Redirect) 상태 코드는 타겟 리소스가 일시적으로 다른 URI에 존재하는 것을 나타내며, 유저 에이전트가 해당 URI로 자동 리다이렉션을 수행하는 경우 요청 메서드를 절대(MUST NOT) 변경해서는 안 된다는 것을 나타낸다. 리다이렉션은 시간이 지남에 따라 변경될 수 있기 때문에, 클라이언트는 향후 요청을 위해 원래 타겟 URI를 계속 사용해야 한다.
+
+서버는 다른 URI에 대한 URI 참조를 포함된 Location 헤더 필드를 응답에 웬만하면(SHOULD) 생성해야 한다. 유저 에이전트는 자동 리다이렉션을 위해 Location 필드 값을 아마(MAY) 사용할 수 있다. 서버의 응답 콘텐츠는 일반적으로 다른 URI로 연결되는 하이퍼링크가 포함된 짧은 하이퍼텍스트 메모를 포함한다.
+
+#### 15.4.9. 308 Permanent Redirect
+
+308 (Permanent Redirect) 상태 코드는 타겟 리소스에 새로운 영구 URI가 할당되었음을 나타내며 향후 이 리소스에 대한 모든 참조는 동봉된 URI 중 하나를 사용해야 한다. 서버는 링크 편집 기능이 있는 유저 에이전트가 타겟 URI에 대한 참조를 서버가 전송한 새로운 참조 중 하나로 영구적으로 대체할 수 있다고 제안하고 있다. 그러나, 유저 에이전트가 참조를 적극적으로 편집하고 있고 (예: 콘텐츠 작성에 관여 중), 연결이 보안되어 있고, origin 서버가 편집 중인 콘텐츠에 대해 신뢰할 수 있는 기관이 아닌 한 이 제안은 보통 무시된다.
+
+서버는 새로운 영구 URI에 대한 URI 참조가 포함된 Location 헤더 필드를 응답에 웬만하면(SHOULD) 생성해야 한다. 유저 에이전트는 자동 리다이렉션을 위해 Location 필드 값을 아마(MAY) 사용할 수 있다. 서버의 응답 콘텐츠에는 일반적으로 새로운 URI로 연결되는 하이퍼링크가 포함된 짧은 하이퍼텍스트 메모가 포함된다.
+
+308 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]) heuristic하게 캐시 할 수 있다.
+
+**Note:** 이 상태 코드는 관련된 코드들보다 휠씬 나중이므로 (2014년 6월) 모든 곳에서 인식되지 않을 수 있다.배포 고려 사항은 [[RFC7538](https://www.rfc-editor.org/info/rfc7538)] 4절을 참조한다.
+
+### 15.5. Client Error 4xx
+
+상태 코드의 4xx (Client Error) 클래스는 클라이언트에 에러가 발생했음을 나타낸다. HEAD 요청에 응답하는 경우를 제외하고, 서버는 에러 상황에 대한 설명과 그것이 일시적인 상태인지 영구적인 상태인지에 대한 설명이 포함된 표현을 보내야 한다. 이러한 상태 코드는 모든 요청 방식에 적용할 수 있다. 유저 에이전트는 포함된 표현을 사용자에게 웬만하면(SHOULD) 표시해야 한다.
+
+#### 15.5.1. 400 Bad Request
+
+400 (Bad Request) 상태 코드는 클라이언트 오류로 인식되는 문제(예: 잘못된 구문 요청, 잘못된 요청 메세지 프레이밍 또는 잘못된 요청 라우팅) 로 인해 서버가 요청을 처리할 수 없거나 처리하지 않음을 나타낸다.
+
+#### 15.5.2. 401 Unauthorized
+
+401 (Unauthorized) 상태 코드는 대상 리소스에 대한 유효한 인증 자격 증명이 없기 때문에 요청이 적용되지 않았음을 나타낸다. 401 응답을 생성하는 서버는 대상 리소스에 적용가능한 챌린지를 하나 이상 포함하는 WWW-Authenticate 헤더 필드 (11.6.1절)를 반드시(MUST) 전송해야 한다.
+
+요청에 인증 자격 증명이 포함되었다면, 401 응답은 해당 자격 증명에 대한 권한 부여가 거부되었음을 나타낸다. 유저 에이전트는 새롭거나 대체된 Authorization 헤더 필드를 사용하여 요청을 아마(MAY) 반복할 수 있다 (11.6.2절). 401 응답이 이전 응답과 동일한 챌린지를 포함하고, 유저 에이전트가 이미 한 번 이상 인증을 시도한 경우, 유저 에이전트는 일반적으로 관련 진단 정보가 포함되어 있으므로 동봉된 표현을 사용자에게 왠만하면(SHOULD) 제시해야 한다.
+
+#### 15.5.3. 402 Payment Required
+
+402 (Payment Required) 상태 코드는 나중에 사용할 수 있도록 예약되어 있다.
+
+#### 15.5.4. 403 Forbidden
+
+403 (Forbidden) 상태 코드는 서버가 요청을 이해했지만 이것을 수행 거부했음을 나타낸다. 요청이 금지된 이유를 공개하려는 서버는 응답 콘텐츠에 해당 이유를 설명할 수 있다 (있는 경우)
+
+클라이언트는 동일한 자격 증명으로 요청을 웬만하면(SHOULD) 자동으로 반복해서는 안 된다. 클라리언트는 새로운 자격 증명 또는 다른 자격 증명을 사용하여 아마(MAY) 요청을 반복 할 수 있다. 그러나, 자격 증명과 관련이 없는 이유로 요청이 금지될 수 있다.
+
+금지된 대상 리소스의 현재 존재를 “숨기려는” origin 서버는 대신 404 (Not Found)의 상태 코드로 응답 할 수 있다.
+
+#### 15.5.5. 404 Not Found
+
+404 (Not Found) 상태 코드는 origin 서버가 타겟 리소스에 대한 현재 표현을 찾지 못했거나 해당 리소스가 존재한다는 사실을 공개하지 않음을 나타낸다. 404 상태 코드는 이러한 표현 부족이 일시적인 것인지 영구적인 것인지는 나타내지 않는다; origin 서버가 구성 가능한 수단을 통해, 조건이 영구적일 가능성이 높다는 것을 알고 있는 경우, 404보다 410 (Gone) 상태 코드가 선호된다.
+
+404 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]) heuristic하게 캐시 할 수 있다.
+
+#### 15.5.6. 405 Method Not Allowed
+
+405 (Method Not Allowed) 상태 코드는 요청 라인에서 수신된 메소드가 origin 서버에서는 알고있지만 타겟 리소스에서는 지원되지 않음을 나타낸다. origin 서버는 반드시(MUST) 타겟 리소스의 현재 지원되는 메소드 목록이 포함된 Allow 헤더 필드를 405 응답에 생성해야 한다.
+
+405 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]) heuristic하게 캐시 할 수 있다.
 
 15.5.7. 406 Not Acceptable
 
