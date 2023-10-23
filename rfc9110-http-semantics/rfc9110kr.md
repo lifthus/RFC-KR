@@ -1921,7 +1921,7 @@ HTTP는 분산 오브젝트 시스템들에 대한 인터페이스로서 사용�
 | DELETE  | ~의 모든 현재 표현들을 삭제        | 9.3.5   | 타겟 리소스                 |
 | CONNECT | ~한 서버에 대한 터널 수립          | 9.3.6   | 타겟 리소스에 의해 식별되는 |
 | OPTIONS | ~에 대한 통신 옵션들을 설명        | 9.3.7   | 타겟 리소스                 |
-| TRACE   | ~를 따라 메시지 루프백 테스트 스행 | 9.3.8   | 타겟 리소스로의 경로        |
+| TRACE   | ~를 따라 메시지 루프백 테스트 수행 | 9.3.8   | 타겟 리소스로의 경로        |
 
 Table 4
 
@@ -2023,66 +2023,21 @@ POST 요청들에 대한 응답들은 오직 그것들이 명시적으로 신선
 
 ##### 9.3.4. PUT
 
-The PUT method requests that the state of the target resource be
-created or replaced with the state defined by the representation
-enclosed in the request message content. A successful PUT of a given
-representation would suggest that a subsequent GET on that same
-target resource will result in an equivalent representation being
-sent in a 200 (OK) response. However, there is no guarantee that
-such a state change will be observable, since the target resource
-might be acted upon by other user agents in parallel, or might be
-subject to dynamic processing by the origin server, before any
-subsequent GET is received. A successful response only implies that
-the user agent's intent was achieved at the time of its processing by
-the origin server.
+PUT 메소드는 타겟 리소스의 상태가 새로 생성되거나 요청 메시지 콘텐츠에 포함된 포현에 의해 정의된 상태로 대체될 것을 요청한다. 주어진 표현의 성공적인 PUT은 같은 타겟 리소스에 대한 이후의 GET이 PUT의 200(OK) 응답에서 보내지는 동등한 표현으로 나타날 것임을 시사한다. 그러나, 그러한 상태 변화가 관측 가능할 것이라는 보장은 없는데, 이는, 어느 GET이든 수신되기 전에 타겟 리소스가 병렬적으로 다른 유저 에이전트들에 의해 작용을 받거나, 오리진 서버에 의해 동적 처리의 대상이 될 수 있기 때문이다. 성공적인 응답은 오직 유저 에이전트의 의도가 오직 오리진 서버에 의해 처리되는 그 시점에 달성됐다는 것만을 함축한다.
 
-If the target resource does not have a current representation and the
-PUT successfully creates one, then the origin server MUST inform the
-user agent by sending a 201 (Created) response. If the target
-resource does have a current representation and that representation
-is successfully modified in accordance with the state of the enclosed
-representation, then the origin server MUST send either a 200 (OK) or
-a 204 (No Content) response to indicate successful completion of the
-request.
+만약 타겟 리소스가 현재 상태를 가지고 있지 않고 PUT이 성공적으로 새 상태를 생성했다면, 오리진 서버는 반드시(MUST) 201(Created) 응답을 보냄으로써 유저 에이전트에게 알려야 한다. 만약 타겟 리소스가 현재 표현을 가지고 있고 표현이 동봉된 표현의 상태에 따라 성공적으로 수정됐다면, 오리진 서버는 반드시(MUST) 200(OK)이나 204(No Content) 응답을 보내 해당 요청의 성공적인 완수를 나타내야 한다.
 
-An origin server SHOULD verify that the PUT representation is
-consistent with its configured constraints for the target resource.
-For example, if an origin server determines a resource's
-representation metadata based on the URI, then the origin server
-needs to ensure that the content received in a successful PUT request
-is consistent with that metadata. When a PUT representation is
-inconsistent with the target resource, the origin server SHOULD
-either make them consistent, by transforming the representation or
-changing the resource configuration, or respond with an appropriate
-error message containing sufficient information to explain why the
-representation is unsuitable. The 409 (Conflict) or 415 (Unsupported
-Media Type) status codes are suggested, with the latter being
-specific to constraints on Content-Type values.
+오리진 서버는 웬만하면(SHOULD) PUT 표현이 타겟 리소스를 위해 설정된 제약들에 대해 일관성 있는지를 검증해야 한다. 예를 들어, 만약 오리진 서버가 URI에 기반해 리소스의 표현 메타데이터를 결정한다면, 오리진 서버는 성공적인 PUT 요청에서 수신한 콘텐츠가 메타데이터와 일관성 있는지를 보장해야 한다. PUT 표현이 타겟 리소스와 비일관적일 때, 오리진 서버는 웬만하면(SHOULD), 표현을 변형하거나 리소스 설정을 변경함으로써, 그것들을 일관성 있게 만들거나, 혹은 왜 해당 표현을 받아들일 수 없는지 설명하기 위한 충분한 정보를 포함한 적절한 에러 메시지로 응답해야 한다. 409(Conflict)나 415(Unsupported Media Type) 상태 코드들이 제안되는데, 후자는 Content-Type 값들에 대한 제약들에 특정되어 있다.
 
-For example, if the target resource is configured to always have a
-Content-Type of "text/html" and the representation being PUT has a
-Content-Type of "image/jpeg", the origin server ought to do one of:
+예를 들어, 만약 타겟 리소스가 항상 "text/html"의 Content-Type을 가지도록 설정됐고 PUT 표현이 "image/jpeg"의 Content-Type을 가지고 있다면, 오리진 서버는 다음 중 하나를 해야 한다:
 
-a. reconfigure the target resource to reflect the new media type;
+a. 새로운 미디어 타입을 반영하도록 타겟 리소스를 재설정;
 
-b. transform the PUT representation to a format consistent with that
-of the resource before saving it as the new resource state; or,
+b. PUT 표현를 새로운 리소스 상태로 저장하기 전에 해당 리소스와 일관성 있는 형태로 변형; 혹은,
 
-c. reject the request with a 415 (Unsupported Media Type) response
-indicating that the target resource is limited to "text/html",
-perhaps including a link to a different resource that would be a
-suitable target for the new representation.
+c. 타겟 리소스가 "text/html"로 제한돼 있음을 나타내며 415(Unsupported Media Type) 응답으로 해당 요청을 거부, 새 표현을 위한 적절한 타겟이 될만한 다른 리소스로의 링크를 포함할 수 있음.
 
-HTTP does not define exactly how a PUT method affects the state of an
-origin server beyond what can be expressed by the intent of the user
-agent request and the semantics of the origin server response. It
-does not define what a resource might be, in any sense of that word,
-beyond the interface provided via HTTP. It does not define how
-resource state is "stored", nor how such storage might change as a
-result of a change in resource state, nor how the origin server
-translates resource state into representations. Generally speaking,
-all implementation details behind the resource interface are
-intentionally hidden by the server.
+HTTP는 어떻게 PUT 메소드가 유저 에이전트 요청의 의도와 오리진 서버 응답의 의미체계에 의해 표현될 수 있는 것을 넘어서서 오리진 서버의 상태에 영향을 미칠 수 있는지 정확히 정의하지 않는다. HTTP는 리소스가 어떤 것일지, 어떤 의미에서든, HTTP를 통해 제공되는 인터페이스를 넘어서서 정의하지 않는다. HTTP는 리소스 상태가 어떻게 "저장"되는지, 혹은 어떻게 그러한 저장이 리소스 상태 변경의 결과로 인해 변경될지, 혹은 어떻게 오리진 서버가 리소스 상태를 표현들로 바꾸는지도 정의하지 않는다. 일반적으로 말해서, 리소스 인터페이스 뒤의 모든 구현 세부사항들은 의도적으로 서버에 의해 감춰진다.
 
 This extends to how header and trailer fields are stored; while
 common header fields like Content-Type will typically be stored and
