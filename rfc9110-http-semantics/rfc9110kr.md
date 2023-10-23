@@ -2039,26 +2039,9 @@ c. 타겟 리소스가 "text/html"로 제한돼 있음을 나타내며 415(Unsup
 
 HTTP는 어떻게 PUT 메소드가 유저 에이전트 요청의 의도와 오리진 서버 응답의 의미체계에 의해 표현될 수 있는 것을 넘어서서 오리진 서버의 상태에 영향을 미칠 수 있는지 정확히 정의하지 않는다. HTTP는 리소스가 어떤 것일지, 어떤 의미에서든, HTTP를 통해 제공되는 인터페이스를 넘어서서 정의하지 않는다. HTTP는 리소스 상태가 어떻게 "저장"되는지, 혹은 어떻게 그러한 저장이 리소스 상태 변경의 결과로 인해 변경될지, 혹은 어떻게 오리진 서버가 리소스 상태를 표현들로 바꾸는지도 정의하지 않는다. 일반적으로 말해서, 리소스 인터페이스 뒤의 모든 구현 세부사항들은 의도적으로 서버에 의해 감춰진다.
 
-This extends to how header and trailer fields are stored; while
-common header fields like Content-Type will typically be stored and
-returned upon subsequent GET requests, header and trailer field
-handling is specific to the resource that received the request. As a
-result, an origin server SHOULD ignore unrecognized header and
-trailer fields received in a PUT request (i.e., not save them as part
-of the resource state).
+이는 헤더와 트레일러 필드들이 저장되는 방식으로 까지 확장된다; 전형적으로 Content-Type 같은 일반적인 헤더 필드들은 저장되고 이후의 GET 요청들에서 반환되는 반면, 헤더와 트레일러 필드 핸들링은 요청을 수신한 리소스별로 구별된다. 그 결과로, 오리진 서버는 웬만하면(SHOULD) PUT 요청에서 수신한 인식되지 않는 헤더와 트레일러 필드들을 무시해야 한다(즉, 그들을 리소스 상태의 일부로 저장하지 않아야 한다).
 
-An origin server MUST NOT send a validator field (Section 8.8), such
-as an ETag or Last-Modified field, in a successful response to PUT
-unless the request's representation data was saved without any
-transformation applied to the content (i.e., the resource's new
-representation data is identical to the content received in the PUT
-request) and the validator field value reflects the new
-representation. This requirement allows a user agent to know when
-the representation it sent (and retains in memory) is the result of
-the PUT, and thus it doesn't need to be retrieved again from the
-origin server. The new validator(s) received in the response can be
-used for future conditional requests in order to prevent accidental
-overwrites (Section 13.1).
+오리진 서버는 요청의 표현 데이터가 콘텐츠에 어떠한 변형도 적용되지 않은 채 저장되고(즉, 리소스의 새로운 표현 데이터가 PUT 요청에서 수신한 콘텐츠와 같고) 검증자 필드 값이 새로운 표현을 반영하지 않는 한 절대(MUST NOT), ETag나 Last-Modified 필드 같은, 검증자 필드(8.8절)를, PUT에 대한 성공적인 응답에 보내서는 안된다. 이 요구사항은 유저 에이전트가 자신이 보낸(그리고 메모리에 유지하는) 표현이 언제 PUT의 결과인지 알도록 하여, 표현이 오리진 서버로부터 다시 검색될 필요가 없도록 한다. 응답에서 수신된 새로운 검증자(들)은 차후의 조건부 요청들에서 우연한 덮어쓰기를 방지하는데 사용될 수 있다(13.1절).
 
 The fundamental difference between the POST and PUT methods is
 highlighted by the different intent for the enclosed representation.
