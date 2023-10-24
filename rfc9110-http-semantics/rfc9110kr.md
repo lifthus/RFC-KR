@@ -1926,7 +1926,7 @@ HTTP는 분산 오브젝트 시스템들에 대한 인터페이스로서 사용�
 | DELETE  | ~의 모든 현재 표현들을 삭제        | 9.3.5   | 타겟 리소스                 |
 | CONNECT | ~한 서버에 대한 터널 수립          | 9.3.6   | 타겟 리소스에 의해 식별되는 |
 | OPTIONS | ~에 대한 통신 옵션들을 설명        | 9.3.7   | 타겟 리소스                 |
-| TRACE   | ~를 따라 메시지 루프백 테스트 스행 | 9.3.8   | 타겟 리소스로의 경로        |
+| TRACE   | ~를 따라 메시지 루프백 테스트 수행 | 9.3.8   | 타겟 리소스로의 경로        |
 
 Table 4
 
@@ -2008,175 +2008,55 @@ HEAD 요청에 대한 응답은 캐시 가능하다; 캐시는 Cache-Control 헤
 
 ##### 9.3.3. POST
 
-The POST method requests that the target resource process the
-representation enclosed in the request according to the resource's
-own specific semantics. For example, POST is used for the following
-functions (among others):
+POST 메소드는 타겟 리소스가 리소스의 특정한 의미체계에 따라 요청에 포함된 표현을 처리할 것을 요청한다. 예를 들어, POST는 (특히) 다음 기능들을 위해 사용된다:
 
-- Providing a block of data, such as the fields entered into an HTML
-  form, to a data-handling process;
+- HTML 폼에 입력된 필드들 같은 데이터 블록을 데이터-처리 프로세스에 제공;
 
-- Posting a message to a bulletin board, newsgroup, mailing list,
-  blog, or similar group of articles;
+- 게시판, 뉴스그룹, 메일링 리스트, 블로그, 혹은 비슷한 기사들의 그룹에 메시지를 게시
 
-- Creating a new resource that has yet to be identified by the
-  origin server; and
+- 아직 오리진 서버에 의해 식별되지 않은 새로운 리소스를 생성; 그리고
 
-- Appending data to a resource's existing representation(s).
+- 리소스의 기존 표현(들)에 데이터를 추가.
 
-An origin server indicates response semantics by choosing an
-appropriate status code depending on the result of processing the
-POST request; almost all of the status codes defined by this
-specification could be received in a response to POST (the exceptions
-being 206 (Partial Content), 304 (Not Modified), and 416 (Range Not
-Satisfiable)).
+오리진 서버는 POST 요청을 처리한 결과에 따라 적절한 상태 코드를 선택함으로써 응답의 의미체계를 나타낸다; 이 사양에 의해 정의된 거의 모든 상태 코드들은 POST에 대한 응답에서 수신될 수 있다(예외는 206(Partial Content), 304(Not Modified), 그리고 416(Range Not Satisfiable)).
 
-If one or more resources has been created on the origin server as a
-result of successfully processing a POST request, the origin server
-SHOULD send a 201 (Created) response containing a Location header
-field that provides an identifier for the primary resource created
-(Section 10.2.2) and a representation that describes the status of
-the request while referring to the new resource(s).
+만약 POST 요청의 성공적인 처리의 결과로서 오리진 서버에 하나 이상의 리소스들이 생성됐다면, 오리진 서버는 웬만하면(SHOULD) 201(Created) 응답에 생성된 주된 리소스에 대한 식별자를 제공하는 Location 헤더 필드(10.2.2절)와 새로운 리소스(들)을 참조하면서 요청의 상태를 기술하는 표현을 포함해 보내야 한다.
 
-Responses to POST requests are only cacheable when they include
-explicit freshness information (see Section 4.2.1 of [CACHING]) and a
-Content-Location header field that has the same value as the POST's
-target URI (Section 8.7). A cached POST response can be reused to
-satisfy a later GET or HEAD request. In contrast, a POST request
-cannot be satisfied by a cached POST response because POST is
-potentially unsafe; see Section 4 of [CACHING].
+POST 요청들에 대한 응답들은 오직 그것들이 명시적으로 신선도 정보([[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 4.2.1절 참조)와 POST의 타겟 URI와 같은 값을 가진 Content-Location 헤더 필드를 포함할 때만 캐시 가능하다(8.7절). 캐시된 POST 응답은 나중의 GET이나 HEAD 요청을 만족시키는 데 재사용될 수 있다. 반대로, POST 요청은 캐시된 POST에 의해 충족될 수 없는데 이는 POST가 잠재적으로 안전하지 않기 때문이다; [[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 4절을 참조하라.
 
-If the result of processing a POST would be equivalent to a
-representation of an existing resource, an origin server MAY redirect
-the user agent to that resource by sending a 303 (See Other) response
-with the existing resource's identifier in the Location field. This
-has the benefits of providing the user agent a resource identifier
-and transferring the representation via a method more amenable to
-shared caching, though at the cost of an extra request if the user
-agent does not already have the representation cached.
+만약 POST를 처리한 결과가 기존 리소스의 표현과 동등할 것 같으면, 오리진 서버는 아마(MAY) Location 필드에 기존 리소스의 식별자와 함께 303(See Other) 응답을 보냄으로써 유저 에이전트를 해당 리소스로 리다이렉트할 수 있을 것이다. 이는 유저 에이전트에게 리소스 식별자를 제공하고, 만약 유저 에이전트가 미리 캐시된 표현을 가지고 있지 않다면 추가 요청 비용이 있겠지만 표현을 공유 캐싱에 더 적합한 메소드를 통해 전달하는 이점을 가진다.
 
 ##### 9.3.4. PUT
 
-The PUT method requests that the state of the target resource be
-created or replaced with the state defined by the representation
-enclosed in the request message content. A successful PUT of a given
-representation would suggest that a subsequent GET on that same
-target resource will result in an equivalent representation being
-sent in a 200 (OK) response. However, there is no guarantee that
-such a state change will be observable, since the target resource
-might be acted upon by other user agents in parallel, or might be
-subject to dynamic processing by the origin server, before any
-subsequent GET is received. A successful response only implies that
-the user agent's intent was achieved at the time of its processing by
-the origin server.
+PUT 메소드는 타겟 리소스의 상태가 새로 생성되거나 요청 메시지 콘텐츠에 포함된 포현에 의해 정의된 상태로 대체될 것을 요청한다. 주어진 표현의 성공적인 PUT은 같은 타겟 리소스에 대한 이후의 GET이 PUT의 200(OK) 응답에서 보내지는 동등한 표현으로 나타날 것임을 시사한다. 그러나, 그러한 상태 변화가 관측 가능할 것이라는 보장은 없는데, 이는, 어느 GET이든 수신되기 전에 타겟 리소스가 병렬적으로 다른 유저 에이전트들에 의해 작용을 받거나, 오리진 서버에 의해 동적 처리의 대상이 될 수 있기 때문이다. 성공적인 응답은 오직 유저 에이전트의 의도가 오직 오리진 서버에 의해 처리되는 그 시점에 달성됐다는 것만을 함축한다.
 
-If the target resource does not have a current representation and the
-PUT successfully creates one, then the origin server MUST inform the
-user agent by sending a 201 (Created) response. If the target
-resource does have a current representation and that representation
-is successfully modified in accordance with the state of the enclosed
-representation, then the origin server MUST send either a 200 (OK) or
-a 204 (No Content) response to indicate successful completion of the
-request.
+만약 타겟 리소스가 현재 상태를 가지고 있지 않고 PUT이 성공적으로 새 상태를 생성했다면, 오리진 서버는 반드시(MUST) 201(Created) 응답을 보냄으로써 유저 에이전트에게 알려야 한다. 만약 타겟 리소스가 현재 표현을 가지고 있고 표현이 동봉된 표현의 상태에 따라 성공적으로 수정됐다면, 오리진 서버는 반드시(MUST) 200(OK)이나 204(No Content) 응답을 보내 해당 요청의 성공적인 완수를 나타내야 한다.
 
-An origin server SHOULD verify that the PUT representation is
-consistent with its configured constraints for the target resource.
-For example, if an origin server determines a resource's
-representation metadata based on the URI, then the origin server
-needs to ensure that the content received in a successful PUT request
-is consistent with that metadata. When a PUT representation is
-inconsistent with the target resource, the origin server SHOULD
-either make them consistent, by transforming the representation or
-changing the resource configuration, or respond with an appropriate
-error message containing sufficient information to explain why the
-representation is unsuitable. The 409 (Conflict) or 415 (Unsupported
-Media Type) status codes are suggested, with the latter being
-specific to constraints on Content-Type values.
+오리진 서버는 웬만하면(SHOULD) PUT 표현이 타겟 리소스를 위해 설정된 제약들에 대해 일관성 있는지를 검증해야 한다. 예를 들어, 만약 오리진 서버가 URI에 기반해 리소스의 표현 메타데이터를 결정한다면, 오리진 서버는 성공적인 PUT 요청에서 수신한 콘텐츠가 메타데이터와 일관성 있는지를 보장해야 한다. PUT 표현이 타겟 리소스와 비일관적일 때, 오리진 서버는 웬만하면(SHOULD), 표현을 변형하거나 리소스 설정을 변경함으로써, 그것들을 일관성 있게 만들거나, 혹은 왜 해당 표현을 받아들일 수 없는지 설명하기 위한 충분한 정보를 포함한 적절한 에러 메시지로 응답해야 한다. 409(Conflict)나 415(Unsupported Media Type) 상태 코드들이 제안되는데, 후자는 Content-Type 값들에 대한 제약들에 특정되어 있다.
 
-For example, if the target resource is configured to always have a
-Content-Type of "text/html" and the representation being PUT has a
-Content-Type of "image/jpeg", the origin server ought to do one of:
+예를 들어, 만약 타겟 리소스가 항상 "text/html"의 Content-Type을 가지도록 설정됐고 PUT 표현이 "image/jpeg"의 Content-Type을 가지고 있다면, 오리진 서버는 다음 중 하나를 해야 한다:
 
-a. reconfigure the target resource to reflect the new media type;
+a. 새로운 미디어 타입을 반영하도록 타겟 리소스를 재설정;
 
-b. transform the PUT representation to a format consistent with that
-of the resource before saving it as the new resource state; or,
+b. PUT 표현를 새로운 리소스 상태로 저장하기 전에 해당 리소스와 일관성 있는 형태로 변형; 혹은,
 
-c. reject the request with a 415 (Unsupported Media Type) response
-indicating that the target resource is limited to "text/html",
-perhaps including a link to a different resource that would be a
-suitable target for the new representation.
+c. 타겟 리소스가 "text/html"로 제한돼 있음을 나타내며 415(Unsupported Media Type) 응답으로 해당 요청을 거부, 새 표현을 위한 적절한 타겟이 될만한 다른 리소스로의 링크를 포함할 수 있음.
 
-HTTP does not define exactly how a PUT method affects the state of an
-origin server beyond what can be expressed by the intent of the user
-agent request and the semantics of the origin server response. It
-does not define what a resource might be, in any sense of that word,
-beyond the interface provided via HTTP. It does not define how
-resource state is "stored", nor how such storage might change as a
-result of a change in resource state, nor how the origin server
-translates resource state into representations. Generally speaking,
-all implementation details behind the resource interface are
-intentionally hidden by the server.
+HTTP는 어떻게 PUT 메소드가 유저 에이전트 요청의 의도와 오리진 서버 응답의 의미체계에 의해 표현될 수 있는 것을 넘어서서 오리진 서버의 상태에 영향을 미칠 수 있는지 정확히 정의하지 않는다. HTTP는 리소스가 어떤 것일지, 어떤 의미에서든, HTTP를 통해 제공되는 인터페이스를 넘어서서 정의하지 않는다. HTTP는 리소스 상태가 어떻게 "저장"되는지, 혹은 어떻게 그러한 저장이 리소스 상태 변경의 결과로 인해 변경될지, 혹은 어떻게 오리진 서버가 리소스 상태를 표현들로 바꾸는지도 정의하지 않는다. 일반적으로 말해서, 리소스 인터페이스 뒤의 모든 구현 세부사항들은 의도적으로 서버에 의해 감춰진다.
 
-This extends to how header and trailer fields are stored; while
-common header fields like Content-Type will typically be stored and
-returned upon subsequent GET requests, header and trailer field
-handling is specific to the resource that received the request. As a
-result, an origin server SHOULD ignore unrecognized header and
-trailer fields received in a PUT request (i.e., not save them as part
-of the resource state).
+이는 헤더와 트레일러 필드들이 저장되는 방식으로 까지 확장된다; 전형적으로 Content-Type 같은 일반적인 헤더 필드들은 저장되고 이후의 GET 요청들에서 반환되는 반면, 헤더와 트레일러 필드 핸들링은 요청을 수신한 리소스별로 구별된다. 그 결과로, 오리진 서버는 웬만하면(SHOULD) PUT 요청에서 수신한 인식되지 않는 헤더와 트레일러 필드들을 무시해야 한다(즉, 그들을 리소스 상태의 일부로 저장하지 않아야 한다).
 
-An origin server MUST NOT send a validator field (Section 8.8), such
-as an ETag or Last-Modified field, in a successful response to PUT
-unless the request's representation data was saved without any
-transformation applied to the content (i.e., the resource's new
-representation data is identical to the content received in the PUT
-request) and the validator field value reflects the new
-representation. This requirement allows a user agent to know when
-the representation it sent (and retains in memory) is the result of
-the PUT, and thus it doesn't need to be retrieved again from the
-origin server. The new validator(s) received in the response can be
-used for future conditional requests in order to prevent accidental
-overwrites (Section 13.1).
+오리진 서버는 요청의 표현 데이터가 콘텐츠에 어떠한 변형도 적용되지 않은 채 저장되고(즉, 리소스의 새로운 표현 데이터가 PUT 요청에서 수신한 콘텐츠와 같고) 검증자 필드 값이 새로운 표현을 반영하지 않는 한 절대(MUST NOT), ETag나 Last-Modified 필드 같은, 검증자 필드(8.8절)를, PUT에 대한 성공적인 응답에 보내서는 안된다. 이 요구사항은 유저 에이전트가 자신이 보낸(그리고 메모리에 유지하는) 표현이 언제 PUT의 결과인지 알도록 하여, 표현이 오리진 서버로부터 다시 검색될 필요가 없도록 한다. 응답에서 수신된 새로운 검증자(들)은 차후의 조건부 요청들에서 우연한 덮어쓰기를 방지하는데 사용될 수 있다(13.1절).
 
-The fundamental difference between the POST and PUT methods is
-highlighted by the different intent for the enclosed representation.
-The target resource in a POST request is intended to handle the
-enclosed representation according to the resource's own semantics,
-whereas the enclosed representation in a PUT request is defined as
-replacing the state of the target resource. Hence, the intent of PUT
-is idempotent and visible to intermediaries, even though the exact
-effect is only known by the origin server.
+POST와 PUST 메소드 간의 근본적인 차이는 동봉된 표현에 대한 다른 의도에 의해 강조된다. POST 요청의 타겟 리소스는 동봉된 표현을 그 리소스 자체적인 의미체계에 따라 다루도록 의도되는 반면, PUT 요청에 동봉된 표현은 타겟 리소스의 상태를 대체하는 것으로 정의된다. 이리하여, 오직 오리진 서버만이 그 정확한 효과를 알고 있더라도, PUT의 의도는 멱등하고 중개자들에게 있어 명백하다.
 
-Proper interpretation of a PUT request presumes that the user agent
-knows which target resource is desired. A service that selects a
-proper URI on behalf of the client, after receiving a state-changing
-request, SHOULD be implemented using the POST method rather than PUT.
-If the origin server will not make the requested PUT state change to
-the target resource and instead wishes to have it applied to a
-different resource, such as when the resource has been moved to a
-different URI, then the origin server MUST send an appropriate 3xx
-(Redirection) response; the user agent MAY then make its own decision
-regarding whether or not to redirect the request.
+PUT 요청의 적절한 해석은 유저 에이전트가 어떤 타겟 리소스를 원하는지 안다고 가정한다. 상태-변경 요청을 수신한 후, 클라이언트를 대신하여 적절한 URI를 선택하는 서비스는, 웬만하면(SHOULD) PUT 대신 POST 메소드를 사용해 구현되어야 한다. 리소스가 다른 URI로 이동됐을 때 처럼, 오리진 서버가 타겟 리소스에 대해 요청된 PUT 상태 변경을 만들지 않을 것이고 대신 그것이 다른 리소스에 적용되길 바란다면, 오리진 서버는 반드시(MUST) 적절한 3xx(Redirection) 응답을 보내야 한다; 유저 에이전트는 아마(MAY) 요청을 리다이렉트할지에 관한 자신의 결정을 내릴 수 있을 것이다.
 
-A PUT request applied to the target resource can have side effects on
-other resources. For example, an article might have a URI for
-identifying "the current version" (a resource) that is separate from
-the URIs identifying each particular version (different resources
-that at one point shared the same state as the current version
-resource). A successful PUT request on "the current version" URI
-might therefore create a new version resource in addition to changing
-the state of the target resource, and might also cause links to be
-added between the related resources.
+타겟 리소스에 적용되는 PUT 요청은 다른 리소스들에 사이드 이펙트들을 가질 수 있다. 예를 들어, 한 아티클은 각 특정 버전(한 시점에서 현재 버전 리소스와 같은 상태를 공유했던 다른 리소스들)을 식별하는 URI들과 별개인 "현재 버전"(하나의 리소스)을 식별하기 위한 URI를 가질 수 있을 것이다. "현재 버전" URI에 대한 성공적인 PUT 요청은 그리하여 타겟 리소스의 상태를 변경하는 것과 함께 새로운 버전 리소스를 생성하고, 또한 관련된 리소스들 사이에 추가될 링크들을 일으킬 수 있을 것이다.
 
-Some origin servers support use of the Content-Range header field
-(Section 14.4) as a request modifier to perform a partial PUT, as
-described in Section 14.5.
+어떤 오리진 서버들은 Content-Range 헤더 필드(14.4절)를 부분적인 PUT을 수행하기 위한 요청 수정자로 사용하는 것을 지원하며, 이에 관해 14.5절에 기술되어 있다.
 
-Responses to the PUT method are not cacheable. If a successful PUT
-request passes through a cache that has one or more stored responses
-for the target URI, those stored responses will be invalidated (see
-Section 4.4 of [CACHING]).
+PUT 메소드에 대한 응답들은 캐시 불가능하다. 만약 성공적인 PUT 요청이 타겟 URI에 대해 하나 이상의 저장된 응답들을 가진 캐시를 거친다면, 그 저장된 응답들은 무효화될 것이다([[CACHING](https://www.rfc-editor.org/info/rfc9111>)]의 4.4절 참조).
 
 ##### 9.3.5. DELETE
 
