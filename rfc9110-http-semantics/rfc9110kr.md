@@ -2043,44 +2043,15 @@ HTTP는 어떻게 PUT 메소드가 유저 에이전트 요청의 의도와 오�
 
 오리진 서버는 요청의 표현 데이터가 콘텐츠에 어떠한 변형도 적용되지 않은 채 저장되고(즉, 리소스의 새로운 표현 데이터가 PUT 요청에서 수신한 콘텐츠와 같고) 검증자 필드 값이 새로운 표현을 반영하지 않는 한 절대(MUST NOT), ETag나 Last-Modified 필드 같은, 검증자 필드(8.8절)를, PUT에 대한 성공적인 응답에 보내서는 안된다. 이 요구사항은 유저 에이전트가 자신이 보낸(그리고 메모리에 유지하는) 표현이 언제 PUT의 결과인지 알도록 하여, 표현이 오리진 서버로부터 다시 검색될 필요가 없도록 한다. 응답에서 수신된 새로운 검증자(들)은 차후의 조건부 요청들에서 우연한 덮어쓰기를 방지하는데 사용될 수 있다(13.1절).
 
-The fundamental difference between the POST and PUT methods is
-highlighted by the different intent for the enclosed representation.
-The target resource in a POST request is intended to handle the
-enclosed representation according to the resource's own semantics,
-whereas the enclosed representation in a PUT request is defined as
-replacing the state of the target resource. Hence, the intent of PUT
-is idempotent and visible to intermediaries, even though the exact
-effect is only known by the origin server.
+POST와 PUST 메소드 간의 근본적인 차이는 동봉된 표현에 대한 다른 의도에 의해 강조된다. POST 요청의 타겟 리소스는 동봉된 표현을 그 리소스 자체적인 의미체계에 따라 다루도록 의도되는 반면, PUT 요청에 동봉된 표현은 타겟 리소스의 상태를 대체하는 것으로 정의된다. 이리하여, 오직 오리진 서버만이 그 정확한 효과를 알고 있더라도, PUT의 의도는 멱등하고 중개자들에게 있어 명백하다.
 
-Proper interpretation of a PUT request presumes that the user agent
-knows which target resource is desired. A service that selects a
-proper URI on behalf of the client, after receiving a state-changing
-request, SHOULD be implemented using the POST method rather than PUT.
-If the origin server will not make the requested PUT state change to
-the target resource and instead wishes to have it applied to a
-different resource, such as when the resource has been moved to a
-different URI, then the origin server MUST send an appropriate 3xx
-(Redirection) response; the user agent MAY then make its own decision
-regarding whether or not to redirect the request.
+PUT 요청의 적절한 해석은 유저 에이전트가 어떤 타겟 리소스를 원하는지 안다고 가정한다. 상태-변경 요청을 수신한 후, 클라이언트를 대신하여 적절한 URI를 선택하는 서비스는, 웬만하면(SHOULD) PUT 대신 POST 메소드를 사용해 구현되어야 한다. 리소스가 다른 URI로 이동됐을 때 처럼, 오리진 서버가 타겟 리소스에 대해 요청된 PUT 상태 변경을 만들지 않을 것이고 대신 그것이 다른 리소스에 적용되길 바란다면, 오리진 서버는 반드시(MUST) 적절한 3xx(Redirection) 응답을 보내야 한다; 유저 에이전트는 아마(MAY) 요청을 리다이렉트할지에 관한 자신의 결정을 내릴 수 있을 것이다.
 
-A PUT request applied to the target resource can have side effects on
-other resources. For example, an article might have a URI for
-identifying "the current version" (a resource) that is separate from
-the URIs identifying each particular version (different resources
-that at one point shared the same state as the current version
-resource). A successful PUT request on "the current version" URI
-might therefore create a new version resource in addition to changing
-the state of the target resource, and might also cause links to be
-added between the related resources.
+타겟 리소스에 적용되는 PUT 요청은 다른 리소스들에 사이드 이펙트들을 가질 수 있다. 예를 들어, 한 아티클은 각 특정 버전(한 시점에서 현재 버전 리소스와 같은 상태를 공유했던 다른 리소스들)을 식별하는 URI들과 별개인 "현재 버전"(하나의 리소스)을 식별하기 위한 URI를 가질 수 있을 것이다. "현재 버전" URI에 대한 성공적인 PUT 요청은 그리하여 타겟 리소스의 상태를 변경하는 것과 함께 새로운 버전 리소스를 생성하고, 또한 관련된 리소스들 사이에 추가될 링크들을 일으킬 수 있을 것이다.
 
-Some origin servers support use of the Content-Range header field
-(Section 14.4) as a request modifier to perform a partial PUT, as
-described in Section 14.5.
+어떤 오리진 서버들은 Content-Range 헤더 필드(14.4절)를 부분적인 PUT을 수행하기 위한 요청 수정자로 사용하는 것을 지원하며, 이에 관해 14.5절에 기술되어 있다.
 
-Responses to the PUT method are not cacheable. If a successful PUT
-request passes through a cache that has one or more stored responses
-for the target URI, those stored responses will be invalidated (see
-Section 4.4 of [CACHING]).
+PUT 메소드에 대한 응답들은 캐시 불가능하다. 만약 성공적인 PUT 요청이 타겟 URI에 대해 하나 이상의 저장된 응답들을 가진 캐시를 거친다면, 그 저장된 응답들은 무효화될 것이다([[CACHING](https://www.rfc-editor.org/info/rfc9111>)]의 4.4절 참조).
 
 ##### 9.3.5. DELETE
 
