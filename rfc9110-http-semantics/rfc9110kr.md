@@ -2056,69 +2056,27 @@ PUT 요청의 적절한 해석은 유저 에이전트가 어떤 타겟 리소스
 
 어떤 오리진 서버들은 Content-Range 헤더 필드(14.4절)를 부분적인 PUT을 수행하기 위한 요청 수정자로 사용하는 것을 지원하며, 이에 관해 14.5절에 기술되어 있다.
 
-PUT 메소드에 대한 응답들은 캐시 불가능하다. 만약 성공적인 PUT 요청이 타겟 URI에 대해 하나 이상의 저장된 응답들을 가진 캐시를 거친다면, 그 저장된 응답들은 무효화될 것이다([[CACHING](https://www.rfc-editor.org/info/rfc9111>)]의 4.4절 참조).
+PUT 메소드에 대한 응답들은 캐시 불가능하다. 만약 성공적인 PUT 요청이 타겟 URI에 대해 하나 이상의 저장된 응답들을 가진 캐시를 거친다면, 그 저장된 응답들은 무효화될 것이다([[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 4.4절 참조).
 
 ##### 9.3.5. DELETE
 
-The DELETE method requests that the origin server remove the
-association between the target resource and its current
-functionality. In effect, this method is similar to the "rm" command
-in UNIX: it expresses a deletion operation on the URI mapping of the
-origin server rather than an expectation that the previously
-associated information be deleted.
+DELETE 메소드는 오리진 서버에게 타겟 리소스와 현재 기능 간의 연관성을 제거할 것을 요청한다. 효과에 있어서, 이 메소드는 UNIX의 "rm" 커맨드와 비슷하다: 이전에 연관된 정보가 삭제될 것을 기대하기 보다는 오리진 서버의 URI 매핑에 대한 삭제 작업을 표현한다.
 
-If the target resource has one or more current representations, they
-might or might not be destroyed by the origin server, and the
-associated storage might or might not be reclaimed, depending
-entirely on the nature of the resource and its implementation by the
-origin server (which are beyond the scope of this specification).
-Likewise, other implementation aspects of a resource might need to be
-deactivated or archived as a result of a DELETE, such as database or
-gateway connections. In general, it is assumed that the origin
-server will only allow DELETE on resources for which it has a
-prescribed mechanism for accomplishing the deletion.
+만약 타겟 리소스가 하나 이상의 현재 표현들을 가진다면, 그것들은 오리진 서버에 의해 파괴될 수도 안될 수도 있고, 연관된 저장소도 회수될 수도 안될 수도 있는데, 이는 전적으로 해당 리소스와 오리진 서버에 의한 그 구현(이 사양의 범위를 넘어서는)에 따른다. 마찬가지로, 리소스의 다른 구현 측면들도 DELETE의 결과로 비활성화되거나 아카이브될 필요가 있을 수 있는데, 데이터베이스나 게이트웨이 연결들 같은 것들이 그러하다. 일반적으로, 오리진 서버는 오직 삭제를 해내기 위해 지정된 메커니즘을 가진 리소스들에 대해서만 DELETE를 허용할 것으로 여겨진다.
 
-Relatively few resources allow the DELETE method -- its primary use
-is for remote authoring environments, where the user has some
-direction regarding its effect. For example, a resource that was
-previously created using a PUT request, or identified via the
-Location header field after a 201 (Created) response to a POST
-request, might allow a corresponding DELETE request to undo those
-actions. Similarly, custom user agent implementations that implement
-an authoring function, such as revision control clients using HTTP
-for remote operations, might use DELETE based on an assumption that
-the server's URI space has been crafted to correspond to a version
-repository.
+상대적으로 매우 적은 리소스들만이 DELETE 메소드를 허용한다 -- 그 주된 용도는, 유저가 그 효과에 관한 어떤 지시를 가지는 원격 저작 환경들이다. 예를 들어, 이전에 PUT 요청을 사용해 생성됐거나, 혹은 POST 요청에 대한 201(Created) 응답 이후에 Location 헤더 필드를 통해 식별된 리소스는, 그러한 액션들을 되돌리기 위해 상응하는 DELETE 요청을 허용할 수도 있다. 비슷하게, 원격 작업들을 위해 HTTP를 사용하는 개정 제어 클라이언트들 같은, 저작 기능을 구현하는 커스텀 유저 에이전트 구현체들은, 서버의 URI 공간이 버전 레포지토리에 대응되도록 만들어졌다는 가정에 기반해 DELETE를 사용할 수도 있다.
 
-If a DELETE method is successfully applied, the origin server SHOULD
-send
+DELETE 메소드가 성공적으로 적용된다면, 오리진 서버는 웬만하면(SHOULD) 다음과 같이 보내야 한다
 
-- a 202 (Accepted) status code if the action will likely succeed but
-  has not yet been enacted,
+- 액션이 성공할 것 같지만 아직 실행되지는 않았다면 202(Accepted) 상태 코드,
 
-- a 204 (No Content) status code if the action has been enacted and
-  no further information is to be supplied, or
+- 액션이 실행됐고 그 외에 추가적으로 공급될 정보는 없다면 204(No Content) 상태 코드,
 
-- a 200 (OK) status code if the action has been enacted and the
-  response message includes a representation describing the status.
+- 액션이 실행됐고 응답 메시지가 그 상태를 기술하는 표현을 포함한다면 200(OK) 상태 코드.
 
-Although request message framing is independent of the method used,
-content received in a DELETE request has no generally defined
-semantics, cannot alter the meaning or target of the request, and
-might lead some implementations to reject the request and close the
-connection because of its potential as a request smuggling attack
-(Section 11.2 of [HTTP/1.1]). A client SHOULD NOT generate content
-in a DELETE request unless it is made directly to an origin server
-that has previously indicated, in or out of band, that such a request
-has a purpose and will be adequately supported. An origin server
-SHOULD NOT rely on private agreements to receive content, since
-participants in HTTP communication are often unaware of
-intermediaries along the request chain.
+요청 메시지 프레이밍은 사용된 메소드와 독립적이긴 하지만, DELETE 요청에서 수신된 콘텐츠는 일반적으로 정의된 의미체계를 갖지 않고, 요청의 의미나 타겟을 변경할 수 없으며, 일부 구현체들이 요청을 거부하고 연결을 닫도록 이끌 수도 있는데 이는 request smuggling attack([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 11.2절)으로써의 잠재성 때문이다. 클라이언트는, in-band든 out-of-band든, 콘텐츠를 가진 DELETE 요청이 목적을 가지며 적절히 지원될 것이라고 미리 나타낸 오리진 서버로 직접 요청하는 게 아니라면 웬만해서는(SHOULD NOT) DELETE 요청에 콘텐츠를 생성해서는 안된다. 오리진 서버는 웬만해서는(SHOULD NOT) 콘텐츠를 수신하는데 있어 사적인 합의들에 의존해서는 안되는데, 이는 HTTP 통신의 참여자들이 종종 요청 체인에 따른 중개자들을 인식하지 못하기 때문이다.
 
-Responses to the DELETE method are not cacheable. If a successful
-DELETE request passes through a cache that has one or more stored
-responses for the target URI, those stored responses will be
-invalidated (see Section 4.4 of [CACHING]).
+DELETE 메소드에 대한 응답들은 캐시할 수 없다. 만약 성공적인 DELETE 요청이 타겟 URI에 대한 하나 이상의 저장된 응답들을 가진 캐시를 거친다면, 그러한 저장된 응답들은 무효화될 것이다([[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 4.4절을 참조하라).
 
 ##### 9.3.6. CONNECT
 
