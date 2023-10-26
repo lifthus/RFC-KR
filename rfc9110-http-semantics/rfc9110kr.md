@@ -2080,78 +2080,36 @@ DELETE 메소드에 대한 응답들은 캐시할 수 없다. 만약 성공적�
 
 ##### 9.3.6. CONNECT
 
-The CONNECT method requests that the recipient establish a tunnel to
-the destination origin server identified by the request target and,
-if successful, thereafter restrict its behavior to blind forwarding
-of data, in both directions, until the tunnel is closed. Tunnels are
-commonly used to create an end-to-end virtual connection, through one
-or more proxies, which can then be secured using TLS (Transport Layer
-Security, [TLS13]).
+CONNECT 메소드 요청들은 수신자가 요청 타겟에 의해 식별되는 목적지 오리진 서버로 터널을 수립하고, 만약 성공적이라면, 그후에 수신자의 행동을, 양방향으로, 터널이 닫힐 때까지 데이터를 블라인드 포워딩하도록 제한할 것을 요청한다. 터널들은 흔히, 하나 이상의 프록시들을 통해, TLS(Transport Layer Security,[[TLS13](https://www.rfc-editor.org/info/rfc8446)])를 사용해 보안을 확보할 수 있는 end-to-end 가상 연결을 생성하는데 사용된다.
 
-CONNECT uses a special form of request target, unique to this method,
-consisting of only the host and port number of the tunnel
-destination, separated by a colon. There is no default port; a
-client MUST send the port number even if the CONNECT request is based
-on a URI reference that contains an authority component with an
-elided port (Section 4.1). For example,
+CONNECT는, 이 메소드에 고유하고, 콜론으로 구분되며, 터널 목적지의 호스트와 포트 넘버만으로 구성되는 특별한 형태의 요청 타겟을 사용한다. 기본 포트는 정해지지 않았다; 클라이언트는 CONNECT 요청이 포트를 생략하는 권한 구성요소를 포함하는 URI 레퍼런스(4.1절)에 기반하더라도 반드시(MUST) 포트 넘버를 보내야 한다. 예를 들어,
 
-CONNECT server.example.com:80 HTTP/1.1
-Host: server.example.com
+     CONNECT server.example.com:80 HTTP/1.1
+     Host: server.example.com
 
-A server MUST reject a CONNECT request that targets an empty or
-invalid port number, typically by responding with a 400 (Bad Request)
-status code.
+서버는 반드시(MUST) 비어있거나 유효하지 않은 포트 넘버를 목적으로 하는 CONNECT 요청을 거부해야 하며, 전형적으로 400(Bad Request) 상태 코드로 응답함으로써 이루어진다.
 
-Because CONNECT changes the request/response nature of an HTTP
-connection, specific HTTP versions might have different ways of
-mapping its semantics into the protocol's wire format.
+CONNECT는 한 HTTP 연결의 요청/응답의 성질을 바꾸기 때문에, 특정 HTTP 버전들은 그 의미체계를 프로토콜의 와이어 포맷으로 매핑하는 다른 방식들을 가질 수 있다.
 
-CONNECT is intended for use in requests to a proxy. The recipient
-can establish a tunnel either by directly connecting to the server
-identified by the request target or, if configured to use another
-proxy, by forwarding the CONNECT request to the next inbound proxy.
-An origin server MAY accept a CONNECT request, but most origin
-servers do not implement CONNECT.
+CONNECT는 프록시로의 요청들에 사용되도록 의도된다. 수신자는 요청 타겟에 의해 식별되는 서버로 직접 연결함으로써, 혹은 만약 다른 프록시를 사용하도록 설정되어 있다면, CONNECT 요청을 다음 인바운드 프록시로 포워딩함으로써 터널을 수립할 수 있다. 오리진 서버는 아마(MAY) CONNECT 요청을 수용할 수도 있을 것이지만, 대부분의 오리진 서버들은 CONNECT를 구현하지 않는다.
 
-Any 2xx (Successful) response indicates that the sender (and all
-inbound proxies) will switch to tunnel mode immediately after the
-response header section; data received after that header section is
-from the server identified by the request target. Any response other
-than a successful response indicates that the tunnel has not yet been
-formed.
+어떠한 2xx(Successful) 응답이든 발신자(와 모든 인바운드 프록시들)가 응답 헤더 섹션 이후 즉시 터널 모드로 스위치할 것임을 나타낸다; 해당 헤더 섹션 이후에 수신된 데이터는 요청 타겟에 의해 식별되는 서버로부터 온 것이다. 어떠한 successful 응답을 제외한 다른 응답은 해당 터널이 아직 형성되지 않았음을 나타낸다.
 
-A tunnel is closed when a tunnel intermediary detects that either
-side has closed its connection: the intermediary MUST attempt to send
-any outstanding data that came from the closed side to the other
-side, close both connections, and then discard any remaining data
-left undelivered.
+한 터널 중개자가 어느 한 쪽이라도 그 연결을 닫았다는 것을 발견하면 터널은 닫힌다: 중개자는 반드시(MUST) 닫힌 쪽에서 오는 어떠한 미해결 데이터든 반대편으로 보내려고 시도하고, 양쪽 연결들을 닫은 후, 어떠한 아직 전송되지 않은 남은 데이터는 버려야 한다.
 
-Proxy authentication might be used to establish the authority to
-create a tunnel. For example,
+터널을 생성하기 위한 권한을 수립하기 위해 프록시 인증이 사용될 수 있다. 예를 들어,
 
 CONNECT server.example.com:443 HTTP/1.1
 Host: server.example.com:443
 Proxy-Authorization: basic aGVsbG86d29ybGQ=
 
-There are significant risks in establishing a tunnel to arbitrary
-servers, particularly when the destination is a well-known or
-reserved TCP port that is not intended for Web traffic. For example,
-a CONNECT to "example.com:25" would suggest that the proxy connect to
-the reserved port for SMTP traffic; if allowed, that could trick the
-proxy into relaying spam email. Proxies that support CONNECT SHOULD
-restrict its use to a limited set of known ports or a configurable
-list of safe request targets.
+임의의 서버들에 대해 터널을 수립할 때, 특히 목적지가 웹 트래픽을 위해 의도되지 않은 잘 알려지거나 예약된 TCP 포트일 때 유의미한 위험들이 있다. 예를 들어, "example.com:25"로의 CONNECT는 프록시에게 SMTP 트래픽을 위해 예약된 포트로 연결할 것을 제안할 것이다; 만약 허용된다면, 프록시가 스팸 메일을 중계하도록 속일 수 있다. CONNECT를 지원하는 프록시들은 웬만하면(SHOULD) 그 사용을 알려진 포트들의 제한된 세트나 설정 가능한 안전한 요청 타겟들의 목록으로 제한해야 한다.
 
-A server MUST NOT send any Transfer-Encoding or Content-Length header
-fields in a 2xx (Successful) response to CONNECT. A client MUST
-ignore any Content-Length or Transfer-Encoding header fields received
-in a successful response to CONNECT.
+서버는 CONNECT에 대한 2xx(Successful) 응답에서 절대(MUST NOT) 어떠한 Transfer-Encoding 혹은 Content-Length 헤더 필드들도 보내서는 안된다. 클라이언트는 어떠한 Content-Length 혹은 Transfer-Encoding 헤더 필드를 CONNECT에 대한 성공적인 응답에서 수신하더라도 반드시(MUST) 무시해야 한다.
 
-A CONNECT request message does not have content. The interpretation
-of data sent after the header section of the CONNECT request message
-is specific to the version of HTTP in use.
+CONNECT 요청 메시지는 콘텐츠를 가지지 않는다. CONNECT 요청 메시지의 헤더 섹션 이후에 보내진 데이터의 해석은 사용되는 HTTP의 버전에 특정된다.
 
-Responses to the CONNECT method are not cacheable.
+CONNECT 메소드에 대한 응답들은 캐시 불가능하다.
 
 ##### 9.3.7. OPTIONS
 
