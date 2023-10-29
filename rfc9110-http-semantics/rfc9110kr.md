@@ -2124,34 +2124,15 @@ OPTIONS 메소드에 대한 응답들은 캐시 불가능하다.
 
 ##### 9.3.8. TRACE
 
-The TRACE method requests a remote, application-level loop-back of
-the request message. The final recipient of the request SHOULD
-reflect the message received, excluding some fields described below,
-back to the client as the content of a 200 (OK) response. The
-"message/http" format (Section 10.1 of [HTTP/1.1]) is one way to do
-so. The final recipient is either the origin server or the first
-server to receive a Max-Forwards value of zero (0) in the request
-(Section 7.6.2).
+TRACE 메소드는 요청 메시지의 원격, 애플리케이션-레벨 루프-백을 요청한다. 해당 요청의 최종 수신자는 웬만하면(SHOULD), 아래에 기술된 몇몇 필드들을 제외하고, 수신한 메시지를 200(OK) 응답의 콘텐츠로 클라이언트에게 반사해야 한다. "message/http" 포맷([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 10.1절)은 그렇게 하기 위한 하나의 방법이다. 최종 수신자는 오리진 서버거나 요청에서 값이 0인 Max-Forwards를 수신하는 첫 서버다(7.6.2절).
 
-A client MUST NOT generate fields in a TRACE request containing
-sensitive data that might be disclosed by the response. For example,
-it would be foolish for a user agent to send stored user credentials
-(Section 11) or cookies [COOKIE] in a TRACE request. The final
-recipient of the request SHOULD exclude any request fields that are
-likely to contain sensitive data when that recipient generates the
-response content.
+클라이언트는 절대(MUST NOT) TRACE 요청에 응답에 의해 노출될 수도 있는 민감한 데이터를 포함하는 필드들을 생성해서는 안된다. 예를 들어, 유저 에이전트가 TRACE 요청에 저장된 유저 크레덴셜(11절)이나 쿠키들[[COOKIE](https://www.rfc-editor.org/info/rfc6265)]을 보내는 것은 멍청한 짓이 될 것이다. 요청의 최종 수신자는 웬만하면(SHOULD) 해당 수신자가 응답 콘텐츠를 생성할 때 민감한 데이터를 포함할 것 같은 어떠한 요청 필드든 제외해야 한다.
 
-TRACE allows the client to see what is being received at the other
-end of the request chain and use that data for testing or diagnostic
-information. The value of the Via header field (Section 7.6.3) is of
-particular interest, since it acts as a trace of the request chain.
-Use of the Max-Forwards header field allows the client to limit the
-length of the request chain, which is useful for testing a chain of
-proxies forwarding messages in an infinite loop.
+TRACE는 클라이언트가 요청 체인의 다른 끝에서 무엇이 수신되고 있는지를 보고 그 데이터를 테스팅이나 진단 정보를 위해 사용할 수 있도록 한다. Via 헤더 필드(7.6.3절)의 값은 특히 관심 대상인데, 그것이 요청 체인의 추적 기록으로 작동하기 때문이다. Max-Forwards 헤더 필드의 사용은 클라이언트가 요청 체인의 길이를 제한할 수 있도록 하는데, 무한 루프에서 메시지들을 포워딩하는 프록시들의 체인을 테스트하는데 유용하다.
 
-A client MUST NOT send content in a TRACE request.
+클라이언트는 절대(MUST NOT) TRACE 요청에 콘텐츠를 보내서는 안된다.
 
-Responses to the TRACE method are not cacheable.
+TRACE 메소드에 대한 응답들은 캐시 불가능하다.
 
 ## 10. 메시지 콘텍스트
 
