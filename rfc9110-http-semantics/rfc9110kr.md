@@ -2113,77 +2113,31 @@ CONNECT 메소드에 대한 응답들은 캐시 불가능하다.
 
 ##### 9.3.7. OPTIONS
 
-The OPTIONS method requests information about the communication
-options available for the target resource, at either the origin
-server or an intervening intermediary. This method allows a client
-to determine the options and/or requirements associated with a
-resource, or the capabilities of a server, without implying a
-resource action.
+OPTIONS 메소드는, 오리진 서버나 통신에 개입하는 중개자에게 타겟 리소스에서 가용한 통신 옵션들에 대한 정보를 요청한다. 이 메소드는 리소스의 액션을 암시하지 않으면서, 클라이언트가 리소스, 혹은 서버의 능력들과 연관된 옵션들 그리고/혹은 요구사항들을 결정할 수 있게 한다.
 
-An OPTIONS request with an asterisk ("_") as the request target
-(Section 7.1) applies to the server in general rather than to a
-specific resource. Since a server's communication options typically
-depend on the resource, the "_" request is only useful as a "ping" or
-"no-op" type of method; it does nothing beyond allowing the client to
-test the capabilities of the server. For example, this can be used
-to test a proxy for HTTP/1.1 conformance (or lack thereof).
+Asterisk("\*")를 요청 타겟으로 하는 OPTIONS 요청(7.1절)은 일반적으로 특정한 리소스보다는 서버에게 적용한다. 서버의 통신 옵션들은 전형적으로 리소스에 따르기 때문에, "\*" 요청은 오직 "ping" 혹은 "no-op" 타입의 메소드로써만 유용하다; 클라이언트가 서버의 능력들을 테스트하도록 하는 것 외에 아무것도 하지 않는다. 예를 들어, 프록시가 HTTP/1.1을 준수하는지(혹은 그렇지 않은지) 테스트하기 위해 사용될 수 있다.
 
-If the request target is not an asterisk, the OPTIONS request applies
-to the options that are available when communicating with the target
-resource.
+만약 요청 타겟이 asterisk가 아니라면, OPTIONS 요청은 해당 타겟 리소스와 통신할 때 가용한 옵션들에 적용한다.
 
-A server generating a successful response to OPTIONS SHOULD send any
-header that might indicate optional features implemented by the
-server and applicable to the target resource (e.g., Allow), including
-potential extensions not defined by this specification. The response
-content, if any, might also describe the communication options in a
-machine or human-readable representation. A standard format for such
-a representation is not defined by this specification, but might be
-defined by future extensions to HTTP.
+OPTIONS에 대해 성공적인 응답을 생성하는 서버는 웬만하면(SHOULD) 서버에 의해 구현됐고 타겟 리소스에 적용 가능한 선택적 기능들을 나타낼 수도 있는 어떠한 헤더든지 보내야 하고(예를 들어, Allow), 이 사양에 의해 정의되지 않은 잠재적인 확장들도 포함한다. 응답 콘텐츠 또한, 만약 있다면, 기계적인 혹은 사람이 읽을 수 있는 표현으로 통신 옵션들을 서술할 수 있을 것이다. 그러한 표현을 위한 표준 형태는 이 사양에서 정의되지 않지만, HTTP에 대한 미래의 확장들에 의해 정의될 수도 있다.
 
-A client MAY send a Max-Forwards header field in an OPTIONS request
-to target a specific recipient in the request chain (see
-Section 7.6.2). A proxy MUST NOT generate a Max-Forwards header
-field while forwarding a request unless that request was received
-with a Max-Forwards field.
+클라이언트는 아마(MAY) OPTIONS 요청에 Max-Forwards 헤더 필드를 포함하여 요청 체인의 특정 수신자를 타겟으로 할 수 있을 것이다(7.6.2절 참조). 프록시는 해당 요청이 Max-Forwards 필드와 함께 수신되지 않은 한 절대(MUST NOT) 요청을 포워딩하는 동안 Max-Forwards 헤더 필드를 생성해서는 안된다.
 
-A client that generates an OPTIONS request containing content MUST
-send a valid Content-Type header field describing the representation
-media type. Note that this specification does not define any use for
-such content.
+콘텐츠를 포함하는 OPTIONS 요청을 생성하는 클라이언트는 반드시(MUST) 표현 미디어 타입을 기술하는 유효한 Content-Type 헤더 필드를 보내야 한다. 이 사양서는 그러한 콘텐츠의 어떠한 사용에 관해서도 정의하지 않음을 명심하라.
 
-Responses to the OPTIONS method are not cacheable.
+OPTIONS 메소드에 대한 응답들은 캐시 불가능하다.
 
 ##### 9.3.8. TRACE
 
-The TRACE method requests a remote, application-level loop-back of
-the request message. The final recipient of the request SHOULD
-reflect the message received, excluding some fields described below,
-back to the client as the content of a 200 (OK) response. The
-"message/http" format (Section 10.1 of [HTTP/1.1]) is one way to do
-so. The final recipient is either the origin server or the first
-server to receive a Max-Forwards value of zero (0) in the request
-(Section 7.6.2).
+TRACE 메소드는 요청 메시지의 원격, 애플리케이션-레벨 루프-백을 요청한다. 해당 요청의 최종 수신자는 웬만하면(SHOULD), 아래에 기술된 몇몇 필드들을 제외하고, 수신한 메시지를 200(OK) 응답의 콘텐츠로 클라이언트에게 반사해야 한다. "message/http" 포맷([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 10.1절)은 그렇게 하기 위한 하나의 방법이다. 최종 수신자는 오리진 서버거나 요청에서 값이 0인 Max-Forwards를 수신하는 첫 서버다(7.6.2절).
 
-A client MUST NOT generate fields in a TRACE request containing
-sensitive data that might be disclosed by the response. For example,
-it would be foolish for a user agent to send stored user credentials
-(Section 11) or cookies [COOKIE] in a TRACE request. The final
-recipient of the request SHOULD exclude any request fields that are
-likely to contain sensitive data when that recipient generates the
-response content.
+클라이언트는 절대(MUST NOT) TRACE 요청에 응답에 의해 노출될 수도 있는 민감한 데이터를 포함하는 필드들을 생성해서는 안된다. 예를 들어, 유저 에이전트가 TRACE 요청에 저장된 유저 크레덴셜(11절)이나 쿠키들[[COOKIE](https://www.rfc-editor.org/info/rfc6265)]을 보내는 것은 멍청한 짓이 될 것이다. 요청의 최종 수신자는 웬만하면(SHOULD) 해당 수신자가 응답 콘텐츠를 생성할 때 민감한 데이터를 포함할 것 같은 어떠한 요청 필드든 제외해야 한다.
 
-TRACE allows the client to see what is being received at the other
-end of the request chain and use that data for testing or diagnostic
-information. The value of the Via header field (Section 7.6.3) is of
-particular interest, since it acts as a trace of the request chain.
-Use of the Max-Forwards header field allows the client to limit the
-length of the request chain, which is useful for testing a chain of
-proxies forwarding messages in an infinite loop.
+TRACE는 클라이언트가 요청 체인의 다른 끝에서 무엇이 수신되고 있는지를 보고 그 데이터를 테스팅이나 진단 정보를 위해 사용할 수 있도록 한다. Via 헤더 필드(7.6.3절)의 값은 특히 관심 대상인데, 그것이 요청 체인의 추적 기록으로 작동하기 때문이다. Max-Forwards 헤더 필드의 사용은 클라이언트가 요청 체인의 길이를 제한할 수 있도록 하는데, 무한 루프에서 메시지들을 포워딩하는 프록시들의 체인을 테스트하는데 유용하다.
 
-A client MUST NOT send content in a TRACE request.
+클라이언트는 절대(MUST NOT) TRACE 요청에 콘텐츠를 보내서는 안된다.
 
-Responses to the TRACE method are not cacheable.
+TRACE 메소드에 대한 응답들은 캐시 불가능하다.
 
 ## 10. 메시지 콘텍스트
 
