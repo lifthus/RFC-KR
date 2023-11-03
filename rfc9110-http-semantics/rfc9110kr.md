@@ -2146,68 +2146,38 @@ TRACE 메소드에 대한 응답들은 캐시 불가능하다.
 
 #### 10.1.1. Expect
 
-The "Expect" header field in a request indicates a certain set of
-behaviors (expectations) that need to be supported by the server in
-order to properly handle this request.
+요청의 "Expect" 헤더 필드는 해당 요청을 적절히 다루기 위해 서버에 의해 지원될 필요가 있는 행동들(기대들)의 특정한 집합을 나타낸다.
 
      Expect =      #expectation
      expectation = token [ "=" ( token / quoted-string ) parameters ]
 
-The Expect field value is case-insensitive.
+Expect 필드 값은 대소문자를 구분하지 않는다.
 
-The only expectation defined by this specification is "100-continue"
-(with no defined parameters).
+이 사양에 의해 정의되는 유일한 기대 사항은 "100-continue"이다(따로 정의된 파라미터 없이).
 
-A server that receives an Expect field value containing a member
-other than 100-continue MAY respond with a 417 (Expectation Failed)
-status code to indicate that the unexpected expectation cannot be
-met.
+100-continue 외의 다른 멤버를 포함하는 Expect 필드 값을 수신한 서버는 아마(MAY) 417(Expectation Failed) 상태 코드로 응답해 예상치 못한 기대 사항이 만족될 수 없음을 나타낼 수 있을 것이다.
 
-A "100-continue" expectation informs recipients that the client is
-about to send (presumably large) content in this request and wishes
-to receive a 100 (Continue) interim response if the method, target
-URI, and header fields are not sufficient to cause an immediate
-success, redirect, or error response. This allows the client to wait
-for an indication that it is worthwhile to send the content before
-actually doing so, which can improve efficiency when the data is huge
-or when the client anticipates that an error is likely (e.g., when
-sending a state-changing method, for the first time, without
-previously verified authentication credentials).
+"100-continue" 기대 사항은 수신자들에게 클라이언트가 이제 해당 요청에 (아마 꽤 큰) 콘텐츠를 보낼 것이고 만약 메소드, 타겟 URI, 그리고 헤더 필드들이 즉시 성공, 리다이렉트, 혹은 에러 응답을 발생시키기에 충분치 않다면 100(Continue) 중간 응답을 수신하길 바란다고 알린다. 이는 클라이언트가 실제로 콘텐츠를 보내기 전에 보낼만한 가치가 있다는 지시를 기다리도록 하여, 데이터가 아주 크거나 클라이언트가 에러가 발생할 수 있다고 예상할 때에 효율성을 향상시킬 수 있다(예를 들어, 이전에 확인된 인증 크레덴셜 없이, 처음으로, 상태-변경 메소드를 보낼 때).
 
-For example, a request that begins with
+예를 들어, 다음과 같이 시작하는 요청은
 
-PUT /somewhere/fun HTTP/1.1
-Host: origin.example.com
-Content-Type: video/h264
-Content-Length: 1234567890987
-Expect: 100-continue
+     PUT /somewhere/fun HTTP/1.1
+     Host: origin.example.com
+     Content-Type: video/h264
+     Content-Length: 1234567890987
+     Expect: 100-continue
 
-allows the origin server to immediately respond with an error
-message, such as 401 (Unauthorized) or 405 (Method Not Allowed),
-before the client starts filling the pipes with an unnecessary data
-transfer.
+클라이언트가 파이프들을 불필요한 데이터 전송으로 채우기 시작하기 전에 오리진 서버가 즉시, 401(Unauthorized) 혹은 405(Method Not Allowed) 같은, 에러 메시지로 응답할 수 있도록 허용한다.
 
-Requirements for clients:
+클라이언트들을 위한 요구사항들:
 
-- A client MUST NOT generate a 100-continue expectation in a request
-  that does not include content.
+- 클라이언트는 절대(MUST NOT) 콘텐츠를 포함하지 않는 요청에 100-continue 기대 사항을 생성해서는 안된다.
 
-- A client that will wait for a 100 (Continue) response before
-  sending the request content MUST send an Expect header field
-  containing a 100-continue expectation.
+- 요청 콘텐츠를 보내기 전에 100(Continue) 응답을 기다릴 클라이언트는 반드시(MUST) 100-continue 기대 사항을 포함하는 Expect 헤더 필드를 보내야 한다.
 
-- A client that sends a 100-continue expectation is not required to
-  wait for any specific length of time; such a client MAY proceed to
-  send the content even if it has not yet received a response.
-  Furthermore, since 100 (Continue) responses cannot be sent through
-  an HTTP/1.0 intermediary, such a client SHOULD NOT wait for an
-  indefinite period before sending the content.
+- 100-continue 기대 사항을 보내는 클라이언트는 어느 특정한 길이의 시간을 기다리도록 요구되지 않는다; 그러한 클라이언트는 아마(MAY) 아직 응답을 수신하지 않았더라도 콘텐츠를 보내는 것을 진행할 수 있을 것이다. 더 나아가, 100(Continue) 응답들은 HTTP/1.0 중개자들을 통해 보내질 수 없기 때문에, 그러한 클라이언트는 웬만해서는(SHOULD NOT) 콘텐츠를 보내기 전에 불분명한 기간동안 기다리지 않아야 한다.
 
-- A client that receives a 417 (Expectation Failed) status code in
-  response to a request containing a 100-continue expectation SHOULD
-  repeat that request without a 100-continue expectation, since the
-  417 response merely indicates that the response chain does not
-  support expectations (e.g., it passes through an HTTP/1.0 server).
+- 100-continue 기대 사항을 포함하는 요청에 대한 응답에서 417(Expectation Failed) 상태 코드를 수신한 클라이언트는 웬만하면(SHOULD) 해당 요청을 100-continue 기대 사항 없이 반복해야 하는데, 이는 417 응답이 단지 응답 체인이 기대 사항들을 지원하지 않음을 나타낼 뿐이기 때문이다(예를 들어, HTTP/1.0 서버를 통과하는 경우).
 
 Requirements for servers:
 
