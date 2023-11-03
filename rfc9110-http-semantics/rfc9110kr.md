@@ -2142,9 +2142,7 @@ TRACE 메소드에 대한 응답들은 캐시 불가능하다.
 
 ### 10.1. 요청 콘텍스트 필드들
 
-The request header fields below provide additional information about
-the request context, including information about the user, user
-agent, and resource behind the request.
+아래 요청 헤더 필드들은 유저, 유저 에이전트, 그리고 요청 뒤의 리소스를 포함하는, 요청 콘텍스트에 대한 추가적인 정보를 제공한다.
 
 #### 10.1.1. Expect
 
