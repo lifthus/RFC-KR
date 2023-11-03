@@ -184,76 +184,77 @@ than English.
 [9. 메소드들](#9-메소드들)
 
 - [9.1. 개요](#91-개요)
-- - [9.2. 공통 메소드 속성들](#92-공통-메소드-속성들)
-- - - [9.2.1. 안전한 메소드들](#921-안전한-메소드들)
-- - - [9.2.2. 멱등성 메소드들](#922-멱등성-메소드들)
-- - - [9.2.3. 메소드들과 캐싱](#923-메소드들과-캐싱)
+- [9.2. 공통 메소드 속성들](#92-공통-메소드-속성들)
+- - [9.2.1. 안전한 메소드들](#921-안전한-메소드들)
+- - [9.2.2. 멱등성 메소드들](#922-멱등성-메소드들)
+- - [9.2.3. 메소드들과 캐싱](#923-메소드들과-캐싱)
 - [9.3 메소드 정의들](#93-메소드-정의들)
-- - - [9.3.1. GET](#931-get)
-- - - [9.3.2. HEAD](#932-head)
-- - - [9.3.3. POST](#933-post)
-- - - [9.3.4. PUT](#934-put)
-- - - [9.3.5. DELETE](#935-delete)
-- - - [9.3.6. CONNECT](#936-connect)
-- - - [9.3.7. OPTIONS](#937-options)
-- - - [9.3.8. TRACE](#938-trace)
+- - [9.3.1. GET](#931-get)
+- - [9.3.2. HEAD](#932-head)
+- - [9.3.3. POST](#933-post)
+- - [9.3.4. PUT](#934-put)
+- - [9.3.5. DELETE](#935-delete)
+- - [9.3.6. CONNECT](#936-connect)
+- - [9.3.7. OPTIONS](#937-options)
+- - [9.3.8. TRACE](#938-trace)
 
 [10. 메시지 콘텍스트](#10-메시지-콘텍스트)
-10.1. Request Context Fields
-10.1.1. Expect
-10.1.2. From
-10.1.3. Referer
-10.1.4. TE
-10.1.5. User-Agent
-10.2. Response Context Fields
-10.2.1. Allow
-10.2.2. Location
-10.2.3. Retry-After
-10.2.4. Server 11. HTTP Authentication
-11.1. Authentication Scheme
-11.2. Authentication Parameters
-11.3. Challenge and Response
-11.4. Credentials
-11.5. Establishing a Protection Space (Realm)
-11.6. Authenticating Users to Origin Servers
-11.6.1. WWW-Authenticate
-11.6.2. Authorization
-11.6.3. Authentication-Info
-11.7. Authenticating Clients to Proxies
-11.7.1. Proxy-Authenticate
-11.7.2. Proxy-Authorization
-11.7.3. Proxy-Authentication-Info 12. Content Negotiation
-12.1. Proactive Negotiation
-12.2. Reactive Negotiation
-12.3. Request Content Negotiation
-12.4. Content Negotiation Field Features
-12.4.1. Absence
-12.4.2. Quality Values
-12.4.3. Wildcard Values
-12.5. Content Negotiation Fields
-12.5.1. Accept
-12.5.2. Accept-Charset
-12.5.3. Accept-Encoding
-12.5.4. Accept-Language
-12.5.5. Vary 13. Conditional Requests
-13.1. Preconditions
-13.1.1. If-Match
-13.1.2. If-None-Match
-13.1.3. If-Modified-Since
-13.1.4. If-Unmodified-Since
-13.1.5. If-Range
-13.2. Evaluation of Preconditions
-13.2.1. When to Evaluate
-13.2.2. Precedence of Preconditions 14. Range Requests
-14.1. Range Units
-14.1.1. Range Specifiers
-14.1.2. Byte Ranges
-14.2. Range
-14.3. Accept-Ranges
-14.4. Content-Range
-14.5. Partial PUT
-14.6. Media Type multipart/byteranges
-   
+
+- [10.1. 요청 콘텍스트 필드들](#101-요청-콘텍스트-필드들)
+- - [10.1.1. Expect](#1011-expect)
+- - [10.1.2. From](#1012-from)
+- - [10.1.3. Referer](#1013-referer)
+- - [10.1.4. TE](#1014-te)
+- - [10.1.5. User-Agent](#1015-user-agent)
+- [10.2. 응답 콘텍스트 필드들](#102-응답-콘텍스트-필드들)
+- - [10.2.1. Allow](#1021-allow)
+- - [10.2.2. Location](#1022-location)
+- - [10.2.3. Retry-After](#1023-retry-after)
+- - [10.2.4. Server 11. HTTP Authentication](#1024-server-11-http-authentication)
+    11.1. Authentication Scheme
+    11.2. Authentication Parameters
+    11.3. Challenge and Response
+    11.4. Credentials
+    11.5. Establishing a Protection Space (Realm)
+    11.6. Authenticating Users to Origin Servers
+    11.6.1. WWW-Authenticate
+    11.6.2. Authorization
+    11.6.3. Authentication-Info
+    11.7. Authenticating Clients to Proxies
+    11.7.1. Proxy-Authenticate
+    11.7.2. Proxy-Authorization
+    11.7.3. Proxy-Authentication-Info 12. Content Negotiation
+    12.1. Proactive Negotiation
+    12.2. Reactive Negotiation
+    12.3. Request Content Negotiation
+    12.4. Content Negotiation Field Features
+    12.4.1. Absence
+    12.4.2. Quality Values
+    12.4.3. Wildcard Values
+    12.5. Content Negotiation Fields
+    12.5.1. Accept
+    12.5.2. Accept-Charset
+    12.5.3. Accept-Encoding
+    12.5.4. Accept-Language
+    12.5.5. Vary 13. Conditional Requests
+    13.1. Preconditions
+    13.1.1. If-Match
+    13.1.2. If-None-Match
+    13.1.3. If-Modified-Since
+    13.1.4. If-Unmodified-Since
+    13.1.5. If-Range
+    13.2. Evaluation of Preconditions
+    13.2.1. When to Evaluate
+    13.2.2. Precedence of Preconditions 14. Range Requests
+    14.1. Range Units
+    14.1.1. Range Specifiers
+    14.1.2. Byte Ranges
+    14.2. Range
+    14.3. Accept-Ranges
+    14.4. Content-Range
+    14.5. Partial PUT
+    14.6. Media Type multipart/byteranges
+
 [15. 상태 코드](#15-상태-코드)
 
 - [15.1. 상태 코드의 개요](#151-상태-코드의-개요)
@@ -278,7 +279,7 @@ than English.
 - - [15.4.4. 303 See Other](#1544-303-See-Other)
 - - [15.4.5. 304 Not Modified](#1545-304-Not-Modified)
 - - [15.4.6. 305 Use Proxy](#1546-305-Use-Proxy)
-- - [15.4.7. 306 (Unused)](#1547-306-(Unused))
+- - [15.4.7. 306 (Unused)](<#1547-306-(Unused)>)
 - - [15.4.8. 307 Temporary Redirect](#1548-307-Temporary-Redirect)
 - - [15.4.9. 308 Permanent Redirect](#1549-308-Permanent-Redirect)
 - [15.5. Client Error 4xx](#155-Client-Error-4xx)
@@ -300,7 +301,7 @@ than English.
 - - [15.5.16. 415 Unsupported Media Type](#15516-415-Unsupported-Media-Type)
 - - [15.5.17. 416 Range Not Satisfiable](#15517-416-Range-Not-Satisfiable)
 - - [15.5.18. 417 Expectation Failed](#15518-417-Expectation-Failed)
-- - [15.5.19. 418 (Unused)](#15519-418-(Unused))
+- - [15.5.19. 418 (Unused)](<#15519-418-(Unused)>)
 - - [15.5.20. 421 Misdirected Request](#15520-421-Misdirected-Request)
 - - [15.5.21. 422 Unprocessable Content](#15521-422-Unprocessable-Content)
 - - [15.5.22. 426 Upgrade Required](#15522-426-Upgrade-Required)
@@ -310,60 +311,58 @@ than English.
 - - [15.6.3. 502 Bad Gateway](#1563-502-Bad-Gateway)
 - - [15.6.4. 503 Service Unavailable](#1564-503-Service-Unavailable)
 - - [15.6.5. 504 Gateway Timeout](#1565-504-Gateway-Timeout)
-- - [15.6.6. 505 HTTP Version Not Supported](#1566-505-HTTP-Version-Not-Supported)
-   
-   16. Extending HTTP
-16.1. Method Extensibility
-16.1.1. Method Registry
-16.1.2. Considerations for New Methods
-16.2. Status Code Extensibility
-16.2.1. Status Code Registry
-16.2.2. Considerations for New Status Codes
-16.3. Field Extensibility
-16.3.1. Field Name Registry
-16.3.2. Considerations for New Fields
-16.3.2.1. Considerations for New Field Names
-16.3.2.2. Considerations for New Field Values
-16.4. Authentication Scheme Extensibility
-16.4.1. Authentication Scheme Registry
-16.4.2. Considerations for New Authentication Schemes
-16.5. Range Unit Extensibility
-16.5.1. Range Unit Registry
-16.5.2. Considerations for New Range Units
-16.6. Content Coding Extensibility
-16.6.1. Content Coding Registry
-16.6.2. Considerations for New Content Codings
-16.7. Upgrade Token Registry 17. Security Considerations
-17.1. Establishing Authority
-17.2. Risks of Intermediaries
-17.3. Attacks Based on File and Path Names
-17.4. Attacks Based on Command, Code, or Query Injection
-17.5. Attacks via Protocol Element Length
-17.6. Attacks Using Shared-Dictionary Compression
-17.7. Disclosure of Personal Information
-17.8. Privacy of Server Log Information
-17.9. Disclosure of Sensitive Information in URIs
-17.10. Application Handling of Field Names
-17.11. Disclosure of Fragment after Redirects
-17.12. Disclosure of Product Information
-17.13. Browser Fingerprinting
-17.14. Validator Retention
-17.15. Denial-of-Service Attacks Using Range
-17.16. Authentication Considerations
-17.16.1. Confidentiality of Credentials
-17.16.2. Credentials and Idle Clients
-17.16.3. Protection Spaces
-17.16.4. Additional Response Fields 18. IANA Considerations
-18.1. URI Scheme Registration
-18.2. Method Registration
-18.3. Status Code Registration
-18.4. Field Name Registration
-18.5. Authentication Scheme Registration
-18.6. Content Coding Registration
-18.7. Range Unit Registration
-18.8. Media Type Registration
-18.9. Port Registration
-18.10. Upgrade Token Registration
+- - [15.6.6. 505 HTTP Version Not Supported](#1566-505-HTTP-Version-Not-Supported) 16. Extending HTTP
+    16.1. Method Extensibility
+    16.1.1. Method Registry
+    16.1.2. Considerations for New Methods
+    16.2. Status Code Extensibility
+    16.2.1. Status Code Registry
+    16.2.2. Considerations for New Status Codes
+    16.3. Field Extensibility
+    16.3.1. Field Name Registry
+    16.3.2. Considerations for New Fields
+    16.3.2.1. Considerations for New Field Names
+    16.3.2.2. Considerations for New Field Values
+    16.4. Authentication Scheme Extensibility
+    16.4.1. Authentication Scheme Registry
+    16.4.2. Considerations for New Authentication Schemes
+    16.5. Range Unit Extensibility
+    16.5.1. Range Unit Registry
+    16.5.2. Considerations for New Range Units
+    16.6. Content Coding Extensibility
+    16.6.1. Content Coding Registry
+    16.6.2. Considerations for New Content Codings
+    16.7. Upgrade Token Registry 17. Security Considerations
+    17.1. Establishing Authority
+    17.2. Risks of Intermediaries
+    17.3. Attacks Based on File and Path Names
+    17.4. Attacks Based on Command, Code, or Query Injection
+    17.5. Attacks via Protocol Element Length
+    17.6. Attacks Using Shared-Dictionary Compression
+    17.7. Disclosure of Personal Information
+    17.8. Privacy of Server Log Information
+    17.9. Disclosure of Sensitive Information in URIs
+    17.10. Application Handling of Field Names
+    17.11. Disclosure of Fragment after Redirects
+    17.12. Disclosure of Product Information
+    17.13. Browser Fingerprinting
+    17.14. Validator Retention
+    17.15. Denial-of-Service Attacks Using Range
+    17.16. Authentication Considerations
+    17.16.1. Confidentiality of Credentials
+    17.16.2. Credentials and Idle Clients
+    17.16.3. Protection Spaces
+    17.16.4. Additional Response Fields 18. IANA Considerations
+    18.1. URI Scheme Registration
+    18.2. Method Registration
+    18.3. Status Code Registration
+    18.4. Field Name Registration
+    18.5. Authentication Scheme Registration
+    18.6. Content Coding Registration
+    18.7. Range Unit Registration
+    18.8. Media Type Registration
+    18.9. Port Registration
+    18.10. Upgrade Token Registration
 
 [19. 레퍼런스](#19-레퍼런스)
 
@@ -2141,13 +2140,13 @@ TRACE 메소드에 대한 응답들은 캐시 불가능하다.
 
 ## 10. 메시지 콘텍스트
 
-10.1. Request Context Fields
+### 10.1. 요청 콘텍스트 필드들
 
 The request header fields below provide additional information about
 the request context, including information about the user, user
 agent, and resource behind the request.
 
-10.1.1. Expect
+#### 10.1.1. Expect
 
 The "Expect" header field in a request indicates a certain set of
 behaviors (expectations) that need to be supported by the server in
@@ -4644,13 +4643,11 @@ GET이나 HEAD에 대한 200 응답들에서, 오리진 서버는 웬만하면(S
 
 204 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]) heuristic하게 캐시 할 수 있다.
 
-
 #### 15.3.6. 205 Reset Content
 
 205 (Reset Content) 상태 코드는 서버가 요청을 이행했고 유저 에이전트가 오리진 서버에서 수신하는대로, 보내진 요청을 유발한, "document view"를 원래 상태로 재설정하기를 원한다는 것을 나타낸다.
 
 이 응답은 사용자가 데이터 입력을 지원하는 컨텐츠(양식, 메모장, 캔버스 등)를 수신하고, 해당 공간에 데이터를 입력하거나 조작하여, 입력된 데이터가 요청에 제출되도록 한 다음, 사용자가 다른 입력 작업을 쉽게 시작할 수 있도록 다음 입력을 위해 데이터 입력 메커니즘이 재설정되는 일반적인 데이터 입력 사용 사례를 지원하기 위한 것이다.
-
 
 205 상태 코드는 추가 콘텐츠가 제공되지 않음을 의미하므로, 서버는 205 응답으로 콘텐츠를 절대(MUST NOT) 생성해서는 안 된다.
 
@@ -4664,7 +4661,6 @@ GET이나 HEAD에 대한 200 응답들에서, 오리진 서버는 웬만하면(S
 
 206 응답을 생성하는 서버는 다음 헤더 필드들이 같은 요청에 대한 200(OK) 응답에서 보내졌을 것이라면 반드시(MUST) 해당 헤더 필드들을, 아래 하위 절들에서 요구되는 것들 외에 추가로, 생성해야 한다: Date, Cache-Control, ETag, Expires,
 Content-Location, 그리고 Vary.
-
 
 206 응답에 있는 Content-Length 헤더 필드는 이 메세지 콘텐츠의 옥텟 수를 나타내며, 일반적으로 선택한 표현의 전체 길이가 아니다. 각 Content-Range 헤더 필드는 선택한 표현의 전체 길이에 대한 정보가 포함를 포함한다.
 
@@ -4727,8 +4723,6 @@ Content-Range: bytes 7000-7999/8000
 
 조합된 응답 콘텐츠는 새로운 응답 내의 부분 콘텐츠 범위들과 모든 일치하는 저장된 응답들의 결합으로 구성된다. 만약 결합이 표현의 모든 범위로 구성된다면, 클라이언트는 반드시(MUST) 조합된 응답을, 완전한 길이를 반영하는 Content-Length 헤더 필드를 포함해, 완전한 200(OK) 응답인 것 처럼 처리해야 한다. 그렇지 않으면, 클라이언트는 반드시(MUST) 연속적인 범위들의 집합을 다음 중 하나로 처리해야 한다: 조합된 응답이 표현의 접두사인 경우 불완전한 200(OK) 응답으로, 혹은 "multipart/byteranges" 콘텐츠를 포함하는 단일 206(Partial Content)이나, 각각 Content-Range 헤더 필드에 의해 지정된 한 연속적인 범위로 된, 여러 206(Partial Content) 응답들로.
 
-
-
 ### 15.4. Redirection 3xx
 
 상태 코드의 3xx (Redirection) 클래스는 요청을 이행하기 위해 유저 에이전트가 추가 조치를 취할 필요가 있음을 나타낸다. redirects에는 여러 유형이 있다:
@@ -4769,7 +4763,7 @@ Location 헤더 필드 (10.2.2절) 가 제공되면, 유저 에이전트는 특�
 
 클라이언트는 순환적 리다이렉션(즉, “무한” 리다이렉션 루프) 을 웬만하면(SHOULD) 감지하고 개입해야 한다.
 
-**Note:**  이 사양의 이전 버전에서는 최대 5개의 리다이렉션을 권장했다([[RFC2068](https://www.rfc-editor.org/info/rfc2068)], 10.3절).콘텐츠 개발자들은 일부 클라이언트가 이러한 고정된 제한을 구현할 수 있다는 점을 인지할 필요가 있다.
+**Note:** 이 사양의 이전 버전에서는 최대 5개의 리다이렉션을 권장했다([[RFC2068](https://www.rfc-editor.org/info/rfc2068)], 10.3절).콘텐츠 개발자들은 일부 클라이언트가 이러한 고정된 제한을 구현할 수 있다는 점을 인지할 필요가 있다.
 
 #### 15.4.1. 300 Multiple Choices
 
@@ -4781,12 +4775,11 @@ HEAD 이외의 요청 메소드의 경우, 서버는 유저 또는 유저 에이
 
 300 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]) heuristic하게 캐시 할 수 있다.
 
-**Note:** 300 상태 코드에 대한 원래 제안에서는 URI 헤더 필드가 200, 300 및 406 응답에 사용할 수 있고 HEAD 메소드에 대한 응답으로 전송될 수 있도록 대체 표현 목록을 제공하는 것으로 정의했다. representations, such that it would be usable for 200, 300, and그러나, 배포의 부족과 구문에 대한 의견 불일치로 인해 URI와 Alternates (후속 제안)는 이 명세서에서 삭제  되었다. 구성원들이 “alternate” 관계를 갖는 링크 헤더 필드 값 [[RFC8288](https://www.rfc-editor.org/info/rfc8288)]으로 목록을 전달할 수 도 있지만, 배포는 닭과 달걀의 문제다.
+**Note:** 300 상태 코드에 대한 원래 제안에서는 URI 헤더 필드가 200, 300 및 406 응답에 사용할 수 있고 HEAD 메소드에 대한 응답으로 전송될 수 있도록 대체 표현 목록을 제공하는 것으로 정의했다. representations, such that it would be usable for 200, 300, and그러나, 배포의 부족과 구문에 대한 의견 불일치로 인해 URI와 Alternates (후속 제안)는 이 명세서에서 삭제 되었다. 구성원들이 “alternate” 관계를 갖는 링크 헤더 필드 값 [[RFC8288](https://www.rfc-editor.org/info/rfc8288)]으로 목록을 전달할 수 도 있지만, 배포는 닭과 달걀의 문제다.
 
 #### 15.4.2. 301 Moved Permanently
 
 301 (Moved Permanently) 상태 코드는 타겟 리소스에 새로운 영구 URI가 할당되었음을 나타내며 이 리소스에 대한 향후 참조는 동봉된 URI 중 하나를 사용해야 한다. 서버는 링크 편집 기능이 있는 유저 에이전트가 타겟 URI에 대한 참조를 서버가 보낸 새로운 참조 중 하나로 영구적으로 대체할 수 있다고 제안한다. 그러나, 유저 에이전트가 참조를 적극적으로 편집하고 (예: 콘텐츠 작성에 관여), 연결이 보안되어 있고, origin 서버가 편집 중인 콘텐츠에 대해 신뢰할 수 있는 권한이 아닌 한 이 제한은 보통 무시된다.
-
 
 서버는 새로운 영구 URI에 대한 선호되는 URI 참조가 포함된 응답에 Location 헤더 필드를 웬만하면(SHOULD) 생성해야 한다. 유저 에이전트는 자동 리다이렉션을 위해 Location 필드 값을 아마(MAY) 사용할 수 있다. 서버의 응답 콘텐츠에는 보통 새로운 URI로 연결되는 하이퍼링크가 포함된 짧은 하이퍼텍스트 메모가 포함된다.
 
