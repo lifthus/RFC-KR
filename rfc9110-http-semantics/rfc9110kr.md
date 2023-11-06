@@ -2179,58 +2179,33 @@ Expect 필드 값은 대소문자를 구분하지 않는다.
 
 - 100-continue 기대 사항을 포함하는 요청에 대한 응답에서 417(Expectation Failed) 상태 코드를 수신한 클라이언트는 웬만하면(SHOULD) 해당 요청을 100-continue 기대 사항 없이 반복해야 하는데, 이는 417 응답이 단지 응답 체인이 기대 사항들을 지원하지 않음을 나타낼 뿐이기 때문이다(예를 들어, HTTP/1.0 서버를 통과하는 경우).
 
-Requirements for servers:
+서버들을 위한 요구사항들:
 
-- A server that receives a 100-continue expectation in an HTTP/1.0
-  request MUST ignore that expectation.
+- HTTP/1.0 요청에서 100-continue 기대사항을 수신하는 서버는 반드시(MUST) 해당 기대사항을 무시해야 한다.
 
-- A server MAY omit sending a 100 (Continue) response if it has
-  already received some or all of the content for the corresponding
-  request, or if the framing indicates that there is no content.
+- 만약 해당하는 요청에 대한 일부 혹은 모든 콘텐츠를 이미 수신했거나, 프레이밍이 콘텐츠가 없다는 것을 나타낸다면 서버는 아마(MAY) 100(Continue) 응답을 보내는 것을 생략할 수 있을 것이다.
 
-- A server that sends a 100 (Continue) response MUST ultimately send
-  a final status code, once it receives and processes the request
-  content, unless the connection is closed prematurely.
+- 100(Continue) 응답을 보내는 서버는, 연결이 조기에 닫히지 않은 한, 요청 콘텐츠를 수신하고 처리한다면 반드시(MUST) 궁극적으로 최종 상태 코드를 보내야한다.
 
-- A server that responds with a final status code before reading the
-  entire request content SHOULD indicate whether it intends to close
-  the connection (e.g., see Section 9.6 of [HTTP/1.1]) or continue
-  reading the request content.
+- 전체 요청 콘텐츠를 읽기 전에 최종 상태 코드를 응답하는 서버는 웬만하면(SHOULD) 언결을 닫을 것인지(예를 들어, [[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 9.6절을 참조하라) 계속 요청 콘텐츠를 읽을 것인지를 나타내야 한다.
 
-Upon receiving an HTTP/1.1 (or later) request that has a method,
-target URI, and complete header section that contains a 100-continue
-expectation and an indication that request content will follow, an
-origin server MUST send either:
+메소드, 타겟 URI, 그리고 100-continue 기대사항과 요청 콘텐츠가 따를 것이라는 지시를 포함하는 완전한 헤더 섹션을 가진 HTTP/1.1(혹은 나중 버전) 요청을 수신하면, 오리진 서버는 반드시(MUST) 다음 중 하나를 보내야 한다.
 
-- an immediate response with a final status code, if that status can
-  be determined by examining just the method, target URI, and header
-  fields, or
+- 그냥 메소드, 타겟 URI, 그리고 헤더 필드들을 조사함으로써 상태가 결정될 수 있다면, 즉시 최종 상태 코드로 응답하거나, 혹은
 
-- an immediate 100 (Continue) response to encourage the client to
-  send the request content.
+- 즉시 100(Continue) 응답을 보냄으로써 클라이언트가 요청 콘텐츠를 보내도록 하라.
 
-The origin server MUST NOT wait for the content before sending the
-100 (Continue) response.
+오리진 서버는 100(Continue) 응답을 보내기 전에는 절대(MUST NOT) 콘텐츠를 기다려서는 안된다.
 
-Upon receiving an HTTP/1.1 (or later) request that has a method,
-target URI, and complete header section that contains a 100-continue
-expectation and indicates a request content will follow, a proxy MUST
-either:
+메소드, 타겟 URI, 그리고 100-continue 기대사항을 포함하는 완전한 헤더 섹션을 가지고 요청 콘텐츠가 따를 것임을 나타내는 HTTP/1.1(혹은 나중 버전) 요청을 수신하면, 프록시는 반드시(MUST) 다음 중 하나를 행해야 한다.
 
-- send an immediate response with a final status code, if that
-  status can be determined by examining just the method, target URI,
-  and header fields, or
+- 그냥 메소드, 타겟 URI, 그리고 헤더 필드들을 조사함으로써 해당 상태가 결정될 수 있다면, 즉시 최종 상태 코드와 함께 응답을 보내거나, 혹은
 
-- forward the request toward the origin server by sending a
-  corresponding request-line and header section to the next inbound
-  server.
+- 다음 인바운드 서버로 해당하는 요청-라인과 헤더 섹션을 보냄으로써 오리진 서버를 향해 요청을 포워딩하라,
 
-If the proxy believes (from configuration or past interaction) that
-the next inbound server only supports HTTP/1.0, the proxy MAY
-generate an immediate 100 (Continue) response to encourage the client
-to begin sending the content.
+만약 프록시가 (설정이나 과거 상호작용으로 부터) 다음 인바운드 서버가 오직 HTTP/1.0만을 지원한다고 믿는다면, 프록시는 아마(MAY) 클라이언트가 콘텐츠를 보내는 것을 시작하도록 즉시 100(Continue) 응답을 생성할 수 있을 것이다.
 
-10.1.2. From
+#### 10.1.2. From
 
 The "From" header field contains an Internet email address for a
 human user who controls the requesting user agent. The address ought
