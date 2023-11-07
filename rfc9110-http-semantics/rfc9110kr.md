@@ -2245,36 +2245,24 @@ Referer 헤더 필드는 유저의 요청 콘텍스트 혹은 브라우징 히�
 
 일부 중개자들은 무차별적으로 나가는 요청들로부터 Referer 헤더 필드들을 제거하는 것으로 알려져있다. 이것은 CSRF 공격들에 대한 보호에 간섭하는 불행한 사이드 이펙트를 가지는데, 그 유저들에게 있어 더욱 더 해로울 수 있다. Referer에서의 정보 노출을 제한하기를 바라는 중개자들과 유저 에이전트 확장들은, 내부 도메인 네임들을 슈도님이나 쿼리 그리고/혹은 경로 컴포넌트들을 잘라내는 것과 같은, 특정한 편집들로 그들의 변경을 제한해야 한다. 중개자는 웬만해서는(SHOULD NOT) 필드 값이 타겟 URI와 같은 scheme과 호스트를 공유할 때는 Referer 헤더 필드를 수정하거나 삭제해서는 안된다.
 
-10.1.4. TE
+#### 10.1.4. TE
 
-The "TE" header field describes capabilities of the client with
-regard to transfer codings and trailer sections.
+"TE" 헤더 필드는 transfer codings들과 트레일러 섹션들과 관련한 클라이언트의 능력들을 서술한다.
 
-As described in Section 6.5, a TE field with a "trailers" member sent
-in a request indicates that the client will not discard trailer
-fields.
+6.5절에 서술된대로, 요청에 보내진 "trailers" 멤버와의 TE 필드는 클라이언트가 트레일러 필드들을 버리지 않을 것임을 나타낸다.
 
-TE is also used within HTTP/1.1 to advise servers about which
-transfer codings the client is able to accept in a response. As of
-publication, only HTTP/1.1 uses transfer codings (see Section 7 of
-[HTTP/1.1]).
+TE는 또한 HTTP/1.1 내에서 서버들에게 응답에서 어떤 transfer codings가 클라이언트가 수용 가능한지 알려주기 위해 사용된다. 출판 기준으로, 오직 HTTP/1.1만이 transfer codings를 사용한다([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 7절 참조).
 
-The TE field value is a list of members, with each member (aside from
-"trailers") consisting of a transfer coding name token with an
-optional weight indicating the client's relative preference for that
-transfer coding (Section 12.4.2) and optional parameters for that
-transfer coding.
+TE 필드 값은 각 멤버("trailers"는 제외하고)가 클라이언트의 transfer coding에 대한 상대적인 선호를 나타내는 선택적 가중치(12.4.2절)와 그 transfer coding을 위한 선택적 파라미터들과 함께하는 transfer coding name token으로 구성되는, 멤버들의 리스트다.
 
      TE                 = #t-codings
      t-codings          = "trailers" / ( transfer-coding [ weight ] )
      transfer-coding    = token *( OWS ";" OWS transfer-parameter )
      transfer-parameter = token BWS "=" BWS ( token / quoted-string )
 
-A sender of TE MUST also send a "TE" connection option within the
-Connection header field (Section 7.6.1) to inform intermediaries not
-to forward this field.
+TE의 발신자는 반드시(MUST) 중개자들에게 이 필드를 포워딩하지 말라고 알리기 위해서 Connnection 헤더 필드(7.6.1절 참조) 내에 "TE" 연결 옵션 또한 보내야 한다.
 
-10.1.5. User-Agent
+#### 10.1.5. User-Agent
 
 The "User-Agent" header field contains information about the user
 agent originating the request, which is often used by servers to help
