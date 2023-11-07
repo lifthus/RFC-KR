@@ -2207,33 +2207,21 @@ Expect 필드 값은 대소문자를 구분하지 않는다.
 
 #### 10.1.2. From
 
-The "From" header field contains an Internet email address for a
-human user who controls the requesting user agent. The address ought
-to be machine-usable, as defined by "mailbox" in Section 3.4 of
-[RFC5322]:
+"From" 헤더 필드는 요청하는 유저 에이전트를 제어하는 인간 사용자를 위한 인터넷 이메일 주소를 포함한다. 그 주소는 [[RFC5322](https://www.rfc-editor.org/info/rfc5322)]의 3.4절에 "mailbox"에 의해 정의된대로, 기계가 사용할 수 있어야 한다:
 
      From    = mailbox
 
-     mailbox = <mailbox, see [RFC5322], Section 3.4>
+     mailbox = <mailbox, [RFC5322], 3.4절 참조>
 
-An example is:
+예시는:
 
-From: spider-admin@example.org
+     From: spider-admin@example.org
 
-The From header field is rarely sent by non-robotic user agents. A
-user agent SHOULD NOT send a From header field without explicit
-configuration by the user, since that might conflict with the user's
-privacy interests or their site's security policy.
+From header 필드는 non-robotic 유저 에이전트들에 의해 드물게 보내진다. 유저 에이전트는 웬만해서는(SHOULD NOT) 유저에 의한 명시적인 설정없이 From 헤더 필드를 보내서는 안되는데, 그것이 유저의 프라이버시 이해나 그들의 사이트의 보안 정책과 충돌할 수도 있기 때문이다.
 
-A robotic user agent SHOULD send a valid From header field so that
-the person responsible for running the robot can be contacted if
-problems occur on servers, such as if the robot is sending excessive,
-unwanted, or invalid requests.
+robotic 유저 에이전트는 웬만하면(SHOULD), 로봇이 과도한, 원하지 않은, 혹은 유효하지 않은 요청들을 보내는 것과 같이, 서버들에 문제들을 일으킨다면 그 로봇을 실행할 책임이 있는 사람에게 연락할 수 있도록 유효한 From 헤더 필드를 보내야 한다.
 
-A server SHOULD NOT use the From header field for access control or
-authentication, since its value is expected to be visible to anyone
-receiving or observing the request and is often recorded within
-logfiles and error reports without any expectation of privacy.
+서버는 웬만해서는(SHOULD NOT) From 헤더 필드를 접근 제어 혹은 인증을 위해 사용해서는 안되는데, 이는 그 값이 그 요청을 수신하거나 관측할 수 있는 누구나에게 보여지도록 기대되기 때문이고 종종 로그 파일내에 그리고 에러 레포트들에 어떠한 프라이버시에 대한 기대도 없이 기록되기 때문이다.
 
 10.1.3. Referer
 
