@@ -2223,68 +2223,27 @@ robotic 유저 에이전트는 웬만하면(SHOULD), 로봇이 과도한, 원하
 
 서버는 웬만해서는(SHOULD NOT) From 헤더 필드를 접근 제어 혹은 인증을 위해 사용해서는 안되는데, 이는 그 값이 그 요청을 수신하거나 관측할 수 있는 누구나에게 보여지도록 기대되기 때문이고 종종 로그 파일내에 그리고 에러 레포트들에 어떠한 프라이버시에 대한 기대도 없이 기록되기 때문이다.
 
-10.1.3. Referer
+#### 10.1.3. Referer
 
-The "Referer" [sic] header field allows the user agent to specify a
-URI reference for the resource from which the target URI was obtained
-(i.e., the "referrer", though the field name is misspelled). A user
-agent MUST NOT include the fragment and userinfo components of the
-URI reference [URI], if any, when generating the Referer field value.
+"Referer"[오타아님] 헤더 필드는 유저 에이전트가 타겟 URI가 얻어진 리소스에 대한 URI 레퍼런스를 지정할 수 있게 한다(즉, "referrer"를 지정한다, 스펠링이 틀리긴 했지만). 유저 에이전트는 Referer 필드 값을 생성할 때 절대(MUST NOT) URI 레퍼런스[[URI](https://www.rfc-editor.org/info/rfc3986)]의 프래그먼트와 유저정보 컴포넌트들이, 만약 있다면, 포함해서는 안된다.
 
      Referer = absolute-URI / partial-URI
 
-The field value is either an absolute-URI or a partial-URI. In the
-latter case (Section 4), the referenced URI is relative to the target
-URI ([URI], Section 5).
+필드 값은 absolute-URI 혹은 partial-URI 중 하나다. 후자의 경우(4절), 참조된 URI는 타겟 URI에 상대적이다([[URI](https://www.rfc-editor.org/info/rfc3986)], 5절).
 
-The Referer header field allows servers to generate back-links to
-other resources for simple analytics, logging, optimized caching,
-etc. It also allows obsolete or mistyped links to be found for
-maintenance. Some servers use the Referer header field as a means of
-denying links from other sites (so-called "deep linking") or
-restricting cross-site request forgery (CSRF), but not all requests
-contain it.
+Referer 헤더 필드는 서버들이 간단한 분석, 로깅, 최적화된 캐싱, 등을 위한 다른 리소스들로의 백-링크들을 생성할 수 있도록 한다. 또한 유지보수를 위해 오래되거나 잘못된 링크들이 발견되도록 한다. 어떤 서버들은 Referer 헤더 필드를 다른 사이트들로부터의 링크들을 거부하기 위해서(소위 "deep linking"이라 하는) 혹은 cross-site request forgery(CSRF)를 제한하기 위해서 사용하지만, 모든 요청들이 그것을 포함하지는 않는다.
 
-Example:
+예시:
 
-Referer: http://www.example.org/hypertext/Overview.html
+     Referer: http://www.example.org/hypertext/Overview.html
 
-If the target URI was obtained from a source that does not have its
-own URI (e.g., input from the user keyboard, or an entry within the
-user's bookmarks/favorites), the user agent MUST either exclude the
-Referer header field or send it with a value of "about:blank".
+만약 타겟 URI가 자신의 URI를 가지지 않은 출처로부터 얻어졌다면(예를 들어, 유저 키보드로부터의 입력, 혹은 유저의 북마크/즐겨찾기 내의 항목), 유저 에이전트는 반드시(MUST) Referer 헤더 필드를 제외하거나 "about:blank"라는 값으로 보내야 한다.
 
-The Referer header field value need not convey the full URI of the
-referring resource; a user agent MAY truncate parts other than the
-referring origin.
+Referer 헤더 필드 값은 참조하는 리소스의 전체 URI를 전달할 필요가 없다; 유저 에이전트는 아마(MAY) 오리진을 참조하는 부분을 제외하고는 잘라낼 수 있을 것이다.
 
-The Referer header field has the potential to reveal information
-about the request context or browsing history of the user, which is a
-privacy concern if the referring resource's identifier reveals
-personal information (such as an account name) or a resource that is
-supposed to be confidential (such as behind a firewall or internal to
-a secured service). Most general-purpose user agents do not send the
-Referer header field when the referring resource is a local "file" or
-"data" URI. A user agent SHOULD NOT send a Referer header field if
-the referring resource was accessed with a secure protocol and the
-request target has an origin differing from that of the referring
-resource, unless the referring resource explicitly allows Referer to
-be sent. A user agent MUST NOT send a Referer header field in an
-unsecured HTTP request if the referring resource was accessed with a
-secure protocol. See Section 17.9 for additional security
-considerations.
+Referer 헤더 필드는 유저의 요청 콘텍스트 혹은 브라우징 히스토리에 관한 정보를 드러낼 잠재성을 가지고 있는데, 이것은 참조하는 리소스의 식별자가 개인적인 정보(계정명 같은) 혹은 비밀스러워야 하는 리소스(방화벽 뒤나 보안 서비스 내부 같은)를 드러낸다면 프라이버시 관심사가 된다. 대부분의 범용 유저 에이전트들은 참조하는 리소스가 로컬 "파일" 혹은 "데이터" URI일 경우 Referer 헤더 필드를 보내지 않는다. 유저 에이전트는 참조하는 리소스가 보안 보안 프로토콜로 접근되고 요청 타겟이 참조하는 리소스의 것과 다른 오리진을 가진 경우, 참조하는 리소스가 명시적으로 Referer가 보내지는 것을 허용하지 않는 이상 웬만해서는(SHOULD NOT) Referer 헤더 필드를 보내서는 안된다. 유저 에이전트는 참조하는 리소스가 보안 프로토콜로 접근됐다면 절대(MUST NOT) Referer 헤더 필드를 보안되지 않은 HTTP 요청에서 보내서는 안된다. 추가적인 보안 고려사항들을 위해서는 17.9절을 참조하라.
 
-Some intermediaries have been known to indiscriminately remove
-Referer header fields from outgoing requests. This has the
-unfortunate side effect of interfering with protection against CSRF
-attacks, which can be far more harmful to their users.
-Intermediaries and user agent extensions that wish to limit
-information disclosure in Referer ought to restrict their changes to
-specific edits, such as replacing internal domain names with
-pseudonyms or truncating the query and/or path components. An
-intermediary SHOULD NOT modify or delete the Referer header field
-when the field value shares the same scheme and host as the target
-URI.
+일부 중개자들은 무차별적으로 나가는 요청들로부터 Referer 헤더 필드들을 제거하는 것으로 알려져있다. 이것은 CSRF 공격들에 대한 보호에 간섭하는 불행한 사이드 이펙트를 가지는데, 그 유저들에게 있어 더욱 더 해로울 수 있다. Referer에서의 정보 노출을 제한하기를 바라는 중개자들과 유저 에이전트 확장들은, 내부 도메인 네임들을 슈도님이나 쿼리 그리고/혹은 경로 컴포넌트들을 잘라내는 것과 같은, 특정한 편집들로 그들의 변경을 제한해야 한다. 중개자는 웬만해서는(SHOULD NOT) 필드 값이 타겟 URI와 같은 scheme과 호스트를 공유할 때는 Referer 헤더 필드를 수정하거나 삭제해서는 안된다.
 
 10.1.4. TE
 
