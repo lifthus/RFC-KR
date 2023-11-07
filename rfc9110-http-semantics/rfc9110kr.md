@@ -184,76 +184,77 @@ than English.
 [9. 메소드들](#9-메소드들)
 
 - [9.1. 개요](#91-개요)
-- - [9.2. 공통 메소드 속성들](#92-공통-메소드-속성들)
-- - - [9.2.1. 안전한 메소드들](#921-안전한-메소드들)
-- - - [9.2.2. 멱등성 메소드들](#922-멱등성-메소드들)
-- - - [9.2.3. 메소드들과 캐싱](#923-메소드들과-캐싱)
+- [9.2. 공통 메소드 속성들](#92-공통-메소드-속성들)
+- - [9.2.1. 안전한 메소드들](#921-안전한-메소드들)
+- - [9.2.2. 멱등성 메소드들](#922-멱등성-메소드들)
+- - [9.2.3. 메소드들과 캐싱](#923-메소드들과-캐싱)
 - [9.3 메소드 정의들](#93-메소드-정의들)
-- - - [9.3.1. GET](#931-get)
-- - - [9.3.2. HEAD](#932-head)
-- - - [9.3.3. POST](#933-post)
-- - - [9.3.4. PUT](#934-put)
-- - - [9.3.5. DELETE](#935-delete)
-- - - [9.3.6. CONNECT](#936-connect)
-- - - [9.3.7. OPTIONS](#937-options)
-- - - [9.3.8. TRACE](#938-trace)
+- - [9.3.1. GET](#931-get)
+- - [9.3.2. HEAD](#932-head)
+- - [9.3.3. POST](#933-post)
+- - [9.3.4. PUT](#934-put)
+- - [9.3.5. DELETE](#935-delete)
+- - [9.3.6. CONNECT](#936-connect)
+- - [9.3.7. OPTIONS](#937-options)
+- - [9.3.8. TRACE](#938-trace)
 
 [10. 메시지 콘텍스트](#10-메시지-콘텍스트)
-10.1. Request Context Fields
-10.1.1. Expect
-10.1.2. From
-10.1.3. Referer
-10.1.4. TE
-10.1.5. User-Agent
-10.2. Response Context Fields
-10.2.1. Allow
-10.2.2. Location
-10.2.3. Retry-After
-10.2.4. Server 11. HTTP Authentication
-11.1. Authentication Scheme
-11.2. Authentication Parameters
-11.3. Challenge and Response
-11.4. Credentials
-11.5. Establishing a Protection Space (Realm)
-11.6. Authenticating Users to Origin Servers
-11.6.1. WWW-Authenticate
-11.6.2. Authorization
-11.6.3. Authentication-Info
-11.7. Authenticating Clients to Proxies
-11.7.1. Proxy-Authenticate
-11.7.2. Proxy-Authorization
-11.7.3. Proxy-Authentication-Info 12. Content Negotiation
-12.1. Proactive Negotiation
-12.2. Reactive Negotiation
-12.3. Request Content Negotiation
-12.4. Content Negotiation Field Features
-12.4.1. Absence
-12.4.2. Quality Values
-12.4.3. Wildcard Values
-12.5. Content Negotiation Fields
-12.5.1. Accept
-12.5.2. Accept-Charset
-12.5.3. Accept-Encoding
-12.5.4. Accept-Language
-12.5.5. Vary 13. Conditional Requests
-13.1. Preconditions
-13.1.1. If-Match
-13.1.2. If-None-Match
-13.1.3. If-Modified-Since
-13.1.4. If-Unmodified-Since
-13.1.5. If-Range
-13.2. Evaluation of Preconditions
-13.2.1. When to Evaluate
-13.2.2. Precedence of Preconditions 14. Range Requests
-14.1. Range Units
-14.1.1. Range Specifiers
-14.1.2. Byte Ranges
-14.2. Range
-14.3. Accept-Ranges
-14.4. Content-Range
-14.5. Partial PUT
-14.6. Media Type multipart/byteranges
-   
+
+- [10.1. 요청 콘텍스트 필드들](#101-요청-콘텍스트-필드들)
+- - [10.1.1. Expect](#1011-expect)
+- - [10.1.2. From](#1012-from)
+- - [10.1.3. Referer](#1013-referer)
+- - [10.1.4. TE](#1014-te)
+- - [10.1.5. User-Agent](#1015-user-agent)
+- [10.2. 응답 콘텍스트 필드들](#102-응답-콘텍스트-필드들)
+- - [10.2.1. Allow](#1021-allow)
+- - [10.2.2. Location](#1022-location)
+- - [10.2.3. Retry-After](#1023-retry-after)
+- - [10.2.4. Server 11. HTTP Authentication](#1024-server-11-http-authentication)
+    11.1. Authentication Scheme
+    11.2. Authentication Parameters
+    11.3. Challenge and Response
+    11.4. Credentials
+    11.5. Establishing a Protection Space (Realm)
+    11.6. Authenticating Users to Origin Servers
+    11.6.1. WWW-Authenticate
+    11.6.2. Authorization
+    11.6.3. Authentication-Info
+    11.7. Authenticating Clients to Proxies
+    11.7.1. Proxy-Authenticate
+    11.7.2. Proxy-Authorization
+    11.7.3. Proxy-Authentication-Info 12. Content Negotiation
+    12.1. Proactive Negotiation
+    12.2. Reactive Negotiation
+    12.3. Request Content Negotiation
+    12.4. Content Negotiation Field Features
+    12.4.1. Absence
+    12.4.2. Quality Values
+    12.4.3. Wildcard Values
+    12.5. Content Negotiation Fields
+    12.5.1. Accept
+    12.5.2. Accept-Charset
+    12.5.3. Accept-Encoding
+    12.5.4. Accept-Language
+    12.5.5. Vary 13. Conditional Requests
+    13.1. Preconditions
+    13.1.1. If-Match
+    13.1.2. If-None-Match
+    13.1.3. If-Modified-Since
+    13.1.4. If-Unmodified-Since
+    13.1.5. If-Range
+    13.2. Evaluation of Preconditions
+    13.2.1. When to Evaluate
+    13.2.2. Precedence of Preconditions 14. Range Requests
+    14.1. Range Units
+    14.1.1. Range Specifiers
+    14.1.2. Byte Ranges
+    14.2. Range
+    14.3. Accept-Ranges
+    14.4. Content-Range
+    14.5. Partial PUT
+    14.6. Media Type multipart/byteranges
+
 [15. 상태 코드](#15-상태-코드)
 
 - [15.1. 상태 코드의 개요](#151-상태-코드의-개요)
@@ -278,7 +279,7 @@ than English.
 - - [15.4.4. 303 See Other](#1544-303-See-Other)
 - - [15.4.5. 304 Not Modified](#1545-304-Not-Modified)
 - - [15.4.6. 305 Use Proxy](#1546-305-Use-Proxy)
-- - [15.4.7. 306 (Unused)](#1547-306-(Unused))
+- - [15.4.7. 306 (Unused)](<#1547-306-(Unused)>)
 - - [15.4.8. 307 Temporary Redirect](#1548-307-Temporary-Redirect)
 - - [15.4.9. 308 Permanent Redirect](#1549-308-Permanent-Redirect)
 - [15.5. Client Error 4xx](#155-Client-Error-4xx)
@@ -300,7 +301,7 @@ than English.
 - - [15.5.16. 415 Unsupported Media Type](#15516-415-Unsupported-Media-Type)
 - - [15.5.17. 416 Range Not Satisfiable](#15517-416-Range-Not-Satisfiable)
 - - [15.5.18. 417 Expectation Failed](#15518-417-Expectation-Failed)
-- - [15.5.19. 418 (Unused)](#15519-418-(Unused))
+- - [15.5.19. 418 (Unused)](<#15519-418-(Unused)>)
 - - [15.5.20. 421 Misdirected Request](#15520-421-Misdirected-Request)
 - - [15.5.21. 422 Unprocessable Content](#15521-422-Unprocessable-Content)
 - - [15.5.22. 426 Upgrade Required](#15522-426-Upgrade-Required)
@@ -310,60 +311,58 @@ than English.
 - - [15.6.3. 502 Bad Gateway](#1563-502-Bad-Gateway)
 - - [15.6.4. 503 Service Unavailable](#1564-503-Service-Unavailable)
 - - [15.6.5. 504 Gateway Timeout](#1565-504-Gateway-Timeout)
-- - [15.6.6. 505 HTTP Version Not Supported](#1566-505-HTTP-Version-Not-Supported)
-   
-   16. Extending HTTP
-16.1. Method Extensibility
-16.1.1. Method Registry
-16.1.2. Considerations for New Methods
-16.2. Status Code Extensibility
-16.2.1. Status Code Registry
-16.2.2. Considerations for New Status Codes
-16.3. Field Extensibility
-16.3.1. Field Name Registry
-16.3.2. Considerations for New Fields
-16.3.2.1. Considerations for New Field Names
-16.3.2.2. Considerations for New Field Values
-16.4. Authentication Scheme Extensibility
-16.4.1. Authentication Scheme Registry
-16.4.2. Considerations for New Authentication Schemes
-16.5. Range Unit Extensibility
-16.5.1. Range Unit Registry
-16.5.2. Considerations for New Range Units
-16.6. Content Coding Extensibility
-16.6.1. Content Coding Registry
-16.6.2. Considerations for New Content Codings
-16.7. Upgrade Token Registry 17. Security Considerations
-17.1. Establishing Authority
-17.2. Risks of Intermediaries
-17.3. Attacks Based on File and Path Names
-17.4. Attacks Based on Command, Code, or Query Injection
-17.5. Attacks via Protocol Element Length
-17.6. Attacks Using Shared-Dictionary Compression
-17.7. Disclosure of Personal Information
-17.8. Privacy of Server Log Information
-17.9. Disclosure of Sensitive Information in URIs
-17.10. Application Handling of Field Names
-17.11. Disclosure of Fragment after Redirects
-17.12. Disclosure of Product Information
-17.13. Browser Fingerprinting
-17.14. Validator Retention
-17.15. Denial-of-Service Attacks Using Range
-17.16. Authentication Considerations
-17.16.1. Confidentiality of Credentials
-17.16.2. Credentials and Idle Clients
-17.16.3. Protection Spaces
-17.16.4. Additional Response Fields 18. IANA Considerations
-18.1. URI Scheme Registration
-18.2. Method Registration
-18.3. Status Code Registration
-18.4. Field Name Registration
-18.5. Authentication Scheme Registration
-18.6. Content Coding Registration
-18.7. Range Unit Registration
-18.8. Media Type Registration
-18.9. Port Registration
-18.10. Upgrade Token Registration
+- - [15.6.6. 505 HTTP Version Not Supported](#1566-505-HTTP-Version-Not-Supported) 16. Extending HTTP
+    16.1. Method Extensibility
+    16.1.1. Method Registry
+    16.1.2. Considerations for New Methods
+    16.2. Status Code Extensibility
+    16.2.1. Status Code Registry
+    16.2.2. Considerations for New Status Codes
+    16.3. Field Extensibility
+    16.3.1. Field Name Registry
+    16.3.2. Considerations for New Fields
+    16.3.2.1. Considerations for New Field Names
+    16.3.2.2. Considerations for New Field Values
+    16.4. Authentication Scheme Extensibility
+    16.4.1. Authentication Scheme Registry
+    16.4.2. Considerations for New Authentication Schemes
+    16.5. Range Unit Extensibility
+    16.5.1. Range Unit Registry
+    16.5.2. Considerations for New Range Units
+    16.6. Content Coding Extensibility
+    16.6.1. Content Coding Registry
+    16.6.2. Considerations for New Content Codings
+    16.7. Upgrade Token Registry 17. Security Considerations
+    17.1. Establishing Authority
+    17.2. Risks of Intermediaries
+    17.3. Attacks Based on File and Path Names
+    17.4. Attacks Based on Command, Code, or Query Injection
+    17.5. Attacks via Protocol Element Length
+    17.6. Attacks Using Shared-Dictionary Compression
+    17.7. Disclosure of Personal Information
+    17.8. Privacy of Server Log Information
+    17.9. Disclosure of Sensitive Information in URIs
+    17.10. Application Handling of Field Names
+    17.11. Disclosure of Fragment after Redirects
+    17.12. Disclosure of Product Information
+    17.13. Browser Fingerprinting
+    17.14. Validator Retention
+    17.15. Denial-of-Service Attacks Using Range
+    17.16. Authentication Considerations
+    17.16.1. Confidentiality of Credentials
+    17.16.2. Credentials and Idle Clients
+    17.16.3. Protection Spaces
+    17.16.4. Additional Response Fields 18. IANA Considerations
+    18.1. URI Scheme Registration
+    18.2. Method Registration
+    18.3. Status Code Registration
+    18.4. Field Name Registration
+    18.5. Authentication Scheme Registration
+    18.6. Content Coding Registration
+    18.7. Range Unit Registration
+    18.8. Media Type Registration
+    18.9. Port Registration
+    18.10. Upgrade Token Registration
 
 [19. 레퍼런스](#19-레퍼런스)
 
@@ -2141,251 +2140,129 @@ TRACE 메소드에 대한 응답들은 캐시 불가능하다.
 
 ## 10. 메시지 콘텍스트
 
-10.1. Request Context Fields
+### 10.1. 요청 콘텍스트 필드들
 
-The request header fields below provide additional information about
-the request context, including information about the user, user
-agent, and resource behind the request.
+아래 요청 헤더 필드들은 유저, 유저 에이전트, 그리고 요청 뒤에 있는 리소스를 포함하는, 요청 콘텍스트에 대한 추가적인 정보를 제공한다.
 
-10.1.1. Expect
+#### 10.1.1. Expect
 
-The "Expect" header field in a request indicates a certain set of
-behaviors (expectations) that need to be supported by the server in
-order to properly handle this request.
+요청의 "Expect" 헤더 필드는 해당 요청을 적절히 다루기 위해 서버에 의해 지원될 필요가 있는 행동들(기대들)의 특정한 집합을 나타낸다.
 
      Expect =      #expectation
      expectation = token [ "=" ( token / quoted-string ) parameters ]
 
-The Expect field value is case-insensitive.
+Expect 필드 값은 대소문자를 구분하지 않는다.
 
-The only expectation defined by this specification is "100-continue"
-(with no defined parameters).
+이 사양에 의해 정의되는 유일한 기대 사항은 "100-continue"이다(따로 정의된 파라미터 없이).
 
-A server that receives an Expect field value containing a member
-other than 100-continue MAY respond with a 417 (Expectation Failed)
-status code to indicate that the unexpected expectation cannot be
-met.
+100-continue 외의 다른 멤버를 포함하는 Expect 필드 값을 수신한 서버는 아마(MAY) 417(Expectation Failed) 상태 코드로 응답해 예상치 못한 기대 사항이 만족될 수 없음을 나타낼 수 있을 것이다.
 
-A "100-continue" expectation informs recipients that the client is
-about to send (presumably large) content in this request and wishes
-to receive a 100 (Continue) interim response if the method, target
-URI, and header fields are not sufficient to cause an immediate
-success, redirect, or error response. This allows the client to wait
-for an indication that it is worthwhile to send the content before
-actually doing so, which can improve efficiency when the data is huge
-or when the client anticipates that an error is likely (e.g., when
-sending a state-changing method, for the first time, without
-previously verified authentication credentials).
+"100-continue" 기대 사항은 수신자들에게 클라이언트가 이제 해당 요청에 (아마 꽤 큰) 콘텐츠를 보낼 것이고 만약 메소드, 타겟 URI, 그리고 헤더 필드들이 즉시 성공, 리다이렉트, 혹은 에러 응답을 발생시키기에 충분치 않다면 100(Continue) 중간 응답을 수신하길 바란다고 알린다. 이는 클라이언트가 실제로 콘텐츠를 보내기 전에 보낼만한 가치가 있다는 지시를 기다리도록 하여, 데이터가 아주 크거나 클라이언트가 에러가 발생할 수 있다고 예상할 때에 효율성을 향상시킬 수 있다(예를 들어, 이전에 확인된 인증 크레덴셜 없이, 처음으로, 상태-변경 메소드를 보낼 때).
 
-For example, a request that begins with
+예를 들어, 다음과 같이 시작하는 요청은
 
-PUT /somewhere/fun HTTP/1.1
-Host: origin.example.com
-Content-Type: video/h264
-Content-Length: 1234567890987
-Expect: 100-continue
+     PUT /somewhere/fun HTTP/1.1
+     Host: origin.example.com
+     Content-Type: video/h264
+     Content-Length: 1234567890987
+     Expect: 100-continue
 
-allows the origin server to immediately respond with an error
-message, such as 401 (Unauthorized) or 405 (Method Not Allowed),
-before the client starts filling the pipes with an unnecessary data
-transfer.
+클라이언트가 파이프들을 불필요한 데이터 전송으로 채우기 시작하기 전에 오리진 서버가 즉시, 401(Unauthorized) 혹은 405(Method Not Allowed) 같은, 에러 메시지로 응답할 수 있도록 허용한다.
 
-Requirements for clients:
+클라이언트들을 위한 요구사항들:
 
-- A client MUST NOT generate a 100-continue expectation in a request
-  that does not include content.
+- 클라이언트는 절대(MUST NOT) 콘텐츠를 포함하지 않는 요청에 100-continue 기대 사항을 생성해서는 안된다.
 
-- A client that will wait for a 100 (Continue) response before
-  sending the request content MUST send an Expect header field
-  containing a 100-continue expectation.
+- 요청 콘텐츠를 보내기 전에 100(Continue) 응답을 기다릴 클라이언트는 반드시(MUST) 100-continue 기대 사항을 포함하는 Expect 헤더 필드를 보내야 한다.
 
-- A client that sends a 100-continue expectation is not required to
-  wait for any specific length of time; such a client MAY proceed to
-  send the content even if it has not yet received a response.
-  Furthermore, since 100 (Continue) responses cannot be sent through
-  an HTTP/1.0 intermediary, such a client SHOULD NOT wait for an
-  indefinite period before sending the content.
+- 100-continue 기대 사항을 보내는 클라이언트는 어느 특정한 길이의 시간을 기다리도록 요구되지 않는다; 그러한 클라이언트는 아마(MAY) 아직 응답을 수신하지 않았더라도 콘텐츠를 보내는 것을 진행할 수 있을 것이다. 더 나아가, 100(Continue) 응답들은 HTTP/1.0 중개자들을 통해 보내질 수 없기 때문에, 그러한 클라이언트는 웬만해서는(SHOULD NOT) 콘텐츠를 보내기 전에 불분명한 기간동안 기다리지 않아야 한다.
 
-- A client that receives a 417 (Expectation Failed) status code in
-  response to a request containing a 100-continue expectation SHOULD
-  repeat that request without a 100-continue expectation, since the
-  417 response merely indicates that the response chain does not
-  support expectations (e.g., it passes through an HTTP/1.0 server).
+- 100-continue 기대 사항을 포함하는 요청에 대한 응답에서 417(Expectation Failed) 상태 코드를 수신한 클라이언트는 웬만하면(SHOULD) 해당 요청을 100-continue 기대 사항 없이 반복해야 하는데, 이는 417 응답이 단지 응답 체인이 기대 사항들을 지원하지 않음을 나타낼 뿐이기 때문이다(예를 들어, HTTP/1.0 서버를 통과하는 경우).
 
-Requirements for servers:
+서버들을 위한 요구사항들:
 
-- A server that receives a 100-continue expectation in an HTTP/1.0
-  request MUST ignore that expectation.
+- HTTP/1.0 요청에서 100-continue 기대사항을 수신하는 서버는 반드시(MUST) 해당 기대사항을 무시해야 한다.
 
-- A server MAY omit sending a 100 (Continue) response if it has
-  already received some or all of the content for the corresponding
-  request, or if the framing indicates that there is no content.
+- 만약 해당하는 요청에 대한 일부 혹은 모든 콘텐츠를 이미 수신했거나, 프레이밍이 콘텐츠가 없다는 것을 나타낸다면 서버는 아마(MAY) 100(Continue) 응답을 보내는 것을 생략할 수 있을 것이다.
 
-- A server that sends a 100 (Continue) response MUST ultimately send
-  a final status code, once it receives and processes the request
-  content, unless the connection is closed prematurely.
+- 100(Continue) 응답을 보내는 서버는, 연결이 조기에 닫히지 않은 한, 요청 콘텐츠를 수신하고 처리한다면 반드시(MUST) 궁극적으로 최종 상태 코드를 보내야한다.
 
-- A server that responds with a final status code before reading the
-  entire request content SHOULD indicate whether it intends to close
-  the connection (e.g., see Section 9.6 of [HTTP/1.1]) or continue
-  reading the request content.
+- 전체 요청 콘텐츠를 읽기 전에 최종 상태 코드를 응답하는 서버는 웬만하면(SHOULD) 언결을 닫을 것인지(예를 들어, [[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 9.6절을 참조하라) 계속 요청 콘텐츠를 읽을 것인지를 나타내야 한다.
 
-Upon receiving an HTTP/1.1 (or later) request that has a method,
-target URI, and complete header section that contains a 100-continue
-expectation and an indication that request content will follow, an
-origin server MUST send either:
+메소드, 타겟 URI, 그리고 100-continue 기대사항과 요청 콘텐츠가 따를 것이라는 지시를 포함하는 완전한 헤더 섹션을 가진 HTTP/1.1(혹은 나중 버전) 요청을 수신하면, 오리진 서버는 반드시(MUST) 다음 중 하나를 보내야 한다.
 
-- an immediate response with a final status code, if that status can
-  be determined by examining just the method, target URI, and header
-  fields, or
+- 그냥 메소드, 타겟 URI, 그리고 헤더 필드들을 조사함으로써 상태가 결정될 수 있다면, 즉시 최종 상태 코드로 응답하거나, 혹은
 
-- an immediate 100 (Continue) response to encourage the client to
-  send the request content.
+- 즉시 100(Continue) 응답을 보냄으로써 클라이언트가 요청 콘텐츠를 보내도록 하라.
 
-The origin server MUST NOT wait for the content before sending the
-100 (Continue) response.
+오리진 서버는 100(Continue) 응답을 보내기 전에는 절대(MUST NOT) 콘텐츠를 기다려서는 안된다.
 
-Upon receiving an HTTP/1.1 (or later) request that has a method,
-target URI, and complete header section that contains a 100-continue
-expectation and indicates a request content will follow, a proxy MUST
-either:
+메소드, 타겟 URI, 그리고 100-continue 기대사항을 포함하는 완전한 헤더 섹션을 가지고 요청 콘텐츠가 따를 것임을 나타내는 HTTP/1.1(혹은 나중 버전) 요청을 수신하면, 프록시는 반드시(MUST) 다음 중 하나를 행해야 한다.
 
-- send an immediate response with a final status code, if that
-  status can be determined by examining just the method, target URI,
-  and header fields, or
+- 그냥 메소드, 타겟 URI, 그리고 헤더 필드들을 조사함으로써 해당 상태가 결정될 수 있다면, 즉시 최종 상태 코드와 함께 응답을 보내거나, 혹은
 
-- forward the request toward the origin server by sending a
-  corresponding request-line and header section to the next inbound
-  server.
+- 다음 인바운드 서버로 해당하는 요청-라인과 헤더 섹션을 보냄으로써 오리진 서버를 향해 요청을 포워딩하라,
 
-If the proxy believes (from configuration or past interaction) that
-the next inbound server only supports HTTP/1.0, the proxy MAY
-generate an immediate 100 (Continue) response to encourage the client
-to begin sending the content.
+만약 프록시가 (설정이나 과거 상호작용으로 부터) 다음 인바운드 서버가 오직 HTTP/1.0만을 지원한다고 믿는다면, 프록시는 아마(MAY) 클라이언트가 콘텐츠를 보내는 것을 시작하도록 즉시 100(Continue) 응답을 생성할 수 있을 것이다.
 
-10.1.2. From
+#### 10.1.2. From
 
-The "From" header field contains an Internet email address for a
-human user who controls the requesting user agent. The address ought
-to be machine-usable, as defined by "mailbox" in Section 3.4 of
-[RFC5322]:
+"From" 헤더 필드는 요청하는 유저 에이전트를 제어하는 인간 사용자를 위한 인터넷 이메일 주소를 포함한다. 그 주소는 [[RFC5322](https://www.rfc-editor.org/info/rfc5322)]의 3.4절에 "mailbox"에 의해 정의된대로, 기계가 사용할 수 있어야 한다:
 
      From    = mailbox
 
-     mailbox = <mailbox, see [RFC5322], Section 3.4>
+     mailbox = <mailbox, [RFC5322], 3.4절 참조>
 
-An example is:
+예시는:
 
-From: spider-admin@example.org
+     From: spider-admin@example.org
 
-The From header field is rarely sent by non-robotic user agents. A
-user agent SHOULD NOT send a From header field without explicit
-configuration by the user, since that might conflict with the user's
-privacy interests or their site's security policy.
+From header 필드는 non-robotic 유저 에이전트들에 의해서는 거의 보내지지 않는다. 유저 에이전트는 웬만해서는(SHOULD NOT) 유저에 의한 명시적인 설정없이 From 헤더 필드를 보내서는 안되는데, 그것이 유저의 프라이버시 이해나 그들의 사이트의 보안 정책과 충돌할 수도 있기 때문이다.
 
-A robotic user agent SHOULD send a valid From header field so that
-the person responsible for running the robot can be contacted if
-problems occur on servers, such as if the robot is sending excessive,
-unwanted, or invalid requests.
+robotic 유저 에이전트는 웬만하면(SHOULD), 로봇이 과도한, 원하지 않은, 혹은 유효하지 않은 요청들을 보내는 것과 같이, 서버들에 문제들을 일으킨다면 그 로봇을 실행할 책임이 있는 사람에게 연락할 수 있도록 유효한 From 헤더 필드를 보내야 한다.
 
-A server SHOULD NOT use the From header field for access control or
-authentication, since its value is expected to be visible to anyone
-receiving or observing the request and is often recorded within
-logfiles and error reports without any expectation of privacy.
+서버는 웬만해서는(SHOULD NOT) From 헤더 필드를 접근 제어 혹은 인증을 위해 사용해서는 안되는데, 이는 그 값이 그 요청을 수신하거나 관측할 수 있는 누구나에게 보여지도록 기대되기 때문이고 종종 로그 파일내에 그리고 에러 레포트들에 어떠한 프라이버시에 대한 기대도 없이 기록되기 때문이다.
 
-10.1.3. Referer
+#### 10.1.3. Referer
 
-The "Referer" [sic] header field allows the user agent to specify a
-URI reference for the resource from which the target URI was obtained
-(i.e., the "referrer", though the field name is misspelled). A user
-agent MUST NOT include the fragment and userinfo components of the
-URI reference [URI], if any, when generating the Referer field value.
+"Referer"[오타아님] 헤더 필드는 유저 에이전트가 타겟 URI가 얻어진 리소스에 대한 URI 레퍼런스를 지정할 수 있게 한다(즉, "referrer"를 지정한다, 스펠링이 틀리긴 했지만). 유저 에이전트는 Referer 필드 값을 생성할 때 절대(MUST NOT) URI 레퍼런스[[URI](https://www.rfc-editor.org/info/rfc3986)]의 프래그먼트와 유저정보 컴포넌트들이, 만약 있다면, 포함해서는 안된다.
 
      Referer = absolute-URI / partial-URI
 
-The field value is either an absolute-URI or a partial-URI. In the
-latter case (Section 4), the referenced URI is relative to the target
-URI ([URI], Section 5).
+필드 값은 absolute-URI 혹은 partial-URI 중 하나다. 후자의 경우(4절), 참조된 URI는 타겟 URI에 상대적이다([[URI](https://www.rfc-editor.org/info/rfc3986)], 5절).
 
-The Referer header field allows servers to generate back-links to
-other resources for simple analytics, logging, optimized caching,
-etc. It also allows obsolete or mistyped links to be found for
-maintenance. Some servers use the Referer header field as a means of
-denying links from other sites (so-called "deep linking") or
-restricting cross-site request forgery (CSRF), but not all requests
-contain it.
+Referer 헤더 필드는 서버들이 간단한 분석, 로깅, 최적화된 캐싱, 등을 위한 다른 리소스들로의 백-링크들을 생성할 수 있도록 한다. 또한 유지보수를 위해 오래되거나 잘못된 링크들이 발견되도록 한다. 어떤 서버들은 Referer 헤더 필드를 다른 사이트들로부터의 링크들을 거부하기 위해서(소위 "deep linking"이라 하는) 혹은 cross-site request forgery(CSRF)를 제한하기 위해서 사용하지만, 모든 요청들이 그것을 포함하지는 않는다.
 
-Example:
+예시:
 
-Referer: http://www.example.org/hypertext/Overview.html
+     Referer: http://www.example.org/hypertext/Overview.html
 
-If the target URI was obtained from a source that does not have its
-own URI (e.g., input from the user keyboard, or an entry within the
-user's bookmarks/favorites), the user agent MUST either exclude the
-Referer header field or send it with a value of "about:blank".
+만약 타겟 URI가 자신의 URI를 가지지 않은 출처로부터 얻어졌다면(예를 들어, 유저 키보드로부터의 입력, 혹은 유저의 북마크/즐겨찾기 내의 항목), 유저 에이전트는 반드시(MUST) Referer 헤더 필드를 제외하거나 "about:blank"라는 값으로 보내야 한다.
 
-The Referer header field value need not convey the full URI of the
-referring resource; a user agent MAY truncate parts other than the
-referring origin.
+Referer 헤더 필드 값은 참조하는 리소스의 전체 URI를 전달할 필요가 없다; 유저 에이전트는 아마(MAY) 오리진을 참조하는 부분을 제외하고는 잘라낼 수 있을 것이다.
 
-The Referer header field has the potential to reveal information
-about the request context or browsing history of the user, which is a
-privacy concern if the referring resource's identifier reveals
-personal information (such as an account name) or a resource that is
-supposed to be confidential (such as behind a firewall or internal to
-a secured service). Most general-purpose user agents do not send the
-Referer header field when the referring resource is a local "file" or
-"data" URI. A user agent SHOULD NOT send a Referer header field if
-the referring resource was accessed with a secure protocol and the
-request target has an origin differing from that of the referring
-resource, unless the referring resource explicitly allows Referer to
-be sent. A user agent MUST NOT send a Referer header field in an
-unsecured HTTP request if the referring resource was accessed with a
-secure protocol. See Section 17.9 for additional security
-considerations.
+Referer 헤더 필드는 유저의 요청 콘텍스트 혹은 브라우징 히스토리에 관한 정보를 드러낼 잠재성을 가지고 있는데, 이것은 참조하는 리소스의 식별자가 개인적인 정보(계정명 같은) 혹은 비밀스러워야 하는 리소스(방화벽 뒤나 보안 서비스 내부 같은)를 드러낸다면 프라이버시 관심사가 된다. 대부분의 범용 유저 에이전트들은 참조하는 리소스가 로컬 "파일" 혹은 "데이터" URI일 경우 Referer 헤더 필드를 보내지 않는다. 유저 에이전트는 참조하는 리소스가 보안 보안 프로토콜로 접근되고 요청 타겟이 참조하는 리소스의 것과 다른 오리진을 가진 경우, 참조하는 리소스가 명시적으로 Referer가 보내지는 것을 허용하지 않는 이상 웬만해서는(SHOULD NOT) Referer 헤더 필드를 보내서는 안된다. 유저 에이전트는 참조하는 리소스가 보안 프로토콜로 접근됐다면 절대(MUST NOT) Referer 헤더 필드를 보안되지 않은 HTTP 요청에서 보내서는 안된다. 추가적인 보안 고려사항들을 위해서는 17.9절을 참조하라.
 
-Some intermediaries have been known to indiscriminately remove
-Referer header fields from outgoing requests. This has the
-unfortunate side effect of interfering with protection against CSRF
-attacks, which can be far more harmful to their users.
-Intermediaries and user agent extensions that wish to limit
-information disclosure in Referer ought to restrict their changes to
-specific edits, such as replacing internal domain names with
-pseudonyms or truncating the query and/or path components. An
-intermediary SHOULD NOT modify or delete the Referer header field
-when the field value shares the same scheme and host as the target
-URI.
+일부 중개자들은 무차별적으로 나가는 요청들로부터 Referer 헤더 필드들을 제거하는 것으로 알려져있다. 이것은 CSRF 공격들에 대한 보호에 간섭하는 불행한 사이드 이펙트를 가지는데, 그 유저들에게 있어 더욱 더 해로울 수 있다. Referer에서의 정보 노출을 제한하기를 바라는 중개자들과 유저 에이전트 확장들은, 내부 도메인 네임들을 슈도님이나 쿼리 그리고/혹은 경로 컴포넌트들을 잘라내는 것과 같은, 특정한 편집들로 그들의 변경을 제한해야 한다. 중개자는 웬만해서는(SHOULD NOT) 필드 값이 타겟 URI와 같은 scheme과 호스트를 공유할 때는 Referer 헤더 필드를 수정하거나 삭제해서는 안된다.
 
-10.1.4. TE
+#### 10.1.4. TE
 
-The "TE" header field describes capabilities of the client with
-regard to transfer codings and trailer sections.
+"TE" 헤더 필드는 transfer codings들과 트레일러 섹션들과 관련한 클라이언트의 능력들을 서술한다.
 
-As described in Section 6.5, a TE field with a "trailers" member sent
-in a request indicates that the client will not discard trailer
-fields.
+6.5절에 서술된대로, 요청에 보내진 "trailers" 멤버와의 TE 필드는 클라이언트가 트레일러 필드들을 버리지 않을 것임을 나타낸다.
 
-TE is also used within HTTP/1.1 to advise servers about which
-transfer codings the client is able to accept in a response. As of
-publication, only HTTP/1.1 uses transfer codings (see Section 7 of
-[HTTP/1.1]).
+TE는 또한 HTTP/1.1 내에서 서버들에게 응답에서 어떤 transfer codings가 클라이언트가 수용 가능한지 알려주기 위해 사용된다. 출판 기준으로, 오직 HTTP/1.1만이 transfer codings를 사용한다([[HTTP/1.1](https://www.rfc-editor.org/info/rfc9112)]의 7절 참조).
 
-The TE field value is a list of members, with each member (aside from
-"trailers") consisting of a transfer coding name token with an
-optional weight indicating the client's relative preference for that
-transfer coding (Section 12.4.2) and optional parameters for that
-transfer coding.
+TE 필드 값은 각 멤버("trailers"는 제외하고)가 클라이언트의 transfer coding에 대한 상대적인 선호를 나타내는 선택적 가중치(12.4.2절)와 그 transfer coding을 위한 선택적 파라미터들과 함께하는 transfer coding name token으로 구성되는, 멤버들의 리스트다.
 
      TE                 = #t-codings
      t-codings          = "trailers" / ( transfer-coding [ weight ] )
      transfer-coding    = token *( OWS ";" OWS transfer-parameter )
      transfer-parameter = token BWS "=" BWS ( token / quoted-string )
 
-A sender of TE MUST also send a "TE" connection option within the
-Connection header field (Section 7.6.1) to inform intermediaries not
-to forward this field.
+TE의 발신자는 반드시(MUST) 중개자들에게 이 필드를 포워딩하지 말라고 알리기 위해서 Connnection 헤더 필드(7.6.1절 참조) 내에 "TE" 연결 옵션 또한 보내야 한다.
 
-10.1.5. User-Agent
+#### 10.1.5. User-Agent
 
 The "User-Agent" header field contains information about the user
 agent originating the request, which is often used by servers to help
@@ -4644,13 +4521,11 @@ GET이나 HEAD에 대한 200 응답들에서, 오리진 서버는 웬만하면(S
 
 204 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]) heuristic하게 캐시 할 수 있다.
 
-
 #### 15.3.6. 205 Reset Content
 
 205 (Reset Content) 상태 코드는 서버가 요청을 이행했고 유저 에이전트가 오리진 서버에서 수신하는대로, 보내진 요청을 유발한, "document view"를 원래 상태로 재설정하기를 원한다는 것을 나타낸다.
 
 이 응답은 사용자가 데이터 입력을 지원하는 컨텐츠(양식, 메모장, 캔버스 등)를 수신하고, 해당 공간에 데이터를 입력하거나 조작하여, 입력된 데이터가 요청에 제출되도록 한 다음, 사용자가 다른 입력 작업을 쉽게 시작할 수 있도록 다음 입력을 위해 데이터 입력 메커니즘이 재설정되는 일반적인 데이터 입력 사용 사례를 지원하기 위한 것이다.
-
 
 205 상태 코드는 추가 콘텐츠가 제공되지 않음을 의미하므로, 서버는 205 응답으로 콘텐츠를 절대(MUST NOT) 생성해서는 안 된다.
 
@@ -4664,7 +4539,6 @@ GET이나 HEAD에 대한 200 응답들에서, 오리진 서버는 웬만하면(S
 
 206 응답을 생성하는 서버는 다음 헤더 필드들이 같은 요청에 대한 200(OK) 응답에서 보내졌을 것이라면 반드시(MUST) 해당 헤더 필드들을, 아래 하위 절들에서 요구되는 것들 외에 추가로, 생성해야 한다: Date, Cache-Control, ETag, Expires,
 Content-Location, 그리고 Vary.
-
 
 206 응답에 있는 Content-Length 헤더 필드는 이 메세지 콘텐츠의 옥텟 수를 나타내며, 일반적으로 선택한 표현의 전체 길이가 아니다. 각 Content-Range 헤더 필드는 선택한 표현의 전체 길이에 대한 정보가 포함를 포함한다.
 
@@ -4727,8 +4601,6 @@ Content-Range: bytes 7000-7999/8000
 
 조합된 응답 콘텐츠는 새로운 응답 내의 부분 콘텐츠 범위들과 모든 일치하는 저장된 응답들의 결합으로 구성된다. 만약 결합이 표현의 모든 범위로 구성된다면, 클라이언트는 반드시(MUST) 조합된 응답을, 완전한 길이를 반영하는 Content-Length 헤더 필드를 포함해, 완전한 200(OK) 응답인 것 처럼 처리해야 한다. 그렇지 않으면, 클라이언트는 반드시(MUST) 연속적인 범위들의 집합을 다음 중 하나로 처리해야 한다: 조합된 응답이 표현의 접두사인 경우 불완전한 200(OK) 응답으로, 혹은 "multipart/byteranges" 콘텐츠를 포함하는 단일 206(Partial Content)이나, 각각 Content-Range 헤더 필드에 의해 지정된 한 연속적인 범위로 된, 여러 206(Partial Content) 응답들로.
 
-
-
 ### 15.4. Redirection 3xx
 
 상태 코드의 3xx (Redirection) 클래스는 요청을 이행하기 위해 유저 에이전트가 추가 조치를 취할 필요가 있음을 나타낸다. redirects에는 여러 유형이 있다:
@@ -4769,7 +4641,7 @@ Location 헤더 필드 (10.2.2절) 가 제공되면, 유저 에이전트는 특�
 
 클라이언트는 순환적 리다이렉션(즉, “무한” 리다이렉션 루프) 을 웬만하면(SHOULD) 감지하고 개입해야 한다.
 
-**Note:**  이 사양의 이전 버전에서는 최대 5개의 리다이렉션을 권장했다([[RFC2068](https://www.rfc-editor.org/info/rfc2068)], 10.3절).콘텐츠 개발자들은 일부 클라이언트가 이러한 고정된 제한을 구현할 수 있다는 점을 인지할 필요가 있다.
+**Note:** 이 사양의 이전 버전에서는 최대 5개의 리다이렉션을 권장했다([[RFC2068](https://www.rfc-editor.org/info/rfc2068)], 10.3절).콘텐츠 개발자들은 일부 클라이언트가 이러한 고정된 제한을 구현할 수 있다는 점을 인지할 필요가 있다.
 
 #### 15.4.1. 300 Multiple Choices
 
@@ -4781,12 +4653,11 @@ HEAD 이외의 요청 메소드의 경우, 서버는 유저 또는 유저 에이
 
 300 응답은 메서드 정의 또는 명시적 캐시 컨트롤에 달리 명시되지 않는 한 (4.2.2절 참조 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]) heuristic하게 캐시 할 수 있다.
 
-**Note:** 300 상태 코드에 대한 원래 제안에서는 URI 헤더 필드가 200, 300 및 406 응답에 사용할 수 있고 HEAD 메소드에 대한 응답으로 전송될 수 있도록 대체 표현 목록을 제공하는 것으로 정의했다. representations, such that it would be usable for 200, 300, and그러나, 배포의 부족과 구문에 대한 의견 불일치로 인해 URI와 Alternates (후속 제안)는 이 명세서에서 삭제  되었다. 구성원들이 “alternate” 관계를 갖는 링크 헤더 필드 값 [[RFC8288](https://www.rfc-editor.org/info/rfc8288)]으로 목록을 전달할 수 도 있지만, 배포는 닭과 달걀의 문제다.
+**Note:** 300 상태 코드에 대한 원래 제안에서는 URI 헤더 필드가 200, 300 및 406 응답에 사용할 수 있고 HEAD 메소드에 대한 응답으로 전송될 수 있도록 대체 표현 목록을 제공하는 것으로 정의했다. representations, such that it would be usable for 200, 300, and그러나, 배포의 부족과 구문에 대한 의견 불일치로 인해 URI와 Alternates (후속 제안)는 이 명세서에서 삭제 되었다. 구성원들이 “alternate” 관계를 갖는 링크 헤더 필드 값 [[RFC8288](https://www.rfc-editor.org/info/rfc8288)]으로 목록을 전달할 수 도 있지만, 배포는 닭과 달걀의 문제다.
 
 #### 15.4.2. 301 Moved Permanently
 
 301 (Moved Permanently) 상태 코드는 타겟 리소스에 새로운 영구 URI가 할당되었음을 나타내며 이 리소스에 대한 향후 참조는 동봉된 URI 중 하나를 사용해야 한다. 서버는 링크 편집 기능이 있는 유저 에이전트가 타겟 URI에 대한 참조를 서버가 보낸 새로운 참조 중 하나로 영구적으로 대체할 수 있다고 제안한다. 그러나, 유저 에이전트가 참조를 적극적으로 편집하고 (예: 콘텐츠 작성에 관여), 연결이 보안되어 있고, origin 서버가 편집 중인 콘텐츠에 대해 신뢰할 수 있는 권한이 아닌 한 이 제한은 보통 무시된다.
-
 
 서버는 새로운 영구 URI에 대한 선호되는 URI 참조가 포함된 응답에 Location 헤더 필드를 웬만하면(SHOULD) 생성해야 한다. 유저 에이전트는 자동 리다이렉션을 위해 Location 필드 값을 아마(MAY) 사용할 수 있다. 서버의 응답 콘텐츠에는 보통 새로운 URI로 연결되는 하이퍼링크가 포함된 짧은 하이퍼텍스트 메모가 포함된다.
 
