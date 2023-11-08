@@ -2264,59 +2264,28 @@ TE의 발신자는 반드시(MUST) 중개자들에게 이 필드를 포워딩하
 
 #### 10.1.5. User-Agent
 
-The "User-Agent" header field contains information about the user
-agent originating the request, which is often used by servers to help
-identify the scope of reported interoperability problems, to work
-around or tailor responses to avoid particular user agent
-limitations, and for analytics regarding browser or operating system
-use. A user agent SHOULD send a User-Agent header field in each
-request unless specifically configured not to do so.
+"User-Agent" 헤더 필드는 요청을 발생시키는 유저 에이전트에 관한 정보를 포함하는데, 종종 서버들에 의해 보고된 상호운용성 문제들의 범위를 식별하고, 특정 유저 에이전트 제한을 회피하기 위해 응답을 해결하거나 조정하고, 브라우저나 운영체제 사용에 관한 분석을 위해 사용된다. 유저 에이전트는 웬만하면(SHOULD) 따로 그렇게 하지 않도록 설정된 것이 아닌한 각 요청에 User-Agent 헤더 필드를 보내야 한다.
 
      User-Agent = product *( RWS ( product / comment ) )
 
-The User-Agent field value consists of one or more product
-identifiers, each followed by zero or more comments (Section 5.6.5),
-which together identify the user agent software and its significant
-subproducts. By convention, the product identifiers are listed in
-decreasing order of their significance for identifying the user agent
-software. Each product identifier consists of a name and optional
-version.
+User-Agent 필드 값은 하나 이상의 product 식별자들로 구성되는데, 각각에는 0개 이상의 코멘트들이 따르며(5.6.5절), 함께 유저 에이전트 소프트웨어와 그것의 중요한 서브프로덕트들을 식별한다. 관례적으로, product 식별자들은 유저 에이전트 소프트웨어를 식별하는데 있어서의 중요함에 대해 내림차순으로 나열된다. 각 product 식별자는 이름과 선택적인 버전으로 구성된다.
 
      product         = token ["/" product-version]
      product-version = token
 
-A sender SHOULD limit generated product identifiers to what is
-necessary to identify the product; a sender MUST NOT generate
-advertising or other nonessential information within the product
-identifier. A sender SHOULD NOT generate information in
-product-version that is not a version identifier (i.e., successive
-versions of the same product name ought to differ only in the
-product-version portion of the product identifier).
+발신자는 웬만하면(SHOULD) product를 식별하기 위해 필수적인 것으로 생성된 product 식별자들을 제한해야한다; 발신자는 절대(MUST NOT) product 식별자 내에 광고나 다른 비필수적인 정보를 생성해서는 안된다. 발신자는 웬만해서는(SHOULD NOT) version 식별자가 아닌 product-version의 정보를 생성해서는 안된다(즉, 같은 product 이름의 연속되는 버전들은 오직 product 식별자의 product-version 부분에서만 달라야 한다).
 
-Example:
+예시:
 
-User-Agent: CERN-LineMode/2.15 libwww/2.17b3
+     User-Agent: CERN-LineMode/2.15 libwww/2.17b3
 
-A user agent SHOULD NOT generate a User-Agent header field containing
-needlessly fine-grained detail and SHOULD limit the addition of
-subproducts by third parties. Overly long and detailed User-Agent
-field values increase request latency and the risk of a user being
-identified against their wishes ("fingerprinting").
+유저 에이전트는 웬만해서는(SHOULD NOT) 불필요하게 세밀한 디테일을 포함하는 User-Agent 헤더 필드를 생성해서는 안되고 웬만하면(SHOULD) 써드 파티들에 의한 서브프로덕트들의 추가를 제한해야 한다. 지나치게 길고 자세한 User-Agent 필드 값들은 요청 레이턴시와 유저가 그들의 의지에 반하여 식별될 위험을 증가시킨다("fingerprinting").
 
-Likewise, implementations are encouraged not to use the product
-tokens of other implementations in order to declare compatibility
-with them, as this circumvents the purpose of the field. If a user
-agent masquerades as a different user agent, recipients can assume
-that the user intentionally desires to see responses tailored for
-that identified user agent, even if they might not work as well for
-the actual user agent being used.
+마찬가지로, 구현체들은 호환성을 선언하려고 다른 구현체들의 product 토큰들을 사용하지 않도록 장려되는데, 이것이 필드의 목적을 우회하기 때문이다. 만약 유저 에이전트가 다른 유저 에이전트로 가장한다면, 수신자들은 유저가 의도적으로 해당 유저 에이전트를 위해 조정된 응답들을 보고 싶어한다고 가정할 수 있고, 실제로 사용되는 유저 에이전트에서 그것들이 잘 작동하지 않을지라도 상관없다.
 
-10.2. Response Context Fields
+### 10.2. 응답 콘텍스트 필드들
 
-The response header fields below provide additional information about
-the response, beyond what is implied by the status code, including
-information about the server, about the target resource, or about
-related resources.
+아래 응답 헤더 필드들은, 상태 코드에 의해 내재된 것을 넘어, 서버에 관한, 타겟 리소스에 관한, 혹은 관련된 리소스들에 관한 정보를 포함해, 응답에 관한 추가적인 정보를 제공한다.
 
 10.2.1. Allow
 
