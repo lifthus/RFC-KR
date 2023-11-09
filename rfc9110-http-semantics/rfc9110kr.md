@@ -2264,7 +2264,7 @@ TE의 발신자는 반드시(MUST) 중개자들에게 이 필드를 포워딩하
 
 #### 10.1.5. User-Agent
 
-"User-Agent" 헤더 필드는 요청을 발생시키는 유저 에이전트에 관한 정보를 포함하는데, 종종 서버들에 의해 보고된 상호운용성 문제들의 범위를 식별하고, 특정 유저 에이전트 제한을 회피하기 위해 응답을 해결하거나 조정하고, 브라우저나 운영체제 사용에 관한 분석을 위해 사용된다. 유저 에이전트는 웬만하면(SHOULD) 따로 그렇게 하지 않도록 설정된 것이 아닌한 각 요청에 User-Agent 헤더 필드를 보내야 한다.
+"User-Agent" 헤더 필드는 요청을 발생시키는 유저 에이전트에 관한 정보를 포함하는데, 종종 서버들에 의해 보고된 상호운용성 문제들의 범위를 식별하고, 특정 유저 에이전트 제한을 회피하기 위해 응답을 해결하거나 조정하고, 브라우저나 운영체제 사용에 관한 분석을 위해 사용된다. 유저 에이전트는 웬만하면(SHOULD) 따로 그렇게 하지 않도록 설정된 것이 아닌 한 각 요청에 User-Agent 헤더 필드를 보내야 한다.
 
      User-Agent = product *( RWS ( product / comment ) )
 
@@ -2273,7 +2273,7 @@ User-Agent 필드 값은 하나 이상의 product 식별자들로 구성되는�
      product         = token ["/" product-version]
      product-version = token
 
-발신자는 웬만하면(SHOULD) product를 식별하기 위해 필수적인 것으로 생성된 product 식별자들을 제한해야한다; 발신자는 절대(MUST NOT) product 식별자 내에 광고나 다른 비필수적인 정보를 생성해서는 안된다. 발신자는 웬만해서는(SHOULD NOT) version 식별자가 아닌 product-version의 정보를 생성해서는 안된다(즉, 같은 product 이름의 연속되는 버전들은 오직 product 식별자의 product-version 부분에서만 달라야 한다).
+발신자는 웬만하면(SHOULD) product를 식별하기 위해 필수적인 것으로 생성된 product 식별자들을 제한해야한다; 발신자는 절대(MUST NOT) product 식별자 내에 공지나 다른 비필수적인 정보를 생성해서는 안된다. 발신자는 웬만해서는(SHOULD NOT) version 식별자가 아닌 product-version의 정보를 생성해서는 안된다(즉, 같은 product 이름의 연속되는 버전들은 오직 product 식별자의 product-version 부분에서만 달라야 한다).
 
 예시:
 
@@ -2287,94 +2287,51 @@ User-Agent 필드 값은 하나 이상의 product 식별자들로 구성되는�
 
 아래 응답 헤더 필드들은, 상태 코드에 의해 내재된 것을 넘어, 서버에 관한, 타겟 리소스에 관한, 혹은 관련된 리소스들에 관한 정보를 포함해, 응답에 관한 추가적인 정보를 제공한다.
 
-10.2.1. Allow
+#### 10.2.1. Allow
 
-The "Allow" header field lists the set of methods advertised as
-supported by the target resource. The purpose of this field is
-strictly to inform the recipient of valid request methods associated
-with the resource.
+"Allow" 헤더 필드는 타겟 리소스에 의해 지원된다고 공지된 메소드들의 집합을 나열한다. 이 필드의 목적은 엄격히 수신자에게 해당 리소스와 관련된 유효한 메소드들을 알리는 것이다.
 
      Allow = #method
 
-Example of use:
+사용 예:
 
-Allow: GET, HEAD, PUT
+     Allow: GET, HEAD, PUT
 
-The actual set of allowed methods is defined by the origin server at
-the time of each request. An origin server MUST generate an Allow
-header field in a 405 (Method Not Allowed) response and MAY do so in
-any other response. An empty Allow field value indicates that the
-resource allows no methods, which might occur in a 405 response if
-the resource has been temporarily disabled by configuration.
+실제 허용된 메소드들의 집합은 오리진 서버에 의해 각 요청 시간에 정의된다. 오리진 서버는 반드시(MUST) 405(Method Not Allowed) 응답의 Allow 헤더 필드를 생성해야 하고 아마(MAY) 다른 응답에서도 그리할 수 있을 것이다. 빈 Allow 필드 값은 리소스가 어떠한 메소드도 허용하지 않음을 나타내며, 리소스가 설정에 의해 일시적으로 비활성화된 경우 405 응답에서 발생할 수 있다.
 
-A proxy MUST NOT modify the Allow header field -- it does not need to
-understand all of the indicated methods in order to handle them
-according to the generic message handling rules.
+프록시는 절대(MUST NOT) Allow 헤더 필드를 수정해서는 안된다 -- 일반적인 메시지 핸들링 규칙에 따라 처리하기 위해서 지정된 모든 메소드들을 이해할 필요는 없다.
 
-10.2.2. Location
+#### 10.2.2. Location
 
-The "Location" header field is used in some responses to refer to a
-specific resource in relation to the response. The type of
-relationship is defined by the combination of request method and
-status code semantics.
+"Location" 헤더 필드는 일부 응답들에서 응답과 관련한 특정한 리소스를 참조하기 위해 사용된다. 관계의 타입은 요청 메소드와 상태 코드 의미체계의 조합에 의해 정의된다.
 
      Location = URI-reference
 
-The field value consists of a single URI-reference. When it has the
-form of a relative reference ([URI], Section 4.2), the final value is
-computed by resolving it against the target URI ([URI], Section 5).
+필드 값은 단일 URI-reference로 구성된다. 만약 상대 참조 형태를 가졌다면([[URI](https://www.rfc-editor.org/info/rfc3986)], 4.2절), 최종 값은 타겟 URI에 대해 결정함으로써 계산된다([[URI](https://www.rfc-editor.org/info/rfc3986)], 5절).
 
-For 201 (Created) responses, the Location value refers to the primary
-resource created by the request. For 3xx (Redirection) responses,
-the Location value refers to the preferred target resource for
-automatically redirecting the request.
+201(Created) 응답들에 대해, Location 값은 요청에 의해 생성된 주요 리소스를 참조한다. 3xx(Redirection) 응답들에 대해, Location 값은 요청을 자동으로 리다이렉트하기 위해 선호되는 타겟 리소스를 참조한다.
 
-If the Location value provided in a 3xx (Redirection) response does
-not have a fragment component, a user agent MUST process the
-redirection as if the value inherits the fragment component of the
-URI reference used to generate the target URI (i.e., the redirection
-inherits the original reference's fragment, if any).
+만약 3xx(Redirection) 응답에 제공된 Loaction 값이 프래그먼트 구성요소를 가지고 있지 않다면, 유저 에이전트는 반드시(MUST) 해당 리다이렉션을 타겟 URI를 생성하기 위해 사용된 URI 레퍼런스의 프래그먼트 구성요소를 상속하는 것 처럼 처리해야 한다(즉, 해당 리다이렉션은 원래 레퍼런스의 프래그먼트를 상속한다, 만약 있다면).
 
-For example, a GET request generated for the URI reference
-"http://www.example.org/~tim" might result in a 303 (See Other)
-response containing the header field:
+예를 들어, URI 레퍼런스 "http://www.example.org/~tim"를 위해 생성된 GET 요청은 다음 헤더 필드를 포함하는 303(See Other) 응답을 낳을 수도 있다:
 
-Location: /People.html#tim
+     Location: /People.html#tim
 
-which suggests that the user agent redirect to
+이는 유저 에이전트가 다음으로 리다이렉트하도록 제안한다
 "http://www.example.org/People.html#tim"
 
-Likewise, a GET request generated for the URI reference
-"http://www.example.org/index.html#larry" might result in a 301
-(Moved Permanently) response containing the header field:
+마찬가지로, URI 레퍼런스 "http://www.example.org/index.html#larry"를 위해 생성된 GET 요청은 다음 헤더 필드를 포함하는 301(Move Permanently) 응답을 낳을 수도 있다:
 
-Location: http://www.example.net/index.html
+     Location: http://www.example.net/index.html
 
-which suggests that the user agent redirect to
-"http://www.example.net/index.html#larry", preserving the original
-fragment identifier.
+이는 유저 에이전트가 원래의 프래그먼트 식별자를 보존하면서, 다음으로 리다이렉트하도록 제안한다
+"http://www.example.net/index.html#larry"
 
-There are circumstances in which a fragment identifier in a Location
-value would not be appropriate. For example, the Location header
-field in a 201 (Created) response is supposed to provide a URI that
-is specific to the created resource.
+Location 값의 프래그먼트 식별자가 적절하지 않게 될 수 있는 상황들이 있다. 예를 들어, 201(Created) 응답의 Location 헤더 필드는 생성된 리소스에 특정된 URI를 제공하도록 되어있다.
 
-      |  *Note:* Some recipients attempt to recover from Location header
-      |  fields that are not valid URI references.  This specification
-      |  does not mandate or define such processing, but does allow it
-      |  for the sake of robustness.  A Location field value cannot
-      |  allow a list of members because the comma list separator is a
-      |  valid data character within a URI-reference.  If an invalid
-      |  message is sent with multiple Location field lines, a recipient
-      |  along the path might combine those field lines into one value.
-      |  Recovery of a valid Location field value from that situation is
-      |  difficult and not interoperable across implementations.
+**Note:** 일부 수신자들은 유효하지 않은 URI 레퍼런스들인 Location 헤더 필드들로부터 복구를 시도한다. 이 사양에서는 그러한 처리를 강제하거나 정의하지 않지만, 견고성을 위해 이를 용인한다. 콤마 리스트 구분자가 URI-레퍼런스 내에서 유효한 데이터 문자이기 때문에 Location 필드 값은 멤버들의 리스트를 허용할 수 없다. 만약 여러 Location 필드 라인들과 함께 유효하지 않은 메시지가 보내졌다면, 경로를 따라 있는 수신자는 그 필드 라인들을 하나의 값으로 결합할 수도 있다. 그러한 상황에서 유효한 Location 필드 값으로 복구하는 것은 어렵고 구현체들에 걸쳐 상호운용가능하지 않다.
 
-      |  *Note:* The Content-Location header field (Section 8.7) differs
-      |  from Location in that the Content-Location refers to the most
-      |  specific resource corresponding to the enclosed representation.
-      |  It is therefore possible for a response to contain both the
-      |  Location and Content-Location header fields.
+**Note:** Content-Location 헤더 필드(8.7절)은 Content-Location 필드가 동봉된 표현에 해당하는 가장 구체적인 리소스를 참조한다는 점에서 Location 헤더 필드와 다르다. 이리하여 응답은 Location과 Content-Locatino 헤더 필드들 둘 다를 포함할 수 있다.
 
 10.2.3. Retry-After
 
