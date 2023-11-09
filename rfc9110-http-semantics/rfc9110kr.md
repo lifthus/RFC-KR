@@ -2264,7 +2264,7 @@ TE의 발신자는 반드시(MUST) 중개자들에게 이 필드를 포워딩하
 
 #### 10.1.5. User-Agent
 
-"User-Agent" 헤더 필드는 요청을 발생시키는 유저 에이전트에 관한 정보를 포함하는데, 종종 서버들에 의해 보고된 상호운용성 문제들의 범위를 식별하고, 특정 유저 에이전트 제한을 회피하기 위해 응답을 해결하거나 조정하고, 브라우저나 운영체제 사용에 관한 분석을 위해 사용된다. 유저 에이전트는 웬만하면(SHOULD) 따로 그렇게 하지 않도록 설정된 것이 아닌한 각 요청에 User-Agent 헤더 필드를 보내야 한다.
+"User-Agent" 헤더 필드는 요청을 발생시키는 유저 에이전트에 관한 정보를 포함하는데, 종종 서버들에 의해 보고된 상호운용성 문제들의 범위를 식별하고, 특정 유저 에이전트 제한을 회피하기 위해 응답을 해결하거나 조정하고, 브라우저나 운영체제 사용에 관한 분석을 위해 사용된다. 유저 에이전트는 웬만하면(SHOULD) 따로 그렇게 하지 않도록 설정된 것이 아닌 한 각 요청에 User-Agent 헤더 필드를 보내야 한다.
 
      User-Agent = product *( RWS ( product / comment ) )
 
@@ -2273,7 +2273,7 @@ User-Agent 필드 값은 하나 이상의 product 식별자들로 구성되는�
      product         = token ["/" product-version]
      product-version = token
 
-발신자는 웬만하면(SHOULD) product를 식별하기 위해 필수적인 것으로 생성된 product 식별자들을 제한해야한다; 발신자는 절대(MUST NOT) product 식별자 내에 광고나 다른 비필수적인 정보를 생성해서는 안된다. 발신자는 웬만해서는(SHOULD NOT) version 식별자가 아닌 product-version의 정보를 생성해서는 안된다(즉, 같은 product 이름의 연속되는 버전들은 오직 product 식별자의 product-version 부분에서만 달라야 한다).
+발신자는 웬만하면(SHOULD) product를 식별하기 위해 필수적인 것으로 생성된 product 식별자들을 제한해야한다; 발신자는 절대(MUST NOT) product 식별자 내에 공지나 다른 비필수적인 정보를 생성해서는 안된다. 발신자는 웬만해서는(SHOULD NOT) version 식별자가 아닌 product-version의 정보를 생성해서는 안된다(즉, 같은 product 이름의 연속되는 버전들은 오직 product 식별자의 product-version 부분에서만 달라야 한다).
 
 예시:
 
@@ -2287,12 +2287,14 @@ User-Agent 필드 값은 하나 이상의 product 식별자들로 구성되는�
 
 아래 응답 헤더 필드들은, 상태 코드에 의해 내재된 것을 넘어, 서버에 관한, 타겟 리소스에 관한, 혹은 관련된 리소스들에 관한 정보를 포함해, 응답에 관한 추가적인 정보를 제공한다.
 
-10.2.1. Allow
+#### 10.2.1. Allow
 
 The "Allow" header field lists the set of methods advertised as
 supported by the target resource. The purpose of this field is
 strictly to inform the recipient of valid request methods associated
 with the resource.
+
+"Allow" 헤더 필드는 타겟 리소스에 의해 지원된다고 
 
      Allow = #method
 
