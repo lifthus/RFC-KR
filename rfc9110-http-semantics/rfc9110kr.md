@@ -2289,29 +2289,17 @@ User-Agent 필드 값은 하나 이상의 product 식별자들로 구성되는�
 
 #### 10.2.1. Allow
 
-The "Allow" header field lists the set of methods advertised as
-supported by the target resource. The purpose of this field is
-strictly to inform the recipient of valid request methods associated
-with the resource.
-
-"Allow" 헤더 필드는 타겟 리소스에 의해 지원된다고 
+"Allow" 헤더 필드는 타겟 리소스에 의해 지원된다고 공지된 메소드들의 집합을 나열한다. 이 필드의 목적은 엄격히 수신자에게 해당 리소스와 관련된 유효한 메소드들을 알리는 것이다.
 
      Allow = #method
 
-Example of use:
+사용 예:
 
-Allow: GET, HEAD, PUT
+     Allow: GET, HEAD, PUT
 
-The actual set of allowed methods is defined by the origin server at
-the time of each request. An origin server MUST generate an Allow
-header field in a 405 (Method Not Allowed) response and MAY do so in
-any other response. An empty Allow field value indicates that the
-resource allows no methods, which might occur in a 405 response if
-the resource has been temporarily disabled by configuration.
+실제 허용된 메소드들의 집합은 오리진 서버에 의해 각 요청 시간에 정의된다. 오리진 서버는 반드시(MUST) 405(Method Not Allowed) 응답의 Allow 헤더 필드를 생성해야 하고 아마(MAY) 다른 응답에서도 그리할 수 있을 것이다. 빈 Allow 필드 값은 리소스가 어떠한 메소드도 허용하지 않음을 나타내며, 리소스가 설정에 의해 일시적으로 비활성화된 경우 405 응답에서 발생할 수 있다.
 
-A proxy MUST NOT modify the Allow header field -- it does not need to
-understand all of the indicated methods in order to handle them
-according to the generic message handling rules.
+프록시는 절대(MUST NOT) Allow 헤더 필드를 수정해서는 안된다 -- 일반적인 메시지 핸들링 규칙에 따라 처리하기 위해서 지정된 모든 메소드들을 이해할 필요는 없다.
 
 10.2.2. Location
 
