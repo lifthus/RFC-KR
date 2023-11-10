@@ -2333,34 +2333,26 @@ Location 값의 프래그먼트 식별자가 적절하지 않게 될 수 있는 
 
 **Note:** Content-Location 헤더 필드(8.7절)은 Content-Location 필드가 동봉된 표현에 해당하는 가장 구체적인 리소스를 참조한다는 점에서 Location 헤더 필드와 다르다. 이리하여 응답은 Location과 Content-Locatino 헤더 필드들 둘 다를 포함할 수 있다.
 
-10.2.3. Retry-After
+#### 10.2.3. Retry-After
 
-Servers send the "Retry-After" header field to indicate how long the
-user agent ought to wait before making a follow-up request. When
-sent with a 503 (Service Unavailable) response, Retry-After indicates
-how long the service is expected to be unavailable to the client.
-When sent with any 3xx (Redirection) response, Retry-After indicates
-the minimum time that the user agent is asked to wait before issuing
-the redirected request.
+서버들은 유저 에이전트가 follow-up 요청을 만들기 전에 얼마나 기다려야하는지 나타내기 위해 "Retry-After" 헤더 필드를 보낸다. 503(Service Unavailable) 응답과 함께 보내졌을 때, Retry-After는 클라이언트에게 서비스가 얼마나 오래 비가용할 것으로 예상되는지 나타낸다. 어느 3xx(Redirection) 응답과 보내질 때든, Retry-After는 리다이렉트된 요청을 발행하기 전에 유저 에이전트가 기다리도록 요구되는 최소 시간을 나타낸다.
 
-The Retry-After field value can be either an HTTP-date or a number of
-seconds to delay after receiving the response.
+Retry-After 필드 값은 응답을 수신한 후 지연할 HTTP-date 혹은 초를 나타내는 숫자가 될 수 있다.
 
      Retry-After = HTTP-date / delay-seconds
 
-A delay-seconds value is a non-negative decimal integer, representing
-time in seconds.
+delay-seconds 값은 비음 십진 정수로, 시간을 초 단위로 나타낸다.
 
      delay-seconds  = 1*DIGIT
 
-Two examples of its use are
+두 사용 예는
 
-Retry-After: Fri, 31 Dec 1999 23:59:59 GMT
-Retry-After: 120
+     Retry-After: Fri, 31 Dec 1999 23:59:59 GMT
+     Retry-After: 120
 
-In the latter example, the delay is 2 minutes.
+후자의 예시에서, 지연시간은 2분이다.
 
-10.2.4. Server
+#### 10.2.4. Server
 
 The "Server" header field contains information about the software
 used by the origin server to handle the request, which is often used
