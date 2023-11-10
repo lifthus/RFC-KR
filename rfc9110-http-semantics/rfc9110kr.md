@@ -2335,7 +2335,7 @@ Location 값의 프래그먼트 식별자가 적절하지 않게 될 수 있는 
 
 #### 10.2.3. Retry-After
 
-서버들은 유저 에이전트가 follow-up 요청을 만들기 전에 얼마나 기다려야하는지 나타내기 위해 "Retry-After" 헤더 필드를 보낸다. 503(Service Unavailable) 응답과 함께 보내졌을 때, Retry-After는 클라이언트에게 서비스가 얼마나 오래 비가용할 것으로 예상되는지 나타낸다. 어느 3xx(Redirection) 응답과 보내질 때든, Retry-After는 리다이렉트된 요청을 발행하기 전에 유저 에이전트가 기다리도록 요구되는 최소 시간을 나타낸다.
+서버들은 유저 에이전트가 후속 요청을 만들기 전에 얼마나 기다려야하는지 나타내기 위해 "Retry-After" 헤더 필드를 보낸다. 503(Service Unavailable) 응답과 함께 보내졌을 때, Retry-After는 클라이언트에게 서비스가 얼마나 오래 비가용할 것으로 예상되는지 나타낸다. 어느 3xx(Redirection) 응답과 보내질 때든, Retry-After는 리다이렉트된 요청을 발행하기 전에 유저 에이전트가 기다리도록 요구되는 최소 시간을 나타낸다.
 
 Retry-After 필드 값은 응답을 수신한 후 지연할 HTTP-date 혹은 초를 나타내는 숫자가 될 수 있다.
 
@@ -2366,7 +2366,7 @@ Server 헤더 필드 값은 하나 이상의 product 식별자들로 구성되�
 
 오리진 서버는 웬만해서는(SHOULD NOT) 불필요하게 세밀한 세부사항을 포함하는 Server 헤더 필드를 생성해서는 안되고 웬만하면(SHOULD) 써드 파티들에 의한 서브프로덕트들의 추가를 제한해야 한다. 지나치게 길고 자세한 Server 필드 값들은 응답 지연시간을 늘리고 잠재적으로 공격자들이 알려진 보안 취약점들을 (약간) 더 쉽게 찾고 악용할 수 있게 하는 내부 구현 세부사항들을 드러낼 수 있다.
 
-11. HTTP Authentication
+## 11. HTTP Authentication
 
 11.1. Authentication Scheme
 
