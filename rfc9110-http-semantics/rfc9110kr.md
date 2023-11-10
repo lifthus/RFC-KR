@@ -2333,65 +2333,40 @@ Location 값의 프래그먼트 식별자가 적절하지 않게 될 수 있는 
 
 **Note:** Content-Location 헤더 필드(8.7절)은 Content-Location 필드가 동봉된 표현에 해당하는 가장 구체적인 리소스를 참조한다는 점에서 Location 헤더 필드와 다르다. 이리하여 응답은 Location과 Content-Locatino 헤더 필드들 둘 다를 포함할 수 있다.
 
-10.2.3. Retry-After
+#### 10.2.3. Retry-After
 
-Servers send the "Retry-After" header field to indicate how long the
-user agent ought to wait before making a follow-up request. When
-sent with a 503 (Service Unavailable) response, Retry-After indicates
-how long the service is expected to be unavailable to the client.
-When sent with any 3xx (Redirection) response, Retry-After indicates
-the minimum time that the user agent is asked to wait before issuing
-the redirected request.
+서버들은 유저 에이전트가 후속 요청을 만들기 전에 얼마나 기다려야하는지 나타내기 위해 "Retry-After" 헤더 필드를 보낸다. 503(Service Unavailable) 응답과 함께 보내졌을 때, Retry-After는 클라이언트에게 서비스가 얼마나 오래 비가용할 것으로 예상되는지 나타낸다. 어느 3xx(Redirection) 응답과 보내질 때든, Retry-After는 리다이렉트된 요청을 발행하기 전에 유저 에이전트가 기다리도록 요구되는 최소 시간을 나타낸다.
 
-The Retry-After field value can be either an HTTP-date or a number of
-seconds to delay after receiving the response.
+Retry-After 필드 값은 응답을 수신한 후 지연할 HTTP-date 혹은 초를 나타내는 숫자가 될 수 있다.
 
      Retry-After = HTTP-date / delay-seconds
 
-A delay-seconds value is a non-negative decimal integer, representing
-time in seconds.
+delay-seconds 값은 비음 십진 정수로, 시간을 초 단위로 나타낸다.
 
      delay-seconds  = 1*DIGIT
 
-Two examples of its use are
+두 사용 예는
 
-Retry-After: Fri, 31 Dec 1999 23:59:59 GMT
-Retry-After: 120
+     Retry-After: Fri, 31 Dec 1999 23:59:59 GMT
+     Retry-After: 120
 
-In the latter example, the delay is 2 minutes.
+후자의 예시에서, 지연시간은 2분이다.
 
-10.2.4. Server
+#### 10.2.4. Server
 
-The "Server" header field contains information about the software
-used by the origin server to handle the request, which is often used
-by clients to help identify the scope of reported interoperability
-problems, to work around or tailor requests to avoid particular
-server limitations, and for analytics regarding server or operating
-system use. An origin server MAY generate a Server header field in
-its responses.
+"Server" 헤더 필드 값은 요청을 처리하기 위해 오리진 서버에 의해 사용된 소프트웨어에 관한 정보를 포함하는데, 보고된 상호운용성 문제들을 식별하기 위해, 특정 서버 제한들을 회피하기 위해서 요청들을 해결하거나 조정하기 위해, 그리고 서버나 운영체제 사용에 관한 분석을 위해서 종종 클라이언트들에 의해 사용된다. 오리진 서버는 아마(MAY) 그 응답들에 Server 헤더 필드를 생성할 수 있을 것이다.
 
      Server = product *( RWS ( product / comment ) )
 
-The Server header field value consists of one or more product
-identifiers, each followed by zero or more comments (Section 5.6.5),
-which together identify the origin server software and its
-significant subproducts. By convention, the product identifiers are
-listed in decreasing order of their significance for identifying the
-origin server software. Each product identifier consists of a name
-and optional version, as defined in Section 10.1.5.
+Server 헤더 필드 값은 하나 이상의 product 식별자들로 구성되며, 각각에는 0개 이상의 코멘트들이 따르는데(5.6.5절), 함께 오리진 서버 소프트웨어와 그것의 중요한 서브프로덕트들을 식별한다. 관례에 의해, product 식별자들은 오리진 서버 소프트웨어를 식별하는데 있어서의 중요성에 따른 내림차순으로 나열된다. 각 product 식별자는 이름과 선택적인 버전으로 구성되며, 10.1.5절에 정의된대로다.
 
-Example:
+예시:
 
-Server: CERN/3.0 libwww/2.17
+     Server: CERN/3.0 libwww/2.17
 
-An origin server SHOULD NOT generate a Server header field containing
-needlessly fine-grained detail and SHOULD limit the addition of
-subproducts by third parties. Overly long and detailed Server field
-values increase response latency and potentially reveal internal
-implementation details that might make it (slightly) easier for
-attackers to find and exploit known security holes.
+오리진 서버는 웬만해서는(SHOULD NOT) 불필요하게 세밀한 세부사항을 포함하는 Server 헤더 필드를 생성해서는 안되고 웬만하면(SHOULD) 써드 파티들에 의한 서브프로덕트들의 추가를 제한해야 한다. 지나치게 길고 자세한 Server 필드 값들은 응답 지연시간을 늘리고 잠재적으로 공격자들이 알려진 보안 취약점들을 (약간) 더 쉽게 찾고 악용할 수 있게 하는 내부 구현 세부사항들을 드러낼 수 있다.
 
-11. HTTP Authentication
+## 11. HTTP Authentication
 
 11.1. Authentication Scheme
 
