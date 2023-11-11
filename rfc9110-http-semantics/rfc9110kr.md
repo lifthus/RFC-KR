@@ -210,20 +210,25 @@ than English.
 - - [10.2.1. Allow](#1021-allow)
 - - [10.2.2. Location](#1022-location)
 - - [10.2.3. Retry-After](#1023-retry-after)
-- - [10.2.4. Server 11. HTTP Authentication](#1024-server-11-http-authentication)
-    11.1. Authentication Scheme
-    11.2. Authentication Parameters
-    11.3. Challenge and Response
-    11.4. Credentials
-    11.5. Establishing a Protection Space (Realm)
-    11.6. Authenticating Users to Origin Servers
-    11.6.1. WWW-Authenticate
-    11.6.2. Authorization
-    11.6.3. Authentication-Info
-    11.7. Authenticating Clients to Proxies
-    11.7.1. Proxy-Authenticate
-    11.7.2. Proxy-Authorization
-    11.7.3. Proxy-Authentication-Info 12. Content Negotiation
+- - [10.2.4. Server](#1024-server)
+
+[11. HTTP 인증](#11-http-authentication)
+
+- [11.1. 인증 Scheme](#111-인증-scheme)
+- [11.2. 인증 매개변수들](#112-인증-매개변수들)
+- [11.3. Challenge와 응답](#113-challenge와-response)
+- [11.4. Credentials](#114-credentials)
+- [11.5. 보호 공간 수립 (Realm)](#115-보호-공간-수립-realm)
+- [11.6. 오리진 서버들에 대해 유저들 인증하기](#116-오리진-서버들에-대해-유저들-인증하기)
+- - [11.6.1. WWW-Authenticate](#1161-www-authenticate)
+- - [11.6.2. Authorization](#1162-authorization)
+- - [11.6.3. Authentication-Info](#1163-authentication-info)
+- [11.7. 프록시들에 대해 클라이언트들 인증하기](#117-프록시들에-대해-클라이언트들-인증하기)
+- - [11.7.1. Proxy-Authenticate](#1171-proxy-authenticate)
+- - [11.7.2. Proxy-Authorization](#1172-proxy-authorization)
+- - [11.7.3. Proxy-Authentication-Info](#1173-proxy-authentication-info)
+
+12. Content Negotiation
     12.1. Proactive Negotiation
     12.2. Reactive Negotiation
     12.3. Request Content Negotiation
@@ -2368,7 +2373,7 @@ Server 헤더 필드 값은 하나 이상의 product 식별자들로 구성되�
 
 ## 11. HTTP Authentication
 
-11.1. Authentication Scheme
+### 11.1. Authentication Scheme
 
 HTTP provides a general framework for access control and
 authentication, via an extensible set of challenge-response
@@ -2386,7 +2391,7 @@ specified independently and ought to be registered within the
 For example, the "basic" and "digest" authentication schemes are
 defined by [RFC7617] and [RFC7616], respectively.
 
-11.2. Authentication Parameters
+### 11.2. Authentication Parameters
 
 The authentication scheme is followed by additional information
 necessary for achieving authentication via that scheme as either a
