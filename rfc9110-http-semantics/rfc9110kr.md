@@ -210,20 +210,25 @@ than English.
 - - [10.2.1. Allow](#1021-allow)
 - - [10.2.2. Location](#1022-location)
 - - [10.2.3. Retry-After](#1023-retry-after)
-- - [10.2.4. Server 11. HTTP Authentication](#1024-server-11-http-authentication)
-    11.1. Authentication Scheme
-    11.2. Authentication Parameters
-    11.3. Challenge and Response
-    11.4. Credentials
-    11.5. Establishing a Protection Space (Realm)
-    11.6. Authenticating Users to Origin Servers
-    11.6.1. WWW-Authenticate
-    11.6.2. Authorization
-    11.6.3. Authentication-Info
-    11.7. Authenticating Clients to Proxies
-    11.7.1. Proxy-Authenticate
-    11.7.2. Proxy-Authorization
-    11.7.3. Proxy-Authentication-Info 12. Content Negotiation
+- - [10.2.4. Server](#1024-server)
+
+[11. HTTP 인증](#11-http-authentication)
+
+- [11.1. 인증 Scheme](#111-인증-scheme)
+- [11.2. 인증 매개변수들](#112-인증-매개변수들)
+- [11.3. Challenge와 응답](#113-challenge와-response)
+- [11.4. Credentials](#114-credentials)
+- [11.5. 보호 공간 수립 (Realm)](#115-보호-공간-수립-realm)
+- [11.6. 오리진 서버들에 대해 유저들 인증하기](#116-오리진-서버들에-대해-유저들-인증하기)
+- - [11.6.1. WWW-Authenticate](#1161-www-authenticate)
+- - [11.6.2. Authorization](#1162-authorization)
+- - [11.6.3. Authentication-Info](#1163-authentication-info)
+- [11.7. 프록시들에 대해 클라이언트들 인증하기](#117-프록시들에-대해-클라이언트들-인증하기)
+- - [11.7.1. Proxy-Authenticate](#1171-proxy-authenticate)
+- - [11.7.2. Proxy-Authorization](#1172-proxy-authorization)
+- - [11.7.3. Proxy-Authentication-Info](#1173-proxy-authentication-info)
+
+12. Content Negotiation
     12.1. Proactive Negotiation
     12.2. Reactive Negotiation
     12.3. Request Content Negotiation
@@ -2366,27 +2371,17 @@ Server 헤더 필드 값은 하나 이상의 product 식별자들로 구성되�
 
 오리진 서버는 웬만해서는(SHOULD NOT) 불필요하게 세밀한 세부사항을 포함하는 Server 헤더 필드를 생성해서는 안되고 웬만하면(SHOULD) 써드 파티들에 의한 서브프로덕트들의 추가를 제한해야 한다. 지나치게 길고 자세한 Server 필드 값들은 응답 지연시간을 늘리고 잠재적으로 공격자들이 알려진 보안 취약점들을 (약간) 더 쉽게 찾고 악용할 수 있게 하는 내부 구현 세부사항들을 드러낼 수 있다.
 
-## 11. HTTP Authentication
+## 11. HTTP 인증
 
-11.1. Authentication Scheme
+### 11.1. 인증 Scheme
 
-HTTP provides a general framework for access control and
-authentication, via an extensible set of challenge-response
-authentication schemes, which can be used by a server to challenge a
-client request and by a client to provide authentication information.
-It uses a case-insensitive token to identify the authentication
-scheme:
+HTTP는, 서버에 의해 클라이언트 요청에 challenge하고 클라이언트에 의해 인증 정보를 제공하는데 사용될 수 있는, challenge-response 인증 scheme들의 확장가능한 세트를 통해, 접근 제어와 인증을 위한 일반적인 프레임워크를 제공한다. 인증 scheme을 식별하기 위해서는 대소문자를 구별하지 않는 토큰을 사용한다:
 
      auth-scheme    = token
 
-Aside from the general framework, this document does not specify any
-authentication schemes. New and existing authentication schemes are
-specified independently and ought to be registered within the
-"Hypertext Transfer Protocol (HTTP) Authentication Scheme Registry".
-For example, the "basic" and "digest" authentication schemes are
-defined by [RFC7617] and [RFC7616], respectively.
+일반적인 프레임워크 외에, 이 문서는 어떠한 인증 scheme들도 지정하지 않는다. 새로운 그리고 기존의 인증 scheme들은 독립적으로 지정되고 "Hypertext Transfer Protocol (HTTP) Authentication Scheme Registry" 내에 등록되어야 한다. 예를 들어, "basic"과 "digest" 인증 scheme들은 [[RFC7617](https://www.rfc-editor.org/info/rfc7617)]과 [[RFC7616](https://www.rfc-editor.org/info/rfc7616)]에 의해, 각각 정의된다.
 
-11.2. Authentication Parameters
+### 11.2. 인증 매개변수들
 
 The authentication scheme is followed by additional information
 necessary for achieving authentication via that scheme as either a
