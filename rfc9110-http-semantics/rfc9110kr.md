@@ -2383,35 +2383,20 @@ HTTP는, 서버에 의해 클라이언트 요청에 challenge하고 클라이언
 
 ### 11.2. 인증 매개변수들
 
-The authentication scheme is followed by additional information
-necessary for achieving authentication via that scheme as either a
-comma-separated list of parameters or a single sequence of characters
-capable of holding base64-encoded information.
+인증 scheme 뒤에는 해당 scheme을 통한 인증을 달성하기 위해 필수적인 추가 정보들이 콤마로 구분되는 파라미터들의 리스트 혹은 base64-인코딩된 정보를 담을 수 있는 단일 문자들의 시퀀스로 따라온다.
 
      token68        = 1*( ALPHA / DIGIT /
                           "-" / "." / "_" / "~" / "+" / "/" ) *"="
 
-The token68 syntax allows the 66 unreserved URI characters ([URI]),
-plus a few others, so that it can hold a base64, base64url (URL and
-filename safe alphabet), base32, or base16 (hex) encoding, with or
-without padding, but excluding whitespace ([RFC4648]).
+token68 구문은 66개의 예약되지 않은 URI 문자들과([[URI](https://www.rfc-editor.org/info/rfc3986)]), 추가로 다른 몇몇 가지들을 허용하여, base64, base64url(URL과 파일명으로 안전한 알파벳), base32, 또는 base16(hex) 인코딩을, 패딩과 함께 혹은 없이, 다만 공백은 제외하고 담을 수 있다([[RFC4648](https://www.rfc-editor.org/info/rfc4648)]).
 
-Authentication parameters are name/value pairs, where the name token
-is matched case-insensitively and each parameter name MUST only occur
-once per challenge.
+인증 매개변수들은 이름/값 쌍들이고, 이름 토큰은 대소문자를 구별하지 않고 각 매개변수 이름은 반드시(MUST) challenge당 한번만 나타나야 한다.
 
      auth-param     = token BWS "=" BWS ( token / quoted-string )
 
-Parameter values can be expressed either as "token" or as "quoted-
-string" (Section 5.6). Authentication scheme definitions need to
-accept both notations, both for senders and recipients, to allow
-recipients to use generic parsing components regardless of the
-authentication scheme.
+매개변수 값들은 "token" 혹은 "quoted-string" 중 하나로 표현될 수 있다(5.6절). 인증 scheme 정의들은, 발신자들과 수신자들 양쪽을 위해, 수신자들이 인증 scheme과 관계없이 일반적인 파싱 구성요소들을 사용할 수 있도록 하기위해, 두 표기법들 다 수용할 필요가 있다.
 
-For backwards compatibility, authentication scheme definitions can
-restrict the format for senders to one of the two variants. This can
-be important when it is known that deployed implementations will fail
-when encountering one of the two formats.
+하위 호환성을 위해, 인증 scheme 정의들은 발신자들을 위한 포맷을 두 변형들 중 하나로 제한할 수 있다. 이것은 배포된 구현체들이 두 포맷들 중 하나를 마주했을 때 실패할 것이라고 알려졌을 때 중요할 수 있다.
 
 11.3. Challenge and Response
 
