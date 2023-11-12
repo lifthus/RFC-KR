@@ -2398,7 +2398,7 @@ token68 구문은 66개의 예약되지 않은 URI 문자들과([[URI](https://w
 
 하위 호환성을 위해, 인증 scheme 정의들은 발신자들을 위한 포맷을 두 변형들 중 하나로 제한할 수 있다. 이것은 배포된 구현체들이 두 포맷들 중 하나를 마주했을 때 실패할 것이라고 알려졌을 때 중요할 수 있다.
 
-11.3. Challenge and Response
+### 11.3. Challenge와 응답
 
 A 401 (Unauthorized) response message is used by an origin server to
 challenge the authorization of a user agent, including a
