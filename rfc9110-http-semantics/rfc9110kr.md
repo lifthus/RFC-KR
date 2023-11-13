@@ -216,7 +216,7 @@ than English.
 
 - [11.1. 인증 Scheme](#111-인증-scheme)
 - [11.2. 인증 매개변수들](#112-인증-매개변수들)
-- [11.3. Challenge와 응답](#113-challenge와-response)
+- [11.3. Challenge와 응답](#113-challenge와-응답)
 - [11.4. Credentials](#114-credentials)
 - [11.5. 보호 공간 수립 (Realm)](#115-보호-공간-수립-realm)
 - [11.6. 오리진 서버들에 대해 유저들 인증하기](#116-오리진-서버들에-대해-유저들-인증하기)
@@ -2400,31 +2400,17 @@ token68 구문은 66개의 예약되지 않은 URI 문자들과([[URI](https://w
 
 ### 11.3. Challenge와 응답
 
-A 401 (Unauthorized) response message is used by an origin server to
-challenge the authorization of a user agent, including a
-WWW-Authenticate header field containing at least one challenge
-applicable to the requested resource.
+401(Unauthorized) 응답 메시지는 오리진 서버에 의해 유저 에이전트의 인가를 challenge하기 위해 사용되며, 요청된 리소스에 적용가능한 최소 하나의 challenge를 포함하는 WWW-Authenticate 헤더 필드를 포함한다.
 
-A 407 (Proxy Authentication Required) response message is used by a
-proxy to challenge the authorization of a client, including a
-Proxy-Authenticate header field containing at least one challenge
-applicable to the proxy for the requested resource.
+407(Proxy Authentication Required) 응답 메시지는 클라이언트의 인가를 challenge하기 위해 프록시에 의해 사용되며, 요청된 리소스에 대한 프록시에 적용 가능한 최소 하나의 challenge를 포함하는 Proxy-Authenticate 헤더 필드를 포함한다.
 
      challenge   = auth-scheme [ 1*SP ( token68 / #auth-param ) ]
 
-      |  *Note:* Many clients fail to parse a challenge that contains an
-      |  unknown scheme.  A workaround for this problem is to list well-
-      |  supported schemes (such as "basic") first.
+**Note:** 많은 클라이언트들은 알려지지 않은 scheme을 포함하는 challenge를 파싱하는데 실패한다. 이 문제의 해결법은 잘 지원되는 scheme들("basic" 같은)을 먼저 나열하는 것이다.
 
-A user agent that wishes to authenticate itself with an origin server
--- usually, but not necessarily, after receiving a 401 (Unauthorized)
--- can do so by including an Authorization header field with the
-request.
+스스로 오리진 서버와 인증하고자 하는 유저 에이전트는 -- 보통, 하지만 꼭 그렇지는 않고, 401(Unauthorized)을 수신한 후에 -- 요청에 Authorization 헤더 필드를 포함함으로써 그렇게 할 수 있다.
 
-A client that wishes to authenticate itself with a proxy -- usually,
-but not necessarily, after receiving a 407 (Proxy Authentication
-Required) -- can do so by including a Proxy-Authorization header
-field with the request.
+스스로 프록시와 인증하고자 하는 클라이언트는 -- 보통, 하지만 꼭 그렇지는 않고, 407(Proxy Authenticatino Required)을 수신한 후에, 요청에 Proxy-Authorization 헤더 필드를 포함함으로써 그렇게 할 수 있다.
 
 11.4. Credentials
 
