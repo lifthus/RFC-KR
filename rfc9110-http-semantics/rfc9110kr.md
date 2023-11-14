@@ -2412,49 +2412,21 @@ token68 구문은 66개의 예약되지 않은 URI 문자들과([[URI](https://w
 
 스스로 프록시와 인증하고자 하는 클라이언트는 -- 보통, 하지만 꼭 그렇지는 않고, 407(Proxy Authenticatino Required)을 수신한 후에, 요청에 Proxy-Authorization 헤더 필드를 포함함으로써 그렇게 할 수 있다.
 
-11.4. Credentials
+### 11.4. Credentials
 
-Both the Authorization field value and the Proxy-Authorization field
-value contain the client's credentials for the realm of the resource
-being requested, based upon a challenge received in a response
-(possibly at some point in the past). When creating their values,
-the user agent ought to do so by selecting the challenge with what it
-considers to be the most secure auth-scheme that it understands,
-obtaining credentials from the user as appropriate. Transmission of
-credentials within header field values implies significant security
-considerations regarding the confidentiality of the underlying
-connection, as described in Section 17.16.1.
+Authorization 필드 값과 Proxy-Authorization 필드 값 둘 다, 응답(아마 과거의 어느 시점에서의)에서 수신한 challenge에 기반한, 요청되는 리소스의 영역을 위한 클라이언트의 credentials를 포함한다. 그 값들을 생성할 때, 유저 에이전트는 적절하게 유저로부터 credentials를 획득하면서, 이해하는 가장 안전한 auth-scheme으로 간주되는 challenge를 선택함으로써 그렇게 해야 한다. 헤더 필드 값들 내에서의 credentials의 전송은, 17.16.1절에 기술된대로 기반이 되는 연결의 기밀성에 관련한 중요한 보안 고려사항들을 내포한다.
 
      credentials = auth-scheme [ 1*SP ( token68 / #auth-param ) ]
 
-Upon receipt of a request for a protected resource that omits
-credentials, contains invalid credentials (e.g., a bad password) or
-partial credentials (e.g., when the authentication scheme requires
-more than one round trip), an origin server SHOULD send a 401
-(Unauthorized) response that contains a WWW-Authenticate header field
-with at least one (possibly new) challenge applicable to the
-requested resource.
+보호되는 리소스에 대해서 credentials를 생략하거나, 유효하지 않은 credentials(예로, 틀린 패스워드) 또는 부분 crededntials(예로, 인증 scheme이 두번 이상의 round trip을 요구할 때)를 포함하는 요청을 수신하면, 오리진 서버는 웬만하면(SHOULD) 요청된 리소스에 적용 가능한 최소 하나의(아마 새로운) challenge와 함께 WWW-Authenticate 헤더 필드를 포함하는 401(Unauthorized) 응답을 보내야 한다.
 
-Likewise, upon receipt of a request that omits proxy credentials or
-contains invalid or partial proxy credentials, a proxy that requires
-authentication SHOULD generate a 407 (Proxy Authentication Required)
-response that contains a Proxy-Authenticate header field with at
-least one (possibly new) challenge applicable to the proxy.
+마찬가지로, 프록시 credentials를 생략하거나 유효하지 않거나 부분적인 프록시 credentials를 포함하는 요청을 수신한 경우, 인증을 요구하는 프록시는 웬만하면(SHOULD) 최소 하나의(아마 새로운) 해당 프록시에 적용 가능한 challenge와 함께 Proxy-Authorization 헤더 필드를 포함하는 407(Proxy Authentication Required) 응답을 생성해야 한다.
 
-A server that receives valid credentials that are not adequate to
-gain access ought to respond with the 403 (Forbidden) status code
-(Section 15.5.4).
+유효하긴 하지만 액세스를 얻을 수는 없는 credentials를 수신한 서버는 403(Forbidden) 상태 코드로 응답해야 한다(15.5.4절).
 
-HTTP does not restrict applications to this simple challenge-response
-framework for access authentication. Additional mechanisms can be
-used, such as authentication at the transport level or via message
-encapsulation, and with additional header fields specifying
-authentication information. However, such additional mechanisms are
-not defined by this specification.
+HTTP는 애플리케이션들에 대해 액세스 인증을 위해 이 단순한 challenge-응답 프레임워크로 제한하지는 않는다. transport 레벨에서의 혹은 메시지 캡슐화를 통한, 그리고 인증 정보를 지정하는 추가적인 헤더 필드들과의 인증 같은, 추가적인 메커니즘들이 사용될 수 있다. 그러나, 이러한 추가적인 메커니즘들은 이 사양에 의해 정의되지는 않는다.
 
-Note that various custom mechanisms for user authentication use the
-Set-Cookie and Cookie header fields, defined in [COOKIE], for passing
-tokens related to authentication.
+유저 인증을 위한 다양한 커스텀 메커니즘들이, 인증에 관련된 토큰들을 전달하기 위해, [[COOKIE](https://www.rfc-editor.org/info/rfc6265)]에 정의된 Set-Cookie와 Cookie 헤더 필드들을 사용함에 주목하라.
 
 11.5. Establishing a Protection Space (Realm)
 
