@@ -2440,7 +2440,7 @@ HTTP는 애플리케이션들에 대해 액세스 인증을 위해 이 단순한
 
 역사적인 이유들로, 발신자는 반드시(MUST) 오직 quoted-string 구문만 생성해야 한다. 수신자들은 오랫동안 두 표기를 모두 받아들이고 있는 기존의 클라이언트들과의 최대 상호운용성을 위해 token과 quoted-string 구문 둘 다 지원해야 할 수도 있다.
 
-11.6. Authenticating Users to Origin Servers
+### 11.6. 오리진 서버들에 대해 유저들 인증하기
 
 11.6.1. WWW-Authenticate
 
