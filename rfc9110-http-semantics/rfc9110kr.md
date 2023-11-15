@@ -2428,40 +2428,17 @@ HTTP는 애플리케이션들에 대해 액세스 인증을 위해 이 단순한
 
 유저 인증을 위한 다양한 커스텀 메커니즘들이, 인증에 관련된 토큰들을 전달하기 위해, [[COOKIE](https://www.rfc-editor.org/info/rfc6265)]에 정의된 Set-Cookie와 Cookie 헤더 필드들을 사용함에 주목하라.
 
-11.5. Establishing a Protection Space (Realm)
+### 11.5. 보호 공간 수립 (Realm)
 
-The "realm" authentication parameter is reserved for use by
-authentication schemes that wish to indicate a scope of protection.
+"realm" 인증 파라미터는 보호의 범위를 나타내고자 하는 인증 scheme들에 의해 사용되도록 예약되어 있다.
 
-A "protection space" is defined by the origin (see Section 4.3.1) of
-the server being accessed, in combination with the realm value if
-present. These realms allow the protected resources on a server to
-be partitioned into a set of protection spaces, each with its own
-authentication scheme and/or authorization database. The realm value
-is a string, generally assigned by the origin server, that can have
-additional semantics specific to the authentication scheme. Note
-that a response can have multiple challenges with the same auth-
-scheme but with different realms.
+"보호 공간(protection space)"은, 만약 존재한다면 realm 값과의 조합으로, 접근되는 서버의 오리진(4.3.1절 참조)에 의해 정의된다. 이 realm들은 각각 자신의 인증 scheme 그리고/또는 인가 데이터베이스와 함께, 서버의 보호되는 리소스들이 보호 공간들의 집합으로 분할될 수 있도록 한다. realm 값은 한 문자열이며, 일반적으로 오리진 서버에 의해 할당되고, 인증 scheme에 특정한 추가적인 의미체계를 가질 수 있다. 하나의 응답이 같은 auth-scheme이지만 realm은 다른 여러 challenge들을 가질 수 있음을 명심하라.
 
-The protection space determines the domain over which credentials can
-be automatically applied. If a prior request has been authorized,
-the user agent MAY reuse the same credentials for all other requests
-within that protection space for a period of time determined by the
-authentication scheme, parameters, and/or user preferences (such as a
-configurable inactivity timeout).
+보호 공간은 credentials가 자동으로 적용될 수 있는 도메인을 결정한다. 만약 이전 요청이 인가되었다면, 유저 에이전트는 아마(MAY) 인증 scheme, 파라미터들, 그리고/혹은 유저 선호(설정 가능한 비활성화 타임아웃 같은)에 의해 결정되는 일정 시간 동안 해당 보호 공간 내에서 다른 모든 요청들을 위해 같은 credentials를 재사용할 수 있을 것이다.
 
-The extent of a protection space, and therefore the requests to which
-credentials might be automatically applied, is not necessarily known
-to clients without additional information. An authentication scheme
-might define parameters that describe the extent of a protection
-space. Unless specifically allowed by the authentication scheme, a
-single protection space cannot extend outside the scope of its
-server.
+이와같이 credentials가 자동으로 적용될 수 있는 요청들과, 보호 공간의 범위가 추가 정보 없이 반드시 클라이언트들ㅇ게 알려져 있는 것은 아니다. 인증 scheme이 보호 공간의 범위를 기술하는 파라미터들을 정의할 수도 있다. 인증 scheme에 의해 특별히 허용되지 않는 한, 단일 보호 공간은 그 서버의 범위 넘어 확장될 수 없다.
 
-For historical reasons, a sender MUST only generate the quoted-string
-syntax. Recipients might have to support both token and quoted-
-string syntax for maximum interoperability with existing clients that
-have been accepting both notations for a long time.
+역사적인 이유들로, 발신자는 반드시(MUST) 오직 quoted-string 구문만 생성해야 한다. 수신자들은 오랫동안 두 표기를 모두 받아들이고 있는 기존의 클라이언트들과의 최대 상호운용성을 위해 token과 quoted-string 구문 둘 다 지원해야 할 수도 있다.
 
 11.6. Authenticating Users to Origin Servers
 
