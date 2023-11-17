@@ -2436,55 +2436,34 @@ HTTP는 애플리케이션들에 대해 액세스 인증을 위해 이 단순한
 
 보호 공간은 credentials가 자동으로 적용될 수 있는 도메인을 결정한다. 만약 이전 요청이 인가되었다면, 유저 에이전트는 아마(MAY) 인증 scheme, 파라미터들, 그리고/혹은 유저 선호(설정 가능한 비활성화 타임아웃 같은)에 의해 결정되는 일정 시간 동안 해당 보호 공간 내에서 다른 모든 요청들을 위해 같은 credentials를 재사용할 수 있을 것이다.
 
-이와같이 credentials가 자동으로 적용될 수 있는 요청들과, 보호 공간의 범위가 추가 정보 없이 반드시 클라이언트들ㅇ게 알려져 있는 것은 아니다. 인증 scheme이 보호 공간의 범위를 기술하는 파라미터들을 정의할 수도 있다. 인증 scheme에 의해 특별히 허용되지 않는 한, 단일 보호 공간은 그 서버의 범위 넘어 확장될 수 없다.
+이와같이 credentials가 자동으로 적용될 수 있는 요청들과, 보호 공간의 범위가 추가 정보 없이 반드시 클라이언트들에게 알려져 있는 것은 아니다. 인증 scheme이 보호 공간의 범위를 기술하는 파라미터들을 정의할 수도 있다. 인증 scheme에 의해 특별히 허용되지 않는 한, 단일 보호 공간은 그 서버의 범위 넘어 확장될 수 없다.
 
 역사적인 이유들로, 발신자는 반드시(MUST) 오직 quoted-string 구문만 생성해야 한다. 수신자들은 오랫동안 두 표기를 모두 받아들이고 있는 기존의 클라이언트들과의 최대 상호운용성을 위해 token과 quoted-string 구문 둘 다 지원해야 할 수도 있다.
 
 ### 11.6. 오리진 서버들에 대해 유저들 인증하기
 
-11.6.1. WWW-Authenticate
+#### 11.6.1. WWW-Authenticate
 
-The "WWW-Authenticate" response header field indicates the
-authentication scheme(s) and parameters applicable to the target
-resource.
+"WWW-Authenticate" 응답 헤더 필드는 타겟 리소스에 적용 가능한 인증 scheme(들)과 파리미터들을 나타낸다.
 
      WWW-Authenticate = #challenge
 
-A server generating a 401 (Unauthorized) response MUST send a WWW-
-Authenticate header field containing at least one challenge. A
-server MAY generate a WWW-Authenticate header field in other response
-messages to indicate that supplying credentials (or different
-credentials) might affect the response.
+401(Unauthorized) 응답을 생성하는 서버는 반드시(MUST) 적어도 하나의 challenge를 포함하는 www-Authenticate 헤더 필드를 보내야 한다. 서버는 아마(MAY) 제공하는 credentials(혹은 다른 credentials)가 응답에 영향을 줄 수 있다는 것을 나타내기 위해 WWW-Authenticate 헤더 필드를 생성할 수도 있을 것이다.
 
-A proxy forwarding a response MUST NOT modify any WWW-Authenticate
-header fields in that response.
+응답을 포워딩하는 프록시는 절대(MUST NOT) 해당 응답에서 어떠한 WWW-Authenticate 헤더 필드들도 수정해서는 안된다.
 
-User agents are advised to take special care in parsing the field
-value, as it might contain more than one challenge, and each
-challenge can contain a comma-separated list of authentication
-parameters. Furthermore, the header field itself can occur multiple
-times.
+유저 에이전트들은 필드 값을 파싱하는데 있어 특별한 주의를 기울이도록 권장되는데, 하나를 초과하는 challenge를 포함할 수 있기 때문이며, 각 challenge는 콤마로 구별되는 인증 파라미터들의 리스트를 포함할 수 있다. 게다가, 헤더 필드 자체가 여러번 나타날 수도 있다.
 
-For instance:
+예를 들어:
 
-WWW-Authenticate: Basic realm="simple", Newauth realm="apps",
-type=1, title="Login to \"apps\""
+     WWW-Authenticate: Basic realm="simple", Newauth realm="apps",
+     type=1, title="Login to \"apps\""
 
-This header field contains two challenges, one for the "Basic" scheme
-with a realm value of "simple" and another for the "Newauth" scheme
-with a realm value of "apps". It also contains two additional
-parameters, "type" and "title".
+이 헤더 필드는 두 challenge들을 포함하는데, 하나는 "simple"이라는 realm 값과 함께하는 "Basic" scheme을 위한 것이고 다른 하나는 "apps"라는 realm 값과 함께하는 "Newauth" scheme을 위한 것이다. 그것은 또한 "type"과 "title" 이라는, 두 추가적인 파라미터들을 포함한다.
 
-Some user agents do not recognize this form, however. As a result,
-sending a WWW-Authenticate field value with more than one member on
-the same field line might not be interoperable.
+하지만, 일부 유저 에이전트들은 이 형태를 인식하지 않는다. 그 결과로, 같은 필드 라인에 하나를 초과하는 멤버를 가진 WWW-Authenticate 필드를 보내는 것은 상호운용 가능하지 않을 수 있다.
 
-      |  *Note:* The challenge grammar production uses the list syntax
-      |  as well.  Therefore, a sequence of comma, whitespace, and comma
-      |  can be considered either as applying to the preceding
-      |  challenge, or to be an empty entry in the list of challenges.
-      |  In practice, this ambiguity does not affect the semantics of
-      |  the header field value and thus is harmless.
+**Note:** challenge 구문 프로덕션은 리스트 구문 또한 사용한다. 이리하여, 콤마, 공백, 그리고 콤마의 나열은 앞서는 challenge에 적용하는 것으로, 또는 challenge들의 리스트에 있는 빈 항목으로 간주될 수 있다. 실무적으로, 이 애매모호함은 헤더 필드 값의 의미체계에 영향을 미치지 않고 따라서 무해하다.
 
 11.6.2. Authorization
 
