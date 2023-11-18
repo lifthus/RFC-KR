@@ -2465,26 +2465,15 @@ HTTP는 애플리케이션들에 대해 액세스 인증을 위해 이 단순한
 
 **Note:** challenge 구문 프로덕션은 리스트 구문 또한 사용한다. 이리하여, 콤마, 공백, 그리고 콤마의 나열은 앞서는 challenge에 적용하는 것으로, 또는 challenge들의 리스트에 있는 빈 항목으로 간주될 수 있다. 실무적으로, 이 애매모호함은 헤더 필드 값의 의미체계에 영향을 미치지 않고 따라서 무해하다.
 
-11.6.2. Authorization
+#### 11.6.2. Authorization
 
-The "Authorization" header field allows a user agent to authenticate
-itself with an origin server -- usually, but not necessarily, after
-receiving a 401 (Unauthorized) response. Its value consists of
-credentials containing the authentication information of the user
-agent for the realm of the resource being requested.
+"Authorization" 헤더 필드는 유저 에이전트가 스스로 오리진 서버와 인증하도록 한다 -- 보통, 하지만 꼭 그렇지는 않고, 401(Unauthorized) 응답을 수신 한 후에. 그 값은 요청되는 리소스의 realm을 위한 유저 에이전트의 인증 정보를 포함하는 credentials로 구성된다.
 
      Authorization = credentials
 
-If a request is authenticated and a realm specified, the same
-credentials are presumed to be valid for all other requests within
-this realm (assuming that the authentication scheme itself does not
-require otherwise, such as credentials that vary according to a
-challenge value or using synchronized clocks).
+만약 요청이 인증되고 realm이 특정되면, 해당하는 같은 credentials는 해당 realm내의 모든 다른 요청들에 대해 유효한 것으로 간주된다(인증 scheme 자체가, challenge 값에 따라 다르거나 동기화된 시계를 사용하는 credentials 같은걸 요구하지 않는다고 가정).
 
-A proxy forwarding a request MUST NOT modify any Authorization header
-fields in that request. See Section 3.5 of [CACHING] for details of
-and requirements pertaining to handling of the Authorization header
-field by HTTP caches.
+요청을 포워딩하는 프록시는 절대(MUST NOT) 해당 요청에서 어떠한 Authorization 헤더 필드들도 수정해서는 안된다. HTTP 캐시들에 의한 Authorization 헤더 필드 처리에 관한 요구사항들과 그 세부사항들은 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 3.5절을 참조하라.
 
 11.6.3. Authentication-Info
 
