@@ -2501,24 +2501,13 @@ WWW-Authenticate와는 달리, Proxy-Authenticate 헤더 필드는 오직 응답
 
 WWW-Authenticate를 위한 파싱 고려사항들이 이 헤더 필드에도 마찬가지로 적용되는 것에 주목하라; 세부사항은 11.6.1절을 참조하라
 
-11.7.2. Proxy-Authorization
+#### 11.7.2. Proxy-Authorization
 
-The "Proxy-Authorization" header field allows the client to identify
-itself (or its user) to a proxy that requires authentication. Its
-value consists of credentials containing the authentication
-information of the client for the proxy and/or realm of the resource
-being requested.
+"Proxy-Authorization" 헤더 필드는 클라이언트가 인증을 요구하는 프록시에게 스스로(혹은 그 유저)를 식별하도록 한다. 그 값은 해당 프록시 그리고/또는 요청되는 리소스의 realm을 위한 클라이언트의 인증 정보를 포함하는 credentials로 구성된다.
 
      Proxy-Authorization = credentials
 
-Unlike Authorization, the Proxy-Authorization header field applies
-only to the next inbound proxy that demanded authentication using the
-Proxy-Authenticate header field. When multiple proxies are used in a
-chain, the Proxy-Authorization header field is consumed by the first
-inbound proxy that was expecting to receive credentials. A proxy MAY
-relay the credentials from the client request to the next proxy if
-that is the mechanism by which the proxies cooperatively authenticate
-a given request.
+Authorization과는 달리, Proxy-Authorization 헤더 필드는 오직 Proxy-Authenticate 헤더 필드를 사용한 인증을 요구한 다음 인바운드 프록시에만 적용된다. 체인에서 여러 프록시들이 사용될 때, Proxy-Authorization 헤더 필드는 credentials를 수신할 것으로 기대하던 첫 인바운드 프록시에 의해 소비된다. 프록시는 프록시들이 해당 요청을 협력적으로 인증하는 메커니즘이 그러할 경우 아마(MAY) 클라이언트 요청으로부터의 credentials를 다음 프록시로 전달할 수도 있을 것이다.
 
 11.7.3. Proxy-Authentication-Info
 
