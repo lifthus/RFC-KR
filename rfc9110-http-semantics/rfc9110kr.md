@@ -2475,33 +2475,19 @@ HTTP는 애플리케이션들에 대해 액세스 인증을 위해 이 단순한
 
 요청을 포워딩하는 프록시는 절대(MUST NOT) 해당 요청에서 어떠한 Authorization 헤더 필드들도 수정해서는 안된다. HTTP 캐시들에 의한 Authorization 헤더 필드 처리에 관한 요구사항들과 그 세부사항들은 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 3.5절을 참조하라.
 
-11.6.3. Authentication-Info
+#### 11.6.3. Authentication-Info
 
-HTTP authentication schemes can use the "Authentication-Info"
-response field to communicate information after the client's
-authentication credentials have been accepted. This information can
-include a finalization message from the server (e.g., it can contain
-the server authentication).
+HTTP 인증 scheme들은 클라이언트의 인증 credentials가 수락된 후에 정보를 전달하기 위해 "Authentication-Info" 응답 필드를 사용할 수 있다. 이 정보는 서버로부터의 최종 메시지를 포함할 수 있다(예를 들어, 서버 인증을 포함할 수 있다).
 
-The field value is a list of parameters (name/value pairs), using the
-"auth-param" syntax defined in Section 11.3. This specification only
-describes the generic format; authentication schemes using
-Authentication-Info will define the individual parameters. The
-"Digest" Authentication Scheme, for instance, defines multiple
-parameters in Section 3.5 of [RFC7616].
+필드 값은 파라미터들의 한 리스트(이름/값 쌍들)로, 11.3절에 정의된 "auth-param" 구문을 사용한다. 이 사양은 오직 일반적인 포맷만을 기술한다; Authentication-Info를 사용하는 인증 scheme들은 각 파라미터들을 정의할 것이다. "Digest" Authentication Scheme은, 예를 들어, [[RFC7616](https://www.rfc-editor.org/info/rfc7616)]의 3.5절에 여러 파라미터들을 정의한다.
 
      Authentication-Info = #auth-param
 
-The Authentication-Info field can be used in any HTTP response,
-independently of request method and status code. Its semantics are
-defined by the authentication scheme indicated by the Authorization
-header field (Section 11.6.2) of the corresponding request.
+Authentication-Info 필드는 어느 HTTP 응답에서든 사용될 수 있으며, 요청 메소드와 상태 코드와는 독립적이다. 그 의미체계는 해당하는 요청의 Authorization 헤더 필드(11.6.2절)에 지정된 authentication scheme에 의해 정의된다.
 
-A proxy forwarding a response is not allowed to modify the field
-value in any way.
+응답을 포워딩하는 프록시가 필드 값을 수정하는 것은 어떤 식으로든 허용되지 않는다.
 
-Authentication-Info can be sent as a trailer field (Section 6.5) when
-the authentication scheme explicitly allows this.
+Authentication-Info는 해당 인증 scheme이 명시적으로 허용할 경우 trailer 필드(6.5절)로 보내질 수 있다.
 
 11.7. Authenticating Clients to Proxies
 
