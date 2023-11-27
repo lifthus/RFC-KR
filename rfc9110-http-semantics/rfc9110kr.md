@@ -228,7 +228,8 @@ than English.
 - - [11.7.2. Proxy-Authorization](#1172-proxy-authorization)
 - - [11.7.3. Proxy-Authentication-Info](#1173-proxy-authentication-info)
 
-12. Content Negotiation
+[12. 콘텐츠 협상](#12-콘텐츠-협상)
+
     12.1. Proactive Negotiation
     12.2. Reactive Negotiation
     12.3. Request Content Negotiation
@@ -2519,42 +2520,15 @@ Authorization과는 달리, Proxy-Authorization 헤더 필드는 오직 Proxy-Au
 
 Proxy-Authentication-Info는 인증 scheme이 명시적으로 허용할 경우 trailer(6.5절) 필드로 보내질 수 있다.
 
-12. Content Negotiation
+## 12. 콘텐츠 협상
 
-When responses convey content, whether indicating a success or an
-error, the origin server often has different ways of representing
-that information; for example, in different formats, languages, or
-encodings. Likewise, different users or user agents might have
-differing capabilities, characteristics, or preferences that could
-influence which representation, among those available, would be best
-to deliver. For this reason, HTTP provides mechanisms for content
-negotiation.
+응답들이 콘텐츠를 전달할 때, 성공을 나타내든 에러를 나타내든, 오리진 서버는 종종 해당 정보를 나타내는 여러 다른 방법들을 가진다; 예를 들면, 다른 포맷들, 언어들, 혹은 인코딩들. 마찬가지로, 다른 유저들이나 유저 에이전트들도, 가용한 것들 중, 어떤 표현이 가장 전달하기 좋을지에 영향을 줄 수 있는 능력들, 특성들, 혹은 선호들에 차이가 있을 수 있다. 이러한 이유로, HTTP는 콘텐츠 협상을 위한 메커니즘들을 제공한다.
 
-This specification defines three patterns of content negotiation that
-can be made visible within the protocol: "proactive" negotiation,
-where the server selects the representation based upon the user
-agent's stated preferences; "reactive" negotiation, where the server
-provides a list of representations for the user agent to choose from;
-and "request content" negotiation, where the user agent selects the
-representation for a future request based upon the server's stated
-preferences in past responses.
+이 사양은 프로토콜 내에서 보여질 수 있는 콘텐츠 협상의 세 가지 패턴들을 정의한다: 유저 에이전트에 의해 진술된 선호들에 기반해 서버가 표현을 선택하는 "proactive" 협상; 유저 에이전트가 선택할 수 있도록 서버가 표현들의 리스트를 제공하는 "reactive" 협상; 그리고 과거 응답들에서 서버에 의해 진술된 선호들에 기반해 유저 에이전트가 차후 요청을 위한 표현을 선택하는 "request content" 협상.
 
-Other patterns of content negotiation include "conditional content",
-where the representation consists of multiple parts that are
-selectively rendered based on user agent parameters, "active
-content", where the representation contains a script that makes
-additional (more specific) requests based on the user agent
-characteristics, and "Transparent Content Negotiation" ([RFC2295]),
-where content selection is performed by an intermediary. These
-patterns are not mutually exclusive, and each has trade-offs in
-applicability and practicality.
+콘텐츠 협상의 다른 패턴들에는 유저 에이전트 파라미터들에 기반해 선택적으로 렌더링되는 여러 부분들로 표현이 구성되는 "conditional content", 표현이 유저 에이전트의 특성에 기반해 추가적인(더 구체적인) 요청들을 만드는 스크립트를 포함하는 "active content", 그리고 콘텐츠 선택이 중개자에 의해 수행되는 "Transparent Content Negotiation"([[RFC2295](https://www.rfc-editor.org/info/rfc2295)])을 포함한다. 이 패턴들은 상호 배타적이지 않고, 각각은 적용성과 실용성에 있어서 트레이드오프를 가진다.
 
-Note that, in all cases, HTTP is not aware of the resource semantics.
-The consistency with which an origin server responds to requests,
-over time and over the varying dimensions of content negotiation, and
-thus the "sameness" of a resource's observed representations over
-time, is determined entirely by whatever entity or algorithm selects
-or generates those responses.
+모든 케이스들에서, HTTP는 리소스 의미체계에 대해 인식하지 않음에 주의하라. 시간에 걸친 그리고 콘텐츠 협상의 다양한 차원들에 걸친, 오리진 서버가 요청들에 응답하는 일관성, 그로인해 시간에 걸친, 리소스의 관찰되는 표현들의 "동일성"은 전적으로 그 응답들을 선택하거나 생성하는 어떠한 엔티티나 알고리즘에 의해 결정된다.
 
 12.1. Proactive Negotiation
 
