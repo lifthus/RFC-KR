@@ -2530,63 +2530,27 @@ Proxy-Authentication-Info는 인증 scheme이 명시적으로 허용할 경우 t
 
 모든 케이스들에서, HTTP는 리소스 의미체계에 대해 인식하지 않음에 주의하라. 시간에 걸친 그리고 콘텐츠 협상의 다양한 차원들에 걸친, 오리진 서버가 요청들에 응답하는 일관성, 그로인해 시간에 걸친, 리소스의 관찰되는 표현들의 "동일성"은 전적으로 그 응답들을 선택하거나 생성하는 어떠한 엔티티나 알고리즘에 의해 결정된다.
 
-12.1. Proactive Negotiation
+### 12.1. Proactive Negotiation
 
-When content negotiation preferences are sent by the user agent in a
-request to encourage an algorithm located at the server to select the
-preferred representation, it is called "proactive negotiation"
-(a.k.a., "server-driven negotiation"). Selection is based on the
-available representations for a response (the dimensions over which
-it might vary, such as language, content coding, etc.) compared to
-various information supplied in the request, including both the
-explicit negotiation header fields below and implicit
-characteristics, such as the client's network address or parts of the
-User-Agent field.
+서버에 배치된 알고리즘이 선호되는 표현을 선택하도록 하기 위해 유저 에이전트에 의해 요청에 콘텐츠 협상 선호들이 보내질 때, 이를 "proactive negotiation"이라고 한다(일명, "server-driven negotiation"). 선택은, 클라이언트의 네트워크 주소 혹은 User-Agent 필드의 일부들과 같은, 아래의 명시적인 협상 헤더 필드들과 암시적인 특성들을 포함한, 요청에서 제공되는 다양한 정보와 비교된 응답을 위해 가용한 표현들(언어, 콘텐츠 코딩 등과 같이, 다양할 수도 있는 차원들)에 기반한다.
 
-Proactive negotiation is advantageous when the algorithm for
-selecting from among the available representations is difficult to
-describe to a user agent, or when the server desires to send its
-"best guess" to the user agent along with the first response (when
-that "best guess" is good enough for the user, this avoids the round-
-trip delay of a subsequent request). In order to improve the
-server's guess, a user agent MAY send request header fields that
-describe its preferences.
+Proactive negotiation은 가용한 표현들 중 하나를 선택하기 위한 알고리즘이 유저 에이전트에게 기술되기 어려울 때, 혹은 서버가 첫번째 응답과 함께 자신의 "최선의 추측"을 유저 에이전트에게 보내고자 할 때(그 "최선의 추측"이 유저에 대해 충분히 좋을 때, 이는 이어지는 요청의 라운드트립 지연 시간을 회피한다.) 유용하다. 서버의 추측을 향상시키기 위해, 유저 에이전트는 아마(MAY) 자신의 선호들을 기술하는 요청 헤더 필드들을 보낼 수 있을 것이다.
 
-Proactive negotiation has serious disadvantages:
+Proactive negotiation는 심각한 단점들을 가진다:
 
-- It is impossible for the server to accurately determine what might
-  be "best" for any given user, since that would require complete
-  knowledge of both the capabilities of the user agent and the
-  intended use for the response (e.g., does the user want to view it
-  on screen or print it on paper?);
+- 주어진 어떤 유저에게라도 "최선"일 수 있는 것을 정확하게 결정하는 것은 서버에게 있어 불가능한데, 그것이 유저 에이전트의 능력과 응답의 의도된 용도 둘 다에 대한 완전한 이해를 요구하기 때문이다(예를 들어, 유저는 그것을 스크린을 통해 보려는가 혹은 종이에 프린트 하려는가?);
 
-- Having the user agent describe its capabilities in every request
-  can be both very inefficient (given that only a small percentage
-  of responses have multiple representations) and a potential risk
-  to the user's privacy;
+- 유저 에이전트가 모든 요청에서 자신의 능력을 기술하게 하는 것은 아주 비효율적이기도 하고(오직 응답들 중 작은 비율만이 여러 표현들을 가짐을 고려하면) 유저의 프라이버시에 있어 잠재적인 위험이기도 하다;
 
-- It complicates the implementation of an origin server and the
-  algorithms for generating responses to a request; and,
+- 오리진 서버와 요청에 대한 응답들을 생성하기 위한 알고리즘들의 구현을 복잡하게 한다; 그리고,
 
-- It limits the reusability of responses for shared caching.
+- 공유 캐싱을 위한 응답들의 재사용성을 제한한다.
 
-A user agent cannot rely on proactive negotiation preferences being
-consistently honored, since the origin server might not implement
-proactive negotiation for the requested resource or might decide that
-sending a response that doesn't conform to the user agent's
-preferences is better than sending a 406 (Not Acceptable) response.
+유저 에이전트는 지속적으로 존중되는 proactive negotiation 선호들에 의존할 수 없는데, 오리진 서버가 요청된 리소스를 위한 proactive negotiation을 구현하지 않을 수도 있고 혹은 유저 에이전트의 선호들을 따르지 않는 응답을 보내는게 406(Not Acceptable) 응답을 보내는 것보다 낫다고 결정할 수도 있기 때문이다.
 
-A Vary header field (Section 12.5.5) is often sent in a response
-subject to proactive negotiation to indicate what parts of the
-request information were used in the selection algorithm.
+Vary 헤더 필드(12.5.5절)는 종종 proactive negotiation에 따라 요청 정보의 어떤 부분들이 선택 알고리즘에서 사용됐는지를 나타내기 위해 응답에서 보내진다.
 
-The request header fields Accept, Accept-Charset, Accept-Encoding,
-and Accept-Language are defined below for a user agent to engage in
-proactive negotiation of the response content. The preferences sent
-in these fields apply to any content in the response, including
-representations of the target resource, representations of error or
-processing status, and potentially even the miscellaneous text
-strings that might appear within the protocol.
+Accept, Accept-Charset, Accept-Encoding, 그리고 Accept-Language 요청 헤더 필드들은 유저 에이전트가 응답 콘텐츠의 proactive negotiation에 착수할 수 있도록 아래에 정의된다. 이 필드들에 보내진 선호들은, 타겟 리소스의 표현들, 에러나 처리 상태의 표현들, 그리고 심지어 잠재적으로 프로토콜 내에 나타날 수 있는 잡다한 텍스트 문자열들을 포함한, 응답의 어떤 콘텐츠에라도 적용된다.
 
 12.2. Reactive Negotiation
 
