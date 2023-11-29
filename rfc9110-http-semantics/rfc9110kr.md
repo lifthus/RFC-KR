@@ -2552,41 +2552,17 @@ Vary 헤더 필드(12.5.5절)는 종종 proactive negotiation에 따라 요청 �
 
 Accept, Accept-Charset, Accept-Encoding, 그리고 Accept-Language 요청 헤더 필드들은 유저 에이전트가 응답 콘텐츠의 proactive negotiation에 착수할 수 있도록 아래에 정의된다. 이 필드들에 보내진 선호들은, 타겟 리소스의 표현들, 에러나 처리 상태의 표현들, 그리고 심지어 잠재적으로 프로토콜 내에 나타날 수 있는 잡다한 텍스트 문자열들을 포함한, 응답의 어떤 콘텐츠에라도 적용된다.
 
-12.2. Reactive Negotiation
+### 12.2. Reactive Negotiation
 
-With "reactive negotiation" (a.k.a., "agent-driven negotiation"),
-selection of content (regardless of the status code) is performed by
-the user agent after receiving an initial response. The mechanism
-for reactive negotiation might be as simple as a list of references
-to alternative representations.
+"reactive negotiation"(일명, "agent-driven negotiation")에서, 콘텐츠의 선택(상태 코드와 상관없이)은 첫 응답을 수신한 후에 유저 에이전트에 의해 수행된다. reactive negotiation을 위한 메커니즘은 대체 표현들에 대한 참조들의 리스트와 같이 단순할 수 있다.
 
-If the user agent is not satisfied by the initial response content,
-it can perform a GET request on one or more of the alternative
-resources to obtain a different representation. Selection of such
-alternatives might be performed automatically (by the user agent) or
-manually (e.g., by the user selecting from a hypertext menu).
+만약 유저 에이전트가 첫 응답 콘텐츠에 만족하지 않으면, 다른 표현을 얻기 위해 하나 이상의 대체 리소스들에 GET 요청을 수행할 수 있다. 그러한 대안들의 선택은 자동적으로(유저 에이전트에 의해) 혹은 수동으로 수행될 수 있다(예를 들어, 하이퍼텍스트 메뉴로부터 유저가 선택하기).
 
-A server might choose not to send an initial representation, other
-than the list of alternatives, and thereby indicate that reactive
-negotiation by the user agent is preferred. For example, the
-alternatives listed in responses with the 300 (Multiple Choices) and
-406 (Not Acceptable) status codes include information about available
-representations so that the user or user agent can react by making a
-selection.
+서버는, 대안들의 리스트 외에, 첫 표현을 보내지 않기로 선택할 수도 있고, 이로써 유저 에이전트에 의한 reactive negotiation이 선호된다고 나타낼 수도 있다. 예를 들어, 300(Multiple Choices)와 406(Not Acceptable) 상태 코드들과의 응답들에 나열된 대안들은 가용한 표현들에 관한 정보를 포함함으로써 유저나 유저 에이전트가 선택을 하여 반응할 수 있도록 한다.
 
-Reactive negotiation is advantageous when the response would vary
-over commonly used dimensions (such as type, language, or encoding),
-when the origin server is unable to determine a user agent's
-capabilities from examining the request, and generally when public
-caches are used to distribute server load and reduce network usage.
+Reactive negotiation은 응답이 흔히 사용되는 차원들(타입, 언어, 혹은 인코딩 같은)에 따라 다양할 때, 오리진 서버가 요청을 검사하는데서 유저 에이전트의 능력들을 결정할 수 없을 때, 그리고 일반적으로 서버 부하를 분산하고 네트워크 사용을 감소시키기 위해 퍼블릭 캐시들이 사용될 때 유용하다.
 
-Reactive negotiation suffers from the disadvantages of transmitting a
-list of alternatives to the user agent, which degrades user-perceived
-latency if transmitted in the header section, and needing a second
-request to obtain an alternate representation. Furthermore, this
-specification does not define a mechanism for supporting automatic
-selection, though it does not prevent such a mechanism from being
-developed.
+Reactive negotiation은, 유저 에이전트에게 대안들의 리스트를 전송함에 있어, 헤더 섹션에서 전송될 경우에 유저가 인식하는 지연시간을 저하시키는, 그리고 대체 표현을 얻기 위해 두번째 요청이 필요해지는 단점들로부터 고통받는다. 게다가, 이 사양은, 자동 선택을 지원하기 위한 메커니즘이 개발되는 것을 막지는 않지만, 따로 정의하지도 않는다.
 
 12.3. Request Content Negotiation
 
