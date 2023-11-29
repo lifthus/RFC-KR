@@ -2564,19 +2564,11 @@ Reactive negotiation은 응답이 흔히 사용되는 차원들(타입, 언어, 
 
 Reactive negotiation은, 유저 에이전트에게 대안들의 리스트를 전송함에 있어, 헤더 섹션에서 전송될 경우에 유저가 인식하는 지연시간을 저하시키는, 그리고 대체 표현을 얻기 위해 두번째 요청이 필요해지는 단점들로부터 고통받는다. 게다가, 이 사양은, 자동 선택을 지원하기 위한 메커니즘이 개발되는 것을 막지는 않지만, 따로 정의하지도 않는다.
 
-12.3. Request Content Negotiation
+### 12.3. Request Content Negotiation
 
-When content negotiation preferences are sent in a server's response,
-the listed preferences are called "request content negotiation"
-because they intend to influence selection of an appropriate content
-for subsequent requests to that resource. For example, the Accept
-(Section 12.5.1) and Accept-Encoding (Section 12.5.3) header fields
-can be sent in a response to indicate preferred media types and
-content codings for subsequent requests to that resource.
+콘텐츠 협상 선호들이 서버의 응답에 보내졌을 때, 나열된 선호들은 그것들이 해당 리소스로의 향후 요청들을 위해 적절한 콘텐츠를 선택하는데 영향을 주도록 의도하기 때문에 "request content negotiation"이라고 불린다. 예를 들어, Accept(12.5.1절)와 Accept-Encoding(12.5.3절) 헤더 필드들은 해당 리소스로의 향후 요청들을 위해 선호되는 미디어 타입들과 콘텐츠 코딩들을 나타내기 위해 응답에 보내질 수 있다.
 
-Similarly, Section 3.1 of [RFC5789] defines the "Accept-Patch"
-response header field, which allows discovery of which content types
-are accepted in PATCH requests.
+비슷하게, [[RFC5789](https://www.rfc-editor.org/info/rfc5789)]의 3.1절은, PATCH 요청들에서 어떤 콘텐츠 타입들이 받아들여지는지 알아낼 수 있도록 하는, "Accept-Patch" 응답 헤더 필드를 정의한다.
 
 12.4. Content Negotiation Field Features
 
