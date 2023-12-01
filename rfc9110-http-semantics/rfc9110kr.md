@@ -230,11 +230,11 @@ than English.
 
 [12. 콘텐츠 협상](#12-콘텐츠-협상)
 
-    12.1. Proactive Negotiation
-    12.2. Reactive Negotiation
-    12.3. Request Content Negotiation
-    12.4. Content Negotiation Field Features
-    12.4.1. Absence
+- [12.1. Proactive Negotiation](#121-proactive-negotiation)
+- [12.2. Reactive Negotiation](#122-reactive-negotiation)
+- [12.3. Request Content Negotiation](#123-request-content-negotiation)
+- [12.4. 콘텐츠 협상 필드 특성들](#124-콘텐츠-협상-필드-특성들)
+- - [12.4.1. 부재](#1241-부재)
     12.4.2. Quality Values
     12.4.3. Wildcard Values
     12.5. Content Negotiation Fields
@@ -2530,157 +2530,67 @@ Proxy-Authentication-Info는 인증 scheme이 명시적으로 허용할 경우 t
 
 모든 케이스들에서, HTTP는 리소스 의미체계에 대해 인식하지 않음에 주의하라. 시간에 걸친 그리고 콘텐츠 협상의 다양한 차원들에 걸친, 오리진 서버가 요청들에 응답하는 일관성, 그로인해 시간에 걸친, 리소스의 관찰되는 표현들의 "동일성"은 전적으로 그 응답들을 선택하거나 생성하는 어떠한 엔티티나 알고리즘에 의해 결정된다.
 
-12.1. Proactive Negotiation
+### 12.1. Proactive Negotiation
 
-When content negotiation preferences are sent by the user agent in a
-request to encourage an algorithm located at the server to select the
-preferred representation, it is called "proactive negotiation"
-(a.k.a., "server-driven negotiation"). Selection is based on the
-available representations for a response (the dimensions over which
-it might vary, such as language, content coding, etc.) compared to
-various information supplied in the request, including both the
-explicit negotiation header fields below and implicit
-characteristics, such as the client's network address or parts of the
-User-Agent field.
+서버에 배치된 알고리즘이 선호되는 표현을 선택하도록 하기 위해 유저 에이전트에 의해 요청에 콘텐츠 협상 선호들이 보내질 때, 이를 "proactive negotiation"이라고 한다(일명, "server-driven negotiation"). 선택은, 클라이언트의 네트워크 주소 혹은 User-Agent 필드의 일부들과 같은, 아래의 명시적인 협상 헤더 필드들과 암시적인 특성들을 포함한, 요청에서 제공되는 다양한 정보와 비교된 응답을 위해 가용한 표현들(언어, 콘텐츠 코딩 등과 같이, 다양할 수도 있는 차원들)에 기반한다.
 
-Proactive negotiation is advantageous when the algorithm for
-selecting from among the available representations is difficult to
-describe to a user agent, or when the server desires to send its
-"best guess" to the user agent along with the first response (when
-that "best guess" is good enough for the user, this avoids the round-
-trip delay of a subsequent request). In order to improve the
-server's guess, a user agent MAY send request header fields that
-describe its preferences.
+Proactive negotiation은 가용한 표현들 중 하나를 선택하기 위한 알고리즘이 유저 에이전트에게 기술되기 어려울 때, 혹은 서버가 첫번째 응답과 함께 자신의 "최선의 추측"을 유저 에이전트에게 보내고자 할 때(그 "최선의 추측"이 유저에 대해 충분히 좋을 때, 이는 이어지는 요청의 라운드트립 지연 시간을 회피한다.) 유용하다. 서버의 추측을 향상시키기 위해, 유저 에이전트는 아마(MAY) 자신의 선호들을 기술하는 요청 헤더 필드들을 보낼 수 있을 것이다.
 
-Proactive negotiation has serious disadvantages:
+Proactive negotiation는 심각한 단점들을 가진다:
 
-- It is impossible for the server to accurately determine what might
-  be "best" for any given user, since that would require complete
-  knowledge of both the capabilities of the user agent and the
-  intended use for the response (e.g., does the user want to view it
-  on screen or print it on paper?);
+- 주어진 어떤 유저에게라도 "최선"일 수 있는 것을 정확하게 결정하는 것은 서버에게 있어 불가능한데, 그것이 유저 에이전트의 능력과 응답의 의도된 용도 둘 다에 대한 완전한 이해를 요구하기 때문이다(예를 들어, 유저는 그것을 스크린을 통해 보려는가 혹은 종이에 프린트 하려는가?);
 
-- Having the user agent describe its capabilities in every request
-  can be both very inefficient (given that only a small percentage
-  of responses have multiple representations) and a potential risk
-  to the user's privacy;
+- 유저 에이전트가 모든 요청에서 자신의 능력을 기술하게 하는 것은 아주 비효율적이기도 하고(오직 응답들 중 작은 비율만이 여러 표현들을 가짐을 고려하면) 유저의 프라이버시에 있어 잠재적인 위험이기도 하다;
 
-- It complicates the implementation of an origin server and the
-  algorithms for generating responses to a request; and,
+- 오리진 서버와 요청에 대한 응답들을 생성하기 위한 알고리즘들의 구현을 복잡하게 한다; 그리고,
 
-- It limits the reusability of responses for shared caching.
+- 공유 캐싱을 위한 응답들의 재사용성을 제한한다.
 
-A user agent cannot rely on proactive negotiation preferences being
-consistently honored, since the origin server might not implement
-proactive negotiation for the requested resource or might decide that
-sending a response that doesn't conform to the user agent's
-preferences is better than sending a 406 (Not Acceptable) response.
+유저 에이전트는 지속적으로 존중되는 proactive negotiation 선호들에 의존할 수 없는데, 오리진 서버가 요청된 리소스를 위한 proactive negotiation을 구현하지 않을 수도 있고 혹은 유저 에이전트의 선호들을 따르지 않는 응답을 보내는게 406(Not Acceptable) 응답을 보내는 것보다 낫다고 결정할 수도 있기 때문이다.
 
-A Vary header field (Section 12.5.5) is often sent in a response
-subject to proactive negotiation to indicate what parts of the
-request information were used in the selection algorithm.
+Vary 헤더 필드(12.5.5절)는 종종 proactive negotiation에 따라 요청 정보의 어떤 부분들이 선택 알고리즘에서 사용됐는지를 나타내기 위해 응답에서 보내진다.
 
-The request header fields Accept, Accept-Charset, Accept-Encoding,
-and Accept-Language are defined below for a user agent to engage in
-proactive negotiation of the response content. The preferences sent
-in these fields apply to any content in the response, including
-representations of the target resource, representations of error or
-processing status, and potentially even the miscellaneous text
-strings that might appear within the protocol.
+Accept, Accept-Charset, Accept-Encoding, 그리고 Accept-Language 요청 헤더 필드들은 유저 에이전트가 응답 콘텐츠의 proactive negotiation에 착수할 수 있도록 아래에 정의된다. 이 필드들에 보내진 선호들은, 타겟 리소스의 표현들, 에러나 처리 상태의 표현들, 그리고 심지어 잠재적으로 프로토콜 내에 나타날 수 있는 잡다한 텍스트 문자열들을 포함한, 응답의 어떤 콘텐츠에라도 적용된다.
 
-12.2. Reactive Negotiation
+### 12.2. Reactive Negotiation
 
-With "reactive negotiation" (a.k.a., "agent-driven negotiation"),
-selection of content (regardless of the status code) is performed by
-the user agent after receiving an initial response. The mechanism
-for reactive negotiation might be as simple as a list of references
-to alternative representations.
+"reactive negotiation"(일명, "agent-driven negotiation")에서, 콘텐츠의 선택(상태 코드와 상관없이)은 첫 응답을 수신한 후에 유저 에이전트에 의해 수행된다. reactive negotiation을 위한 메커니즘은 대체 표현들에 대한 참조들의 리스트와 같이 단순할 수 있다.
 
-If the user agent is not satisfied by the initial response content,
-it can perform a GET request on one or more of the alternative
-resources to obtain a different representation. Selection of such
-alternatives might be performed automatically (by the user agent) or
-manually (e.g., by the user selecting from a hypertext menu).
+만약 유저 에이전트가 첫 응답 콘텐츠에 만족하지 않으면, 다른 표현을 얻기 위해 하나 이상의 대체 리소스들에 GET 요청을 수행할 수 있다. 그러한 대안들의 선택은 자동적으로(유저 에이전트에 의해) 혹은 수동으로 수행될 수 있다(예를 들어, 하이퍼텍스트 메뉴로부터 유저가 선택하기).
 
-A server might choose not to send an initial representation, other
-than the list of alternatives, and thereby indicate that reactive
-negotiation by the user agent is preferred. For example, the
-alternatives listed in responses with the 300 (Multiple Choices) and
-406 (Not Acceptable) status codes include information about available
-representations so that the user or user agent can react by making a
-selection.
+서버는, 대안들의 리스트 외에, 첫 표현을 보내지 않기로 선택할 수도 있고, 이로써 유저 에이전트에 의한 reactive negotiation이 선호된다고 나타낼 수도 있다. 예를 들어, 300(Multiple Choices)와 406(Not Acceptable) 상태 코드들과의 응답들에 나열된 대안들은 가용한 표현들에 관한 정보를 포함함으로써 유저나 유저 에이전트가 선택을 하여 반응할 수 있도록 한다.
 
-Reactive negotiation is advantageous when the response would vary
-over commonly used dimensions (such as type, language, or encoding),
-when the origin server is unable to determine a user agent's
-capabilities from examining the request, and generally when public
-caches are used to distribute server load and reduce network usage.
+Reactive negotiation은 응답이 흔히 사용되는 차원들(타입, 언어, 혹은 인코딩 같은)에 따라 다양할 때, 오리진 서버가 요청을 검사하는데서 유저 에이전트의 능력들을 결정할 수 없을 때, 그리고 일반적으로 서버 부하를 분산하고 네트워크 사용을 감소시키기 위해 퍼블릭 캐시들이 사용될 때 유용하다.
 
-Reactive negotiation suffers from the disadvantages of transmitting a
-list of alternatives to the user agent, which degrades user-perceived
-latency if transmitted in the header section, and needing a second
-request to obtain an alternate representation. Furthermore, this
-specification does not define a mechanism for supporting automatic
-selection, though it does not prevent such a mechanism from being
-developed.
+Reactive negotiation은, 유저 에이전트에게 대안들의 리스트를 전송함에 있어, 헤더 섹션에서 전송될 경우에 유저가 인식하는 지연시간을 저하시키는, 그리고 대체 표현을 얻기 위해 두번째 요청이 필요해지는 단점들로부터 고통받는다. 게다가, 이 사양은, 자동 선택을 지원하기 위한 메커니즘이 개발되는 것을 막지는 않지만, 따로 정의하지도 않는다.
 
-12.3. Request Content Negotiation
+### 12.3. Request Content Negotiation
 
-When content negotiation preferences are sent in a server's response,
-the listed preferences are called "request content negotiation"
-because they intend to influence selection of an appropriate content
-for subsequent requests to that resource. For example, the Accept
-(Section 12.5.1) and Accept-Encoding (Section 12.5.3) header fields
-can be sent in a response to indicate preferred media types and
-content codings for subsequent requests to that resource.
+콘텐츠 협상 선호들이 서버의 응답에 보내졌을 때, 나열된 선호들은 그것들이 해당 리소스로의 향후 요청들을 위해 적절한 콘텐츠를 선택하는데 영향을 주도록 의도하기 때문에 "request content negotiation"이라고 불린다. 예를 들어, Accept(12.5.1절)와 Accept-Encoding(12.5.3절) 헤더 필드들은 해당 리소스로의 향후 요청들을 위해 선호되는 미디어 타입들과 콘텐츠 코딩들을 나타내기 위해 응답에 보내질 수 있다.
 
-Similarly, Section 3.1 of [RFC5789] defines the "Accept-Patch"
-response header field, which allows discovery of which content types
-are accepted in PATCH requests.
+비슷하게, [[RFC5789](https://www.rfc-editor.org/info/rfc5789)]의 3.1절은, PATCH 요청들에서 어떤 콘텐츠 타입들이 받아들여지는지 알아낼 수 있도록 하는, "Accept-Patch" 응답 헤더 필드를 정의한다.
 
-12.4. Content Negotiation Field Features
+### 12.4. 콘텐츠 협상 필드 특성들
 
-12.4.1. Absence
+#### 12.4.1. 부재
 
-For each of the content negotiation fields, a request that does not
-contain the field implies that the sender has no preference on that
-dimension of negotiation.
+각 콘텐츠 협상 필드들에 대해, 해당 필드를 포함하지 않는 요청은 발신자가 해당 협상의 차원에서 선호를 가지지 않음을 의미한다.
 
-If a content negotiation header field is present in a request and
-none of the available representations for the response can be
-considered acceptable according to it, the origin server can either
-honor the header field by sending a 406 (Not Acceptable) response or
-disregard the header field by treating the response as if it is not
-subject to content negotiation for that request header field. This
-does not imply, however, that the client will be able to use the
-representation.
+만약 콘텐츠 협상 필드가 요청에 존재하지만 응답을 위한 어떠한 가용한 표현들도 그에 따라 받아들여질 수 있는 것으로 간주되지 않는다면, 오리진 서버는 406(Not Acceptable) 응답을 보냄으로써 그 헤더 필드를 존중해주거나 혹은 응답을 해당 요청 헤더 필드가 콘텐츠 협상의 대상이 아닌 것 처럼 다룸으로써 해당 헤더 필드를 무시할 수 있다. 그러나, 이는 클라이언트가 그 표현을 사용할 수 있을 것이라는 것을 의미하지는 않는다.
 
-      |  *Note:* A user agent sending these header fields makes it
-      |  easier for a server to identify an individual by virtue of the
-      |  user agent's request characteristics (Section 17.13).
+**Note:** 이 헤더 필드들을 보내는 유저 에이전트는 유저 에이전트의 요청 특성들 덕에 서버가 개체를 식별하는 것을 수월하게 한다(17.13절).
 
-12.4.2. Quality Values
+#### 12.4.2. Quality Values
 
-The content negotiation fields defined by this specification use a
-common parameter, named "q" (case-insensitive), to assign a relative
-"weight" to the preference for that associated kind of content. This
-weight is referred to as a "quality value" (or "qvalue") because the
-same parameter name is often used within server configurations to
-assign a weight to the relative quality of the various
-representations that can be selected for a resource.
+이 사양에 의해 정의된 콘텐츠 협상 필드들은 해당하는 관련된 종류의 콘텐츠를 위한 선호에 상대적인 "가중치" 부여하기 위해, "q"(대소문자 상관없이)라는, 공통적인 파라미터를 사용한다. 같은 파라미터 이름이 종종 서버 설정 내에서 리소스를 위해 선택될 수 있는 다양한 표현들의 상대적인 quality에 가중치를 부여하기 위해 사용되기 때문에 이 가중치는 "quality value"(혹은 "qvalue")라고 불린다.
 
-The weight is normalized to a real number in the range 0 through 1,
-where 0.001 is the least preferred and 1 is the most preferred; a
-value of 0 means "not acceptable". If no "q" parameter is present,
-the default weight is 1.
+가중치는 0과 1 사이의 실수로 정규화되며, 0.001은 가장 덜 선호되고 1은 가장 선호된다; 0은 "받아들일 수 없음"을 뜻한다. 만약 "q" 파라미터가 존재하지 않으면, 기본 가중치는 1이다.
 
      weight = OWS ";" OWS "q=" qvalue
      qvalue = ( "0" [ "." 0*3DIGIT ] )
             / ( "1" [ "." 0*3("0") ] )
 
-A sender of qvalue MUST NOT generate more than three digits after the
-decimal point. User configuration of these values ought to be
-limited in the same fashion.
+qvalue의 발신자는 절대(MUST NOT) 소수점 뒤에 세 개를 초과하는 숫자를 생성해서는 안된다. 이 값들의 유저 설정은 같은 방식으로 제한되어야 한다.
 
 12.4.3. Wildcard Values
 
