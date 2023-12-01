@@ -230,11 +230,11 @@ than English.
 
 [12. 콘텐츠 협상](#12-콘텐츠-협상)
 
-    12.1. Proactive Negotiation
-    12.2. Reactive Negotiation
-    12.3. Request Content Negotiation
-    12.4. Content Negotiation Field Features
-    12.4.1. Absence
+- [12.1. Proactive Negotiation](#121-proactive-negotiation)
+- [12.2. Reactive Negotiation](#122-reactive-negotiation)
+- [12.3. Request Content Negotiation](#123-request-content-negotiation)
+- [12.4. 콘텐츠 협상 필드 특성들](#124-콘텐츠-협상-필드-특성들)
+- - [12.4.1. 부재](#1241-부재)
     12.4.2. Quality Values
     12.4.3. Wildcard Values
     12.5. Content Negotiation Fields
