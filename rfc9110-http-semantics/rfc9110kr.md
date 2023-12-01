@@ -2580,28 +2580,17 @@ Reactive negotiation은, 유저 에이전트에게 대안들의 리스트를 전
 
 **Note:** 이 헤더 필드들을 보내는 유저 에이전트는 유저 에이전트의 요청 특성들 덕에 서버가 개체를 식별하는 것을 수월하게 한다(17.13절).
 
-12.4.2. Quality Values
+#### 12.4.2. Quality Values
 
-The content negotiation fields defined by this specification use a
-common parameter, named "q" (case-insensitive), to assign a relative
-"weight" to the preference for that associated kind of content. This
-weight is referred to as a "quality value" (or "qvalue") because the
-same parameter name is often used within server configurations to
-assign a weight to the relative quality of the various
-representations that can be selected for a resource.
+이 사양에 의해 정의된 콘텐츠 협상 필드들은 해당하는 관련된 종류의 콘텐츠를 위한 선호에 상대적인 "가중치" 부여하기 위해, "q"(대소문자 상관없이)라는, 공통적인 파라미터를 사용한다. 같은 파라미터 이름이 종종 서버 설정 내에서 리소스를 위해 선택될 수 있는 다양한 표현들의 상대적인 quality에 가중치를 부여하기 위해 사용되기 때문에 이 가중치는 "quality value"(혹은 "qvalue")라고 불린다.
 
-The weight is normalized to a real number in the range 0 through 1,
-where 0.001 is the least preferred and 1 is the most preferred; a
-value of 0 means "not acceptable". If no "q" parameter is present,
-the default weight is 1.
+가중치는 0과 1 사이의 실수로 정규화되며, 0.001은 가장 덜 선호되고 1은 가장 선호된다; 0은 "받아들일 수 없음"을 뜻한다. 만약 "q" 파라미터가 존재하지 않으면, 기본 가중치는 1이다.
 
      weight = OWS ";" OWS "q=" qvalue
      qvalue = ( "0" [ "." 0*3DIGIT ] )
             / ( "1" [ "." 0*3("0") ] )
 
-A sender of qvalue MUST NOT generate more than three digits after the
-decimal point. User configuration of these values ought to be
-limited in the same fashion.
+qvalue의 발신자는 절대(MUST NOT) 소수점 뒤에 세 개를 초과하는 숫자를 생성해서는 안된다. 이 값들의 유저 설정은 같은 방식으로 제한되어야 한다.
 
 12.4.3. Wildcard Values
 
