@@ -2570,26 +2570,15 @@ Reactive negotiation은, 유저 에이전트에게 대안들의 리스트를 전
 
 비슷하게, [[RFC5789](https://www.rfc-editor.org/info/rfc5789)]의 3.1절은, PATCH 요청들에서 어떤 콘텐츠 타입들이 받아들여지는지 알아낼 수 있도록 하는, "Accept-Patch" 응답 헤더 필드를 정의한다.
 
-12.4. Content Negotiation Field Features
+### 12.4. 콘텐츠 협상 필드 특성들
 
-12.4.1. Absence
+#### 12.4.1. 부재
 
-For each of the content negotiation fields, a request that does not
-contain the field implies that the sender has no preference on that
-dimension of negotiation.
+각 콘텐츠 협상 필드들에 대해, 해당 필드를 포함하지 않는 요청은 발신자가 해당 협상의 차원에서 선호를 가지지 않음을 의미한다.
 
-If a content negotiation header field is present in a request and
-none of the available representations for the response can be
-considered acceptable according to it, the origin server can either
-honor the header field by sending a 406 (Not Acceptable) response or
-disregard the header field by treating the response as if it is not
-subject to content negotiation for that request header field. This
-does not imply, however, that the client will be able to use the
-representation.
+만약 콘텐츠 협상 필드가 요청에 존재하지만 응답을 위한 어떠한 가용한 표현들도 그에 따라 받아들여질 수 있는 것으로 간주되지 않는다면, 오리진 서버는 406(Not Acceptable) 응답을 보냄으로써 그 헤더 필드를 존중해주거나 혹은 응답을 해당 요청 헤더 필드가 콘텐츠 협상의 대상이 아닌 것 처럼 다룸으로써 해당 헤더 필드를 무시할 수 있다. 그러나, 이는 클라이언트가 그 표현을 사용할 수 있을 것이라는 것을 의미하지는 않는다.
 
-      |  *Note:* A user agent sending these header fields makes it
-      |  easier for a server to identify an individual by virtue of the
-      |  user agent's request characteristics (Section 17.13).
+**Note:** 이 헤더 필드들을 보내는 유저 에이전트는 유저 에이전트의 요청 특성들 덕에 서버가 개체를 식별하는 것을 수월하게 한다(17.13절).
 
 12.4.2. Quality Values
 
