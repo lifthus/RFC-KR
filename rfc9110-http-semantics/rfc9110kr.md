@@ -234,32 +234,32 @@ than English.
 - [12.2. Reactive Negotiation](#122-reactive-negotiation)
 - [12.3. Request Content Negotiation](#123-request-content-negotiation)
 - [12.4. 콘텐츠 협상 필드 특성들](#124-콘텐츠-협상-필드-특성들)
-- - [12.4.1. 부재](#1241-부재)
-    12.4.2. Quality Values
-    12.4.3. Wildcard Values
-    12.5. Content Negotiation Fields
-    12.5.1. Accept
-    12.5.2. Accept-Charset
-    12.5.3. Accept-Encoding
-    12.5.4. Accept-Language
-    12.5.5. Vary 13. Conditional Requests
-    13.1. Preconditions
-    13.1.1. If-Match
-    13.1.2. If-None-Match
-    13.1.3. If-Modified-Since
-    13.1.4. If-Unmodified-Since
-    13.1.5. If-Range
-    13.2. Evaluation of Preconditions
-    13.2.1. When to Evaluate
-    13.2.2. Precedence of Preconditions 14. Range Requests
-    14.1. Range Units
-    14.1.1. Range Specifiers
-    14.1.2. Byte Ranges
-    14.2. Range
-    14.3. Accept-Ranges
-    14.4. Content-Range
-    14.5. Partial PUT
-    14.6. Media Type multipart/byteranges
+- [12.4.1. 부재](#1241-부재)
+- - [12.4.2. Quality Values](#1242-quality-values)
+- - [12.4.3. Wildcard Values](#1243-wildcard-values)
+- [12.5. 콘텐츠 협상 필드들](#125-콘텐츠-협상-필드들)
+  12.5.1. Accept
+  12.5.2. Accept-Charset
+  12.5.3. Accept-Encoding
+  12.5.4. Accept-Language
+  12.5.5. Vary 13. Conditional Requests
+  13.1. Preconditions
+  13.1.1. If-Match
+  13.1.2. If-None-Match
+  13.1.3. If-Modified-Since
+  13.1.4. If-Unmodified-Since
+  13.1.5. If-Range
+  13.2. Evaluation of Preconditions
+  13.2.1. When to Evaluate
+  13.2.2. Precedence of Preconditions 14. Range Requests
+  14.1. Range Units
+  14.1.1. Range Specifiers
+  14.1.2. Byte Ranges
+  14.2. Range
+  14.3. Accept-Ranges
+  14.4. Content-Range
+  14.5. Partial PUT
+  14.6. Media Type multipart/byteranges
 
 [15. 상태 코드](#15-상태-코드)
 
@@ -2598,7 +2598,7 @@ qvalue의 발신자는 절대(MUST NOT) 소수점 뒤에 세 개를 초과하는
 
 **Note:** 실무적으로, 콘텐츠 협상에서 와일드카드들을 사용하는 것은, 예를 들어, "나는 image/\*를 (다른 특정한 값 보다) 더 혹은 덜 선호한다"고 말하는 것이 거의 유용하지 않기 때문에 제한적인 실용성만을 가진다. Accept: \*/\*;q=0를 보냄으로써, 클라이언트들은 명시적으로 더 선호되는 포맷이 가용하지 않을 경우 406(Not Acceptable) 응답을 달라고 요구할 수 있지만, 서버가 선호를 무시하는 것이 허용되기 때문에 여전히 다른 응답을 처리할 수 있어야 한다.
 
-12.5. Content Negotiation Fields
+### 12.5. 콘텐츠 협상 필드들
 
 12.5.1. Accept
 
