@@ -2601,17 +2601,11 @@ qvalue의 발신자는 절대(MUST NOT) 소수점 뒤에 세 개를 초과하는
 
 ### 12.5. 콘텐츠 협상 필드들
 
-12.5.1. Accept
+#### 12.5.1. Accept
 
-The "Accept" header field can be used by user agents to specify their
-preferences regarding response media types. For example, Accept
-header fields can be used to indicate that the request is
-specifically limited to a small set of desired types, as in the case
-of a request for an in-line image.
+"Accept" 헤더 필드는 응답 미디어 타입들과 관련한 선호들을 지정하기 위해 유저 에이전트들에 의해 사용될 수 있다. 예를 들어, Accept 헤더 필드들은, 인-라인 이미지를 위한 요청의 경우와 같이, 요청이 원하는 타입들의 작은 집합으로 구체적으로 제한되어 있음을 나타내기 위해 사용될 수 있다.
 
-When sent by a server in a response, Accept provides information
-about which content types are preferred in the content of a
-subsequent request to the same resource.
+응답에서 서버에 의해 보내졌을 때, Accept는 같은 리소스로의 이후 요청의 콘텐츠에서 어떤 콘텐츠 타입들이 선호되는지에 관한 정보를 제공한다.
 
      Accept = #( media-range [ weight ] )
 
@@ -2620,53 +2614,32 @@ subsequent request to the same resource.
                         / ( type "/" subtype )
                       ) parameters
 
-The asterisk "_" character is used to group media types into ranges,
-with "_/_" indicating all media types and "type/_" indicating all
-subtypes of that type. The media-range can include media type
-parameters that are applicable to that range.
+Asterisk "\*" 문자는, "\*/\*"는 모든 미디어 타입들을 나타내고 "type/\*"는 그 타입의 모든 서브타입들을 나타내면서, 미디어 타입들을 범위들로 그룹화하기 위해 사용된다. media-range는 해당 범위에 적용되는 media type 파라미터들을 포함할 수 있다.
 
-Each media-range might be followed by optional applicable media type
-parameters (e.g., charset), followed by an optional "q" parameter for
-indicating a relative weight (Section 12.4.2).
+각 media-range에는 선택적인 적용 가능한 media type 파라미터들(예를 들어, charset)이 따를 수도 있는데, 상대적인 가중치를 나타내기 위해 선택적인 "q" 파라미터가 따른다(12.4.2절).
 
-Previous specifications allowed additional extension parameters to
-appear after the weight parameter. The accept extension grammar
-(accept-params, accept-ext) has been removed because it had a
-complicated definition, was not being used in practice, and is more
-easily deployed through new header fields. Senders using weights
-SHOULD send "q" last (after all media-range parameters). Recipients
-SHOULD process any parameter named "q" as weight, regardless of
-parameter ordering.
+이전의 사양들은 가중치 파라미터 뒤에 추가적인 확장 파라미터들이 나타날 수 있도록 허용했다. accept 확장 문법(accept-params, accept-ext)은 그것이 복잡한 정의를 가졌었고, 실무에서 사용되지 않았으며, 새로운 헤더필드들을 통해 더 쉽게 배포될 수 있었기 때문에 삭제됐다. 가중치들을 사용하는 발신자들은 웬만하면(SHOULD) "q"를 마지막에 보내야 한다(모든 media-range 파라미터들 뒤에). 수신자들은 웬만하면(SHOULD), 파라미터 순서에 관계없이, "q"라는 이름의 어떠한 파라미터든 가중치로 처리해야 한다.
 
-      |  *Note:* Use of the "q" parameter name to control content
-      |  negotiation would interfere with any media type parameter
-      |  having the same name.  Hence, the media type registry disallows
-      |  parameters named "q".
+**Note:** "q" 파라미터 이름을 콘텐츠 협상을 제어하기 위해 사용하는 것은 같은 이름을 가지는 어떤 미디어 타입 파라미터와도 충돌할 것이다. 그러므로, 미디어 타입 레지스트리는 "q"라는 이름의 파라미터들을 허용하지 않는다.
 
-The example
+다음 예시는
 
-Accept: audio/\*; q=0.2, audio/basic
+     Accept: audio/\*; q=0.2, audio/basic
 
-is interpreted as "I prefer audio/basic, but send me any audio type
-if it is the best available after an 80% markdown in quality".
+"나는 audio/basic을 선호하지만, quality에서 80% 마크다운 후에 가용한 최선이라면 어떤 audio 타입이든 보내라."라고 해석된다.
 
-A more elaborate example is
+더 정교한 예시는
 
-Accept: text/plain; q=0.5, text/html,
-text/x-dvi; q=0.8, text/x-c
+     Accept: text/plain; q=0.5, text/html,
+     text/x-dvi; q=0.8, text/x-c
 
-Verbally, this would be interpreted as "text/html and text/x-c are
-the equally preferred media types, but if they do not exist, then
-send the text/x-dvi representation, and if that does not exist, send
-the text/plain representation".
+말로 하자면, 이는 "text/html과 text/x-c는 동등하게 선호되는 미디어 타입들이지만, 만약 그것들이 존재하지 않으면, text/x-dvi 표현을 보내고, 만약 그것도 없으면, text/plain 표현을 보내라"라고 해석될 것이다.
 
-Media ranges can be overridden by more specific media ranges or
-specific media types. If more than one media range applies to a
-given type, the most specific reference has precedence. For example,
+Media range들은 더 구체적인 media range들이나 특정한 미디어 타입들에 의해 오버라이드될 수 있다. 만약 둘 이상의 media range가 주어진 타입에 적용된다면, 가장 구체적인 참조가 우선한다. 예를 들어,
 
-Accept: text/_, text/plain, text/plain;format=flowed, _/\*
+     Accept: text/*, text/plain, text/plain;format=flowed, */*
 
-have the following precedence:
+는 다음 우선순위를 가진다:
 
 1.  text/plain;format=flowed
 
@@ -2674,40 +2647,31 @@ have the following precedence:
 
 3.  text/\*
 
-4.  _/_
+4.  \*/\*
 
-The media type quality factor associated with a given type is
-determined by finding the media range with the highest precedence
-that matches the type. For example,
+주어진 타입과 연관된 미디어 타입 quality factor는 해당 타입과 일치하는 가장 높은 우선순위의 media range를 찾는 것으로 결정된다. 예를 들어,
 
-Accept: text/_;q=0.3, text/plain;q=0.7, text/plain;format=flowed,
-text/plain;format=fixed;q=0.4, _/\*;q=0.5
+     Accept: text/*;q=0.3, text/plain;q=0.7, text/plain;format=flowed,
+     text/plain;format=fixed;q=0.4, */*;q=0.5
 
-would cause the following values to be associated:
+는 다음 값들이 연관되도록 한다:
 
-+==========================+===============+
-| Media Type | Quality Value |
-+==========================+===============+
-| text/plain;format=flowed | 1 |
-+--------------------------+---------------+
-| text/plain | 0.7 |
-+--------------------------+---------------+
-| text/html | 0.3 |
-+--------------------------+---------------+
-| image/jpeg | 0.5 |
-+--------------------------+---------------+
-| text/plain;format=fixed | 0.4 |
-+--------------------------+---------------+
-| text/html;level=3 | 0.7 |
-+--------------------------+---------------+
+<center>
 
-                     Table 5
+| Media Type               | Quality Value |
+| ------------------------ | ------------- |
+| text/plain;format=flowed | 1             |
+| text/plain               | 0.7           |
+| text/html                | 0.3           |
+| image/jpeg               | 0.5           |
+| text/plain;format=fixed  | 0.4           |
+| text/html;level=3        | 0.7           |
 
-      |  *Note:* A user agent might be provided with a default set of
-      |  quality values for certain media ranges.  However, unless the
-      |  user agent is a closed system that cannot interact with other
-      |  rendering agents, this default set ought to be configurable by
-      |  the user.
+Table 5
+
+</center>
+
+**Note:** 유저 에이전트는 특정 media range들을 위한 quality value들의 기본 집합을 제공받을 수 있다. 그러나, 유저 에이전트가 다른 렌더링 에이전트들과 상호작용할 수 없는 닫힌 시스템이 아니라면, 이 기본 집합은 유저에 의해 설정될 수 있어야 한다.
 
 12.5.2. Accept-Charset
 
