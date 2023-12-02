@@ -92,17 +92,17 @@ than English.
 
 - [4.1. URI 레퍼런스](#41-uri-레퍼런스)
 - [4.2. HTTP와 연관된 URI 체계들](#42-http와-연관된-uri-체계들)
-- - [4.2.1. http URI 체계](#421-http-uri-체계)
-- - [4.2.2. https URI 체계](#422-https-uri-체계)
-- - [4.2.3. http(s) 정규화와 비교](#423-https-정규화와-비교)
-- - [4.2.4. http(s) URI에서의 userinfo 지원 중단](#424-https-uri에서의-userinfo-지원-중단)
-- - [4.2.5. 프래그먼트 식별자들과 http(s) 레퍼런스들](#425-프래그먼트-식별자들과-https-레퍼런스들)
+  - [4.2.1. http URI 체계](#421-http-uri-체계)
+  - [4.2.2. https URI 체계](#422-https-uri-체계)
+  - [4.2.3. http(s) 정규화와 비교](#423-https-정규화와-비교)
+  - [4.2.4. http(s) URI에서의 userinfo 지원 중단](#424-https-uri에서의-userinfo-지원-중단)
+  - [4.2.5. 프래그먼트 식별자들과 http(s) 레퍼런스들](#425-프래그먼트-식별자들과-https-레퍼런스들)
 - [4.3. 권한 있는 접근](#43-권한-있는-접근)
-- - [4.3.1. URI 오리진](#431-uri-오리진)
-- - [4.3.2. http 오리진들](#432-http-오리진들)
-- - [4.3.3. https 오리진들](#433-https-오리진들)
-- - [4.3.4. https 인증서 검증](#434-https-인증서-검증)
-- - [4.3.5. IP-ID 참조 신원](#435-ip-id-참조-신원)
+  - [4.3.1. URI 오리진](#431-uri-오리진)
+  - [4.3.2. http 오리진들](#432-http-오리진들)
+  - [4.3.3. https 오리진들](#433-https-오리진들)
+  - [4.3.4. https 인증서 검증](#434-https-인증서-검증)
+  - [4.3.5. IP-ID 참조 신원](#435-ip-id-참조-신원)
 
 [5. 필드](#5-필드)
 
@@ -112,15 +112,15 @@ than English.
 - [5.4. 필드 제한](#54-필드-제한)
 - [5.5. 필드 값들](#55-필드-값들)
 - [5.6. 필드 값들을 정의하기 위한 공통 규칙들](#56-필드-값들을-정의하기-위한-공통-규칙들)
-- - [5.6.1. Lists (#rule ABNF Extension)](#561-lists-rule-abnf-extension)
-- - - [5.6.1.1. 발신자 요구사항들](#5611-발신자-요구사항들)
-- - - [5.6.1.2. 수신자 요구사항들](#5612-수신자-요구사항들)
-- - [5.6.2. 토큰](#562-토큰)
-- - [5.6.3. 공백](#563-공백)
-- - [5.6.4. 인용된 문자열](#564-인용된-문자열)
-- - [5.6.5. 코멘트](#565-코멘트)
-- - [5.6.6. 파라미터](#566-파라미터)
-- - [5.6.7. Date/Time 포맷](#567-datetime-포맷)
+  - [5.6.1. Lists (#rule ABNF Extension)](#561-lists-rule-abnf-extension)
+    - [5.6.1.1. 발신자 요구사항들](#5611-발신자-요구사항들)
+    - [5.6.1.2. 수신자 요구사항들](#5612-수신자-요구사항들)
+  - [5.6.2. 토큰](#562-토큰)
+  - [5.6.3. 공백](#563-공백)
+  - [5.6.4. 인용된 문자열](#564-인용된-문자열)
+  - [5.6.5. 코멘트](#565-코멘트)
+  - [5.6.6. 파라미터](#566-파라미터)
+  - [5.6.7. Date/Time 포맷](#567-datetime-포맷)
 
 [6. 메시지 추상화](#6-메시지-추상화)
 
@@ -128,29 +128,29 @@ than English.
 - [6.2 제어 데이터](#62-제어-데이터)
 - [6.3 헤더 필드](#63-헤더-필드)
 - [6.4 콘텐츠](#64-콘텐츠)
-- - [6.4.1 콘텐츠 의미체계](#641-콘텐츠-의미체계)
-- - [6.4.2 콘텐츠 식별](#642-콘텐츠-식별)
+  - [6.4.1 콘텐츠 의미체계](#641-콘텐츠-의미체계)
+  - [6.4.2 콘텐츠 식별](#642-콘텐츠-식별)
 - [6.5 트레일러 필드](#65-트레일러-필드)
-- - [6.5.1 트레일러 사용에 대한 제한](#651-트레일러-사용에-대한-제한)
-- - [6.5.2 트레일러 필드 처리](#652-트레일러-필드-처리)
+  - [6.5.1 트레일러 사용에 대한 제한](#651-트레일러-사용에-대한-제한)
+  - [6.5.2 트레일러 필드 처리](#652-트레일러-필드-처리)
 - [6.6 메시지 메타데이터](#66-메시지-메타데이터)
-- - [6.6.1 Date](#661-date)
-- - [6.6.2 Trailer](#662-trailer)
+  - [6.6.1 Date](#661-date)
+  - [6.6.2 Trailer](#662-trailer)
 
 [7. HTTP 메시지 라우팅](#7-http-메시지-라우팅)
 
 - [7.1 타겟 리소스 결정](#71-타겟-리소스-결정)
 - [7.2 Host와 :authority](#72-host와-authority)
 - [7.3 인바운드 요청 라우팅](#73-인바운드-요청-라우팅)
-- - [7.3.1 캐시로](#731-캐시로)
-- - [7.3.2 프록시로](#732-프록시로)
-- - [7.3.3 오리진으로](#733-오리진으로)
+  - [7.3.1 캐시로](#731-캐시로)
+  - [7.3.2 프록시로](#732-프록시로)
+  - [7.3.3 오리진으로](#733-오리진으로)
 - [7.4 잘못 도달한 요청 거부](#74-잘못-도달한-요청-거부)
 - [7.5 응답 연관짓기](#75-응답-연관짓기)
 - [7.6 메시지 포워딩](#76-메시지-포워딩)
-- - [7.6.1 Connection](#761-connection)
-- - [7.6.2 Max-Forwards](#762-max-forwards)
-- - [7.6.3 Via](#763-via)
+  - [7.6.1 Connection](#761-connection)
+  - [7.6.2 Max-Forwards](#762-max-forwards)
+  - [7.6.3 Via](#763-via)
 - [7.7 메시지 변환](#77-메시지-변환)
 - [7.8 Upgrade](#78-upgrade)
 
@@ -159,58 +159,57 @@ than English.
 - [8.1. 표현 데이터](#81-표현-데이터)
 - [8.2. 표현 메타데이터](#82-표현-메타데이터)
 - [8.3. Content-Type](#83-content-type)
-- - [8.3.1. Media Type](#831-media-type)
-- - [8.3.2. Charset](#832-charset)
-- - [8.3.3. Multipart Types](#833-multipart-types)
+  - [8.3.1. Media Type](#831-media-type)
+  - [8.3.2. Charset](#832-charset)
+  - [8.3.3. Multipart Types](#833-multipart-types)
 - [8.4. Content-Encoding](#84-content-encoding)
-- - [8.4.1. Content Codings](#841-content-codings)
-- - - [8.4.1.1. Compress Coding](#8411-compress-coding)
-- - - [8.4.1.2. Deflate Coding](#8412-deflate-coding)
-- - - [8.4.1.3. Gzip Coding](#8413-gzip-coding)
+  - [8.4.1. Content Codings](#841-content-codings)
+    - [8.4.1.1. Compress Coding](#8411-compress-coding)
+    - [8.4.1.2. Deflate Coding](#8412-deflate-coding)
+    - [8.4.1.3. Gzip Coding](#8413-gzip-coding)
 - [8.5. Content-Language](#85-content-language)
-- - [8.5.1. 언어 태그들](#851-언어-태그들)
+  - [8.5.1. 언어 태그들](#851-언어-태그들)
 - [8.6. Content-Length](#86-content-length)
 - [8.7. Content-Location](#87-content-location)
 - [8.8. 검증자 필드들](#88-검증자-필드들)
-- - [8.8.1. 약한 것 대 강한 것](#881-약한-것-대-강한-것)
-- - [8.8.2. Last-Modified](#882-last-modified)
-- - - [8.8.2.1. 생성](#8821-생성)
-- - -[ 8.8.2.2. 비교](#8822-비교)
-- - [8.8.3. ETag](#883-etag)
-- - - [8.8.3.1. 생성](#8831-생성)
-- - - [8.8.3.2. 비교](#8832-비교)
-- - - [8.8.3.3. 예시: 콘텐츠-협상된 리소스들에서의 다양한 엔티티 태그들](#8833-예시-콘텐츠-협상된-리소스들에서의-다양한-엔티티-태그들)
+  - [8.8.1. 약한 것 대 강한 것](#881-약한-것-대-강한-것)
+  - [8.8.2. Last-Modified](#882-last-modified)
+    - [8.8.2.1. 생성](#8821-생성) -[ 8.8.2.2. 비교](#8822-비교)
+  - [8.8.3. ETag](#883-etag)
+    - [8.8.3.1. 생성](#8831-생성)
+    - [8.8.3.2. 비교](#8832-비교)
+    - [8.8.3.3. 예시: 콘텐츠-협상된 리소스들에서의 다양한 엔티티 태그들](#8833-예시-콘텐츠-협상된-리소스들에서의-다양한-엔티티-태그들)
 
 [9. 메소드들](#9-메소드들)
 
 - [9.1. 개요](#91-개요)
 - [9.2. 공통 메소드 속성들](#92-공통-메소드-속성들)
-- - [9.2.1. 안전한 메소드들](#921-안전한-메소드들)
-- - [9.2.2. 멱등성 메소드들](#922-멱등성-메소드들)
-- - [9.2.3. 메소드들과 캐싱](#923-메소드들과-캐싱)
+  - [9.2.1. 안전한 메소드들](#921-안전한-메소드들)
+  - [9.2.2. 멱등성 메소드들](#922-멱등성-메소드들)
+  - [9.2.3. 메소드들과 캐싱](#923-메소드들과-캐싱)
 - [9.3 메소드 정의들](#93-메소드-정의들)
-- - [9.3.1. GET](#931-get)
-- - [9.3.2. HEAD](#932-head)
-- - [9.3.3. POST](#933-post)
-- - [9.3.4. PUT](#934-put)
-- - [9.3.5. DELETE](#935-delete)
-- - [9.3.6. CONNECT](#936-connect)
-- - [9.3.7. OPTIONS](#937-options)
-- - [9.3.8. TRACE](#938-trace)
+  - [9.3.1. GET](#931-get)
+  - [9.3.2. HEAD](#932-head)
+  - [9.3.3. POST](#933-post)
+  - [9.3.4. PUT](#934-put)
+  - [9.3.5. DELETE](#935-delete)
+  - [9.3.6. CONNECT](#936-connect)
+  - [9.3.7. OPTIONS](#937-options)
+  - [9.3.8. TRACE](#938-trace)
 
 [10. 메시지 콘텍스트](#10-메시지-콘텍스트)
 
 - [10.1. 요청 콘텍스트 필드들](#101-요청-콘텍스트-필드들)
-- - [10.1.1. Expect](#1011-expect)
-- - [10.1.2. From](#1012-from)
-- - [10.1.3. Referer](#1013-referer)
-- - [10.1.4. TE](#1014-te)
-- - [10.1.5. User-Agent](#1015-user-agent)
+  - [10.1.1. Expect](#1011-expect)
+  - [10.1.2. From](#1012-from)
+  - [10.1.3. Referer](#1013-referer)
+  - [10.1.4. TE](#1014-te)
+  - [10.1.5. User-Agent](#1015-user-agent)
 - [10.2. 응답 콘텍스트 필드들](#102-응답-콘텍스트-필드들)
-- - [10.2.1. Allow](#1021-allow)
-- - [10.2.2. Location](#1022-location)
-- - [10.2.3. Retry-After](#1023-retry-after)
-- - [10.2.4. Server](#1024-server)
+  - [10.2.1. Allow](#1021-allow)
+  - [10.2.2. Location](#1022-location)
+  - [10.2.3. Retry-After](#1023-retry-after)
+  - [10.2.4. Server](#1024-server)
 
 [11. HTTP 인증](#11-http-authentication)
 
@@ -220,13 +219,13 @@ than English.
 - [11.4. Credentials](#114-credentials)
 - [11.5. 보호 공간 수립 (Realm)](#115-보호-공간-수립-realm)
 - [11.6. 오리진 서버들에 대해 유저들 인증하기](#116-오리진-서버들에-대해-유저들-인증하기)
-- - [11.6.1. WWW-Authenticate](#1161-www-authenticate)
-- - [11.6.2. Authorization](#1162-authorization)
-- - [11.6.3. Authentication-Info](#1163-authentication-info)
+  - [11.6.1. WWW-Authenticate](#1161-www-authenticate)
+  - [11.6.2. Authorization](#1162-authorization)
+  - [11.6.3. Authentication-Info](#1163-authentication-info)
 - [11.7. 프록시들에 대해 클라이언트들 인증하기](#117-프록시들에-대해-클라이언트들-인증하기)
-- - [11.7.1. Proxy-Authenticate](#1171-proxy-authenticate)
-- - [11.7.2. Proxy-Authorization](#1172-proxy-authorization)
-- - [11.7.3. Proxy-Authentication-Info](#1173-proxy-authentication-info)
+  - [11.7.1. Proxy-Authenticate](#1171-proxy-authenticate)
+  - [11.7.2. Proxy-Authorization](#1172-proxy-authorization)
+  - [11.7.3. Proxy-Authentication-Info](#1173-proxy-authentication-info)
 
 [12. 콘텐츠 협상](#12-콘텐츠-협상)
 
@@ -234,90 +233,92 @@ than English.
 - [12.2. Reactive Negotiation](#122-reactive-negotiation)
 - [12.3. Request Content Negotiation](#123-request-content-negotiation)
 - [12.4. 콘텐츠 협상 필드 특성들](#124-콘텐츠-협상-필드-특성들)
-- - [12.4.1. 부재](#1241-부재)
-    12.4.2. Quality Values
-    12.4.3. Wildcard Values
-    12.5. Content Negotiation Fields
-    12.5.1. Accept
-    12.5.2. Accept-Charset
-    12.5.3. Accept-Encoding
-    12.5.4. Accept-Language
-    12.5.5. Vary 13. Conditional Requests
-    13.1. Preconditions
-    13.1.1. If-Match
-    13.1.2. If-None-Match
-    13.1.3. If-Modified-Since
-    13.1.4. If-Unmodified-Since
-    13.1.5. If-Range
-    13.2. Evaluation of Preconditions
-    13.2.1. When to Evaluate
-    13.2.2. Precedence of Preconditions 14. Range Requests
-    14.1. Range Units
-    14.1.1. Range Specifiers
-    14.1.2. Byte Ranges
-    14.2. Range
-    14.3. Accept-Ranges
-    14.4. Content-Range
-    14.5. Partial PUT
-    14.6. Media Type multipart/byteranges
+  - [12.4.1. 부재](#1241-부재)
+  - [12.4.2. Quality Values](#1242-quality-values)
+  - [12.4.3. Wildcard Values](#1243-wildcard-values)
+- [12.5. 콘텐츠 협상 필드들](#125-콘텐츠-협상-필드들)
+  - [12.5.1. Accept](#1251-accept)
+  - [12.5.2. Accept-Charset](#1252-accept-charset)
+  - [12.5.3. Accept-Encoding](#1253-accept-encoding)
+  - [12.5.4. Accept-Language](#1254-accept-language)
+  - [12.5.5. Vary](#1255-vary)
+
+[13. 조건부 요청들](#13-조건부-요청들)
+13.1. Preconditions
+13.1.1. If-Match
+13.1.2. If-None-Match
+13.1.3. If-Modified-Since
+13.1.4. If-Unmodified-Since
+13.1.5. If-Range
+13.2. Evaluation of Preconditions
+13.2.1. When to Evaluate
+13.2.2. Precedence of Preconditions 14. Range Requests
+14.1. Range Units
+14.1.1. Range Specifiers
+14.1.2. Byte Ranges
+14.2. Range
+14.3. Accept-Ranges
+14.4. Content-Range
+14.5. Partial PUT
+14.6. Media Type multipart/byteranges
 
 [15. 상태 코드](#15-상태-코드)
 
 - [15.1. 상태 코드의 개요](#151-상태-코드의-개요)
 - [15.2. Informational 1xx](#152-Informational-1xx)
-- - [15.2.1. 100 Continue](#1521-100-Continue)
-- - [15.2.2. 101 Switching Protocols](#1522-101-Switching-Protocols)
+  - [15.2.1. 100 Continue](#1521-100-Continue)
+  - [15.2.2. 101 Switching Protocols](#1522-101-Switching-Protocols)
 - [15.3. Successful 2xx](#153-Successful-2xx)
-- - [15.3.1. 200 OK](#1531-200-OK)
-- - [15.3.2. 201 Created](#1532-201-Created)
-- - [15.3.3. 202 Accepted](#1533-202-Accepted)
-- - [15.3.4. 203 Non-Authoritative Information](#1534-203-Non-Authoritative-Information)
-- - [15.3.5. 204 No Content ](#1535-204-No-Content)
-- - [15.3.6. 205 Reset Content](#1536-205-Reset-Content)
-- - [15.3.7. 206 Partial Content](#1537-206-Partial-Content)
-- - - [15.3.7.1. Single Part](#15371-Single-Part)
-- - - [15.3.7.2. Multiple Parts](#15372-Multiple-Parts)
-- - - [15.3.7.3. Combining Parts](#15373-Combining-Parts)
+  - [15.3.1. 200 OK](#1531-200-OK)
+  - [15.3.2. 201 Created](#1532-201-Created)
+  - [15.3.3. 202 Accepted](#1533-202-Accepted)
+  - [15.3.4. 203 Non-Authoritative Information](#1534-203-Non-Authoritative-Information)
+  - [15.3.5. 204 No Content ](#1535-204-No-Content)
+  - [15.3.6. 205 Reset Content](#1536-205-Reset-Content)
+  - [15.3.7. 206 Partial Content](#1537-206-Partial-Content)
+    - [15.3.7.1. Single Part](#15371-Single-Part)
+    - [15.3.7.2. Multiple Parts](#15372-Multiple-Parts)
+    - [15.3.7.3. Combining Parts](#15373-Combining-Parts)
 - [15.4. Redirection 3xx](#154-Redirection-3xx)
-- - [15.4.1. 300 Multiple Choices](#1541-300-Multiple-Choices)
-- - [15.4.2. 301 Moved Permanently](#1542-301-Moved-Permanently)
-- - [15.4.3. 302 Found](#1543-Found)
-- - [15.4.4. 303 See Other](#1544-303-See-Other)
-- - [15.4.5. 304 Not Modified](#1545-304-Not-Modified)
-- - [15.4.6. 305 Use Proxy](#1546-305-Use-Proxy)
-- - [15.4.7. 306 (Unused)](<#1547-306-(Unused)>)
-- - [15.4.8. 307 Temporary Redirect](#1548-307-Temporary-Redirect)
-- - [15.4.9. 308 Permanent Redirect](#1549-308-Permanent-Redirect)
+  - [15.4.1. 300 Multiple Choices](#1541-300-Multiple-Choices)
+  - [15.4.2. 301 Moved Permanently](#1542-301-Moved-Permanently)
+  - [15.4.3. 302 Found](#1543-Found)
+  - [15.4.4. 303 See Other](#1544-303-See-Other)
+  - [15.4.5. 304 Not Modified](#1545-304-Not-Modified)
+  - [15.4.6. 305 Use Proxy](#1546-305-Use-Proxy)
+  - [15.4.7. 306 (Unused)](<#1547-306-(Unused)>)
+  - [15.4.8. 307 Temporary Redirect](#1548-307-Temporary-Redirect)
+  - [15.4.9. 308 Permanent Redirect](#1549-308-Permanent-Redirect)
 - [15.5. Client Error 4xx](#155-Client-Error-4xx)
-- - [15.5.1. 400 Bad Request](#1551-400-Bad-Request)
-- - [15.5.2. 401 Unauthorized](#1552-401-Unauthorized)
-- - [15.5.3. 402 Payment Required](#1553-402-Payment-Required)
-- - [15.5.4. 403 Forbidden](#1554-403-Forbidden)
-- - [15.5.5. 404 Not Found](#1555-404-Not-Found)
-- - [15.5.6. 405 Method Not Allowed](#1556-405-Method-Not-Allowed)
-- - [15.5.7. 406 Not Acceptable](#1557-406-Not-Acceptable)
-- - [15.5.8. 407 Proxy Authentication Required](#1558-407-Proxy-Authentication-Required)
-- - [15.5.9. 408 Request Timeout](#1559-408-Request-Timeout)
-- - [15.5.10. 409 Conflict](#15510-409-Conflict)
-- - [15.5.11. 410 Gone](#15511-410-Gone)
-- - [15.5.12. 411 Length Required](#15512-411-Length-Required)
-- - [15.5.13. 412 Precondition Failed](#15513-412-Precondition-Failed)
-- - [15.5.14. 413 Content Too Large](#15514-413-Content-Too-Large)
-- - [15.5.15. 414 URI Too Long](#15515-414-URI-Too-Long)
-- - [15.5.16. 415 Unsupported Media Type](#15516-415-Unsupported-Media-Type)
-- - [15.5.17. 416 Range Not Satisfiable](#15517-416-Range-Not-Satisfiable)
-- - [15.5.18. 417 Expectation Failed](#15518-417-Expectation-Failed)
-- - [15.5.19. 418 (Unused)](<#15519-418-(Unused)>)
-- - [15.5.20. 421 Misdirected Request](#15520-421-Misdirected-Request)
-- - [15.5.21. 422 Unprocessable Content](#15521-422-Unprocessable-Content)
-- - [15.5.22. 426 Upgrade Required](#15522-426-Upgrade-Required)
+  - [15.5.1. 400 Bad Request](#1551-400-Bad-Request)
+  - [15.5.2. 401 Unauthorized](#1552-401-Unauthorized)
+  - [15.5.3. 402 Payment Required](#1553-402-Payment-Required)
+  - [15.5.4. 403 Forbidden](#1554-403-Forbidden)
+  - [15.5.5. 404 Not Found](#1555-404-Not-Found)
+  - [15.5.6. 405 Method Not Allowed](#1556-405-Method-Not-Allowed)
+  - [15.5.7. 406 Not Acceptable](#1557-406-Not-Acceptable)
+  - [15.5.8. 407 Proxy Authentication Required](#1558-407-Proxy-Authentication-Required)
+  - [15.5.9. 408 Request Timeout](#1559-408-Request-Timeout)
+  - [15.5.10. 409 Conflict](#15510-409-Conflict)
+  - [15.5.11. 410 Gone](#15511-410-Gone)
+  - [15.5.12. 411 Length Required](#15512-411-Length-Required)
+  - [15.5.13. 412 Precondition Failed](#15513-412-Precondition-Failed)
+  - [15.5.14. 413 Content Too Large](#15514-413-Content-Too-Large)
+  - [15.5.15. 414 URI Too Long](#15515-414-URI-Too-Long)
+  - [15.5.16. 415 Unsupported Media Type](#15516-415-Unsupported-Media-Type)
+  - [15.5.17. 416 Range Not Satisfiable](#15517-416-Range-Not-Satisfiable)
+  - [15.5.18. 417 Expectation Failed](#15518-417-Expectation-Failed)
+  - [15.5.19. 418 (Unused)](<#15519-418-(Unused)>)
+  - [15.5.20. 421 Misdirected Request](#15520-421-Misdirected-Request)
+  - [15.5.21. 422 Unprocessable Content](#15521-422-Unprocessable-Content)
+  - [15.5.22. 426 Upgrade Required](#15522-426-Upgrade-Required)
 - [15.6. Server Error 5xx](#156-Server-Error-5xx)
-- - [15.6.1. 500 Internal Server Error](#1561-500-Internal-Server-Error)
-- - [15.6.2. 501 Not Implemented](#1562-501-Not-Implemented)
-- - [15.6.3. 502 Bad Gateway](#1563-502-Bad-Gateway)
-- - [15.6.4. 503 Service Unavailable](#1564-503-Service-Unavailable)
-- - [15.6.5. 504 Gateway Timeout](#1565-504-Gateway-Timeout)
-- - [15.6.6. 505 HTTP Version Not Supported](#1566-505-HTTP-Version-Not-Supported) 16. Extending HTTP
+  - [15.6.1. 500 Internal Server Error](#1561-500-Internal-Server-Error)
+  - [15.6.2. 501 Not Implemented](#1562-501-Not-Implemented)
+  - [15.6.3. 502 Bad Gateway](#1563-502-Bad-Gateway)
+  - [15.6.4. 503 Service Unavailable](#1564-503-Service-Unavailable)
+  - [15.6.5. 504 Gateway Timeout](#1565-504-Gateway-Timeout)
+  - [15.6.6. 505 HTTP Version Not Supported](#1566-505-HTTP-Version-Not-Supported) 16. Extending HTTP
     16.1. Method Extensibility
     16.1.1. Method Registry
     16.1.2. Considerations for New Methods
@@ -2592,36 +2593,19 @@ Reactive negotiation은, 유저 에이전트에게 대안들의 리스트를 전
 
 qvalue의 발신자는 절대(MUST NOT) 소수점 뒤에 세 개를 초과하는 숫자를 생성해서는 안된다. 이 값들의 유저 설정은 같은 방식으로 제한되어야 한다.
 
-12.4.3. Wildcard Values
+#### 12.4.3. Wildcard Values
 
-Most of these header fields, where indicated, define a wildcard value
-("\*") to select unspecified values. If no wildcard is present,
-values that are not explicitly mentioned in the field are considered
-unacceptable. Within Vary, the wildcard value means that the
-variance is unlimited.
+표시된 경우, 이 대부분의 헤더 필드들은, 지정되지 않은 값들을 선택하기 위한 와일드카드 값("\*")을 정의한다. 만약 와일드카드가 존재하지 않으면, 필드에 명시적으로 언급되지 않은 값들은 받아들여질 수 없는 것으로 간주된다. Vary 내에서, 와일드카드는 변화가 무제한적임을 의미한다.
 
-      |  *Note:* In practice, using wildcards in content negotiation has
-      |  limited practical value because it is seldom useful to say, for
-      |  example, "I prefer image/* more or less than (some other
-      |  specific value)".  By sending Accept: */*;q=0, clients can
-      |  explicitly request a 406 (Not Acceptable) response if a more
-      |  preferred format is not available, but they still need to be
-      |  able to handle a different response since the server is allowed
-      |  to ignore their preference.
+**Note:** 실무적으로, 콘텐츠 협상에서 와일드카드들을 사용하는 것은, 예를 들어, "나는 image/\*를 (다른 특정한 값 보다) 더 혹은 덜 선호한다"고 말하는 것이 거의 유용하지 않기 때문에 제한적인 실용성만을 가진다. Accept: \*/\*;q=0를 보냄으로써, 클라이언트들은 명시적으로 더 선호되는 포맷이 가용하지 않을 경우 406(Not Acceptable) 응답을 달라고 요구할 수 있지만, 서버가 선호를 무시하는 것이 허용되기 때문에 여전히 다른 응답을 처리할 수 있어야 한다.
 
-12.5. Content Negotiation Fields
+### 12.5. 콘텐츠 협상 필드들
 
-12.5.1. Accept
+#### 12.5.1. Accept
 
-The "Accept" header field can be used by user agents to specify their
-preferences regarding response media types. For example, Accept
-header fields can be used to indicate that the request is
-specifically limited to a small set of desired types, as in the case
-of a request for an in-line image.
+"Accept" 헤더 필드는 응답 미디어 타입들과 관련한 선호들을 지정하기 위해 유저 에이전트들에 의해 사용될 수 있다. 예를 들어, Accept 헤더 필드들은, 인-라인 이미지를 위한 요청의 경우와 같이, 요청이 원하는 타입들의 작은 집합으로 구체적으로 제한되어 있음을 나타내기 위해 사용될 수 있다.
 
-When sent by a server in a response, Accept provides information
-about which content types are preferred in the content of a
-subsequent request to the same resource.
+응답에서 서버에 의해 보내졌을 때, Accept는 같은 리소스로의 이후 요청의 콘텐츠에서 어떤 콘텐츠 타입들이 선호되는지에 관한 정보를 제공한다.
 
      Accept = #( media-range [ weight ] )
 
@@ -2630,53 +2614,32 @@ subsequent request to the same resource.
                         / ( type "/" subtype )
                       ) parameters
 
-The asterisk "_" character is used to group media types into ranges,
-with "_/_" indicating all media types and "type/_" indicating all
-subtypes of that type. The media-range can include media type
-parameters that are applicable to that range.
+Asterisk "\*" 문자는, "\*/\*"는 모든 미디어 타입들을 나타내고 "type/\*"는 그 타입의 모든 서브타입들을 나타내면서, 미디어 타입들을 범위들로 그룹화하기 위해 사용된다. media-range는 해당 범위에 적용되는 media type 파라미터들을 포함할 수 있다.
 
-Each media-range might be followed by optional applicable media type
-parameters (e.g., charset), followed by an optional "q" parameter for
-indicating a relative weight (Section 12.4.2).
+각 media-range에는 선택적인 적용 가능한 media type 파라미터들(예를 들어, charset)이 따를 수도 있는데, 상대적인 가중치를 나타내기 위해 선택적인 "q" 파라미터가 따른다(12.4.2절).
 
-Previous specifications allowed additional extension parameters to
-appear after the weight parameter. The accept extension grammar
-(accept-params, accept-ext) has been removed because it had a
-complicated definition, was not being used in practice, and is more
-easily deployed through new header fields. Senders using weights
-SHOULD send "q" last (after all media-range parameters). Recipients
-SHOULD process any parameter named "q" as weight, regardless of
-parameter ordering.
+이전의 사양들은 가중치 파라미터 뒤에 추가적인 확장 파라미터들이 나타날 수 있도록 허용했다. accept 확장 문법(accept-params, accept-ext)은 그것이 복잡한 정의를 가졌었고, 실무에서 사용되지 않았으며, 새로운 헤더필드들을 통해 더 쉽게 배포될 수 있었기 때문에 삭제됐다. 가중치들을 사용하는 발신자들은 웬만하면(SHOULD) "q"를 마지막에 보내야 한다(모든 media-range 파라미터들 뒤에). 수신자들은 웬만하면(SHOULD), 파라미터 순서에 관계없이, "q"라는 이름의 어떠한 파라미터든 가중치로 처리해야 한다.
 
-      |  *Note:* Use of the "q" parameter name to control content
-      |  negotiation would interfere with any media type parameter
-      |  having the same name.  Hence, the media type registry disallows
-      |  parameters named "q".
+**Note:** "q" 파라미터 이름을 콘텐츠 협상을 제어하기 위해 사용하는 것은 같은 이름을 가지는 어떤 미디어 타입 파라미터와도 충돌할 것이다. 그러므로, 미디어 타입 레지스트리는 "q"라는 이름의 파라미터들을 허용하지 않는다.
 
-The example
+다음 예시는
 
-Accept: audio/\*; q=0.2, audio/basic
+     Accept: audio/\*; q=0.2, audio/basic
 
-is interpreted as "I prefer audio/basic, but send me any audio type
-if it is the best available after an 80% markdown in quality".
+"나는 audio/basic을 선호하지만, quality에서 80% 마크다운 후에 가용한 최선이라면 어떤 audio 타입이든 보내라."라고 해석된다.
 
-A more elaborate example is
+더 정교한 예시는
 
-Accept: text/plain; q=0.5, text/html,
-text/x-dvi; q=0.8, text/x-c
+     Accept: text/plain; q=0.5, text/html,
+     text/x-dvi; q=0.8, text/x-c
 
-Verbally, this would be interpreted as "text/html and text/x-c are
-the equally preferred media types, but if they do not exist, then
-send the text/x-dvi representation, and if that does not exist, send
-the text/plain representation".
+말로 하자면, 이는 "text/html과 text/x-c는 동등하게 선호되는 미디어 타입들이지만, 만약 그것들이 존재하지 않으면, text/x-dvi 표현을 보내고, 만약 그것도 없으면, text/plain 표현을 보내라"라고 해석될 것이다.
 
-Media ranges can be overridden by more specific media ranges or
-specific media types. If more than one media range applies to a
-given type, the most specific reference has precedence. For example,
+Media range들은 더 구체적인 media range들이나 특정한 미디어 타입들에 의해 오버라이드될 수 있다. 만약 둘 이상의 media range가 주어진 타입에 적용된다면, 가장 구체적인 참조가 우선한다. 예를 들어,
 
-Accept: text/_, text/plain, text/plain;format=flowed, _/\*
+     Accept: text/*, text/plain, text/plain;format=flowed, */*
 
-have the following precedence:
+는 다음 우선순위를 가진다:
 
 1.  text/plain;format=flowed
 
@@ -2684,40 +2647,31 @@ have the following precedence:
 
 3.  text/\*
 
-4.  _/_
+4.  \*/\*
 
-The media type quality factor associated with a given type is
-determined by finding the media range with the highest precedence
-that matches the type. For example,
+주어진 타입과 연관된 미디어 타입 quality factor는 해당 타입과 일치하는 가장 높은 우선순위의 media range를 찾는 것으로 결정된다. 예를 들어,
 
-Accept: text/_;q=0.3, text/plain;q=0.7, text/plain;format=flowed,
-text/plain;format=fixed;q=0.4, _/\*;q=0.5
+     Accept: text/*;q=0.3, text/plain;q=0.7, text/plain;format=flowed,
+     text/plain;format=fixed;q=0.4, */*;q=0.5
 
-would cause the following values to be associated:
+는 다음 값들이 연관되도록 한다:
 
-+==========================+===============+
-| Media Type | Quality Value |
-+==========================+===============+
-| text/plain;format=flowed | 1 |
-+--------------------------+---------------+
-| text/plain | 0.7 |
-+--------------------------+---------------+
-| text/html | 0.3 |
-+--------------------------+---------------+
-| image/jpeg | 0.5 |
-+--------------------------+---------------+
-| text/plain;format=fixed | 0.4 |
-+--------------------------+---------------+
-| text/html;level=3 | 0.7 |
-+--------------------------+---------------+
+<center>
 
-                     Table 5
+| Media Type               | Quality Value |
+| ------------------------ | ------------- |
+| text/plain;format=flowed | 1             |
+| text/plain               | 0.7           |
+| text/html                | 0.3           |
+| image/jpeg               | 0.5           |
+| text/plain;format=fixed  | 0.4           |
+| text/html;level=3        | 0.7           |
 
-      |  *Note:* A user agent might be provided with a default set of
-      |  quality values for certain media ranges.  However, unless the
-      |  user agent is a closed system that cannot interact with other
-      |  rendering agents, this default set ought to be configurable by
-      |  the user.
+Table 5
+
+</center>
+
+**Note:** 유저 에이전트는 특정 media range들을 위한 quality value들의 기본 집합을 제공받을 수 있다. 그러나, 유저 에이전트가 다른 렌더링 에이전트들과 상호작용할 수 없는 닫힌 시스템이 아니라면, 이 기본 집합은 유저에 의해 설정될 수 있어야 한다.
 
 12.5.2. Accept-Charset
 
