@@ -2592,22 +2592,11 @@ Reactive negotiation은, 유저 에이전트에게 대안들의 리스트를 전
 
 qvalue의 발신자는 절대(MUST NOT) 소수점 뒤에 세 개를 초과하는 숫자를 생성해서는 안된다. 이 값들의 유저 설정은 같은 방식으로 제한되어야 한다.
 
-12.4.3. Wildcard Values
+#### 12.4.3. Wildcard Values
 
-Most of these header fields, where indicated, define a wildcard value
-("\*") to select unspecified values. If no wildcard is present,
-values that are not explicitly mentioned in the field are considered
-unacceptable. Within Vary, the wildcard value means that the
-variance is unlimited.
+표시된 경우, 대부분의 이 헤더 필드들은, 지정되지 않은 값들을 선택하기 위한 와일드카드 값("\*")을 정의한다. 만약 와일드카드가 존재하지 않으면, 필드에 명시적으로 언급되지 않은 값들은 받아들여질 수 없는 것으로 간주된다. Vary 내에서, 와일드카드는 변화가 무제한적임을 의미한다.
 
-      |  *Note:* In practice, using wildcards in content negotiation has
-      |  limited practical value because it is seldom useful to say, for
-      |  example, "I prefer image/* more or less than (some other
-      |  specific value)".  By sending Accept: */*;q=0, clients can
-      |  explicitly request a 406 (Not Acceptable) response if a more
-      |  preferred format is not available, but they still need to be
-      |  able to handle a different response since the server is allowed
-      |  to ignore their preference.
+**Note:** 실무적으로, 콘텐츠 협상에서 와일드카드들을 사용하는 것은, 예를 들어, "나는 image/\*를 (다른 특정한 값 보다) 더 혹은 덜 선호한다"고 말하는 것이 거의 유용하지 않기 때문에 제한적인 실용성만을 가진다. Accept: \*/\*;q=0를 보냄으로써, 클라이언트들은 명시적으로 더 선호되는 포맷이 가용하지 않을 경우 406(Not Acceptable) 응답을 달라고 요구할 수 있지만, 서버가 선호를 무시하는 것이 허용되기 때문에 여전히 다른 응답을 처리할 수 있어야 한다.
 
 12.5. Content Negotiation Fields
 
