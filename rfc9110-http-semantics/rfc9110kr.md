@@ -2673,33 +2673,19 @@ Table 5
 
 **Note:** 유저 에이전트는 특정 media range들을 위한 quality value들의 기본 집합을 제공받을 수 있다. 그러나, 유저 에이전트가 다른 렌더링 에이전트들과 상호작용할 수 없는 닫힌 시스템이 아니라면, 이 기본 집합은 유저에 의해 설정될 수 있어야 한다.
 
-12.5.2. Accept-Charset
+#### 12.5.2. Accept-Charset
 
-The "Accept-Charset" header field can be sent by a user agent to
-indicate its preferences for charsets in textual response content.
-For example, this field allows user agents capable of understanding
-more comprehensive or special-purpose charsets to signal that
-capability to an origin server that is capable of representing
-information in those charsets.
+"Accept-Charset" 헤더 필드는 텍스트 응답 콘텐츠의 문자셋들을 위한 선호들을 나타내기 위해 유저 에이전트에 의해 보내질 수 있다. 예를 들어, 이 필드는 더 포괄적이거나 특수-목적인 문자셋들을 이해할 능력이 있는 유저 에이전트들이 그 능력을 그 문자셋들로 정보를 표현할 수 있는 오리진 서버에게 알리는 신호를 보낼 수 있도록 한다.
 
      Accept-Charset = #( ( token / "*" ) [ weight ] )
 
-Charset names are defined in Section 8.3.2. A user agent MAY
-associate a quality value with each charset to indicate the user's
-relative preference for that charset, as defined in Section 12.4.2.
-An example is
+문자셋 이름들은 8.3.2절에 정의된다. 유저 에이전트는, 12.4.2절에 정의된대로, 아마(MAY) 해당 문자셋에 대한 유저의 상대적인 선호를 나타내기 위해 각 문자셋을 quality value와 연관시킬 수 있을 것이다. 한 예시는
 
-Accept-Charset: iso-8859-5, unicode-1-1;q=0.8
+     Accept-Charset: iso-8859-5, unicode-1-1;q=0.8
 
-The special value "\*", if present in the Accept-Charset header field,
-matches every charset that is not mentioned elsewhere in the field.
+특수 값 "\*"은, 만약 Accept-Charset 헤더 필드에 존재한다면, 필드 다른 곳에 언급되지 않은 모든 문자셋들과 매치된다.
 
-      |  *Note:* Accept-Charset is deprecated because UTF-8 has become
-      |  nearly ubiquitous and sending a detailed list of user-preferred
-      |  charsets wastes bandwidth, increases latency, and makes passive
-      |  fingerprinting far too easy (Section 17.13).  Most general-
-      |  purpose user agents do not send Accept-Charset unless
-      |  specifically configured to do so.
+**Note:** Accept-Charset은 UTF-8이 거의 모든 곳에서 쓰이고 유저-선호 문자셋들의 자세한 리스트를 보내는 것은 대역폭을 낭비하고, 지연 시간을 증가시키고, 패시브 핑거프린팅(17.13절)을 너무 쉽게 만들어내는 바람에 더 이상 사용되지 않는다. 대부분의 범용 유저 에이조ㅓㄴ트들은 특별히 설정되지 않은 이상 Accept-Charset을 보내지 않는다.
 
 12.5.3. Accept-Encoding
 
