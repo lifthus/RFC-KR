@@ -2673,59 +2673,36 @@ Table 5
 
 **Note:** 유저 에이전트는 특정 media range들을 위한 quality value들의 기본 집합을 제공받을 수 있다. 그러나, 유저 에이전트가 다른 렌더링 에이전트들과 상호작용할 수 없는 닫힌 시스템이 아니라면, 이 기본 집합은 유저에 의해 설정될 수 있어야 한다.
 
-12.5.2. Accept-Charset
+#### 12.5.2. Accept-Charset
 
-The "Accept-Charset" header field can be sent by a user agent to
-indicate its preferences for charsets in textual response content.
-For example, this field allows user agents capable of understanding
-more comprehensive or special-purpose charsets to signal that
-capability to an origin server that is capable of representing
-information in those charsets.
+"Accept-Charset" 헤더 필드는 텍스트 응답 콘텐츠의 문자셋들을 위한 선호들을 나타내기 위해 유저 에이전트에 의해 보내질 수 있다. 예를 들어, 이 필드는 더 포괄적이거나 특수-목적인 문자셋들을 이해할 능력이 있는 유저 에이전트들이 그 능력을 그 문자셋들로 정보를 표현할 수 있는 오리진 서버에게 알리는 신호를 보낼 수 있도록 한다.
 
      Accept-Charset = #( ( token / "*" ) [ weight ] )
 
-Charset names are defined in Section 8.3.2. A user agent MAY
-associate a quality value with each charset to indicate the user's
-relative preference for that charset, as defined in Section 12.4.2.
-An example is
+문자셋 이름들은 8.3.2절에 정의된다. 유저 에이전트는, 12.4.2절에 정의된대로, 아마(MAY) 해당 문자셋에 대한 유저의 상대적인 선호를 나타내기 위해 각 문자셋을 quality value와 연관시킬 수 있을 것이다. 한 예시는
 
-Accept-Charset: iso-8859-5, unicode-1-1;q=0.8
+     Accept-Charset: iso-8859-5, unicode-1-1;q=0.8
 
-The special value "\*", if present in the Accept-Charset header field,
-matches every charset that is not mentioned elsewhere in the field.
+특수 값 "\*"은, 만약 Accept-Charset 헤더 필드에 존재한다면, 필드 다른 곳에 언급되지 않은 모든 문자셋들과 매치된다.
 
-      |  *Note:* Accept-Charset is deprecated because UTF-8 has become
-      |  nearly ubiquitous and sending a detailed list of user-preferred
-      |  charsets wastes bandwidth, increases latency, and makes passive
-      |  fingerprinting far too easy (Section 17.13).  Most general-
-      |  purpose user agents do not send Accept-Charset unless
-      |  specifically configured to do so.
+**Note:** Accept-Charset은 UTF-8이 거의 모든 곳에서 쓰이고 유저-선호 문자셋들의 자세한 리스트를 보내는 것은 대역폭을 낭비하고, 지연 시간을 증가시키고, 패시브 핑거프린팅(17.13절)을 너무 쉽게 만들어내는 바람에 더 이상 사용되지 않는다. 대부분의 범용 유저 에이전트들은 특별히 설정되지 않은 이상 Accept-Charset을 보내지 않는다.
 
-12.5.3. Accept-Encoding
+#### 12.5.3. Accept-Encoding
 
-The "Accept-Encoding" header field can be used to indicate
-preferences regarding the use of content codings (Section 8.4.1).
+"Accept-Encoding" 헤더 필드는 콘텐츠 코딩(8.4.1절)들의 사용에 관한 선호들을 나타내기 위해 사용될 수 있다.
 
-When sent by a user agent in a request, Accept-Encoding indicates the
-content codings acceptable in a response.
+요청에서 유저 에이전트에 의해 보내질 때, Accept-Encoding은 응답에서 수용될 수 있는 콘텐츠 코딩들을 가리킨다.
 
-When sent by a server in a response, Accept-Encoding provides
-information about which content codings are preferred in the content
-of a subsequent request to the same resource.
+응답에서 서버에 의해 보내질 때, Accept-Encoding은 같은 리소스에 대한 차후 요청의 콘텐츠에서 어떤 콘텐츠 코딩들이 선호되는지에 관한 정보를 제공한다.
 
-An "identity" token is used as a synonym for "no encoding" in order
-to communicate when no encoding is preferred.
+"identity" 토큰은 어떤 인코딩도 선호되지 않을 때 알리기 위해 "no encoding"의 동의어로 사용된다.
 
      Accept-Encoding  = #( codings [ weight ] )
      codings          = content-coding / "identity" / "*"
 
-Each codings value MAY be given an associated quality value (weight)
-representing the preference for that encoding, as defined in
-Section 12.4.2. The asterisk "\*" symbol in an Accept-Encoding field
-matches any available content coding not explicitly listed in the
-field.
+12.4.2절에 정의된 대로, 각 codings 값에는 아마(MAY) 해당 인코딩을 위한 선호를 표현하는 연관된 quality value(가중치)가 주어질 수 있을 것이다. Accept-Encoding 필드의 asterisk "\*" 기호는 명시적으로 필드에 나열되지 않은 어떤 가용한 콘텐츠 코딩과도 매치된다.
 
-Examples:
+예시:
 
 Accept-Encoding: compress, gzip
 Accept-Encoding:
@@ -2733,63 +2710,25 @@ Accept-Encoding: _
 Accept-Encoding: compress;q=0.5, gzip;q=1.0
 Accept-Encoding: gzip;q=1.0, identity; q=0.5, _;q=0
 
-A server tests whether a content coding for a given representation is
-acceptable using these rules:
+서버는 주어진 표현을 위한 콘텐츠 코딩이 이 규칙들을 사용해서 받아들여질 수 있는지 테스트한다.
 
-1.  If no Accept-Encoding header field is in the request, any content
-    coding is considered acceptable by the user agent.
+1. 만약 요청에 Accept-Encoding 헤더 필드가 없으면, 어떤 콘텐츠 코딩이든 유저 에이전트에 의해 받아들여질 수 있는 것으로 간주된다.
 
-2.  If the representation has no content coding, then it is
-    acceptable by default unless specifically excluded by the Accept-
-    Encoding header field stating either "identity;q=0" or "\*;q=0"
-    without a more specific entry for "identity".
+2. 만약 표현이 콘텐츠 코딩을 갖고 있지 않으면, 그럼 그것은 "identity"를 위한 더 구체적인 항목 없이 "identity;q=0"나 "\*;q=0"를 진술하는 Accept-Encoding 헤더 필드에 의해 구체적으로 제외되지 않은 한 기본적으로 수용가능하다.
 
-3.  If the representation's content coding is one of the content
-    codings listed in the Accept-Encoding field value, then it is
-    acceptable unless it is accompanied by a qvalue of 0. (As
-    defined in Section 12.4.2, a qvalue of 0 means "not acceptable".)
+3. 만약 표현의 콘텐츠 코딩이 Accept-Encoding 필드 값에 나열된 콘텐츠 코딩들 중 하나라면, 그럼 그것은 0인 qvalue와 수반하지 않은 한 수용 가능하다. (12.4.2절에 정의된대로, 0인 qvalue는 "not acceptable"을 의미한다.)
 
-A representation could be encoded with multiple content codings.
-However, most content codings are alternative ways to accomplish the
-same purpose (e.g., data compression). When selecting between
-multiple content codings that have the same purpose, the acceptable
-content coding with the highest non-zero qvalue is preferred.
+한 표현은 여러 콘텐츠 코딩들로 엔코딩될 수 있다. 그러나, 대부분의 콘텐츠 코딩들은 같은 목적을 달성하기 위한 대체 방법들이다(예를 들어, 데이터 압축). 여러 콘텐츠 코딩들 중에 같은 목적을 가지는 것들을 선택할 때는, 가장 높은 0이 아닌 qvalue의 수용 가능한 콘텐츠 코딩이 선호된다.
 
-An Accept-Encoding header field with a field value that is empty
-implies that the user agent does not want any content coding in
-response. If a non-empty Accept-Encoding header field is present in
-a request and none of the available representations for the response
-have a content coding that is listed as acceptable, the origin server
-SHOULD send a response without any content coding unless the identity
-coding is indicated as unacceptable.
+빈 필드 값의 Accept-Encoding 헤더 필드는 유저 에이전트가 응답에서 어떠한 콘텐츠 코딩도 원하지 않음을 암시한다. 만약 비어있지 않은 Accept-Encoding 헤더 필드가 요청에 존재하고 응답을 위해 가용한 표현들 중 어느 것도 수용 가능한 것으로 나열된 콘텐츠 코딩을 가지고 있지 않다면, 오리진 서버는 identity 코딩이 수용할 수 없는 것으로 나타내지지 않은 한 웬만하면(SHOULD) 어떠한 콘텐츠 코딩도 없이 응답을 보내야 한다.
 
-When the Accept-Encoding header field is present in a response, it
-indicates what content codings the resource was willing to accept in
-the associated request. The field value is evaluated the same way as
-in a request.
+Accept-Encoding 헤더 필드가 응답에 존재할 때, 그것은 연관된 요청에서 어떤 콘텐츠 코딩들이 리소스에 의해 기꺼이 받아들여졌을지를 나타낸다. 필드 값은 요청에서와 똑같이 평가된다.
 
-Note that this information is specific to the associated request; the
-set of supported encodings might be different for other resources on
-the same server and could change over time or depend on other aspects
-of the request (such as the request method).
+이 정보는 연관된 요청에 특정되어 있음에 주의하라; 지원되는 인코딩들은 같은 서버의 다른 리소스들에서 다를 수 있고 시간에 따라 혹은 요청의 다른 측면에 따라(요청 메소드 같은) 변할 수도 있다.
 
-Servers that fail a request due to an unsupported content coding
-ought to respond with a 415 (Unsupported Media Type) status and
-include an Accept-Encoding header field in that response, allowing
-clients to distinguish between issues related to content codings and
-media types. In order to avoid confusion with issues related to
-media types, servers that fail a request with a 415 status for
-reasons unrelated to content codings MUST NOT include the Accept-
-Encoding header field.
+지원되지 않는 콘텐츠 코딩 때문에 요청 처리에 실패하는 서버들은 415(Unsupported Media Type) 상태로 응답하고 해당 응답에 Accept-Encoding 헤더 필드를 포함해, 클라이언트들이 콘텐츠 코딩들과 미디어 타입들에 관련된 이슈들을 구별할 수 있도록 해야 한다. 미디어 타입들과 연관된 이슈들과의 혼동을 회피하기 위해, 콘텐츠 코딩들과 관련 없는 이유로 415 상태와 함께 요청 처리에 실패하는 서버들은 절대(MUST NOT) Accept-Encoding 헤더 필드를 포함해서는 안된다.
 
-The most common use of Accept-Encoding is in responses with a 415
-(Unsupported Media Type) status code, in response to optimistic use
-of a content coding by clients. However, the header field can also
-be used to indicate to clients that content codings are supported in
-order to optimize future interactions. For example, a resource might
-include it in a 2xx (Successful) response when the request content
-was big enough to justify use of a compression coding but the client
-failed do so.
+Accept-Encoding의 가장 흔한 사용처는, 클라이언트들에 의한 낙관적인 콘텐츠 코딩 사용에 대한 응답에서의, 415(Unsupported Media Type) 상태코드 응답들이다. 그러나, 그 헤더 필드는 클라이언트들에게 향후 상호작용들을 최적화하기 위해 콘텐츠 코딩들이 지원됨을 나타내기 위해서 또한 사용될 수 있다. 예를 들어, 한 리소스는 요청 콘텐츠가 압축 코딩의 사용을 정당화할 수 있을 정도로 충분히 크지만 클라이언트가 그렇게 하는데 실패했을 때 그것을 2xx(Successful) 응답에 포함할 수 있다.
 
 12.5.4. Accept-Language
 
