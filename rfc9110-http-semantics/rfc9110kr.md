@@ -2730,58 +2730,29 @@ Accept-Encoding 헤더 필드가 응답에 존재할 때, 그것은 연관된 �
 
 Accept-Encoding의 가장 흔한 사용처는, 클라이언트들에 의한 낙관적인 콘텐츠 코딩 사용에 대한 응답에서의, 415(Unsupported Media Type) 상태코드 응답들이다. 그러나, 그 헤더 필드는 클라이언트들에게 향후 상호작용들을 최적화하기 위해 콘텐츠 코딩들이 지원됨을 나타내기 위해서 또한 사용될 수 있다. 예를 들어, 한 리소스는 요청 콘텐츠가 압축 코딩의 사용을 정당화할 수 있을 정도로 충분히 크지만 클라이언트가 그렇게 하는데 실패했을 때 그것을 2xx(Successful) 응답에 포함할 수 있다.
 
-12.5.4. Accept-Language
+#### 12.5.4. Accept-Language
 
-The "Accept-Language" header field can be used by user agents to
-indicate the set of natural languages that are preferred in the
-response. Language tags are defined in Section 8.5.1.
+"Accept-Language" 헤더 필드는 응답에서 선호되는 자연 언어들의 집합을 나타내기 위해 유저 에이전트들에 의해 사용될 수 있다. 언어 태그들은 8.5.1절에 정의된다.
 
      Accept-Language = #( language-range [ weight ] )
      language-range  =
-               <language-range, see [RFC4647], Section 2.1>
+          <language-range, [RFC4647], 2.1절 참조>
 
-Each language-range can be given an associated quality value
-representing an estimate of the user's preference for the languages
-specified by that range, as defined in Section 12.4.2. For example,
+각 language-range에는, 12.4.2절에 정의된대로 해당 범위에 지정된 언어들을위한 유저의 선호도의 추정치를 표현하는 연관된 quality value가 주어질 수 있다. 예를 들어,
 
-Accept-Language: da, en-gb;q=0.8, en;q=0.7
+     Accept-Language: da, en-gb;q=0.8, en;q=0.7
 
-would mean: "I prefer Danish, but will accept British English and
-other types of English".
+는 의미할 것이다: "나는 덴마크어를 선호하지만, 영국 영어와 영어의 다른 타입들을 받아들일 것이다".
 
-Note that some recipients treat the order in which language tags are
-listed as an indication of descending priority, particularly for tags
-that are assigned equal quality values (no value is the same as q=1).
-However, this behavior cannot be relied upon. For consistency and to
-maximize interoperability, many user agents assign each language tag
-a unique quality value while also listing them in order of decreasing
-quality. Additional discussion of language priority lists can be
-found in Section 2.3 of [RFC4647].
+일부 수신자들은 언어 태그들이 나열된 순서를, 특히 동등한 quality value들이 할당된 태그들에 대해 내림차순 우선순위를 나타내는 것으로 취급한다는 사실을 주의하라(어떤 값도 q=1과 같지 않다). 그러나, 이러한 행동에 의존할 수는 없다. 일관성을 위해서 그리고 상호운용성을 최대화하기 위해서, 많은 유저 에이전트들은 각 언어 태그에 고유한 quality value를 할당하면서 또한 그것들을 quality 내림차순으로 나열한다. 언어 우선순위 목록들에 관한 추가적인 논의는 [[RFC4647](https://www.rfc-editor.org/info/rfc4647)]의 2.3절에서 찾아볼 수 있다.
 
-For matching, Section 3 of [RFC4647] defines several matching
-schemes. Implementations can offer the most appropriate matching
-scheme for their requirements. The "Basic Filtering" scheme
-([RFC4647], Section 3.3.1) is identical to the matching scheme that
-was previously defined for HTTP in Section 14.4 of [RFC2616].
+matching을 위해, [[RFC4647](https://www.rfc-editor.org/info/rfc4647)]의 3절은 몇몇 matching scheme들을 정의한다. 구현들은 그들의 요구사항을 위해 가장 적합한 matching scheme을 제공할 수 있다. "Basic Filtering" scheme([RFC4647](https://www.rfc-editor.org/info/rfc4647), 3.3.1절)은 [[RFC2616](https://www.rfc-editor.org/info/rfc2616)]의 14.4절에 HTTP를 위해 이전에 정의된 matching scheme과 동일하다.
 
-It might be contrary to the privacy expectations of the user to send
-an Accept-Language header field with the complete linguistic
-preferences of the user in every request (Section 17.13).
+모든 요청에서 유저의 완전한 언허적 선호들과 Accept-Language 헤더 필드를 보내는 것은 유저의 프라이버시 기대사항들에 반할 수도 있다.
 
-Since intelligibility is highly dependent on the individual user,
-user agents need to allow user control over the linguistic preference
-(either through configuration of the user agent itself or by
-defaulting to a user controllable system setting). A user agent that
-does not provide such control to the user MUST NOT send an Accept-
-Language header field.
+이해가능성은 개인 유저들에 크게 의존적이기 때문에, 유저 에이전트들은 유저들이 언어적 선호를 제어할 수 있도록 해야 한다(유저 에이전트 자체의 설정을 통해 혹은 유저가 제어할 수 있는 시스템 설정을 기본값으로 함으로써). 그러한 제어를 유저에게 제공하지 않는 유저 에이전트는 절대(MUST NOT) Accept-Language 헤더 필드를 보내서는 안된다.
 
-      |  *Note:* User agents ought to provide guidance to users when
-      |  setting a preference, since users are rarely familiar with the
-      |  details of language matching as described above.  For example,
-      |  users might assume that on selecting "en-gb", they will be
-      |  served any kind of English document if British English is not
-      |  available.  A user agent might suggest, in such a case, to add
-      |  "en" to the list for better matching behavior.
+**Note:** 유저 에이전트들은 선호를 설정할 때 유저들에게 가이던스를 제공해야 하는데 이는 유저들이 위에 서술된대로 거의 언어 매칭의 자세한 사항들과 친숙하지 않기 때문이다. 예를 들어, 유저들은 "en-gb"를 선택함으로써, 영국 영어가 가용하지 않다면 그들이 다른 어느 영어 문서든지라도 받아볼것이라고 여길 수 있다. 유저 에이전트는, 그런 상황에서, 더 나은 매칭 행동을 위해 "en"을 리스트에 추가할 것을 제안할 수도 있다.
 
 12.5.5. Vary
 
