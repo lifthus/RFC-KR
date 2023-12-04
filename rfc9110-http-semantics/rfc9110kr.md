@@ -2752,13 +2752,7 @@ matching을 위해, [[RFC4647](https://www.rfc-editor.org/info/rfc4647)]의 3절
 
 이해가능성은 개인 유저들에 크게 의존적이기 때문에, 유저 에이전트들은 유저들이 언어적 선호를 제어할 수 있도록 해야 한다(유저 에이전트 자체의 설정을 통해 혹은 유저가 제어할 수 있는 시스템 설정을 기본값으로 함으로써). 그러한 제어를 유저에게 제공하지 않는 유저 에이전트는 절대(MUST NOT) Accept-Language 헤더 필드를 보내서는 안된다.
 
-      |  *Note:* User agents ought to provide guidance to users when
-      |  setting a preference, since users are rarely familiar with the
-      |  details of language matching as described above.  For example,
-      |  users might assume that on selecting "en-gb", they will be
-      |  served any kind of English document if British English is not
-      |  available.  A user agent might suggest, in such a case, to add
-      |  "en" to the list for better matching behavior.
+**Note:** 유저 에이전트들은 선호를 설정할 때 유저들에게 가이던스를 제공해야 하는데 이는 유저들이 위에 서술된대로 거의 언어 매칭의 자세한 사항들과 친숙하지 않기 때문이다. 예를 들어, 유저들은 "en-gb"를 선택함으로써, 영국 영어가 가용하지 않다면 그들이 다른 어느 영어 문서든지라도 받아볼것이라고 여길 수 있다. 유저 에이전트는, 그런 상황에서, 더 나은 매칭 행동을 위해 "en"을 리스트에 추가할 것을 제안할 수도 있다.
 
 12.5.5. Vary
 
