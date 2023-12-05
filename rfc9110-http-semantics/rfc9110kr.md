@@ -2754,72 +2754,33 @@ matching을 위해, [[RFC4647](https://www.rfc-editor.org/info/rfc4647)]의 3절
 
 **Note:** 유저 에이전트들은 선호를 설정할 때 유저들에게 가이던스를 제공해야 하는데 이는 유저들이 위에 서술된대로 거의 언어 매칭의 자세한 사항들과 친숙하지 않기 때문이다. 예를 들어, 유저들은 "en-gb"를 선택함으로써, 영국 영어가 가용하지 않다면 그들이 다른 어느 영어 문서든지라도 받아볼것이라고 여길 수 있다. 유저 에이전트는, 그런 상황에서, 더 나은 매칭 행동을 위해 "en"을 리스트에 추가할 것을 제안할 수도 있다.
 
-12.5.5. Vary
+#### 12.5.5. Vary
 
-The "Vary" header field in a response describes what parts of a
-request message, aside from the method and target URI, might have
-influenced the origin server's process for selecting the content of
-this response.
+응답의 "Vary" 헤더 필드는, 메소드와 타겟 URI는 제외하고, 요청 메시지의 어느 부분이 해당 응답의 콘텐츠를 선택하는 오리진 서버의 프로세스에 영향을 미쳤을 수 있는지를 기술한다.
 
      Vary = #( "*" / field-name )
 
-A Vary field value is either the wildcard member "\*" or a list of
-request field names, known as the selecting header fields, that might
-have had a role in selecting the representation for this response.
-Potential selecting header fields are not limited to fields defined
-by this specification.
+Vary 필드 값은 와일드카드 멤버 "\*"나, 선택 헤더 필드들로 알려진, 해당 응답을 위한 표현 선택에서 한 역할을 가졌을 수도 있는, 요청 필드 이름들의 리스트다. 잠재적인 선택 헤더 필드들은 이 사양에 의해 정의된 필드들로 제한되지 않는다.
 
-A list containing the member "_" signals that other aspects of the
-request might have played a role in selecting the response
-representation, possibly including aspects outside the message syntax
-(e.g., the client's network address). A recipient will not be able
-to determine whether this response is appropriate for a later request
-without forwarding the request to the origin server. A proxy MUST
-NOT generate "_" in a Vary field value.
+멤버 "\*"를 포함하는 리스트는 요청의 다른 측면들이 응답 표현을 선택하는데 있어 한 역할을 했을 것임을 신호하며, 메시지 구문을 벗어나는 측면들을 포함할 수도 있다(예를 들어, 클라이언트의 네트워크 주소). 나중의 요청에 대해 수신자는 오리진 서버로 요청을 포워딩 하지 않고는 이 응답이 그 요청을 위해 적절한지 결정할 수 없을 것이다. 프록시는 절대(MUST NOT) Vary 필드 값에 "\*"를 생성해서는 안된다.
 
-For example, a response that contains
+예를 들어, 다음을 포함하는 응답은
 
-Vary: accept-encoding, accept-language
+     Vary: accept-encoding, accept-language
 
-indicates that the origin server might have used the request's
-Accept-Encoding and Accept-Language header fields (or lack thereof)
-as determining factors while choosing the content for this response.
+오리진 서버가 요청의 Accept-Encoding과 Accept-Language 헤더 필드들(혹은 그것들의 부재)를 응답을 위한 콘텐츠를 선택하는 동안 결정 요소들로 사용했을 수 있음을 나타낸다.
 
-A Vary field containing a list of field names has two purposes:
+필드 이름들의 리스트를 포함하는 Vary 필드는 두 가지 목적을 가진다:
 
-1.  To inform cache recipients that they MUST NOT use this response
-    to satisfy a later request unless the later request has the same
-    values for the listed header fields as the original request
-    (Section 4.1 of [CACHING]) or reuse of the response has been
-    validated by the origin server. In other words, Vary expands the
-    cache key required to match a new request to the stored cache
-    entry.
+1.  캐시 수신자들에게 나중의 요청이 원래의 요청의 나열된 헤더필드들에 대해 같은 값들을 가지거나([[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 4.1절) 응답의 재사용이 오리진 서버에 의해 검증되지 않은 한 절대(MUST NOT) 나중의 요청을 만족시키기 위해 해당 응답을 사용하지 말라고 알리기 위해. 다시 말해, Vary는 저장된 캐시 항목에 새로운 요청을 매치시키기 위해 요구되는 캐시 키를 넓힌다.
 
-2.  To inform user agent recipients that this response was subject to
-    content negotiation (Section 12) and a different representation
-    might be sent in a subsequent request if other values are
-    provided in the listed header fields (proactive negotiation).
+2.  유저 에이전트 수신자들에게 해당 응답이 콘텐츠 협상(12절)의 대상이었고 만약 추후의 요청에서 나열된 헤더필드들에 다른 값들이 제공된다면(proactive negotiation) 다른 표현이 보내질 수도 있음을 알리기.
 
-An origin server SHOULD generate a Vary header field on a cacheable
-response when it wishes that response to be selectively reused for
-subsequent requests. Generally, that is the case when the response
-content has been tailored to better fit the preferences expressed by
-those selecting header fields, such as when an origin server has
-selected the response's language based on the request's
-Accept-Language header field.
+오리진 서버는 웬만하면(SHOULD) 캐시 가능한 응답이 추후의 요청들에서 선택적으로 재사용되길 바란다면 해당 응답에 대해 Vary 헤더 필드를 생성해야 한다. 일반적으로, 그러한 케이스는, 오리진 서버가 요청의 Accept-Language 헤더 필드에 기반해 응답의 언어를 선택하는 것과 같이, 응답 콘텐츠가 선택 헤더 필드들에 의해 표현된 선호들에 더 잘 맞추기 위해 맞춤화됐을 때이다.
 
-Vary might be elided when an origin server considers variance in
-content selection to be less significant than Vary's performance
-impact on caching, particularly when reuse is already limited by
-cache response directives (Section 5.2 of [CACHING]).
+Vary는 오리진 서버가 콘텐츠 선택에서의 변동이 Vary의 캐싱 성능에 대한 영향보다 덜 중요하다고 여길 때 생략될 수 있는데, 특히 재사용이 이미 캐시 응답 지시어들에 의해 제한됐을 때 그러하다([[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 5.2절).
 
-There is no need to send the Authorization field name in Vary because
-reuse of that response for a different user is prohibited by the
-field definition (Section 11.6.2). Likewise, if the response content
-has been selected or influenced by network region, but the origin
-server wants the cached response to be reused even if recipients move
-from one region to another, then there is no need for the origin
-server to indicate such variance in Vary.
+Vary에 Authorization 필드 이름을 보낼 필요는 없는데 이는 다른 유저를 위해 해당 응답을 재사용하는 것이 필드 정의에 의해 금지되어 있기 때문이다(11.6.2절). 마찬가지로, 만약 응답 콘텐츠가 네트워크 리전에 의해 선택되거나 영향을 받았지만, 수신자들이 한 리전에서 다른 곳으로 옮긴다 하더라도 캐시된 응답이 재사용되길 원한다면, 오리진 서버가 그러한 변동을 Vary에 나타낼 필요가 없다.
 
 13. Conditional Requests
 
