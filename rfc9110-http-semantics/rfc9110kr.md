@@ -2782,19 +2782,11 @@ Vary는 오리진 서버가 콘텐츠 선택에서의 변동이 Vary의 캐싱 �
 
 Vary에 Authorization 필드 이름을 보낼 필요는 없는데 이는 다른 유저를 위해 해당 응답을 재사용하는 것이 필드 정의에 의해 금지되어 있기 때문이다(11.6.2절). 마찬가지로, 만약 응답 콘텐츠가 네트워크 리전에 의해 선택되거나 영향을 받았지만, 수신자들이 한 리전에서 다른 곳으로 옮긴다 하더라도 캐시된 응답이 재사용되길 원한다면, 오리진 서버가 그러한 변동을 Vary에 나타낼 필요가 없다.
 
-13. Conditional Requests
+## 13. 조건부 요청들
 
-A conditional request is an HTTP request with one or more request
-header fields that indicate a precondition to be tested before
-applying the request method to the target resource. Section 13.2
-defines when to evaluate preconditions and their order of precedence
-when more than one precondition is present.
+조건부 요청은 타겟 리소스에 해당 요청 메소드를 적용하기 전에 테스트되야 할 사전 조건을 나타내는 하나 이상의 요청 헤더 필드를 가진 HTTP 요청이다. 13.2절은 사전 조건들이 언제 평가되어야 하는지와 하나를 초과하는 사전 조건이 존재할 때 그들의 우선순위를 정의한다.
 
-Conditional GET requests are the most efficient mechanism for HTTP
-cache updates [CACHING]. Conditionals can also be applied to state-
-changing methods, such as PUT and DELETE, to prevent the "lost
-update" problem: one client accidentally overwriting the work of
-another client that has been acting in parallel.
+조건부 GET 요청들은 HTTP 캐시 업데이트[[CACHING](https://www.rfc-editor.org/info/rfc9111)]들을 위한 가장 효율적인 메커니즘이다. 조건부들은 또한, "lost update" 문제를 방지하기 위해, PUT과 DELETE 같은, 상태-변화 메소드들에도 적용될 수 있다: "lost-update" 문제는 한 클라이언트가 병렬적으로 행해지고 있는 다른 클라이언트의 작업을 덮어쓰는 것을 말함.
 
 13.1. Preconditions
 
