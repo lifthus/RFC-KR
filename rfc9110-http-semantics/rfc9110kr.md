@@ -246,22 +246,22 @@ than English.
 [13. 조건부 요청들](#13-조건부-요청들)
 
 - [13.1. 사전 조건들](#131-사전-조건들)
-  13.1.1. If-Match
-  13.1.2. If-None-Match
-  13.1.3. If-Modified-Since
-  13.1.4. If-Unmodified-Since
-  13.1.5. If-Range
-  13.2. Evaluation of Preconditions
-  13.2.1. When to Evaluate
-  13.2.2. Precedence of Preconditions 14. Range Requests
-  14.1. Range Units
-  14.1.1. Range Specifiers
-  14.1.2. Byte Ranges
-  14.2. Range
-  14.3. Accept-Ranges
-  14.4. Content-Range
-  14.5. Partial PUT
-  14.6. Media Type multipart/byteranges
+  - [13.1.1. If-Match](#1311-if-match)
+  - [13.1.2. If-None-Match](#1312-if-none-match)
+  - [13.1.3. If-Modified-Since](#1313-if-modified-since)
+  - [13.1.4. If-Unmodified-Since](#1314-if-unmodified-since)
+  - [13.1.5. If-Range](#1315-if-range)
+    13.2. Evaluation of Preconditions
+    13.2.1. When to Evaluate
+    13.2.2. Precedence of Preconditions 14. Range Requests
+    14.1. Range Units
+    14.1.1. Range Specifiers
+    14.1.2. Byte Ranges
+    14.2. Range
+    14.3. Accept-Ranges
+    14.4. Content-Range
+    14.5. Partial PUT
+    14.6. Media Type multipart/byteranges
 
 [15. 상태 코드](#15-상태-코드)
 
@@ -2799,7 +2799,7 @@ Vary에 Authorization 필드 이름을 보낼 필요는 없는데 이는 다른 
 
 사전조건들의 확장은 오직 사전 조건이 알려지지 않은 경우(If-Modified-Since 같이) 안전하게 무시될 수 있을 때, 배포가 주어진 용례에 대해 가정될 수 있을 때, 혹은 타겟 리소스의 어떤 다른 속성에 의해 구현됐다는 신호를 받았을 때만 가능하다. 이는 공통 표준들의 상호 동의된 배포에 초점을 맞추도록 한다.
 
-13.1.1. If-Match
+#### 13.1.1. If-Match
 
 The "If-Match" header field makes the request method conditional on
 the recipient origin server either having at least one current
