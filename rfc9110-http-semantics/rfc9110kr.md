@@ -244,23 +244,24 @@ than English.
   - [12.5.5. Vary](#1255-vary)
 
 [13. 조건부 요청들](#13-조건부-요청들)
-13.1. Preconditions
-13.1.1. If-Match
-13.1.2. If-None-Match
-13.1.3. If-Modified-Since
-13.1.4. If-Unmodified-Since
-13.1.5. If-Range
-13.2. Evaluation of Preconditions
-13.2.1. When to Evaluate
-13.2.2. Precedence of Preconditions 14. Range Requests
-14.1. Range Units
-14.1.1. Range Specifiers
-14.1.2. Byte Ranges
-14.2. Range
-14.3. Accept-Ranges
-14.4. Content-Range
-14.5. Partial PUT
-14.6. Media Type multipart/byteranges
+
+- [13.1. 사전 조건들](#131-사전-조건들)
+  13.1.1. If-Match
+  13.1.2. If-None-Match
+  13.1.3. If-Modified-Since
+  13.1.4. If-Unmodified-Since
+  13.1.5. If-Range
+  13.2. Evaluation of Preconditions
+  13.2.1. When to Evaluate
+  13.2.2. Precedence of Preconditions 14. Range Requests
+  14.1. Range Units
+  14.1.1. Range Specifiers
+  14.1.2. Byte Ranges
+  14.2. Range
+  14.3. Accept-Ranges
+  14.4. Content-Range
+  14.5. Partial PUT
+  14.6. Media Type multipart/byteranges
 
 [15. 상태 코드](#15-상태-코드)
 
@@ -2788,41 +2789,15 @@ Vary에 Authorization 필드 이름을 보낼 필요는 없는데 이는 다른 
 
 조건부 GET 요청들은 HTTP 캐시 업데이트[[CACHING](https://www.rfc-editor.org/info/rfc9111)]들을 위한 가장 효율적인 메커니즘이다. 조건부들은 또한, "lost update" 문제를 방지하기 위해, PUT과 DELETE 같은, 상태-변화 메소드들에도 적용될 수 있다: "lost-update" 문제는 한 클라이언트가 병렬적으로 행해지고 있는 다른 클라이언트의 작업을 덮어쓰는 것을 말함.
 
-13.1. Preconditions
+### 13.1. 사전 조건들
 
-Preconditions are usually defined with respect to a state of the
-target resource as a whole (its current value set) or the state as
-observed in a previously obtained representation (one value in that
-set). If a resource has multiple current representations, each with
-its own observable state, a precondition will assume that the mapping
-of each request to a selected representation (Section 3.2) is
-consistent over time. Regardless, if the mapping is inconsistent or
-the server is unable to select an appropriate representation, then no
-harm will result when the precondition evaluates to false.
+사전 조건들은 보통 전체로서의 타겟 리소스(현재 값 집합)의 상태 혹은 이전에 얻어진 표현에서 관측된대로의 상태(그 집합에서의 한 값)에 대해 정의된다. 만약 리소스가, 각각 그것의 관측 가능한 상태와 함께, 여러 현재 표현들을 가진다면, 사전 조건은 선택된 표현에 대한 각 요청의 매핑(3.2절)이 시간에 걸쳐 일관적이라고 가정할 것이다. 그와 관계없이, 만약 매핑이 비일관적이거나 혹은 서버가 적절한 표현을 선택할 수 없다면, 사전 조건이 거짓으로 평가될 때는 어떤 해도 발생하지 않을 것이다.
 
-Each precondition defined below consists of a comparison between a
-set of validators obtained from prior representations of the target
-resource to the current state of validators for the selected
-representation (Section 8.8). Hence, these preconditions evaluate
-whether the state of the target resource has changed since a given
-state known by the client. The effect of such an evaluation depends
-on the method semantics and choice of conditional, as defined in
-Section 13.2.
+아래에 정의된 각 사전 조건은 타겟 리소스의 이전 표현들로부터 얻어진 검증자들의 집합과 선택된 표현을 위한 검증자들의 현재 상태 간의 비교로 구성된다(8.8절). 이리하여, 이 사전 조건들은 주어진 상태가 클라이언트에게 알려진 이후로 타겟 리소스의 해당 상태가 변경됐는지를 평가한다. 그러한 평가의 효과는 13.2절에 정의된대로, 메소드 의미체계와 조건부에 관한 선택에 의존한다.
 
-Other preconditions, defined by other specifications as extension
-fields, might place conditions on all recipients, on the state of the
-target resource in general, or on a group of resources. For
-instance, the "If" header field in WebDAV can make a request
-conditional on various aspects of multiple resources, such as locks,
-if the recipient understands and implements that field ([WEBDAV],
-Section 10.4).
+다른 사양들에 의해 확장 필드들로 정의되는, 다른 사전조건들은, 모든 수신자들에 대해, 일반적으로 타겟 리소스의 상태에 대해, 혹은 리소스들의 그룹에 대해 조건들을 둘 수도 있다. 예를 들어, WebDAV의 "If" 헤더 필드는, 만약 수신자가 해당 필드([[WEBDAV](https://www.rfc-editor.org/info/rfc4918)], 10.4절)를 이해하고 구현한다면, 잠금들과 같은, 여러 리소스들의 다양한 측면들에 대해 요청을 조건부로 만들 수 있다.
 
-Extensibility of preconditions is only possible when the precondition
-can be safely ignored if unknown (like If-Modified-Since), when
-deployment can be assumed for a given use case, or when
-implementation is signaled by some other property of the target
-resource. This encourages a focus on mutually agreed deployment of
-common standards.
+사전조건들의 확장은 오직 사전 조건이 알려지지 않은 경우(If-Modified-Since 같이) 안전하게 무시될 수 있을 때, 배포가 주어진 용례에 대해 가정될 수 있을 때, 혹은 타겟 리소스의 어떤 다른 속성에 의해 구현됐다는 신호를 받았을 때만 가능하다. 이는 공통 표준들의 상호 동의된 배포에 초점을 맞추도록 한다.
 
 13.1.1. If-Match
 
