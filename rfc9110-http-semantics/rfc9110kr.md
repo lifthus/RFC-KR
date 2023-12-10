@@ -2835,75 +2835,41 @@ If-Match를 평가하는 오리진 서버는 만약 그 조건이 거짓으로 �
 
 "\*"와 다른 값들("\*"의 다른 인스턴스들을 포함해)을 포함하는 리스트 값과의 If-Match 헤더 필드는 구문론적으로 유효하지 않고(이리하여 생성이 허용되지 않음) 게다가 상호운용 가능할 것 같지도 않다는 것에 주의하라.
 
-13.1.2. If-None-Match
+#### 13.1.2. If-None-Match
 
-The "If-None-Match" header field makes the request method conditional
-on a recipient cache or origin server either not having any current
-representation of the target resource, when the field value is "\*",
-or having a selected representation with an entity tag that does not
-match any of those listed in the field value.
+"If-None-Match" 헤더 필드는, 필드 값이 "\*"일 때 타겟 리소스의 어떠한 현재 표현도 가지고 있지 않거나, 필드 값에 나열된 것들 중 어느 것과도 매치되지 않는 entity tag를 가진 선택된 표현을 가지고 있는, 수신자 캐시 또는 오리진 서버에 대해 요청 메소드를 조건부로 만든다.
 
-A recipient MUST use the weak comparison function when comparing
-entity tags for If-None-Match (Section 8.8.3.2), since weak entity
-tags can be used for cache validation even if there have been changes
-to the representation data.
+If-None-Match를 위한 entity tag들을 비교할 때 수신자들은 반드시(MUST) 약한 비교 함수를 사용해야 하는데(8.8.3.2절), 이는 표현 데이터에 변화가 있었다하더라도 약한 entity tag들이 캐시 검증을 위해 사용될 수 있기 때문이다.
 
      If-None-Match = "*" / #entity-tag
 
-Examples:
+예시들:
 
-If-None-Match: "xyzzy"
-If-None-Match: W/"xyzzy"
-If-None-Match: "xyzzy", "r2d2xxxx", "c3piozzzz"
-If-None-Match: W/"xyzzy", W/"r2d2xxxx", W/"c3piozzzz"
-If-None-Match: \*
+     If-None-Match: "xyzzy"
+     If-None-Match: W/"xyzzy"
+     If-None-Match: "xyzzy", "r2d2xxxx", "c3piozzzz"
+     If-None-Match: W/"xyzzy", W/"r2d2xxxx", W/"c3piozzzz"
+     If-None-Match: \*
 
-If-None-Match is primarily used in conditional GET requests to enable
-efficient updates of cached information with a minimum amount of
-transaction overhead. When a client desires to update one or more
-stored responses that have entity tags, the client SHOULD generate an
-If-None-Match header field containing a list of those entity tags
-when making a GET request; this allows recipient servers to send a
-304 (Not Modified) response to indicate when one of those stored
-responses matches the selected representation.
+If-None-Match는 주로 최소한의 트랜잭션 오버헤드와 함께 캐시된 정보의 효율적인 업데이트들을 가능하게 하기 위해 조건부 GET 요청들에서 사용된다. 클라이언트가 entity tag들을 가진 하나 이상의 저장된 응답들을 갱신하길 바랄 때, 클라이언트는 웬만하면(SHOULD) GET 요청을 만들 때 그 entity tag들을 포함하는 If-None-Match 헤더 필드를 생성해야 한다; 이는 수신자 서버들이 저장된 응답들 중 하나가 선택된 표현과 매치된다는 것을 나타내기 위해 304(Not Modified) 응답을 보낼 수 있도록 한다.
 
-If-None-Match can also be used with a value of "\*" to prevent an
-unsafe request method (e.g., PUT) from inadvertently modifying an
-existing representation of the target resource when the client
-believes that the resource does not have a current representation
-(Section 9.2.1). This is a variation on the "lost update" problem
-that might arise if more than one client attempts to create an
-initial representation for the target resource.
+If-None-Match는 또한 클라이언트가 리소스가 현재 표현을 가지고 있지 않다고 믿을 때 안전하지 않은 요청 메소드(예로, PUT)로 무심코 타겟 리소스의 기존 표현을 수정하는 것을 방지하기 위해 "\*" 값과 함께 사용될 수 있다(9.2.1절). 이는 둘 이상의 클라이언트가 타겟 리소스를 위한 초기 표현을 생성하려고 시도한다면 발생할 수 있는 "lost update" 문제의 변형이다.
 
-When an origin server receives a request that selects a
-representation and that request includes an If-None-Match header
-field, the origin server MUST evaluate the If-None-Match condition
-per Section 13.2 prior to performing the method.
+오리진 서버가 표현을 선택하는 요청을 수신하고 그 요청은 If-None-Match 헤더 필드를 포함할 때, 그 오리진 서버는 반드시(MUST) 해당 메소드를 수행하기 전에 13.2절에 따라 If-None-Match 조건을 평가해야 한다.
 
-To evaluate a received If-None-Match header field:
+수신한 If-None-Match 헤더 필드를 평가하기 위해:
 
-1.  If the field value is "\*", the condition is false if the origin
-    server has a current representation for the target resource.
+1. 만약 필드 값이 "\*"라면, 조건은 만약 오리진 서버가 타겟 리소스를 위한 현재 표현을 가지고 있다면 거짓이다.
 
-2.  If the field value is a list of entity tags, the condition is
-    false if one of the listed tags matches the entity tag of the
-    selected representation.
+2. 만약 필드 값이 entity tag들의 리스트라면, 조건은 만약 나열된 태그들 중 하나가 선택된 표현의 entity tag와 매치된다면 거짓이다.
 
-3.  Otherwise, the condition is true.
+3. 그렇지 않다면, 조건은 참이다.
 
-An origin server that evaluates an If-None-Match condition MUST NOT
-perform the requested method if the condition evaluates to false;
-instead, the origin server MUST respond with either a) the 304 (Not
-Modified) status code if the request method is GET or HEAD or b) the
-412 (Precondition Failed) status code for all other request methods.
+If-None-Match 조건을 평가하는 오리진 서버는 만약 그 조건이 거짓으로 평가된다면 절대(MUST NOT) 요청된 메소드를 수행해서는 안된다; 대신에, 그 오리진 서버는 반드시(MUST) a) 요청 메소드가 GET 혹은 HEAD라면 304(Not Modified) 상태 코드로 혹은 b) 다른 모든 요청 메소드들에 대해서는 412(Precondition Failed) 상태 코드로 응답해야 한다.
 
-Requirements on cache handling of a received If-None-Match header
-field are defined in Section 4.3.2 of [CACHING].
+수신된 If-None-Match 헤더 필드의 캐시 핸들링에 관한 요구사항들은 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 4.3.2절에 정의된다.
 
-Note that an If-None-Match header field with a list value containing
-"_" and other values (including other instances of "_") is
-syntactically invalid (therefore not allowed to be generated) and
-furthermore is unlikely to be interoperable.
+"\*"와 다른 값들("\*"의 다른 인스턴스드을 포함하는)을 포함하는 리스트 값과의 If-None-Match 헤더 필드는 구문론적으로 유효하지 않고(이리하여 생성되도록 허영되지 않음) 나아가 상호운용 가능할 것 같지도 않다는 것에 주의하라.
 
 13.1.3. If-Modified-Since
 
