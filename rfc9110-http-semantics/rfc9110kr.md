@@ -244,23 +244,24 @@ than English.
   - [12.5.5. Vary](#1255-vary)
 
 [13. 조건부 요청들](#13-조건부-요청들)
-13.1. Preconditions
-13.1.1. If-Match
-13.1.2. If-None-Match
-13.1.3. If-Modified-Since
-13.1.4. If-Unmodified-Since
-13.1.5. If-Range
-13.2. Evaluation of Preconditions
-13.2.1. When to Evaluate
-13.2.2. Precedence of Preconditions 14. Range Requests
-14.1. Range Units
-14.1.1. Range Specifiers
-14.1.2. Byte Ranges
-14.2. Range
-14.3. Accept-Ranges
-14.4. Content-Range
-14.5. Partial PUT
-14.6. Media Type multipart/byteranges
+
+- [13.1. 사전 조건들](#131-사전-조건들)
+  - [13.1.1. If-Match](#1311-if-match)
+  - [13.1.2. If-None-Match](#1312-if-none-match)
+  - [13.1.3. If-Modified-Since](#1313-if-modified-since)
+  - [13.1.4. If-Unmodified-Since](#1314-if-unmodified-since)
+  - [13.1.5. If-Range](#1315-if-range)
+    13.2. Evaluation of Preconditions
+    13.2.1. When to Evaluate
+    13.2.2. Precedence of Preconditions 14. Range Requests
+    14.1. Range Units
+    14.1.1. Range Specifiers
+    14.1.2. Byte Ranges
+    14.2. Range
+    14.3. Accept-Ranges
+    14.4. Content-Range
+    14.5. Partial PUT
+    14.6. Media Type multipart/byteranges
 
 [15. 상태 코드](#15-상태-코드)
 
@@ -2782,293 +2783,129 @@ Vary는 오리진 서버가 콘텐츠 선택에서의 변동이 Vary의 캐싱 �
 
 Vary에 Authorization 필드 이름을 보낼 필요는 없는데 이는 다른 유저를 위해 해당 응답을 재사용하는 것이 필드 정의에 의해 금지되어 있기 때문이다(11.6.2절). 마찬가지로, 만약 응답 콘텐츠가 네트워크 리전에 의해 선택되거나 영향을 받았지만, 수신자들이 한 리전에서 다른 곳으로 옮긴다 하더라도 캐시된 응답이 재사용되길 원한다면, 오리진 서버가 그러한 변동을 Vary에 나타낼 필요가 없다.
 
-13. Conditional Requests
+## 13. 조건부 요청들
 
-A conditional request is an HTTP request with one or more request
-header fields that indicate a precondition to be tested before
-applying the request method to the target resource. Section 13.2
-defines when to evaluate preconditions and their order of precedence
-when more than one precondition is present.
+조건부 요청은 타겟 리소스에 해당 요청 메소드를 적용하기 전에 테스트되야 할 사전 조건을 나타내는 하나 이상의 요청 헤더 필드를 가진 HTTP 요청이다. 13.2절은 사전 조건들이 언제 평가되어야 하는지와 하나를 초과하는 사전 조건이 존재할 때 그들의 우선순위를 정의한다.
 
-Conditional GET requests are the most efficient mechanism for HTTP
-cache updates [CACHING]. Conditionals can also be applied to state-
-changing methods, such as PUT and DELETE, to prevent the "lost
-update" problem: one client accidentally overwriting the work of
-another client that has been acting in parallel.
+조건부 GET 요청들은 HTTP 캐시 업데이트[[CACHING](https://www.rfc-editor.org/info/rfc9111)]들을 위한 가장 효율적인 메커니즘이다. 조건부들은 또한, "lost update" 문제를 방지하기 위해, PUT과 DELETE 같은, 상태-변화 메소드들에도 적용될 수 있다: "lost-update" 문제는 한 클라이언트가 병렬적으로 행해지고 있는 다른 클라이언트의 작업을 덮어쓰는 것을 말함.
 
-13.1. Preconditions
+### 13.1. 사전 조건들
 
-Preconditions are usually defined with respect to a state of the
-target resource as a whole (its current value set) or the state as
-observed in a previously obtained representation (one value in that
-set). If a resource has multiple current representations, each with
-its own observable state, a precondition will assume that the mapping
-of each request to a selected representation (Section 3.2) is
-consistent over time. Regardless, if the mapping is inconsistent or
-the server is unable to select an appropriate representation, then no
-harm will result when the precondition evaluates to false.
+사전 조건들은 보통 전체로서의 타겟 리소스(현재 값 집합)의 상태 혹은 이전에 얻어진 표현에서 관측된대로의 상태(그 집합에서의 한 값)에 대해 정의된다. 만약 리소스가, 각각 그것의 관측 가능한 상태와 함께, 여러 현재 표현들을 가진다면, 사전 조건은 선택된 표현에 대한 각 요청의 매핑(3.2절)이 시간에 걸쳐 일관적이라고 가정할 것이다. 그와 관계없이, 만약 매핑이 비일관적이거나 혹은 서버가 적절한 표현을 선택할 수 없다면, 사전 조건이 거짓으로 평가될 때는 어떤 해도 발생하지 않을 것이다.
 
-Each precondition defined below consists of a comparison between a
-set of validators obtained from prior representations of the target
-resource to the current state of validators for the selected
-representation (Section 8.8). Hence, these preconditions evaluate
-whether the state of the target resource has changed since a given
-state known by the client. The effect of such an evaluation depends
-on the method semantics and choice of conditional, as defined in
-Section 13.2.
+아래에 정의된 각 사전 조건은 타겟 리소스의 이전 표현들로부터 얻어진 검증자들의 집합과 선택된 표현을 위한 검증자들의 현재 상태 간의 비교로 구성된다(8.8절). 이리하여, 이 사전 조건들은 주어진 상태가 클라이언트에게 알려진 이후로 타겟 리소스의 해당 상태가 변경됐는지를 평가한다. 그러한 평가의 효과는 13.2절에 정의된대로, 메소드 의미체계와 조건부에 관한 선택에 의존한다.
 
-Other preconditions, defined by other specifications as extension
-fields, might place conditions on all recipients, on the state of the
-target resource in general, or on a group of resources. For
-instance, the "If" header field in WebDAV can make a request
-conditional on various aspects of multiple resources, such as locks,
-if the recipient understands and implements that field ([WEBDAV],
-Section 10.4).
+다른 사양들에 의해 확장 필드들로 정의되는, 다른 사전조건들은, 모든 수신자들에 대해, 일반적으로 타겟 리소스의 상태에 대해, 혹은 리소스들의 그룹에 대해 조건들을 둘 수도 있다. 예를 들어, WebDAV의 "If" 헤더 필드는, 만약 수신자가 해당 필드([[WEBDAV](https://www.rfc-editor.org/info/rfc4918)], 10.4절)를 이해하고 구현한다면, 잠금들과 같은, 여러 리소스들의 다양한 측면들에 대해 요청을 조건부로 만들 수 있다.
 
-Extensibility of preconditions is only possible when the precondition
-can be safely ignored if unknown (like If-Modified-Since), when
-deployment can be assumed for a given use case, or when
-implementation is signaled by some other property of the target
-resource. This encourages a focus on mutually agreed deployment of
-common standards.
+사전조건들의 확장은 오직 사전 조건이 알려지지 않은 경우(If-Modified-Since 같이) 안전하게 무시될 수 있을 때, 배포가 주어진 용례에 대해 가정될 수 있을 때, 혹은 타겟 리소스의 어떤 다른 속성에 의해 구현됐다는 신호를 받았을 때만 가능하다. 이는 공통 표준들의 상호 동의된 배포에 초점을 맞추도록 한다.
 
-13.1.1. If-Match
+#### 13.1.1. If-Match
 
-The "If-Match" header field makes the request method conditional on
-the recipient origin server either having at least one current
-representation of the target resource, when the field value is "\*",
-or having a current representation of the target resource that has an
-entity tag matching a member of the list of entity tags provided in
-the field value.
+"If-Match" 헤더 필드는, 필드 값이 "\*"일 때, 타겟 리소스의 최소 하나의 현재 표현을 가지거나, 필드 값에 제공된 엔티티 태그들의 리스트 중 한 멤버와 매치되는 엔티티 태그를 가진 타겟 리소스의 현재 표현을 가진 수신자 오리진 서버에 대해 요청 메소드를 조건부로 만든다.
 
-An origin server MUST use the strong comparison function when
-comparing entity tags for If-Match (Section 8.8.3.2), since the
-client intends this precondition to prevent the method from being
-applied if there have been any changes to the representation data.
+오리진 서버는 반드시(MUST) If-Match를 위한 entity tag들을 비교할 때 강한 비교 함수를 사용해야 하는데(8.8.3.2절), 클라이언트가 표현 데이터에 어떤 변화라도 있었을 경우 메소드가 적용되는 것을 방지하도록 이 사전조건을 의도하기 때문이다.
 
      If-Match = "*" / #entity-tag
 
-Examples:
+예시들:
 
-If-Match: "xyzzy"
-If-Match: "xyzzy", "r2d2xxxx", "c3piozzzz"
-If-Match: \*
+     If-Match: "xyzzy"
+     If-Match: "xyzzy", "r2d2xxxx", "c3piozzzz"
+     If-Match: \*
 
-If-Match is most often used with state-changing methods (e.g., POST,
-PUT, DELETE) to prevent accidental overwrites when multiple user
-agents might be acting in parallel on the same resource (i.e., to
-prevent the "lost update" problem). In general, it can be used with
-any method that involves the selection or modification of a
-representation to abort the request if the selected representation's
-current entity tag is not a member within the If-Match field value.
+If-Match는 여러 유저 에이전트들이 같은 리소스에 대해 병렬적으로 작업할 수도 있을 때 우발적으로 덮어 쓰는 경우를 방지하기 위해(즉, "lost update" 문제를 방지하기 위해) 상태-변화 메소드들(예로, POST, PUT, DELETE)과 가장 자주 함께 사용된다. 일반적으로는, 선택된 표현의 현재 entity tag가 If-Match 필드 값 내의 멤버가 아닌 경우 요청을 중단시키기 위해 표현의 선택이나 수정에 관여하는 어떠한 메소드든지와 함께 사용될 수 있다.
 
-When an origin server receives a request that selects a
-representation and that request includes an If-Match header field,
-the origin server MUST evaluate the If-Match condition per
-Section 13.2 prior to performing the method.
+오리진 서버가 표현을 선택하는 요청을 수신하고 해당 요청은 If-Match 헤더 필드를 포함할 때, 그 오리진 서버는 반드시(MUST) 메소드를 수행하기 전에 If-Match 조건을 13.2절에 따라 평가해야 한다.
 
-To evaluate a received If-Match header field:
+수신한 If-Match 헤더 필드를 평가하기 위해:
 
-1.  If the field value is "\*", the condition is true if the origin
-    server has a current representation for the target resource.
+1. 만약 필드 값이 "\*"이면, 조건은 만약 오리진 서버가 해당 타겟 리소스를 위한 현재 표현을 가지고 있으면 참이다.
 
-2.  If the field value is a list of entity tags, the condition is
-    true if any of the listed tags match the entity tag of the
-    selected representation.
+2. 만약 필드 값이 entity tag들의 리스트면, 조건은 만약 나열된 태그들 중 어느 하나라도 선택된 표현의 entity tag와 매치된다면 참이다.
 
-3.  Otherwise, the condition is false.
+3. 그렇지 않으면, 조건은 거짓이다.
 
-An origin server that evaluates an If-Match condition MUST NOT
-perform the requested method if the condition evaluates to false.
-Instead, the origin server MAY indicate that the conditional request
-failed by responding with a 412 (Precondition Failed) status code.
-Alternatively, if the request is a state-changing operation that
-appears to have already been applied to the selected representation,
-the origin server MAY respond with a 2xx (Successful) status code
-(i.e., the change requested by the user agent has already succeeded,
-but the user agent might not be aware of it, perhaps because the
-prior response was lost or an equivalent change was made by some
-other user agent).
+If-Match를 평가하는 오리진 서버는 만약 그 조건이 거짓으로 평가된다면 절대(MUST NOT) 요청된 메소드를 수행해서는 안된다. 대신에, 그 오리진 서버는 아마(MAY) 412(Precondition Failed) 상태 코드로 응답함으로써 그 조건부 요청이 실패했다고 나타낼 수 있을 것이다. 또는, 만약 요청이 이미 선택된 표현에 대해 적용된 것으로 나타나는 상태-변화 작업이라면, 오리진 서버는 아마(MAY) 2xx(Successful) 상태 코드로 응답할 수 있을 것이다(즉, 유저 에이전트에 의해 요청된 변화가 이미 성공했지만, 유저 에이전트는 그것을 인지하지 못할 수도 있는데, 아마 이전의 응답이 손실됐거나 다른 어떤 유저 에이전트에 의해 동등한 변화가 일어났기 때문일 수 있다).
 
-Allowing an origin server to send a success response when a change
-request appears to have already been applied is more efficient for
-many authoring use cases, but comes with some risk if multiple user
-agents are making change requests that are very similar but not
-cooperative. For example, multiple user agents writing to a common
-resource as a semaphore (e.g., a nonatomic increment) are likely to
-collide and potentially lose important state transitions. For those
-kinds of resources, an origin server is better off being stringent in
-sending 412 for every failed precondition on an unsafe method. In
-other cases, excluding the ETag field from a success response might
-encourage the user agent to perform a GET as its next request to
-eliminate confusion about the resource's current state.
+변화 요청이 이미 적용된 것으로 나타날 때 오리진 서버가 성공적 응답을 보내도록 허용하는 것은 많은 저작 용례들을 위해 더 효율적이지만, 여러 유저 에이전트들이 아주 비슷한 변화 요청들을 만들고 있으면서 협력적이지는 않다면 어떤 위험을 초래한다. 예를 들어, 한 공통 리소스를 세마포어로써 작성하는(예컨대, 비원자적 증가) 여러 유저 에이전트들은 충돌할 가능성이 높고 잠재적으로 중요한 상태 전환들을 잃을 수 있다. 그런 리소스 종류들에 대해, 오리진 서버는 안전하지 않은 메소드에 대한 모든 실패한 사전 조건을 위해 412를 보내는 것에 엄중한 편이 낫다. 다른 경우들에서, 성공적 응답에서 ETag 필드를 제외하는 것은 유저 에이전트가 리소스의 현재 상태에 대한 혼동을 제거하기 위해 다음 요청으로 GET을 수행하도록 장려할 수도 있다.
 
-A client MAY send an If-Match header field in a GET request to
-indicate that it would prefer a 412 (Precondition Failed) response if
-the selected representation does not match. However, this is only
-useful in range requests (Section 14) for completing a previously
-received partial representation when there is no desire for a new
-representation. If-Range (Section 13.1.5) is better suited for range
-requests when the client prefers to receive a new representation.
+클라이언트는 아마(MAY) 만약 선택된 표현이 매치되지 않으면 412(Precondition Failed) 응답을 선호한다는 것을 나타내기 위해 GET 요청에 If-Match 헤더 필드를 보낼 수도 있을 것이다. 그러나, 이는 오직 새로운 표현을 바라지 않을 때 이전에 수신한 부분 표현을 완성하기 위한 범위 요청들(14절)에서만 유용하다. 클라이언트가 새로운 표현을 수신하는 것을 선호할 때는 범위 요청들을 위해 If-Range(13.1.5절)가 더 잘 맞다.
 
-A cache or intermediary MAY ignore If-Match because its
-interoperability features are only necessary for an origin server.
+캐시 혹은 중개자는 아마(MAY) If-Match를 무시할 수도 있는데 이는 그 상호운용성 기능들이 오직 오리진 서버를 위해서만 필수적이기 때문이다.
 
-Note that an If-Match header field with a list value containing "_"
-and other values (including other instances of "_") is syntactically
-invalid (therefore not allowed to be generated) and furthermore is
-unlikely to be interoperable.
+"\*"와 다른 값들("\*"의 다른 인스턴스들을 포함해)을 포함하는 리스트 값과의 If-Match 헤더 필드는 구문론적으로 유효하지 않고(이리하여 생성이 허용되지 않음) 게다가 상호운용 가능할 것 같지도 않다는 것에 주의하라.
 
-13.1.2. If-None-Match
+#### 13.1.2. If-None-Match
 
-The "If-None-Match" header field makes the request method conditional
-on a recipient cache or origin server either not having any current
-representation of the target resource, when the field value is "\*",
-or having a selected representation with an entity tag that does not
-match any of those listed in the field value.
+"If-None-Match" 헤더 필드는, 필드 값이 "\*"일 때 타겟 리소스의 어떠한 현재 표현도 가지고 있지 않거나, 필드 값에 나열된 것들 중 어느 것과도 매치되지 않는 entity tag를 가진 선택된 표현을 가지고 있는, 수신자 캐시 또는 오리진 서버에 대해 요청 메소드를 조건부로 만든다.
 
-A recipient MUST use the weak comparison function when comparing
-entity tags for If-None-Match (Section 8.8.3.2), since weak entity
-tags can be used for cache validation even if there have been changes
-to the representation data.
+If-None-Match를 위한 entity tag들을 비교할 때 수신자들은 반드시(MUST) 약한 비교 함수를 사용해야 하는데(8.8.3.2절), 이는 표현 데이터에 변화가 있었다하더라도 약한 entity tag들이 캐시 검증을 위해 사용될 수 있기 때문이다.
 
      If-None-Match = "*" / #entity-tag
 
-Examples:
+예시들:
 
-If-None-Match: "xyzzy"
-If-None-Match: W/"xyzzy"
-If-None-Match: "xyzzy", "r2d2xxxx", "c3piozzzz"
-If-None-Match: W/"xyzzy", W/"r2d2xxxx", W/"c3piozzzz"
-If-None-Match: \*
+     If-None-Match: "xyzzy"
+     If-None-Match: W/"xyzzy"
+     If-None-Match: "xyzzy", "r2d2xxxx", "c3piozzzz"
+     If-None-Match: W/"xyzzy", W/"r2d2xxxx", W/"c3piozzzz"
+     If-None-Match: \*
 
-If-None-Match is primarily used in conditional GET requests to enable
-efficient updates of cached information with a minimum amount of
-transaction overhead. When a client desires to update one or more
-stored responses that have entity tags, the client SHOULD generate an
-If-None-Match header field containing a list of those entity tags
-when making a GET request; this allows recipient servers to send a
-304 (Not Modified) response to indicate when one of those stored
-responses matches the selected representation.
+If-None-Match는 주로 최소한의 트랜잭션 오버헤드와 함께 캐시된 정보의 효율적인 업데이트들을 가능하게 하기 위해 조건부 GET 요청들에서 사용된다. 클라이언트가 entity tag들을 가진 하나 이상의 저장된 응답들을 갱신하길 바랄 때, 클라이언트는 웬만하면(SHOULD) GET 요청을 만들 때 그 entity tag들을 포함하는 If-None-Match 헤더 필드를 생성해야 한다; 이는 수신자 서버들이 저장된 응답들 중 하나가 선택된 표현과 매치된다는 것을 나타내기 위해 304(Not Modified) 응답을 보낼 수 있도록 한다.
 
-If-None-Match can also be used with a value of "\*" to prevent an
-unsafe request method (e.g., PUT) from inadvertently modifying an
-existing representation of the target resource when the client
-believes that the resource does not have a current representation
-(Section 9.2.1). This is a variation on the "lost update" problem
-that might arise if more than one client attempts to create an
-initial representation for the target resource.
+If-None-Match는 또한 클라이언트가 리소스가 현재 표현을 가지고 있지 않다고 믿을 때 안전하지 않은 요청 메소드(예로, PUT)로 무심코 타겟 리소스의 기존 표현을 수정하는 것을 방지하기 위해 "\*" 값과 함께 사용될 수 있다(9.2.1절). 이는 둘 이상의 클라이언트가 타겟 리소스를 위한 초기 표현을 생성하려고 시도한다면 발생할 수 있는 "lost update" 문제의 변형이다.
 
-When an origin server receives a request that selects a
-representation and that request includes an If-None-Match header
-field, the origin server MUST evaluate the If-None-Match condition
-per Section 13.2 prior to performing the method.
+오리진 서버가 표현을 선택하는 요청을 수신하고 그 요청은 If-None-Match 헤더 필드를 포함할 때, 그 오리진 서버는 반드시(MUST) 해당 메소드를 수행하기 전에 13.2절에 따라 If-None-Match 조건을 평가해야 한다.
 
-To evaluate a received If-None-Match header field:
+수신한 If-None-Match 헤더 필드를 평가하기 위해:
 
-1.  If the field value is "\*", the condition is false if the origin
-    server has a current representation for the target resource.
+1. 만약 필드 값이 "\*"라면, 조건은 만약 오리진 서버가 타겟 리소스를 위한 현재 표현을 가지고 있다면 거짓이다.
 
-2.  If the field value is a list of entity tags, the condition is
-    false if one of the listed tags matches the entity tag of the
-    selected representation.
+2. 만약 필드 값이 entity tag들의 리스트라면, 조건은 만약 나열된 태그들 중 하나가 선택된 표현의 entity tag와 매치된다면 거짓이다.
 
-3.  Otherwise, the condition is true.
+3. 그렇지 않다면, 조건은 참이다.
 
-An origin server that evaluates an If-None-Match condition MUST NOT
-perform the requested method if the condition evaluates to false;
-instead, the origin server MUST respond with either a) the 304 (Not
-Modified) status code if the request method is GET or HEAD or b) the
-412 (Precondition Failed) status code for all other request methods.
+If-None-Match 조건을 평가하는 오리진 서버는 만약 그 조건이 거짓으로 평가된다면 절대(MUST NOT) 요청된 메소드를 수행해서는 안된다; 대신에, 그 오리진 서버는 반드시(MUST) a) 요청 메소드가 GET 혹은 HEAD라면 304(Not Modified) 상태 코드로 혹은 b) 다른 모든 요청 메소드들에 대해서는 412(Precondition Failed) 상태 코드로 응답해야 한다.
 
-Requirements on cache handling of a received If-None-Match header
-field are defined in Section 4.3.2 of [CACHING].
+수신된 If-None-Match 헤더 필드의 캐시 핸들링에 관한 요구사항들은 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 4.3.2절에 정의된다.
 
-Note that an If-None-Match header field with a list value containing
-"_" and other values (including other instances of "_") is
-syntactically invalid (therefore not allowed to be generated) and
-furthermore is unlikely to be interoperable.
+"\*"와 다른 값들("\*"의 다른 인스턴스드을 포함하는)을 포함하는 리스트 값과의 If-None-Match 헤더 필드는 구문론적으로 유효하지 않고(이리하여 생성되도록 허영되지 않음) 나아가 상호운용 가능할 것 같지도 않다는 것에 주의하라.
 
-13.1.3. If-Modified-Since
+#### 13.1.3. If-Modified-Since
 
-The "If-Modified-Since" header field makes a GET or HEAD request
-method conditional on the selected representation's modification date
-being more recent than the date provided in the field value.
-Transfer of the selected representation's data is avoided if that
-data has not changed.
+"If-Modified-Since" 헤더 필드는 필드 값에 제공된 날짜보다 더 최근인 선택된 표현의 수정 날짜에 대해 GET 혹은 HEAD 요청 메소드를 조건부로 만든다. 해당 데이터가 변경되지 않았다면 선택된 표현의 데이터 전송은 피해진다.
 
      If-Modified-Since = HTTP-date
 
-An example of the field is:
+필드의 한 예시는:
 
-If-Modified-Since: Sat, 29 Oct 1994 19:43:31 GMT
+     If-Modified-Since: Sat, 29 Oct 1994 19:43:31 GMTㄴ
 
-A recipient MUST ignore If-Modified-Since if the request contains an
-If-None-Match header field; the condition in If-None-Match is
-considered to be a more accurate replacement for the condition in If-
-Modified-Since, and the two are only combined for the sake of
-interoperating with older intermediaries that might not implement
-If-None-Match.
+만약 요청이 If-None-Match 헤더 필드를 포함하고 있다면 수신자는 반드시(MUST) If-Modified-Since를 무시해야한다; If-None-Match의 조건은 If-Modified-Since 조건에 대한 더 정확한 대체로 간주되고, 둘은 오직 If-None-Match를 구현하지 않을 수도 있는 더 오래된 중개자들과의 상호운용을 위해서만 결합된다.
 
-A recipient MUST ignore the If-Modified-Since header field if the
-received field value is not a valid HTTP-date, the field value has
-more than one member, or if the request method is neither GET nor
-HEAD.
+만약 수신된 필드 값이 유효한 HTTP-date가 아니거나, 필드 값이 하나를 초과하는 멤버를 가지거나, 혹은 요청 메소드가 GET 혹은 HEAD가 아니라면 수신자는 반드시(MUST) If-Modified-Since 헤더 필드를 무시해야 한다.
 
-A recipient MUST ignore the If-Modified-Since header field if the
-resource does not have a modification date available.
+만약 리소스가 가용한 수정 날짜를 가지고 있지 않다면 수신자는 반드시(MUST) If-Modified-Since 헤더 필드를 무시해야 한다.
 
-A recipient MUST interpret an If-Modified-Since field value's
-timestamp in terms of the origin server's clock.
+수신자는 반드시(MUST) If-Modified-Since 필드 값의 타임스탬프를 오리진 서버 시계 측면에서 해석해야 한다.
 
-If-Modified-Since is typically used for two distinct purposes: 1) to
-allow efficient updates of a cached representation that does not have
-an entity tag and 2) to limit the scope of a web traversal to
-resources that have recently changed.
+If-Modified-Since는 전형적으로 두 가지 서로 다른 목적들을 위해 사용된다: 1) entity tag를 갖지 않은 캐시된 표현의 효율적인 갱신을 허용하기 위해 그리고 2) 최근에 변경된 리소스들로 웹 탐색의 범위를 제한하기 위해.
 
-When used for cache updates, a cache will typically use the value of
-the cached message's Last-Modified header field to generate the field
-value of If-Modified-Since. This behavior is most interoperable for
-cases where clocks are poorly synchronized or when the server has
-chosen to only honor exact timestamp matches (due to a problem with
-Last-Modified dates that appear to go "back in time" when the origin
-server's clock is corrected or a representation is restored from an
-archived backup). However, caches occasionally generate the field
-value based on other data, such as the Date header field of the
-cached message or the clock time at which the message was received,
-particularly when the cached message does not contain a Last-Modified
-header field.
+캐시 업데이트들을 위해 사용될 때, 캐시는 전형적으로 캐시된 메시지의 Last-Modified 헤더 필드를 If-Modified-Since 필드 값을 생성하기 위해 사용할 것이다. 이 행동은 시계들이 제대로 동기화되어 있지 않거나 서버가 오직 정확히 매치되는 타임스탬프만 인정하기로 선택한(오리진 서버의 시계가 고쳐지거나 표현이 아카이브된 백업에서 회복됐을 때 "시간을 거스르는" 것으로 나타나는 Last-Modified 날짜들과의 문제 때문에) 경우들에서 가장 상호운용성 있다. 그러나, 캐시들은 가끔 다른 데이터에 기반해 필드 값을 생성하는데, 캐시된 메시지의 Date 헤더 필드 혹은 메시지가 수신된 시점의 클락 타임이 그 예이고, 특히 캐시된 메시지가 Last-Modified 헤더 필드를 포함하지 않을 때 그러하다.
 
-When used for limiting the scope of retrieval to a recent time
-window, a user agent will generate an If-Modified-Since field value
-based on either its own clock or a Date header field received from
-the server in a prior response. Origin servers that choose an exact
-timestamp match based on the selected representation's Last-Modified
-header field will not be able to help the user agent limit its data
-transfers to only those changed during the specified window.
+검색의 범위를 최근 기간으로 제한하는데 사용되는 경우, 유저 에이전트는 그 자신의 클락 혹은 이전 응답에서 서버로부터 수신한 Date 헤더 필드에 기반해 If-Modified-Since 필드 값을 생성할 것이다. 선택된 표현의 Last-Modified 헤더 필드에 기반한 정확한 타임스탬프 매치를 선택한 오리진 서버들은 유저 에이전트가 그 데이터 전송을 오직 지정된 기간 동안만 변경된 것들로 제한하도록 도울 수 없을 것이다.
 
-When an origin server receives a request that selects a
-representation and that request includes an If-Modified-Since header
-field without an If-None-Match header field, the origin server SHOULD
-evaluate the If-Modified-Since condition per Section 13.2 prior to
-performing the method.
+오리진 서버가 표현을 선택하는 요청을 수신하고 그 요청은 If-None-Match 헤더 필드 없이 If-Modified-Since 헤더 필드를 포함한다면, 오리진 서버는 웬만하면(SHOULD) 메소드를 수행하기 전에 그 If-Modified-Since 조건을 13.2절에 따라 평가해야 한다.
 
-To evaluate a received If-Modified-Since header field:
+수신한 If-Modified-Since 헤더 필드를 평가하기 위해:
 
-1.  If the selected representation's last modification date is
-    earlier or equal to the date provided in the field value, the
-    condition is false.
+1. 만약 선택된 표현의 마지막 수정 날짜가 필드 값에 제공된 날짜보다 이르거나 동일하다면, 그 조건은 거짓이다.
 
-2.  Otherwise, the condition is true.
+2. 그렇지 않으면, 그 조건은 참이다.
 
-An origin server that evaluates an If-Modified-Since condition SHOULD
-NOT perform the requested method if the condition evaluates to false;
-instead, the origin server SHOULD generate a 304 (Not Modified)
-response, including only those metadata that are useful for
-identifying or updating a previously cached response.
+If-Modified-Since 조건을 평가하는 오리진 서버는 웬만해서는(SHOULD NOT) 그 조건이 거짓으로 평가되면 요청된 메소드를 수행해서는 안된다; 대신에, 오리진 서버는 웬만하면(SHOULDE) 304(Not Modified) 응답을 생성하고, 오직 이전에 캐시된 응답을 식별하거나 갱신한즌 데 유용한 메타데이터만을 포함해야 한다.
 
-Requirements on cache handling of a received If-Modified-Since header
-field are defined in Section 4.3.2 of [CACHING].
+수신한 If-Modified-Since 헤더 필드의 캐시 핸들링에 관한 요구사항들은 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 4.3.2절에 정의된다.
 
 13.1.4. If-Unmodified-Since
 
