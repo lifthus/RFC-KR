@@ -2871,86 +2871,41 @@ If-None-Match 조건을 평가하는 오리진 서버는 만약 그 조건이 �
 
 "\*"와 다른 값들("\*"의 다른 인스턴스드을 포함하는)을 포함하는 리스트 값과의 If-None-Match 헤더 필드는 구문론적으로 유효하지 않고(이리하여 생성되도록 허영되지 않음) 나아가 상호운용 가능할 것 같지도 않다는 것에 주의하라.
 
-13.1.3. If-Modified-Since
+#### 13.1.3. If-Modified-Since
 
-The "If-Modified-Since" header field makes a GET or HEAD request
-method conditional on the selected representation's modification date
-being more recent than the date provided in the field value.
-Transfer of the selected representation's data is avoided if that
-data has not changed.
+"If-Modified-Since" 헤더 필드는 필드 값에 제공된 날짜보다 더 최근인 선택된 표현의 수정 날짜에 대해 GET 혹은 HEAD 요청 메소드를 조건부로 만든다. 해당 데이터가 변경되지 않았다면 선택된 표현의 데이터 전송은 피해진다.
 
      If-Modified-Since = HTTP-date
 
-An example of the field is:
+필드의 한 예시는:
 
-If-Modified-Since: Sat, 29 Oct 1994 19:43:31 GMT
+     If-Modified-Since: Sat, 29 Oct 1994 19:43:31 GMTㄴ
 
-A recipient MUST ignore If-Modified-Since if the request contains an
-If-None-Match header field; the condition in If-None-Match is
-considered to be a more accurate replacement for the condition in If-
-Modified-Since, and the two are only combined for the sake of
-interoperating with older intermediaries that might not implement
-If-None-Match.
+만약 요청이 If-None-Match 헤더 필드를 포함하고 있다면 수신자는 반드시(MUST) If-Modified-Since를 무시해야한다; If-None-Match의 조건은 If-Modified-Since 조건에 대한 더 정확한 대체로 간주되고, 둘은 오직 If-None-Match를 구현하지 않을 수도 있는 더 오래된 중개자들과의 상호운용을 위해서만 결합된다.
 
-A recipient MUST ignore the If-Modified-Since header field if the
-received field value is not a valid HTTP-date, the field value has
-more than one member, or if the request method is neither GET nor
-HEAD.
+만약 수신된 필드 값이 유효한 HTTP-date가 아니거나, 필드 값이 하나를 초과하는 멤버를 가지거나, 혹은 요청 메소드가 GET 혹은 HEAD가 아니라면 수신자는 반드시(MUST) If-Modified-Since 헤더 필드를 무시해야 한다.
 
-A recipient MUST ignore the If-Modified-Since header field if the
-resource does not have a modification date available.
+만약 리소스가 가용한 수정 날짜를 가지고 있지 않다면 수신자는 반드시(MUST) If-Modified-Since 헤더 필드를 무시해야 한다.
 
-A recipient MUST interpret an If-Modified-Since field value's
-timestamp in terms of the origin server's clock.
+수신자는 반드시(MUST) If-Modified-Since 필드 값의 타임스탬프를 오리진 서버 시계 측면에서 해석해야 한다.
 
-If-Modified-Since is typically used for two distinct purposes: 1) to
-allow efficient updates of a cached representation that does not have
-an entity tag and 2) to limit the scope of a web traversal to
-resources that have recently changed.
+If-Modified-Since는 전형적으로 두 가지 서로 다른 목적들을 위해 사용된다: 1) entity tag를 갖지 않은 캐시된 표현의 효율적인 갱신을 허용하기 위해 그리고 2) 최근에 변경된 리소스들로 웹 탐색의 범위를 제한하기 위해.
 
-When used for cache updates, a cache will typically use the value of
-the cached message's Last-Modified header field to generate the field
-value of If-Modified-Since. This behavior is most interoperable for
-cases where clocks are poorly synchronized or when the server has
-chosen to only honor exact timestamp matches (due to a problem with
-Last-Modified dates that appear to go "back in time" when the origin
-server's clock is corrected or a representation is restored from an
-archived backup). However, caches occasionally generate the field
-value based on other data, such as the Date header field of the
-cached message or the clock time at which the message was received,
-particularly when the cached message does not contain a Last-Modified
-header field.
+캐시 업데이트들을 위해 사용될 때, 캐시는 전형적으로 캐시된 메시지의 Last-Modified 헤더 필드를 If-Modified-Since 필드 값을 생성하기 위해 사용할 것이다. 이 행동은 시계들이 제대로 동기화되어 있지 않거나 서버가 오직 정확히 매치되는 타임스탬프만 인정하기로 선택한(오리진 서버의 시계가 고쳐지거나 표현이 아카이브된 백업에서 회복됐을 때 "시간을 거스르는" 것으로 나타나는 Last-Modified 날짜들과의 문제 때문에) 경우들에서 가장 상호운용성 있다. 그러나, 캐시들은 가끔 다른 데이터에 기반해 필드 값을 생성하는데, 캐시된 메시지의 Date 헤더 필드 혹은 메시지가 수신된 시점의 클락 타임이 그 예이고, 특히 캐시된 메시지가 Last-Modified 헤더 필드를 포함하지 않을 때 그러하다.
 
-When used for limiting the scope of retrieval to a recent time
-window, a user agent will generate an If-Modified-Since field value
-based on either its own clock or a Date header field received from
-the server in a prior response. Origin servers that choose an exact
-timestamp match based on the selected representation's Last-Modified
-header field will not be able to help the user agent limit its data
-transfers to only those changed during the specified window.
+검색의 범위를 최근 기간으로 제한하는데 사용되는 경우, 유저 에이전트는 그 자신의 클락 혹은 이전 응답에서 서버로부터 수신한 Date 헤더 필드에 기반해 If-Modified-Since 필드 값을 생성할 것이다. 선택된 표현의 Last-Modified 헤더 필드에 기반한 정확한 타임스탬프 매치를 선택한 오리진 서버들은 유저 에이전트가 그 데이터 전송을 오직 지정된 기간 동안만 변경된 것들로 제한하도록 도울 수 없을 것이다.
 
-When an origin server receives a request that selects a
-representation and that request includes an If-Modified-Since header
-field without an If-None-Match header field, the origin server SHOULD
-evaluate the If-Modified-Since condition per Section 13.2 prior to
-performing the method.
+오리진 서버가 표현을 선택하는 요청을 수신하고 그 요청은 If-None-Match 헤더 필드 없이 If-Modified-Since 헤더 필드를 포함한다면, 오리진 서버는 웬만하면(SHOULD) 메소드를 수행하기 전에 그 If-Modified-Since 조건을 13.2절에 따라 평가해야 한다.
 
-To evaluate a received If-Modified-Since header field:
+수신한 If-Modified-Since 헤더 필드를 평가하기 위해:
 
-1.  If the selected representation's last modification date is
-    earlier or equal to the date provided in the field value, the
-    condition is false.
+1. 만약 선택된 표현의 마지막 수정 날짜가 필드 값에 제공된 날짜보다 이르거나 동일하다면, 그 조건은 거짓이다.
 
-2.  Otherwise, the condition is true.
+2. 그렇지 않으면, 그 조건은 참이다.
 
-An origin server that evaluates an If-Modified-Since condition SHOULD
-NOT perform the requested method if the condition evaluates to false;
-instead, the origin server SHOULD generate a 304 (Not Modified)
-response, including only those metadata that are useful for
-identifying or updating a previously cached response.
+If-Modified-Since 조건을 평가하는 오리진 서버는 웬만해서는(SHOULD NOT) 그 조건이 거짓으로 평가되면 요청된 메소드를 수행해서는 안된다; 대신에, 오리진 서버는 웬만하면(SHOULDE) 304(Not Modified) 응답을 생성하고, 오직 이전에 캐시된 응답을 식별하거나 갱신한즌 데 유용한 메타데이터만을 포함해야 한다.
 
-Requirements on cache handling of a received If-Modified-Since header
-field are defined in Section 4.3.2 of [CACHING].
+수신한 If-Modified-Since 헤더 필드의 캐시 핸들링에 관한 요구사항들은 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 4.3.2절에 정의된다.
 
 13.1.4. If-Unmodified-Since
 
