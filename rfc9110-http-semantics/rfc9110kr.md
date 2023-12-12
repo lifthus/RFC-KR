@@ -2907,93 +2907,43 @@ If-Modified-Since 조건을 평가하는 오리진 서버는 웬만해서는(SHO
 
 수신한 If-Modified-Since 헤더 필드의 캐시 핸들링에 관한 요구사항들은 [[CACHING](https://www.rfc-editor.org/info/rfc9111)]의 4.3.2절에 정의된다.
 
-13.1.4. If-Unmodified-Since
+#### 13.1.4. If-Unmodified-Since
 
-The "If-Unmodified-Since" header field makes the request method
-conditional on the selected representation's last modification date
-being earlier than or equal to the date provided in the field value.
-This field accomplishes the same purpose as If-Match for cases where
-the user agent does not have an entity tag for the representation.
+"If-Unmodified-Since" 헤더 필드는 필드 값에 제공된 날짜와 동일하거나 그보다 이른 선택된 표현의 최종 수정 날짜에 대해 요청 메소드를 조건부로 만든다. 이 필드는 유저 에이전트가 표현을 위한 entity tag를 가지고 있지 않은 경우에 If-Match와 동일한 목적을 달성한다.
 
      If-Unmodified-Since = HTTP-date
 
-An example of the field is:
+필드의 한 예시는:
 
-If-Unmodified-Since: Sat, 29 Oct 1994 19:43:31 GMT
+     If-Unmodified-Since: Sat, 29 Oct 1994 19:43:31 GMT
 
-A recipient MUST ignore If-Unmodified-Since if the request contains
-an If-Match header field; the condition in If-Match is considered to
-be a more accurate replacement for the condition in If-Unmodified-
-Since, and the two are only combined for the sake of interoperating
-with older intermediaries that might not implement If-Match.
+수신자는 만약 요청이 If-Match 헤더 필드를 포함한다면 반드시(MUST) If-Unmodified-Since를 무시해야한다; If-Match의 조건은 If-Unmodified-Since의 조건에 대한 더 정확한 대체로 간주되고, 그 둘은 오직 If-Match를 구현하지 않을 수도 있는 더 오래된 중개자들과의 상호운용을 위해서만 조합된다.
 
-A recipient MUST ignore the If-Unmodified-Since header field if the
-received field value is not a valid HTTP-date (including when the
-field value appears to be a list of dates).
+수신자는 만약 수신된 필드 값이 유효한 HTTP-date가 아니라면(필드 값이 날짜들의 리스트로 나타나는 경우를 포함해서) 반드시(MUST) If-Unmodified-Since 헤더 필드를 무시해야 한다.
 
-A recipient MUST ignore the If-Unmodified-Since header field if the
-resource does not have a modification date available.
+수신자는 만약 리소스가 가용한 수정 날짜를 가지고 있지 않다면 반드시(MUST) If-Unmodified-Since 헤더 필드를 무시해야 한다.
 
-A recipient MUST interpret an If-Unmodified-Since field value's
-timestamp in terms of the origin server's clock.
+수신자는 반드시(MUST) If-Unmodified-Since 필드 값의 타임스탬프를 오리진 서버 클락의 관점에서 해석해야 한다.
 
-If-Unmodified-Since is most often used with state-changing methods
-(e.g., POST, PUT, DELETE) to prevent accidental overwrites when
-multiple user agents might be acting in parallel on a resource that
-does not supply entity tags with its representations (i.e., to
-prevent the "lost update" problem). In general, it can be used with
-any method that involves the selection or modification of a
-representation to abort the request if the selected representation's
-last modification date has changed since the date provided in the If-
-Unmodified-Since field value.
+If-Unmodified-Since는 여러 유저 에이전트들이 그 표현들에 대한 entity tag들을 제공하지 않는 한 리소스에 병렬적으로 작업하고 있을 수도 있을 때 우발적으로 덮어 쓰는 것을 방지하기 위해 상태-변화 메소드들(예로, POST, PUT, DELETE)과 함께 가장 자주 사용된다(즉, "lost update" 문제를 방지하기 위해서). 일반적으로는, 만약 선택된 표현의 최종수정 날짜가 If-Unmodified-Since 필드 값에 제공된 날짜로 부터 변경됐다면 그 요청을 중단하기 위해 표현의 선택이나 수정에 관여하는 어떤 메소드든지와 함께 사용될 수 있다.
 
-When an origin server receives a request that selects a
-representation and that request includes an If-Unmodified-Since
-header field without an If-Match header field, the origin server MUST
-evaluate the If-Unmodified-Since condition per Section 13.2 prior to
-performing the method.
+오리진 서버가 한 표현을 선택하는 요청을 수신하고 그 요청은 If-Match 헤더 필드는 없이 If-Unmodified-Since 헤더 필드를 포함한다면, 그 오리진 서버는 반드시(MUST) 메소드를 수행하기 전에 13.2절에 따라 If-Unmodified-Since 조건을 평가해야 한다.
 
-To evaluate a received If-Unmodified-Since header field:
+수신된 If-Unmodified-Since 헤더 필드를 평가하기 위해:
 
-1.  If the selected representation's last modification date is
-    earlier than or equal to the date provided in the field value,
-    the condition is true.
+1. 만약 선택된 표현의 최종 수정 날짜가 필드 값에 제공된 날짜보다 이르거나 동일하다면, 그 조건은 참이다.
 
-2.  Otherwise, the condition is false.
+2. 그렇지 않으면, 그 조건은 거짓이다.
 
-An origin server that evaluates an If-Unmodified-Since condition MUST
-NOT perform the requested method if the condition evaluates to false.
-Instead, the origin server MAY indicate that the conditional request
-failed by responding with a 412 (Precondition Failed) status code.
-Alternatively, if the request is a state-changing operation that
-appears to have already been applied to the selected representation,
-the origin server MAY respond with a 2xx (Successful) status code
-(i.e., the change requested by the user agent has already succeeded,
-but the user agent might not be aware of it, perhaps because the
-prior response was lost or an equivalent change was made by some
-other user agent).
+If-Unmodified-Since 조건을 평가하는 오리진 서버는 그 조건이 거짓으로 평가된다면 절대(MUST NOT) 요청된 메소드를 수행해서는 안된다. 대신에, 오리진 서버는 아마(MAY) 412(Precondition Failed) 상태 코드로 응답함으로써 조건부 요청이 실패했음을 나타낼 수 있을 것이다. 또는, 만약 요청이 선택된 표현에 이미 적용된 것으로나타나는 상태-변화 작업이라면, 오리진 서버는 아마(MAY) 2xx(Successful) 상태 코드로 응답할 수 있을 것이다(즉, 유저 에0이전트에 의한 변경 요청이 이미 성공했지만, 유저 에이전트는 그것을 인지하지 못할 수도 있는데, 아마 이전의 응답이 손실됐거나 동등한 변화가 다른 유저 에이전트에 의해 일어났기 때문일 수 있다).
 
-Allowing an origin server to send a success response when a change
-request appears to have already been applied is more efficient for
-many authoring use cases, but comes with some risk if multiple user
-agents are making change requests that are very similar but not
-cooperative. In those cases, an origin server is better off being
-stringent in sending 412 for every failed precondition on an unsafe
-method.
+변경 요청이 이미 적용된 것으로 나타날 때 오리진 서버가 성공적 응답을 보내도록 허용하는 것은 많은 저작 용례들에 대해 더 효율적이지만, 만약 여러 유저 에이전트들이 아주 비슷한 변경 요청들을 만들고 있지만 협력적이지는 않다면 어떤 위험을 초래한다. 그러한 경우들에서, 오리진 서버는 안전하지 않은 메소드에서 모든 실패한 사전 조건들에 대해 412를 보내는 것에 엄격한 편이 낫다.
 
-A client MAY send an If-Unmodified-Since header field in a GET
-request to indicate that it would prefer a 412 (Precondition Failed)
-response if the selected representation has been modified. However,
-this is only useful in range requests (Section 14) for completing a
-previously received partial representation when there is no desire
-for a new representation. If-Range (Section 13.1.5) is better suited
-for range requests when the client prefers to receive a new
-representation.
+클라이언트는 아마(MAY) 만약 선택된 표현이 수정됐다면 412(Precondition Failed) 응답을 선호한다는 것을 나타내기 위해 ET 요청에 If-Unmodified-Since 헤더 필드를 보낼 수도 있을 것이다. 그러나, 이는 오직 새로운 표현을 바라지 않을 때 이전에 수신한 부분 표현을 완성하기 위한 범위 요청들(14절)에서만 유용하다. 클라이언트가 새로운 표현을 수신하는 것을 선호할 때는 If-Range(13.1.5절)가 범위 요청들에 대해 더 잘 맞는다.
 
-A cache or intermediary MAY ignore If-Unmodified-Since because its
-interoperability features are only necessary for an origin server.
+캐시와 중개자는 아마(MAY) IF-Unmodified-Since를 무시할 수도 있는데 이는 그 상호운용성 기능들이 오직 오리진 서버를 위해서만 필수적이기 때문이다.
 
-13.1.5. If-Range
+#### 13.1.5. If-Range
 
 The "If-Range" header field provides a special conditional request
 mechanism that is similar to the If-Match and If-Unmodified-Since
