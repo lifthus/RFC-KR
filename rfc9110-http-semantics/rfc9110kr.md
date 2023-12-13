@@ -2945,76 +2945,39 @@ If-Unmodified-Since 조건을 평가하는 오리진 서버는 그 조건이 거
 
 #### 13.1.5. If-Range
 
-The "If-Range" header field provides a special conditional request
-mechanism that is similar to the If-Match and If-Unmodified-Since
-header fields but that instructs the recipient to ignore the Range
-header field if the validator doesn't match, resulting in transfer of
-the new selected representation instead of a 412 (Precondition
-Failed) response.
+"If-Range" 헤더 필드는 If-Match와 If-Unmodified-Since 헤더 필드들과 비슷하지만 만약 검증자가 매치되지 않으면 수신자가 Range 헤더 필드를 무시하도록 지시해, 412(Precondition Failed) 응답 대신에 새로운 선택된 표현의 전송을 초래하는 특수한 조건부 요청 메커니즘을 제공한다.
 
-If a client has a partial copy of a representation and wishes to have
-an up-to-date copy of the entire representation, it could use the
-Range header field with a conditional GET (using either or both of
-If-Unmodified-Since and If-Match.) However, if the precondition
-fails because the representation has been modified, the client would
-then have to make a second request to obtain the entire current
-representation.
+만약 클라이언트가 표현의 부분 카피를 가지고 있고 전체 표현의 최신 카피를 가지길 바란다면, 조건부 GET과 함께 Range 헤더 필드를 사용할 수 있다(If-Unmodified-Since와 If-Match 둘 중 하나 혹은 둘 다를 사용하며.) 그러나, 만야 표현이 수정됐기 때문에 사전조건이 실패한다면, 클라이언트는 전체 현재 상태를 얻기 위해 두번째 요청을 만들어야 한다.
 
-The "If-Range" header field allows a client to "short-circuit" the
-second request. Informally, its meaning is as follows: if the
-representation is unchanged, send me the part(s) that I am requesting
-in Range; otherwise, send me the entire representation.
+"If-Range" 헤더 필드는 클라이트가 두번째 요청을 "short-circuit"할 수 있도록 한다. 비공식적으로, 그 의미는 다음과 같다: 만약 표현이 변경되지 않아다면, 나에게 내가 Range에서 요청하고 있는 부분(들)을 보내라; 그렇지 않으면, 전체 표현을 보내라.
 
      If-Range = entity-tag / HTTP-date
 
-A valid entity-tag can be distinguished from a valid HTTP-date by
-examining the first three characters for a DQUOTE.
+유효한 entity-tag는 DQUOTE의 첫 세 문자들을 검사함으로써 유효한 HTTP-date와 구별될 수 있다.
 
-A client MUST NOT generate an If-Range header field in a request that
-does not contain a Range header field. A server MUST ignore an If-
-Range header field received in a request that does not contain a
-Range header field. An origin server MUST ignore an If-Range header
-field received in a request for a target resource that does not
-support Range requests.
+클라이언트는 절대(MUST NOT) Range 헤더 필드를 포함하지 않는 요청에 If-Range 헤더 필드를 생성해서는 안된다. 서버는 반드시(MUST) Range 헤더 필드를 포함하지 않는 요청에 수신된 If-Range 헤더 필드를 무시해야 한다. 오리진 서버는 반드시(MUST) Range 요청들을 지원하지 않는 타겟 리소스를 위한 요청에서 수신된 If-Range 헤더 필드를 무시해야 한다.
 
-A client MUST NOT generate an If-Range header field containing an
-entity tag that is marked as weak. A client MUST NOT generate an If-
-Range header field containing an HTTP-date unless the client has no
-entity tag for the corresponding representation and the date is a
-strong validator in the sense defined by Section 8.8.2.2.
+클라이언트는 절대(MUST NOT) 약한 것으로 마크된 entity tag를 포함하는 If-Range 헤더 필드를 생성해서는 안된다. 클라이언트는 클라이언트가 해당 표현을 위한 entity tag를 가지고 있지 않고 날짜가 8.8.2.2절에 정의된 의미에서와 같이 강한 검증자가 아니라면 절대(MUST NOT) HTTP-date를 포함하는 If-Range 헤더 필드를 생성해서는 안된다.
 
-A server that receives an If-Range header field on a Range request
-MUST evaluate the condition per Section 13.2 prior to performing the
-method.
+Range 요청에서 If-Range 헤더 필드를 수신하는 서버는 메소드를 수행하기 전에 반드시(MUST) 13.2절에 따라 조건을 평가해야 한다.
 
-To evaluate a received If-Range header field containing an HTTP-date:
+수신된 HTTP-date를 포함하는 If-Range 헤더 필드를 평가하려면:
 
-1.  If the HTTP-date validator provided is not a strong validator in
-    the sense defined by Section 8.8.2.2, the condition is false.
+1. 제공된 HTTP-date 검증자가 8.8.2.2절에 정의되는 의미에서 강한 검증자가 아니라면, 그 조건은 거짓이다.
 
-2.  If the HTTP-date validator provided exactly matches the
-    Last-Modified field value for the selected representation, the
-    condition is true.
+2. 제공된 HTTP-date 검증자가 선택된 표현을 위한 Last-Modified 필드 값과 정확히 매치된다면, 그 조건은 참이다.
 
-3.  Otherwise, the condition is false.
+3. 그렇지 않으면, 그 조건은 거짓이다.
 
-To evaluate a received If-Range header field containing an
-entity-tag:
+수신된 entity-tag를 포함하는 If-Range 헤더 필드를 평가하려면:
 
-1.  If the entity-tag validator provided exactly matches the ETag
-    field value for the selected representation using the strong
-    comparison function (Section 8.8.3.2), the condition is true.
+1. 제공된 entity-tag 검증자가 강한 비교 함수를 통해 선택된 표현을 위한 ETag 필드 값과 정확히 매치되는 것으로 확인되면, 그 조건은 참이다.
 
-2.  Otherwise, the condition is false.
+2. 그렇지 않으면, 그 조건은 거짓이다.
 
-A recipient of an If-Range header field MUST ignore the Range header
-field if the If-Range condition evaluates to false. Otherwise, the
-recipient SHOULD process the Range header field as requested.
+If-Range 헤더 필드의 수신자는 만약 If-Range 조건이 거짓으로 평가된다면 반드시(MUST) Range 헤더 필드를 무시해야 한다. 그렇지 않으면, 수신자는 웬만하면(SHOULD) Range 헤더 필드를 요청된대로 처리해줘야 한다.
 
-Note that the If-Range comparison is by exact match, including when
-the validator is an HTTP-date, and so it differs from the "earlier
-than or equal to" comparison used when evaluating an
-If-Unmodified-Since conditional.
+If-Range 비교는, 검증자가 HTTP-date일 때를 포함해, 정확한 매치를 통해 이루어지고 그래서 If-Unmodified-Since 조건을 평가할 때 사용되는 "이르거나 동일한" 비교와는 다르다는 것에 주의하라.
 
 13.2. Evaluation of Preconditions
 
