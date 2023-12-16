@@ -251,8 +251,8 @@ than English.
   - [13.1.3. If-Modified-Since](#1313-if-modified-since)
   - [13.1.4. If-Unmodified-Since](#1314-if-unmodified-since)
   - [13.1.5. If-Range](#1315-if-range)
-    13.2. Evaluation of Preconditions
-    13.2.1. When to Evaluate
+- [13.2. 사전 조건들의 평가](#132-사전-조건들의-평가)
+  - [13.2.1. 언제 평가할까](#1321-언제-평가할까)
     13.2.2. Precedence of Preconditions 14. Range Requests
     14.1. Range Units
     14.1.1. Range Specifiers
@@ -2979,45 +2979,17 @@ If-Range 헤더 필드의 수신자는 만약 If-Range 조건이 거짓으로 �
 
 If-Range 비교는, 검증자가 HTTP-date일 때를 포함해, 정확한 매치를 통해 이루어지고 그래서 If-Unmodified-Since 조건을 평가할 때 사용되는 "이르거나 동일한" 비교와는 다르다는 것에 주의하라.
 
-13.2. Evaluation of Preconditions
+### 13.2. 사전 조건들의 평가
 
-13.2.1. When to Evaluate
+#### 13.2.1. 언제 평가할까
 
-Except when excluded below, a recipient cache or origin server MUST
-evaluate received request preconditions after it has successfully
-performed its normal request checks and just before it would process
-the request content (if any) or perform the action associated with
-the request method. A server MUST ignore all received preconditions
-if its response to the same request without those conditions, prior
-to processing the request content, would have been a status code
-other than a 2xx (Successful) or 412 (Precondition Failed). In other
-words, redirects and failures that can be detected before significant
-processing occurs take precedence over the evaluation of
-preconditions.
+아래에서 제외될 때를 제외하고, 수신자 캐시나 오리진 서버는 반드시(MUST) 정상적인 요청 체크들을 성공적으로 수행하고 난 후 그리고 요청 콘텐츠나 (만약 있다면) 그 요청 메소드와 연관된 행동을 수행하기 직전에 수신한 요청 사전 조건들을 평가해야 한다. 서버는 만약 요청에 있는 조건들을 제외한 같은 요청에 대한 응답이, 그 요청 콘텐츠의 처리 이전에, 2xx(Successful)나 412(Precondition Failed)가 아닌 다른 것이었을 것이라면 반드시(MUST) 모든 수신된 사전 조건들을 무시해야 한다. 다시 말해, 의미있는 처리가 발생하기 전에 발견될 수 있는 리다이렉트들과 실패들은 사전 조건들의 평가보다 우선한다.
 
-A server that is not the origin server for the target resource and
-cannot act as a cache for requests on the target resource MUST NOT
-evaluate the conditional request header fields defined by this
-specification, and it MUST forward them if the request is forwarded,
-since the generating client intends that they be evaluated by a
-server that can provide a current representation. Likewise, a server
-MUST ignore the conditional request header fields defined by this
-specification when received with a request method that does not
-involve the selection or modification of a selected representation,
-such as CONNECT, OPTIONS, or TRACE.
+타겟 리소스를 위한 오리진 서버가 아니고 타겟 리소스에 대한 요청들을 위한 캐시로 동작할 수 없는 서버는 절대(MUST NOT) 이 사양에 의해 정의된 조건부 요청 헤더 필드들을 평가해서는 안되고, 만약 요청이 포워딩 됐다면 반드시(MUST) 그것들을 포워딩해야 하는데, 이는 그것들을 생성한 클라이언트가 그것들이 현재 표현을 제공할 수 있는 서버에 의해 평가되는 것을 의도하기 때문이다. 마찬가지로, 서버는 CONNECT, OPTIONS, 혹은 TRACE 같이, 선택이나 선택된 표현의 수정에 관여하지 않는 요청 메소드와 수신됐을 때는 이 사양에 의해 정의된 조건부 요청 헤더 필드들을 반드시(MUST) 무시해야 한다.
 
-Note that protocol extensions can modify the conditions under which
-preconditions are evaluated or the consequences of their evaluation.
-For example, the immutable cache directive (defined by [RFC8246])
-instructs caches to forgo forwarding conditional requests when they
-hold a fresh response.
+프로토콜 확장들은 사전 조건들이 평가되는 조건들이나 그 평가의 결과들을 수정할 수 있음에 주의하라. 예를 들어, immutable 캐시 지시자([[RFC8246](https://www.rfc-editor.org/info/rfc8246)]에 의해 정의됨)는 캐시들이 신선한 응답을 가지고 있을 때는 조건부 요청들을 포워딩하지 않도록 지시한다.
 
-Although conditional request header fields are defined as being
-usable with the HEAD method (to keep HEAD's semantics consistent with
-those of GET), there is no point in sending a conditional HEAD
-because a successful response is around the same size as a 304 (Not
-Modified) response and more useful than a 412 (Precondition Failed)
-response.
+비록 조건부 요청 헤더 필더들이 HEAD 메소드와 함께 사용될 수 있도록 정의되어 있지만(HEAD의 의미체계를 GET과 일관성 있도록), 굳이 조건부 HEAD를 보내는 것은 의미가 없는데 이는 성공적인 응답이 304(Not Modified) 응답과 거의 같은 크기이고 412(Precondition Failed) 응답보다 더 유용하기 때문이다.
 
 13.2.2. Precedence of Preconditions
 
