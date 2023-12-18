@@ -253,15 +253,17 @@ than English.
   - [13.1.5. If-Range](#1315-if-range)
 - [13.2. 사전 조건들의 평가](#132-사전-조건들의-평가)
   - [13.2.1. 언제 평가할까](#1321-언제-평가할까)
-    13.2.2. Precedence of Preconditions 14. Range Requests
-    14.1. Range Units
-    14.1.1. Range Specifiers
-    14.1.2. Byte Ranges
-    14.2. Range
-    14.3. Accept-Ranges
-    14.4. Content-Range
-    14.5. Partial PUT
-    14.6. Media Type multipart/byteranges
+  - [13.2.2 사전 조건들의 우선순위](#1322-사전-조건들의-우선순위)
+
+[14. 범위 요청들](#14-범위-요청들)
+14.1. Range Units
+14.1.1. Range Specifiers
+14.1.2. Byte Ranges
+14.2. Range
+14.3. Accept-Ranges
+14.4. Content-Range
+14.5. Partial PUT
+14.6. Media Type multipart/byteranges
 
 [15. 상태 코드](#15-상태-코드)
 
@@ -2991,75 +2993,51 @@ If-Range 비교는, 검증자가 HTTP-date일 때를 포함해, 정확한 매치
 
 비록 조건부 요청 헤더 필더들이 HEAD 메소드와 함께 사용될 수 있도록 정의되어 있지만(HEAD의 의미체계를 GET과 일관성 있도록), 굳이 조건부 HEAD를 보내는 것은 의미가 없는데 이는 성공적인 응답이 304(Not Modified) 응답과 거의 같은 크기이고 412(Precondition Failed) 응답보다 더 유용하기 때문이다.
 
-13.2.2. Precedence of Preconditions
+#### 13.2.2. 사전 조건들의 우선순위
 
-When more than one conditional request header field is present in a
-request, the order in which the fields are evaluated becomes
-important. In practice, the fields defined in this document are
-consistently implemented in a single, logical order, since "lost
-update" preconditions have more strict requirements than cache
-validation, a validated cache is more efficient than a partial
-response, and entity tags are presumed to be more accurate than date
-validators.
+요청에 하나를 초과하는 조건부 요청 헤더 필드가 존재할 때, 그 필드들이 평가되는 순서는 중요해진다. 실무적으로, 이 문서에 정의된 필드들은 일관적으로 단일의, 논리적 순서로 구현되는데, 이는 "lost update" 사전 조건들이 캐시 검증보다 더 엄격한 요구사항들을 가지고 있고, 검증된 캐시가 부분 응답보다 더 효율적이며, 그리고 entity tag들이 날짜 검증자들보다 더 정확하다고 가정되기 때문이다.
 
-A recipient cache or origin server MUST evaluate the request
-preconditions defined by this specification in the following order:
+수신자 캐시나 오리진 서버는 이 사양에 의해 정의된 요청 사전 조건들을 반드시(MUST) 다음 순서에 따라 평가해야 한다.
 
-1.  When recipient is the origin server and If-Match is present,
-    evaluate the If-Match precondition:
+1. 수신자가 오리진 서버고 If-Match가 존재한다면, If-Match 사전 조건을 다음과 같이 평가하라:
 
-    - if true, continue to step 3
+- 만약 참이면, 3단계로 진행하라
 
-    - if false, respond 412 (Precondition Failed) unless it can be
-      determined that the state-changing request has already
-      succeeded (see Section 13.1.1)
+- 만약 거짓이면, 상태-변화 요청이 이미 성공한 것으로 판단될 수 있지 않은 한(13.1.1절을 보라) 412(Precondition Failed)로 응답하라
 
-2.  When recipient is the origin server, If-Match is not present, and
-    If-Unmodified-Since is present, evaluate the If-Unmodified-Since
-    precondition:
+2. 수신자가 오리진 서버고, If-Match가 존재하지 않으며, If-Unmodified-Since가 존재한다면, If-Unmodified_since 사전 조건을 다음과 같이 평가하라:
 
-    - if true, continue to step 3
+- 만약 참이면, 3단계로 진행하라
 
-    - if false, respond 412 (Precondition Failed) unless it can be
-      determined that the state-changing request has already
-      succeeded (see Section 13.1.4)
+- 만약 거짓이면, 상태-변화 요청이 이미 성공한 것으로 판단될 수 있지 않은 한(13.1.4절을 보라) 412(Precondition Failed)로 응답하라
 
-3.  When If-None-Match is present, evaluate the If-None-Match
-    precondition:
+3. If-None-Match가 존재할 때, If-None-Match 사전 조건을 다음과 같이 평가하라:
 
-    - if true, continue to step 5
+- 만약 참이면, 5단계로 진행하라
 
-    - if false for GET/HEAD, respond 304 (Not Modified)
+- 만약 GET/HEAD에 대해 거짓이면, 304(Not Modified)로 응답하라
 
-    - if false for other methods, respond 412 (Precondition Failed)
+- 만약 이외의 메소드들에 대해 거짓이면, 412(Precondition Failed)로 응답하라
 
-4.  When the method is GET or HEAD, If-None-Match is not present, and
-    If-Modified-Since is present, evaluate the If-Modified-Since
-    precondition:
+4. 메소드가 GET 혹은 HEAD고, If-None-Match가 존재하지 않고, If-Modified-Since가 존재한다면, If-Modified-Since 사전 조건을 다음과 같이 평가하라:
 
-    - if true, continue to step 5
+- 만약 참이면, 5단계로 진행하라
 
-    - if false, respond 304 (Not Modified)
+- 만약 거짓이면, 304(Not Modified)로 응답하라
 
-5.  When the method is GET and both Range and If-Range are present,
-    evaluate the If-Range precondition:
+5. 메소드가 GET이고 Range와 If-Range 둘 다 존재할 때, If-Range 사전 조건을 다음과 같이 평가하라:
 
-    - if true and the Range is applicable to the selected
-      representation, respond 206 (Partial Content)
+- 만약 참이고 Range가 선택된 표현에 적용 가능하면, 206(Partial Content)로 응답하라
 
-    - otherwise, ignore the Range header field and respond 200 (OK)
+- 그렇지 않으면, Range 헤더 필드를 무시하고 200(OK)로 응답하라
 
-6.  Otherwise,
+6. 그렇지 않으면,
 
-    - perform the requested method and respond according to its
-      success or failure.
+- 요청된 메소드를 수행하고 그 성패에 따라 응답하라.
 
-Any extension to HTTP that defines additional conditional request
-header fields ought to define the order for evaluating such fields in
-relation to those defined in this document and other conditionals
-that might be found in practice.
+추가적인 조건부 요청 헤더필드들을 정의하는 어느 HTTP 확장이든 그러한 필드들을 이 문서에서 정의된 것들과 실무에서 발견할 수도 있는 다른 조건부들과 관련해 평가하기 위한 순서를 정의해야 한다.
 
-14. Range Requests
+## 14. 범위 요청들
 
 Clients often encounter interrupted data transfers as a result of
 canceled requests or dropped connections. When a client has stored a
