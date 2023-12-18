@@ -251,17 +251,19 @@ than English.
   - [13.1.3. If-Modified-Since](#1313-if-modified-since)
   - [13.1.4. If-Unmodified-Since](#1314-if-unmodified-since)
   - [13.1.5. If-Range](#1315-if-range)
-    13.2. Evaluation of Preconditions
-    13.2.1. When to Evaluate
-    13.2.2. Precedence of Preconditions 14. Range Requests
-    14.1. Range Units
-    14.1.1. Range Specifiers
-    14.1.2. Byte Ranges
-    14.2. Range
-    14.3. Accept-Ranges
-    14.4. Content-Range
-    14.5. Partial PUT
-    14.6. Media Type multipart/byteranges
+- [13.2. 사전 조건들의 평가](#132-사전-조건들의-평가)
+  - [13.2.1. 언제 평가할까](#1321-언제-평가할까)
+  - [13.2.2 사전 조건들의 우선순위](#1322-사전-조건들의-우선순위)
+
+[14. 범위 요청들](#14-범위-요청들)
+14.1. Range Units
+14.1.1. Range Specifiers
+14.1.2. Byte Ranges
+14.2. Range
+14.3. Accept-Ranges
+14.4. Content-Range
+14.5. Partial PUT
+14.6. Media Type multipart/byteranges
 
 [15. 상태 코드](#15-상태-코드)
 
@@ -2935,7 +2937,7 @@ If-Unmodified-Since는 여러 유저 에이전트들이 그 표현들에 대한 
 
 2. 그렇지 않으면, 그 조건은 거짓이다.
 
-If-Unmodified-Since 조건을 평가하는 오리진 서버는 그 조건이 거짓으로 평가된다면 절대(MUST NOT) 요청된 메소드를 수행해서는 안된다. 대신에, 오리진 서버는 아마(MAY) 412(Precondition Failed) 상태 코드로 응답함으로써 조건부 요청이 실패했음을 나타낼 수 있을 것이다. 또는, 만약 요청이 선택된 표현에 이미 적용된 것으로나타나는 상태-변화 작업이라면, 오리진 서버는 아마(MAY) 2xx(Successful) 상태 코드로 응답할 수 있을 것이다(즉, 유저 에0이전트에 의한 변경 요청이 이미 성공했지만, 유저 에이전트는 그것을 인지하지 못할 수도 있는데, 아마 이전의 응답이 손실됐거나 동등한 변화가 다른 유저 에이전트에 의해 일어났기 때문일 수 있다).
+If-Unmodified-Since 조건을 평가하는 오리진 서버는 그 조건이 거짓으로 평가된다면 절대(MUST NOT) 요청된 메소드를 수행해서는 안된다. 대신에, 오리진 서버는 아마(MAY) 412(Precondition Failed) 상태 코드로 응답함으로써 조건부 요청이 실패했음을 나타낼 수 있을 것이다. 또는, 만약 요청이 선택된 표현에 이미 적용된 것으로나타나는 상태-변화 작업이라면, 오리진 서버는 아마(MAY) 2xx(Successful) 상태 코드로 응답할 수 있을 것이다(즉, 유저 에이전트에 의한 변경 요청이 이미 성공했지만, 유저 에이전트는 그것을 인지하지 못할 수도 있는데, 아마 이전의 응답이 손실됐거나 동등한 변화가 다른 유저 에이전트에 의해 일어났기 때문일 수 있다).
 
 변경 요청이 이미 적용된 것으로 나타날 때 오리진 서버가 성공적 응답을 보내도록 허용하는 것은 많은 저작 용례들에 대해 더 효율적이지만, 만약 여러 유저 에이전트들이 아주 비슷한 변경 요청들을 만들고 있지만 협력적이지는 않다면 어떤 위험을 초래한다. 그러한 경우들에서, 오리진 서버는 안전하지 않은 메소드에서 모든 실패한 사전 조건들에 대해 412를 보내는 것에 엄격한 편이 낫다.
 
@@ -2945,186 +2947,97 @@ If-Unmodified-Since 조건을 평가하는 오리진 서버는 그 조건이 거
 
 #### 13.1.5. If-Range
 
-The "If-Range" header field provides a special conditional request
-mechanism that is similar to the If-Match and If-Unmodified-Since
-header fields but that instructs the recipient to ignore the Range
-header field if the validator doesn't match, resulting in transfer of
-the new selected representation instead of a 412 (Precondition
-Failed) response.
+"If-Range" 헤더 필드는 If-Match와 If-Unmodified-Since 헤더 필드들과 비슷하지만 만약 검증자가 매치되지 않으면 수신자가 Range 헤더 필드를 무시하도록 지시해, 412(Precondition Failed) 응답 대신에 새로운 선택된 표현의 전송을 초래하는 특수한 조건부 요청 메커니즘을 제공한다.
 
-If a client has a partial copy of a representation and wishes to have
-an up-to-date copy of the entire representation, it could use the
-Range header field with a conditional GET (using either or both of
-If-Unmodified-Since and If-Match.) However, if the precondition
-fails because the representation has been modified, the client would
-then have to make a second request to obtain the entire current
-representation.
+만약 클라이언트가 표현의 부분 카피를 가지고 있고 전체 표현의 최신 카피를 가지길 바란다면, 조건부 GET과 함께 Range 헤더 필드를 사용할 수 있다(If-Unmodified-Since와 If-Match 둘 중 하나 혹은 둘 다를 사용하며.) 그러나, 만야 표현이 수정됐기 때문에 사전조건이 실패한다면, 클라이언트는 전체 현재 상태를 얻기 위해 두번째 요청을 만들어야 한다.
 
-The "If-Range" header field allows a client to "short-circuit" the
-second request. Informally, its meaning is as follows: if the
-representation is unchanged, send me the part(s) that I am requesting
-in Range; otherwise, send me the entire representation.
+"If-Range" 헤더 필드는 클라이트가 두번째 요청을 "short-circuit"할 수 있도록 한다. 비공식적으로, 그 의미는 다음과 같다: 만약 표현이 변경되지 않아다면, 나에게 내가 Range에서 요청하고 있는 부분(들)을 보내라; 그렇지 않으면, 전체 표현을 보내라.
 
      If-Range = entity-tag / HTTP-date
 
-A valid entity-tag can be distinguished from a valid HTTP-date by
-examining the first three characters for a DQUOTE.
+유효한 entity-tag는 DQUOTE의 첫 세 문자들을 검사함으로써 유효한 HTTP-date와 구별될 수 있다.
 
-A client MUST NOT generate an If-Range header field in a request that
-does not contain a Range header field. A server MUST ignore an If-
-Range header field received in a request that does not contain a
-Range header field. An origin server MUST ignore an If-Range header
-field received in a request for a target resource that does not
-support Range requests.
+클라이언트는 절대(MUST NOT) Range 헤더 필드를 포함하지 않는 요청에 If-Range 헤더 필드를 생성해서는 안된다. 서버는 반드시(MUST) Range 헤더 필드를 포함하지 않는 요청에 수신된 If-Range 헤더 필드를 무시해야 한다. 오리진 서버는 반드시(MUST) Range 요청들을 지원하지 않는 타겟 리소스를 위한 요청에서 수신된 If-Range 헤더 필드를 무시해야 한다.
 
-A client MUST NOT generate an If-Range header field containing an
-entity tag that is marked as weak. A client MUST NOT generate an If-
-Range header field containing an HTTP-date unless the client has no
-entity tag for the corresponding representation and the date is a
-strong validator in the sense defined by Section 8.8.2.2.
+클라이언트는 절대(MUST NOT) 약한 것으로 마크된 entity tag를 포함하는 If-Range 헤더 필드를 생성해서는 안된다. 클라이언트는 클라이언트가 해당 표현을 위한 entity tag를 가지고 있지 않고 날짜가 8.8.2.2절에 정의된 의미에서와 같이 강한 검증자가 아니라면 절대(MUST NOT) HTTP-date를 포함하는 If-Range 헤더 필드를 생성해서는 안된다.
 
-A server that receives an If-Range header field on a Range request
-MUST evaluate the condition per Section 13.2 prior to performing the
-method.
+Range 요청에서 If-Range 헤더 필드를 수신하는 서버는 메소드를 수행하기 전에 반드시(MUST) 13.2절에 따라 조건을 평가해야 한다.
 
-To evaluate a received If-Range header field containing an HTTP-date:
+수신된 HTTP-date를 포함하는 If-Range 헤더 필드를 평가하려면:
 
-1.  If the HTTP-date validator provided is not a strong validator in
-    the sense defined by Section 8.8.2.2, the condition is false.
+1. 제공된 HTTP-date 검증자가 8.8.2.2절에 정의되는 의미에서 강한 검증자가 아니라면, 그 조건은 거짓이다.
 
-2.  If the HTTP-date validator provided exactly matches the
-    Last-Modified field value for the selected representation, the
-    condition is true.
+2. 제공된 HTTP-date 검증자가 선택된 표현을 위한 Last-Modified 필드 값과 정확히 매치된다면, 그 조건은 참이다.
 
-3.  Otherwise, the condition is false.
+3. 그렇지 않으면, 그 조건은 거짓이다.
 
-To evaluate a received If-Range header field containing an
-entity-tag:
+수신된 entity-tag를 포함하는 If-Range 헤더 필드를 평가하려면:
 
-1.  If the entity-tag validator provided exactly matches the ETag
-    field value for the selected representation using the strong
-    comparison function (Section 8.8.3.2), the condition is true.
+1. 제공된 entity-tag 검증자가 강한 비교 함수를 통해 선택된 표현을 위한 ETag 필드 값과 정확히 매치되는 것으로 확인되면, 그 조건은 참이다.
 
-2.  Otherwise, the condition is false.
+2. 그렇지 않으면, 그 조건은 거짓이다.
 
-A recipient of an If-Range header field MUST ignore the Range header
-field if the If-Range condition evaluates to false. Otherwise, the
-recipient SHOULD process the Range header field as requested.
+If-Range 헤더 필드의 수신자는 만약 If-Range 조건이 거짓으로 평가된다면 반드시(MUST) Range 헤더 필드를 무시해야 한다. 그렇지 않으면, 수신자는 웬만하면(SHOULD) Range 헤더 필드를 요청된대로 처리해줘야 한다.
 
-Note that the If-Range comparison is by exact match, including when
-the validator is an HTTP-date, and so it differs from the "earlier
-than or equal to" comparison used when evaluating an
-If-Unmodified-Since conditional.
+If-Range 비교는, 검증자가 HTTP-date일 때를 포함해, 정확한 매치를 통해 이루어지고 그래서 If-Unmodified-Since 조건을 평가할 때 사용되는 "이르거나 동일한" 비교와는 다르다는 것에 주의하라.
 
-13.2. Evaluation of Preconditions
+### 13.2. 사전 조건들의 평가
 
-13.2.1. When to Evaluate
+#### 13.2.1. 언제 평가할까
 
-Except when excluded below, a recipient cache or origin server MUST
-evaluate received request preconditions after it has successfully
-performed its normal request checks and just before it would process
-the request content (if any) or perform the action associated with
-the request method. A server MUST ignore all received preconditions
-if its response to the same request without those conditions, prior
-to processing the request content, would have been a status code
-other than a 2xx (Successful) or 412 (Precondition Failed). In other
-words, redirects and failures that can be detected before significant
-processing occurs take precedence over the evaluation of
-preconditions.
+아래에서 제외될 때를 제외하고, 수신자 캐시나 오리진 서버는 반드시(MUST) 정상적인 요청 체크들을 성공적으로 수행하고 난 후 그리고 요청 콘텐츠나 (만약 있다면) 그 요청 메소드와 연관된 행동을 수행하기 직전에 수신한 요청 사전 조건들을 평가해야 한다. 서버는 만약 요청에 있는 조건들을 제외한 같은 요청에 대한 응답이, 그 요청 콘텐츠의 처리 이전에, 2xx(Successful)나 412(Precondition Failed)가 아닌 다른 것이었을 것이라면 반드시(MUST) 모든 수신된 사전 조건들을 무시해야 한다. 다시 말해, 의미있는 처리가 발생하기 전에 발견될 수 있는 리다이렉트들과 실패들은 사전 조건들의 평가보다 우선한다.
 
-A server that is not the origin server for the target resource and
-cannot act as a cache for requests on the target resource MUST NOT
-evaluate the conditional request header fields defined by this
-specification, and it MUST forward them if the request is forwarded,
-since the generating client intends that they be evaluated by a
-server that can provide a current representation. Likewise, a server
-MUST ignore the conditional request header fields defined by this
-specification when received with a request method that does not
-involve the selection or modification of a selected representation,
-such as CONNECT, OPTIONS, or TRACE.
+타겟 리소스를 위한 오리진 서버가 아니고 타겟 리소스에 대한 요청들을 위한 캐시로 동작할 수 없는 서버는 절대(MUST NOT) 이 사양에 의해 정의된 조건부 요청 헤더 필드들을 평가해서는 안되고, 만약 요청이 포워딩 됐다면 반드시(MUST) 그것들을 포워딩해야 하는데, 이는 그것들을 생성한 클라이언트가 그것들이 현재 표현을 제공할 수 있는 서버에 의해 평가되는 것을 의도하기 때문이다. 마찬가지로, 서버는 CONNECT, OPTIONS, 혹은 TRACE 같이, 선택이나 선택된 표현의 수정에 관여하지 않는 요청 메소드와 수신됐을 때는 이 사양에 의해 정의된 조건부 요청 헤더 필드들을 반드시(MUST) 무시해야 한다.
 
-Note that protocol extensions can modify the conditions under which
-preconditions are evaluated or the consequences of their evaluation.
-For example, the immutable cache directive (defined by [RFC8246])
-instructs caches to forgo forwarding conditional requests when they
-hold a fresh response.
+프로토콜 확장들은 사전 조건들이 평가되는 조건들이나 그 평가의 결과들을 수정할 수 있음에 주의하라. 예를 들어, immutable 캐시 지시자([[RFC8246](https://www.rfc-editor.org/info/rfc8246)]에 의해 정의됨)는 캐시들이 신선한 응답을 가지고 있을 때는 조건부 요청들을 포워딩하지 않도록 지시한다.
 
-Although conditional request header fields are defined as being
-usable with the HEAD method (to keep HEAD's semantics consistent with
-those of GET), there is no point in sending a conditional HEAD
-because a successful response is around the same size as a 304 (Not
-Modified) response and more useful than a 412 (Precondition Failed)
-response.
+비록 조건부 요청 헤더 필더들이 HEAD 메소드와 함께 사용될 수 있도록 정의되어 있지만(HEAD의 의미체계를 GET과 일관성 있도록), 굳이 조건부 HEAD를 보내는 것은 의미가 없는데 이는 성공적인 응답이 304(Not Modified) 응답과 거의 같은 크기이고 412(Precondition Failed) 응답보다 더 유용하기 때문이다.
 
-13.2.2. Precedence of Preconditions
+#### 13.2.2. 사전 조건들의 우선순위
 
-When more than one conditional request header field is present in a
-request, the order in which the fields are evaluated becomes
-important. In practice, the fields defined in this document are
-consistently implemented in a single, logical order, since "lost
-update" preconditions have more strict requirements than cache
-validation, a validated cache is more efficient than a partial
-response, and entity tags are presumed to be more accurate than date
-validators.
+요청에 하나를 초과하는 조건부 요청 헤더 필드가 존재할 때, 그 필드들이 평가되는 순서는 중요해진다. 실무적으로, 이 문서에 정의된 필드들은 일관적으로 단일의, 논리적 순서로 구현되는데, 이는 "lost update" 사전 조건들이 캐시 검증보다 더 엄격한 요구사항들을 가지고 있고, 검증된 캐시가 부분 응답보다 더 효율적이며, 그리고 entity tag들이 날짜 검증자들보다 더 정확하다고 가정되기 때문이다.
 
-A recipient cache or origin server MUST evaluate the request
-preconditions defined by this specification in the following order:
+수신자 캐시나 오리진 서버는 이 사양에 의해 정의된 요청 사전 조건들을 반드시(MUST) 다음 순서에 따라 평가해야 한다.
 
-1.  When recipient is the origin server and If-Match is present,
-    evaluate the If-Match precondition:
+1. 수신자가 오리진 서버고 If-Match가 존재한다면, If-Match 사전 조건을 다음과 같이 평가하라:
 
-    - if true, continue to step 3
+- 만약 참이면, 3단계로 진행하라
 
-    - if false, respond 412 (Precondition Failed) unless it can be
-      determined that the state-changing request has already
-      succeeded (see Section 13.1.1)
+- 만약 거짓이면, 상태-변화 요청이 이미 성공한 것으로 판단될 수 있지 않은 한(13.1.1절을 보라) 412(Precondition Failed)로 응답하라
 
-2.  When recipient is the origin server, If-Match is not present, and
-    If-Unmodified-Since is present, evaluate the If-Unmodified-Since
-    precondition:
+2. 수신자가 오리진 서버고, If-Match가 존재하지 않으며, If-Unmodified-Since가 존재한다면, If-Unmodified_since 사전 조건을 다음과 같이 평가하라:
 
-    - if true, continue to step 3
+- 만약 참이면, 3단계로 진행하라
 
-    - if false, respond 412 (Precondition Failed) unless it can be
-      determined that the state-changing request has already
-      succeeded (see Section 13.1.4)
+- 만약 거짓이면, 상태-변화 요청이 이미 성공한 것으로 판단될 수 있지 않은 한(13.1.4절을 보라) 412(Precondition Failed)로 응답하라
 
-3.  When If-None-Match is present, evaluate the If-None-Match
-    precondition:
+3. If-None-Match가 존재할 때, If-None-Match 사전 조건을 다음과 같이 평가하라:
 
-    - if true, continue to step 5
+- 만약 참이면, 5단계로 진행하라
 
-    - if false for GET/HEAD, respond 304 (Not Modified)
+- 만약 GET/HEAD에 대해 거짓이면, 304(Not Modified)로 응답하라
 
-    - if false for other methods, respond 412 (Precondition Failed)
+- 만약 이외의 메소드들에 대해 거짓이면, 412(Precondition Failed)로 응답하라
 
-4.  When the method is GET or HEAD, If-None-Match is not present, and
-    If-Modified-Since is present, evaluate the If-Modified-Since
-    precondition:
+4. 메소드가 GET 혹은 HEAD고, If-None-Match가 존재하지 않고, If-Modified-Since가 존재한다면, If-Modified-Since 사전 조건을 다음과 같이 평가하라:
 
-    - if true, continue to step 5
+- 만약 참이면, 5단계로 진행하라
 
-    - if false, respond 304 (Not Modified)
+- 만약 거짓이면, 304(Not Modified)로 응답하라
 
-5.  When the method is GET and both Range and If-Range are present,
-    evaluate the If-Range precondition:
+5. 메소드가 GET이고 Range와 If-Range 둘 다 존재할 때, If-Range 사전 조건을 다음과 같이 평가하라:
 
-    - if true and the Range is applicable to the selected
-      representation, respond 206 (Partial Content)
+- 만약 참이고 Range가 선택된 표현에 적용 가능하면, 206(Partial Content)로 응답하라
 
-    - otherwise, ignore the Range header field and respond 200 (OK)
+- 그렇지 않으면, Range 헤더 필드를 무시하고 200(OK)로 응답하라
 
-6.  Otherwise,
+6. 그렇지 않으면,
 
-    - perform the requested method and respond according to its
-      success or failure.
+- 요청된 메소드를 수행하고 그 성패에 따라 응답하라.
 
-Any extension to HTTP that defines additional conditional request
-header fields ought to define the order for evaluating such fields in
-relation to those defined in this document and other conditionals
-that might be found in practice.
+추가적인 조건부 요청 헤더필드들을 정의하는 어느 HTTP 확장이든 그러한 필드들을 이 문서에서 정의된 것들과 실무에서 발견할 수도 있는 다른 조건부들과 관련해 평가하기 위한 순서를 정의해야 한다.
 
-14. Range Requests
+## 14. 범위 요청들
 
 Clients often encounter interrupted data transfers as a result of
 canceled requests or dropped connections. When a client has stored a
