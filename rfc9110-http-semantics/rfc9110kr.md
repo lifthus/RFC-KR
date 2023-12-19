@@ -3039,21 +3039,9 @@ If-Range 비교는, 검증자가 HTTP-date일 때를 포함해, 정확한 매치
 
 ## 14. 범위 요청들
 
-Clients often encounter interrupted data transfers as a result of
-canceled requests or dropped connections. When a client has stored a
-partial representation, it is desirable to request the remainder of
-that representation in a subsequent request rather than transfer the
-entire representation. Likewise, devices with limited local storage
-might benefit from being able to request only a subset of a larger
-representation, such as a single page of a very large document, or
-the dimensions of an embedded image.
+클라이언트들은 종종 취소된 요청들이나 드랍된 연결들의 결과로 중단된 데이터 전송들을 마주한다. 클라이언트가 부분 표현을 저장했을 때는, 전체 표현을 전송하는 대신에 표현의 남은 부분을 요청하는 것이 바람직하다. 마찬가지로, 제한된 로컬 스토리지를 가진 디바이스들은, 아주 큰 문서의 한 페이지나, 임베딩된 이미지의 차원들과 같이 더 큰 표현의 오직 부분집합만을 요청할 수 있는 것으로부터 이득을 얻을 수도 있다.
 
-Range requests are an OPTIONAL feature of HTTP, designed so that
-recipients not implementing this feature (or not supporting it for
-the target resource) can respond as if it is a normal GET request
-without impacting interoperability. Partial responses are indicated
-by a distinct status code to not be mistaken for full responses by
-caches that might not implement the feature.
+범위 요청들은 HTTP의 선택적인(OPTIONAL) 기능으로, 이 기능을 구현하지 않는(혹은 해당 타겟 리소스를 위해 지원하지 않는) 수신자들이 상호운용성에 영향을 주지 않으면서 정상적인 GET 요청인 것 처럼 응답할 수 있도록 설계됐다. 부분 응답들은 이 기능을 구현하지 않을 수 있는 캐시들에 의해 완전한 응답들과 혼동되지 않도록 구분되는 상태 코드로 나타내진다.
 
 14.1. Range Units
 
