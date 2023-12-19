@@ -3043,29 +3043,17 @@ If-Range 비교는, 검증자가 HTTP-date일 때를 포함해, 정확한 매치
 
 범위 요청들은 HTTP의 선택적인(OPTIONAL) 기능으로, 이 기능을 구현하지 않는(혹은 해당 타겟 리소스를 위해 지원하지 않는) 수신자들이 상호운용성에 영향을 주지 않으면서 정상적인 GET 요청인 것 처럼 응답할 수 있도록 설계됐다. 부분 응답들은 이 기능을 구현하지 않을 수 있는 캐시들에 의해 완전한 응답들과 혼동되지 않도록 구분되는 상태 코드로 나타내진다.
 
-14.1. Range Units
+### 14.1. Range Units
 
-Representation data can be partitioned into subranges when there are
-addressable structural units inherent to that data's content coding
-or media type. For example, octet (a.k.a. byte) boundaries are a
-structural unit common to all representation data, allowing
-partitions of the data to be identified as a range of bytes at some
-offset from the start or end of that data.
+표현 데이터는 그 데이터의 콘텐츠 코딩이나 미디어 타입에 내재된 주소 지정 가능한 구조적 단위들이 있을 때 서브레인지들로 분할될 수 있다. 예를 들어, octet(일명, byte) 바운더리들은 모든 표현 데이터에 공통적인 구조적 단위로, 데이터의 분할들이 그 데이터의 시작이나 끝으로 부터의 어느 오프셋에서의 바이트들의 범위로 식별될 수 있도록 한다.
 
-This general notion of a "range unit" is used in the Accept-Ranges
-(Section 14.3) response header field to advertise support for range
-requests, the Range (Section 14.2) request header field to delineate
-the parts of a representation that are requested, and the
-Content-Range (Section 14.4) header field to describe which part of a
-representation is being transferred.
+"range unit"의 일반적인 개념은 Accept-Ranges(14.3절) 응답 헤더 필드에서 범위 요청들에 대한 지원을 알리기 위해, Ragne(14.2절) 요청 헤더 필드에서 요청된 표현의 부분들을 기술하기 위해, 그리고 Content-Range(14.4절) 헤더 필드에서 표현의 어떤 부분이 전송되고 있는지를 기술하기 위해 사용된다.
 
      range-unit       = token
 
-All range unit names are case-insensitive and ought to be registered
-within the "HTTP Range Unit Registry", as defined in Section 16.5.1.
+모든 range unit 이름들은 대소문자를 구별하지 않고, 16.5.1절에 정의된대로 "HTTP Range Unit Registry" 내에 등록되어야 한다.
 
-Range units are intended to be extensible, as described in
-Section 16.5.
+Range unit들은, 16.5절에 서술된대로 확장 가능하도록 의도된다.
 
 14.1.1. Range Specifiers
 
