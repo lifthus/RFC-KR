@@ -256,14 +256,15 @@ than English.
   - [13.2.2 사전 조건들의 우선순위](#1322-사전-조건들의-우선순위)
 
 [14. 범위 요청들](#14-범위-요청들)
-14.1. Range Units
-14.1.1. Range Specifiers
-14.1.2. Byte Ranges
-14.2. Range
-14.3. Accept-Ranges
-14.4. Content-Range
-14.5. Partial PUT
-14.6. Media Type multipart/byteranges
+
+- [14.1. Range Unit들](#141-range-unit들)
+  - [14.1.1 Range Specifier들](#1411-range-specifier들)
+    14.1.2. Byte Ranges
+    14.2. Range
+    14.3. Accept-Ranges
+    14.4. Content-Range
+    14.5. Partial PUT
+    14.6. Media Type multipart/byteranges
 
 [15. 상태 코드](#15-상태-코드)
 
@@ -3043,7 +3044,7 @@ If-Range 비교는, 검증자가 HTTP-date일 때를 포함해, 정확한 매치
 
 범위 요청들은 HTTP의 선택적인(OPTIONAL) 기능으로, 이 기능을 구현하지 않는(혹은 해당 타겟 리소스를 위해 지원하지 않는) 수신자들이 상호운용성에 영향을 주지 않으면서 정상적인 GET 요청인 것 처럼 응답할 수 있도록 설계됐다. 부분 응답들은 이 기능을 구현하지 않을 수 있는 캐시들에 의해 완전한 응답들과 혼동되지 않도록 구분되는 상태 코드로 나타내진다.
 
-### 14.1. Range Units
+### 14.1. Range Unit들
 
 표현 데이터는 그 데이터의 콘텐츠 코딩이나 미디어 타입에 내재된 주소 지정 가능한 구조적 단위들이 있을 때 서브레인지들로 분할될 수 있다. 예를 들어, octet(일명, byte) 바운더리들은 모든 표현 데이터에 공통적인 구조적 단위로, 데이터의 분할들이 그 데이터의 시작이나 끝으로 부터의 어느 오프셋에서의 바이트들의 범위로 식별될 수 있도록 한다.
 
@@ -3055,7 +3056,7 @@ If-Range 비교는, 검증자가 HTTP-date일 때를 포함해, 정확한 매치
 
 Range unit들은, 16.5절에 서술된대로 확장 가능하도록 의도된다.
 
-14.1.1. Range Specifiers
+#### 14.1.1. Range Specifier들
 
 Ranges are expressed in terms of a range unit paired with a set of
 range specifiers. The range unit name determines what kinds of
