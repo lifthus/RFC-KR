@@ -3058,15 +3058,9 @@ Range unit들은, 16.5절에 서술된대로 확장 가능하도록 의도된다
 
 #### 14.1.1. Range Specifier들
 
-Ranges are expressed in terms of a range unit paired with a set of
-range specifiers. The range unit name determines what kinds of
-range-spec are applicable to its own specifiers. Hence, the
-following grammar is generic: each range unit is expected to specify
-requirements on when int-range, suffix-range, and other-range are
-allowed.
+Range들은 range specifier들의 세트와 짝지어진 range unit의 측면에서 표현된다. Range unit 이름은 어떤 range-spec이 그 자신의 specifier들에 적용 가능한지를 결정한다. 이리하여, 다음의 문법은 일반적이다: 각 range unit은 int-range, suffix-range, 그리고 other-range가 허용될 때의 요구사항들을 지정하도록 기대된다.
 
-A range request can specify a single range or a set of ranges within
-a single representation.
+범위 요청은 단일 표현 내에서의 단일 범위 혹은 범위들의 세트를 지정할 수 있다.
 
      ranges-specifier = range-unit "=" range-set
      range-set        = 1#range-spec
@@ -3074,39 +3068,27 @@ a single representation.
                       / suffix-range
                       / other-range
 
-An int-range is a range expressed as two non-negative integers or as
-one non-negative integer through to the end of the representation
-data. The range unit specifies what the integers mean (e.g., they
-might indicate unit offsets from the beginning, inclusive numbered
-parts, etc.).
+int-range는 두 비음 정수들로 혹은 이후 표현 데이터의 끝까지를 의미하는 하나의 비음 정수로 표현되는 범위이다. range unit은 정수들이 무엇을 의미하는지를 지정한다(예로, 그것들은 시작점으로부터의 단위 오프셋들이나, 번호가 매겨진 포함되는 부분들, 등등을 나타낼 수도 있다.).
 
      int-range     = first-pos "-" [ last-pos ]
      first-pos     = 1*DIGIT
      last-pos      = 1*DIGIT
 
-An int-range is invalid if the last-pos value is present and less
-than the first-pos.
+int-range는 만약 last-pos 값이 존재하고 first-pos보다 작다면 유효하지 않다.
 
-A suffix-range is a range expressed as a suffix of the representation
-data with the provided non-negative integer maximum length (in range
-units). In other words, the last N units of the representation data.
+suffix-range는 (range unit들에서) 제공된 비음 정수 최대 길이로 제한되는 표현 데이터의 suffix로 표현된 범위이다. 다시말해, 표현 데이터의 마지막 N 단위들이다.
 
      suffix-range  = "-" suffix-length
      suffix-length = 1*DIGIT
 
-To provide for extensibility, the other-range rule is a mostly
-unconstrained grammar that allows application-specific or future
-range units to define additional range specifiers.
+other-range 규칙은 애플리케이션별 혹은 차후의 range unit들이 추가적인 range specifier들을 정의할 수 있도록 하는, 확장성을 제공하기 위한 거의 제약이 없는 문법이다.
 
      other-range   = 1*( %x21-2B / %x2D-7E )
                    ; 1*(VCHAR excluding comma)
 
-A ranges-specifier is invalid if it contains any range-spec that is
-invalid or undefined for the indicated range-unit.
+ranges-specifier는 만약 그것이 지정된 range-unit에 대해 유효하지 않거나 정의되지 않은 어떠한 range-spec이라도 포함한다면 유효하지 않다.
 
-A valid ranges-specifier is "satisfiable" if it contains at least one
-range-spec that is satisfiable, as defined by the indicated
-range-unit. Otherwise, the ranges-specifier is "unsatisfiable".
+유효한 ranges-specifier는 만약 그것이, 지정된 range-unit에 의해 정의된대로, 최소 하나의 만족할 수 있는 range-spec을 포함한다면 "만족할 수 있는" 것이다. 그렇지 않으면, 그 ranges-specifier는 "만족할 수 없는" 것이다.
 
 14.1.2. Byte Ranges
 
