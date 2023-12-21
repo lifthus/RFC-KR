@@ -256,14 +256,15 @@ than English.
   - [13.2.2 사전 조건들의 우선순위](#1322-사전-조건들의-우선순위)
 
 [14. 범위 요청들](#14-범위-요청들)
-14.1. Range Units
-14.1.1. Range Specifiers
-14.1.2. Byte Ranges
-14.2. Range
-14.3. Accept-Ranges
-14.4. Content-Range
-14.5. Partial PUT
-14.6. Media Type multipart/byteranges
+
+- [14.1. Range Unit들](#141-range-unit들)
+  - [14.1.1 Range Specifier들](#1411-range-specifier들)
+    14.1.2. Byte Ranges
+    14.2. Range
+    14.3. Accept-Ranges
+    14.4. Content-Range
+    14.5. Partial PUT
+    14.6. Media Type multipart/byteranges
 
 [15. 상태 코드](#15-상태-코드)
 
@@ -3039,57 +3040,27 @@ If-Range 비교는, 검증자가 HTTP-date일 때를 포함해, 정확한 매치
 
 ## 14. 범위 요청들
 
-Clients often encounter interrupted data transfers as a result of
-canceled requests or dropped connections. When a client has stored a
-partial representation, it is desirable to request the remainder of
-that representation in a subsequent request rather than transfer the
-entire representation. Likewise, devices with limited local storage
-might benefit from being able to request only a subset of a larger
-representation, such as a single page of a very large document, or
-the dimensions of an embedded image.
+클라이언트들은 종종 취소된 요청들이나 드랍된 연결들의 결과로 중단된 데이터 전송들을 마주한다. 클라이언트가 부분 표현을 저장했을 때는, 전체 표현을 전송하는 대신에 표현의 남은 부분을 요청하는 것이 바람직하다. 마찬가지로, 제한된 로컬 스토리지를 가진 디바이스들은, 아주 큰 문서의 한 페이지나, 임베딩된 이미지의 차원들과 같이 더 큰 표현의 오직 부분집합만을 요청할 수 있는 것으로부터 이득을 얻을 수도 있다.
 
-Range requests are an OPTIONAL feature of HTTP, designed so that
-recipients not implementing this feature (or not supporting it for
-the target resource) can respond as if it is a normal GET request
-without impacting interoperability. Partial responses are indicated
-by a distinct status code to not be mistaken for full responses by
-caches that might not implement the feature.
+범위 요청들은 HTTP의 선택적인(OPTIONAL) 기능으로, 이 기능을 구현하지 않는(혹은 해당 타겟 리소스를 위해 지원하지 않는) 수신자들이 상호운용성에 영향을 주지 않으면서 정상적인 GET 요청인 것 처럼 응답할 수 있도록 설계됐다. 부분 응답들은 이 기능을 구현하지 않을 수 있는 캐시들에 의해 완전한 응답들과 혼동되지 않도록 구분되는 상태 코드로 나타내진다.
 
-14.1. Range Units
+### 14.1. Range Unit들
 
-Representation data can be partitioned into subranges when there are
-addressable structural units inherent to that data's content coding
-or media type. For example, octet (a.k.a. byte) boundaries are a
-structural unit common to all representation data, allowing
-partitions of the data to be identified as a range of bytes at some
-offset from the start or end of that data.
+표현 데이터는 그 데이터의 콘텐츠 코딩이나 미디어 타입에 내재된 주소 지정 가능한 구조적 단위들이 있을 때 서브레인지들로 분할될 수 있다. 예를 들어, octet(일명, byte) 바운더리들은 모든 표현 데이터에 공통적인 구조적 단위로, 데이터의 분할들이 그 데이터의 시작이나 끝으로 부터의 어느 오프셋에서의 바이트들의 범위로 식별될 수 있도록 한다.
 
-This general notion of a "range unit" is used in the Accept-Ranges
-(Section 14.3) response header field to advertise support for range
-requests, the Range (Section 14.2) request header field to delineate
-the parts of a representation that are requested, and the
-Content-Range (Section 14.4) header field to describe which part of a
-representation is being transferred.
+"range unit"의 일반적인 개념은 Accept-Ranges(14.3절) 응답 헤더 필드에서 범위 요청들에 대한 지원을 알리기 위해, Range(14.2절) 요청 헤더 필드에서 요청된 표현의 부분들을 기술하기 위해, 그리고 Content-Range(14.4절) 헤더 필드에서 표현의 어떤 부분이 전송되고 있는지를 기술하기 위해 사용된다.
 
      range-unit       = token
 
-All range unit names are case-insensitive and ought to be registered
-within the "HTTP Range Unit Registry", as defined in Section 16.5.1.
+모든 range unit 이름들은 대소문자를 구별하지 않고, 16.5.1절에 정의된대로 "HTTP Range Unit Registry" 내에 등록되어야 한다.
 
-Range units are intended to be extensible, as described in
-Section 16.5.
+Range unit들은, 16.5절에 서술된대로 확장 가능하도록 의도된다.
 
-14.1.1. Range Specifiers
+#### 14.1.1. Range Specifier들
 
-Ranges are expressed in terms of a range unit paired with a set of
-range specifiers. The range unit name determines what kinds of
-range-spec are applicable to its own specifiers. Hence, the
-following grammar is generic: each range unit is expected to specify
-requirements on when int-range, suffix-range, and other-range are
-allowed.
+Range들은 range specifier들의 세트와 짝지어진 range unit의 측면에서 표현된다. Range unit 이름은 어떤 range-spec이 그 자신의 specifier들에 적용 가능한지를 결정한다. 이리하여, 다음의 문법은 일반적이다: 각 range unit은 int-range, suffix-range, 그리고 other-range가 허용될 때의 요구사항들을 지정하도록 기대된다.
 
-A range request can specify a single range or a set of ranges within
-a single representation.
+범위 요청은 단일 표현 내에서의 단일 범위 혹은 범위들의 세트를 지정할 수 있다.
 
      ranges-specifier = range-unit "=" range-set
      range-set        = 1#range-spec
@@ -3097,39 +3068,27 @@ a single representation.
                       / suffix-range
                       / other-range
 
-An int-range is a range expressed as two non-negative integers or as
-one non-negative integer through to the end of the representation
-data. The range unit specifies what the integers mean (e.g., they
-might indicate unit offsets from the beginning, inclusive numbered
-parts, etc.).
+int-range는 두 비음 정수들로 혹은 이후 표현 데이터의 끝까지를 의미하는 하나의 비음 정수로 표현되는 범위이다. range unit은 정수들이 무엇을 의미하는지를 지정한다(예로, 그것들은 시작점으로부터의 단위 오프셋들이나, 번호가 매겨진 포함되는 부분들, 등등을 나타낼 수도 있다.).
 
      int-range     = first-pos "-" [ last-pos ]
      first-pos     = 1*DIGIT
      last-pos      = 1*DIGIT
 
-An int-range is invalid if the last-pos value is present and less
-than the first-pos.
+int-range는 만약 last-pos 값이 존재하고 first-pos보다 작다면 유효하지 않다.
 
-A suffix-range is a range expressed as a suffix of the representation
-data with the provided non-negative integer maximum length (in range
-units). In other words, the last N units of the representation data.
+suffix-range는 (range unit들에서) 제공된 비음 정수 최대 길이로 제한되는 표현 데이터의 suffix로 표현된 범위이다. 다시말해, 표현 데이터의 마지막 N 단위들이다.
 
      suffix-range  = "-" suffix-length
      suffix-length = 1*DIGIT
 
-To provide for extensibility, the other-range rule is a mostly
-unconstrained grammar that allows application-specific or future
-range units to define additional range specifiers.
+other-range 규칙은 애플리케이션별 혹은 차후의 range unit들이 추가적인 range specifier들을 정의할 수 있도록 하는, 확장성을 제공하기 위한 거의 제약이 없는 문법이다.
 
      other-range   = 1*( %x21-2B / %x2D-7E )
                    ; 1*(VCHAR excluding comma)
 
-A ranges-specifier is invalid if it contains any range-spec that is
-invalid or undefined for the indicated range-unit.
+ranges-specifier는 만약 그것이 지정된 range-unit에 대해 유효하지 않거나 정의되지 않은 어떠한 range-spec이라도 포함한다면 유효하지 않다.
 
-A valid ranges-specifier is "satisfiable" if it contains at least one
-range-spec that is satisfiable, as defined by the indicated
-range-unit. Otherwise, the ranges-specifier is "unsatisfiable".
+유효한 ranges-specifier는 만약 그것이, 지정된 range-unit에 의해 정의된대로, 최소 하나의 만족할 수 있는 range-spec을 포함한다면 "만족할 수 있는" 것이다. 그렇지 않으면, 그 ranges-specifier는 "만족할 수 없는" 것이다.
 
 14.1.2. Byte Ranges
 
