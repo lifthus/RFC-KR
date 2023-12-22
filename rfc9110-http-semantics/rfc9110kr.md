@@ -257,8 +257,9 @@ than English.
 
 [14. 범위 요청들](#14-범위-요청들)
 
-- [14.1. Range Unit들](#141-range-unit들)
-  - [14.1.1 Range Specifier들](#1411-range-specifier들)
+- [14.1. Range Units](#141-range-units)
+  - [14.1.1 Range Specifiers](#1411-range-specifiers)
+  - [14.1.2 Byte Ranges](#1412-byte-ranges)
     14.1.2. Byte Ranges
     14.2. Range
     14.3. Accept-Ranges
@@ -3044,7 +3045,7 @@ If-Range 비교는, 검증자가 HTTP-date일 때를 포함해, 정확한 매치
 
 범위 요청들은 HTTP의 선택적인(OPTIONAL) 기능으로, 이 기능을 구현하지 않는(혹은 해당 타겟 리소스를 위해 지원하지 않는) 수신자들이 상호운용성에 영향을 주지 않으면서 정상적인 GET 요청인 것 처럼 응답할 수 있도록 설계됐다. 부분 응답들은 이 기능을 구현하지 않을 수 있는 캐시들에 의해 완전한 응답들과 혼동되지 않도록 구분되는 상태 코드로 나타내진다.
 
-### 14.1. Range Unit들
+### 14.1. Range Units
 
 표현 데이터는 그 데이터의 콘텐츠 코딩이나 미디어 타입에 내재된 주소 지정 가능한 구조적 단위들이 있을 때 서브레인지들로 분할될 수 있다. 예를 들어, octet(일명, byte) 바운더리들은 모든 표현 데이터에 공통적인 구조적 단위로, 데이터의 분할들이 그 데이터의 시작이나 끝으로 부터의 어느 오프셋에서의 바이트들의 범위로 식별될 수 있도록 한다.
 
@@ -3056,7 +3057,7 @@ If-Range 비교는, 검증자가 HTTP-date일 때를 포함해, 정확한 매치
 
 Range unit들은, 16.5절에 서술된대로 확장 가능하도록 의도된다.
 
-#### 14.1.1. Range Specifier들
+#### 14.1.1. Range Specifiers
 
 Range들은 range specifier들의 세트와 짝지어진 range unit의 측면에서 표현된다. Range unit 이름은 어떤 range-spec이 그 자신의 specifier들에 적용 가능한지를 결정한다. 이리하여, 다음의 문법은 일반적이다: 각 range unit은 int-range, suffix-range, 그리고 other-range가 허용될 때의 요구사항들을 지정하도록 기대된다.
 
@@ -3090,88 +3091,60 @@ ranges-specifier는 만약 그것이 지정된 range-unit에 대해 유효하지
 
 유효한 ranges-specifier는 만약 그것이, 지정된 range-unit에 의해 정의된대로, 최소 하나의 만족할 수 있는 range-spec을 포함한다면 "만족할 수 있는" 것이다. 그렇지 않으면, 그 ranges-specifier는 "만족할 수 없는" 것이다.
 
-14.1.2. Byte Ranges
+#### 14.1.2. Byte Ranges
 
-The "bytes" range unit is used to express subranges of a
-representation data's octet sequence. Each byte range is expressed
-as an integer range at some offset, relative to either the beginning
-(int-range) or end (suffix-range) of the representation data. Byte
-ranges do not use the other-range specifier.
+"bytes" range unit은 표현 데이터의 옥텟 시퀀스의 서브레인지들을 표현하기 위해 사용된다. 각 byte range는, 표현 데이터의 시작(int-range)이나 끝(suffix-range) 중 하나에 상대적인 어떤 오프셋에 있는 한 정수 범위로 표현된다. Byte 범위들은 other-range specifier를 사용하지 않는다.
 
-The first-pos value in a bytes int-range gives the offset of the
-first byte in a range. The last-pos value gives the offset of the
-last byte in the range; that is, the byte positions specified are
-inclusive. Byte offsets start at zero.
+bytes int-range의 first-pos 값은 범위 내 첫 바이트의 오프셋을 제공한다. last-post 값은 범위 내 마지막 바이트의 오프셋을 제공한다; 즉, 지정된 바이트 포지션들은 포함된다. 바이트 오프셋들은 0에서 시작한다.
 
-If the representation data has a content coding applied, each byte
-range is calculated with respect to the encoded sequence of bytes,
-not the sequence of underlying bytes that would be obtained after
-decoding.
+만약 표현 데이터가 적용된 콘텐츠 코딩을 가지고 있다면, 각 byte range는, 기본적으로 디코딩된 후에 얻어질 바이트들의 시퀀스가 아니라, 바이트들의 인코딩된 시퀀스에 관하여 계산된다.
 
-Examples of bytes range specifiers:
+bytes range specifier들의 예시들:
 
-- The first 500 bytes (byte offsets 0-499, inclusive):
+- 첫 500 바이트 (바이트 오프셋 0-499, 가장자리 포함):
 
        bytes=0-499
 
-- The second 500 bytes (byte offsets 500-999, inclusive):
+- 둘째 500 바이트 (바이트 오프셋 500-999, 가장자리 포함):
 
        bytes=500-999
 
-A client can limit the number of bytes requested without knowing the
-size of the selected representation. If the last-pos value is
-absent, or if the value is greater than or equal to the current
-length of the representation data, the byte range is interpreted as
-the remainder of the representation (i.e., the server replaces the
-value of last-pos with a value that is one less than the current
-length of the selected representation).
+클라이언트는 선택된 표현의 사이즈를 알지 않고도 요청된 바이트들의 수를 제한할 수 있다. 만약 last-post 값이 없거나, 값이 표현 데이터의 현재 길이보다 크거나 같다면, byte range는 표현의 나머지 부분으로 해석된다(즉, 서버는 last-post의 값을 선택된 표현의 현재 길이보다 하나 작은 값으로 대체한다).
 
-A client can refer to the last N bytes (N > 0) of the selected
-representation using a suffix-range. If the selected representation
-is shorter than the specified suffix-length, the entire
-representation is used.
+클라이언트는 suffix-range를 사용해 선택된 표현의 마지막 N 바이트들(N>0)을 참조할 수 있다. 만약 선택된 표현이 지정된 suffix-length보다 짧다면, 전체 표현이 사용된다.
 
-Additional examples, assuming a representation of length 10000:
+길이 10000의 표현을 가정한, 추가적인 예시들:
 
-- The final 500 bytes (byte offsets 9500-9999, inclusive):
+- 최종 500 바이트 (바이트 오프셋 95000-9999, 가장자리 포함):
 
        bytes=-500
 
-  Or:
+  혹은:
 
        bytes=9500-
 
-- The first and last bytes only (bytes 0 and 9999):
+- 오직 첫 그리고 마지막 바이트 (바이트 0과 9999):
 
        bytes=0-0,-1
 
-- The first, middle, and last 1000 bytes:
+- 처음, 중간, 그리고 마지막 1000 바이트:
 
        bytes= 0-999, 4500-5499, -1000
 
-- Other valid (but not canonical) specifications of the second 500
-  bytes (byte offsets 500-999, inclusive):
+- 둘째 500 바이트의 다른 유효한(그러나 정식적인 것은 아닌) 지정들 (바이트 오프셋 500-999, 가장자리 포함):
 
        bytes=500-600,601-999
        bytes=500-700,601-999
 
-For a GET request, a valid bytes range-spec is satisfiable if it is
-either:
+GET 요청에 대해, 유효한 bytes range-spec은 만약 그것이 다음 중 하나라면 만족할 수 있다:
 
-- an int-range with a first-pos that is less than the current length
-  of the selected representation or
+- 선택된 표현의 현재 길이보다 작은 first-pos를 가진 int-range 혹은
 
-- a suffix-range with a non-zero suffix-length.
+- 0이 아닌 suffix-length를 가진 suffix-range.
 
-When a selected representation has zero length, the only satisfiable
-form of range-spec in a GET request is a suffix-range with a non-zero
-suffix-length.
+선택된 표현의 길이가 0일 때, GET 요청에서 만족할 수 있는 range-spec의 유일한 형태는 0이 아닌 suffix-length를 가진 suffix-range이다.
 
-In the byte-range syntax, first-pos, last-pos, and suffix-length are
-expressed as decimal number of octets. Since there is no predefined
-limit to the length of content, recipients MUST anticipate
-potentially large decimal numerals and prevent parsing errors due to
-integer conversion overflows.
+byte-range 구문에서, first-pos, last-pos, 그리고 suffix-length는 옥텟들의 십진수 숫자로 표현된다. 콘텐츠의 길이에 미리 정의된 제한 같은 것은 없기 때문에, 수신자들은 반드시(MUST) 잠재적으로 큰 십진수들을 예상하고 정수 변환 오버플로우들로 인한 파싱 에러들을 방지해야 한다.
 
 14.2. Range
 
