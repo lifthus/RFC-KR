@@ -3146,82 +3146,33 @@ GET 요청에 대해, 유효한 bytes range-spec은 만약 그것이 다음 중 
 
 byte-range 구문에서, first-pos, last-pos, 그리고 suffix-length는 옥텟들의 십진수 숫자로 표현된다. 콘텐츠의 길이에 미리 정의된 제한 같은 것은 없기 때문에, 수신자들은 반드시(MUST) 잠재적으로 큰 십진수들을 예상하고 정수 변환 오버플로우들로 인한 파싱 에러들을 방지해야 한다.
 
-14.2. Range
+### 14.2. Range
 
-The "Range" header field on a GET request modifies the method
-semantics to request transfer of only one or more subranges of the
-selected representation data (Section 8.1), rather than the entire
-selected representation.
+GET 요청에서의 "Range" 헤더 필드는, 전체 선택된 표현 보다는 선택된 표현 데이터의 하나 이상의 서브레인지들의 전송을 요청하기 위해(8.1절) 메소드 의미체계를 수정한다.
 
      Range = ranges-specifier
 
-A server MAY ignore the Range header field. However, origin servers
-and intermediate caches ought to support byte ranges when possible,
-since they support efficient recovery from partially failed transfers
-and partial retrieval of large representations.
+서버는 아마(MAY) Range 헤더 필드를 무시할 수도 있을 것이다. 그러나, 오리진 서버들과 중간 캐시들은 가능할 때는 byte range들을 지원해야 하는데, 이는 그것들이 부분적으로 실패한 전송들과 큰 표현들의 부분적인 검색들로부터 효율적인 복구를 지원하기 때문이다.
 
-A server MUST ignore a Range header field received with a request
-method that is unrecognized or for which range handling is not
-defined. For this specification, GET is the only method for which
-range handling is defined.
+서버는 인식되지 않거나 범위 처리가 정의되지 않은 요청 메소드와 함께 수신된 Range 헤더 필드를 반드시(MUST) 무시해야 한다. 이 사양에 대해, GET은 범위 처리가 정의된 유일한 메소드이다.
 
-An origin server MUST ignore a Range header field that contains a
-range unit it does not understand. A proxy MAY discard a Range
-header field that contains a range unit it does not understand.
+오리진 서버는 이해할 수 없는 range unit을 포함하는 Range 헤더 필드를 반드시(MUST) 무시해야 한다. 프록시는 아마(MAY) 이해할 수 없는 range unit을 포함하는 Range 헤더 필드를 버릴 수 있을 것이다.
 
-A server that supports range requests MAY ignore or reject a Range
-header field that contains an invalid ranges-specifier
-(Section 14.1.1), a ranges-specifier with more than two overlapping
-ranges, or a set of many small ranges that are not listed in
-ascending order, since these are indications of either a broken
-client or a deliberate denial-of-service attack (Section 17.15). A
-client SHOULD NOT request multiple ranges that are inherently less
-efficient to process and transfer than a single range that
-encompasses the same data.
+범위 요청들을 지원하는 서버는 아마(MAY) 유효하지 않은 ranges-specifier(14.1.1절)나, 두 개를 넘는 겹치는 범위들의 ranges-specifier나, 혹은 오름차순으로 나열되지 않은 많은 작은 범위들의 세트를 포함하는 Range 헤더 필드를 무시하거나 거부할 수 있을 것인데, 이는 이것들이 클라이언트가 망가졌다거나 의도적인 denial-of-service 공격임을 나타내는 것이기 때문이다(17.15). 클라이언트는 웬만해서는(SHOULD NOT) 같은 데이터를 포함하는 단일 범위보다 처리하고 전송하는 데 있어 본질적으로 덜 효율적인 여러 범위들에 대한 요청을 하면 안된다.
 
-A server that supports range requests MAY ignore a Range header field
-when the selected representation has no content (i.e., the selected
-representation's data is of zero length).
+범위 요청들을 지원하는 서버는 아마(MAY) 선택된 표현에 콘텐츠가 없을 때(즉, 선택된 표현의 데이터 길이가 0일 때) Range 헤더 필드를 무시할 수도 있을 것이다.
 
-A client that is requesting multiple ranges SHOULD list those ranges
-in ascending order (the order in which they would typically be
-received in a complete representation) unless there is a specific
-need to request a later part earlier. For example, a user agent
-processing a large representation with an internal catalog of parts
-might need to request later parts first, particularly if the
-representation consists of pages stored in reverse order and the user
-agent wishes to transfer one page at a time.
+여러 범위들을 요청하는 클라이언트는 나중 부분을 더 일찍 요청해야할 특정한 이유가 없다면 웬만하면(SHOULD) 그 범위들을 오름차순으로(완성된 표현에서 그것들이 전형적으로 수신될 순서) 나열해야 한다. 예를 들어, 부분들의 내부 카탈로그를 가진 큰 표현을 처리하는 유저 에이전트는 나중 부분들을 먼저 요청할 필요가 있을 수 있는데, 특히 표현이 역순으로 저장된 페이지들로 구성되어 있고 유저 에이전트는 한 번에 한 페이지씩 전달하고 싶을 때 그러하다.
 
-The Range header field is evaluated after evaluating the precondition
-header fields defined in Section 13.1, and only if the result in
-absence of the Range header field would be a 200 (OK) response. In
-other words, Range is ignored when a conditional GET would result in
-a 304 (Not Modified) response.
+Range 헤더 필드는 13.1절에 정의된 사전 조건 헤더 필드들을 평가하고 나서, 오직 Range 헤더 필드가 없을 때의 결과가 200(OK) 응답이 될 것이어야만 평가된다. 다시 말해, 조건부 GET이 304(Not Modified) 응답을 나타낼 것일 때 Range는 무시된다.
 
-The If-Range header field (Section 13.1.5) can be used as a
-precondition to applying the Range header field.
+If-Range 헤더 필드(13.1.5절)는 Range 헤더 필드를 적용하기 위한 사전 조건으로 사용될 수 있다.
 
-If all of the preconditions are true, the server supports the Range
-header field for the target resource, the received Range field-value
-contains a valid ranges-specifier with a range-unit supported for
-that target resource, and that ranges-specifier is satisfiable with
-respect to the selected representation, the server SHOULD send a 206
-(Partial Content) response with content containing one or more
-partial representations that correspond to the satisfiable
-range-spec(s) requested.
+만약 모든 사전 조건들이 참이고, 서버는 타겟 리소스에 대해 Range 헤더 필드를 지원하고, 수신된 Range 필드-값은 타겟 리소스에 대해 지원되는 range-unit과 함께 유효한 ranges-specifier를 포함하고, 그 ranges-specifier는 선택된 표현에 대해 만족할 수 있다면, 서버는 웬만하면(SHOULD) 그 만족 가능한 요청된 range-spec(들)에 해당하는 하나 이상의 부분적인 표현들을 포함하는 콘텐츠와 함께 206(Partial Content) 응답을 보내야 한다.
 
-The above does not imply that a server will send all requested
-ranges. In some cases, it may only be possible (or efficient) to
-send a portion of the requested ranges first, while expecting the
-client to re-request the remaining portions later if they are still
-desired (see Section 15.3.7).
+위 내용은 서버가 요청된 모든 범위들을 보낼 것임을 암시하지는 않는다. 어떤 경우들에서는, 클라이언트가 나머지 부분을 나중에도 여전히 바라고 있다면 재요청하는 것을 기대하면서, 요청된 범위들의 한 부분만 먼저 보내는 것만 가능할 수(혹은 효율적일 수) 있다(15.3.7절).
 
-If all of the preconditions are true, the server supports the Range
-header field for the target resource, the received Range field-value
-contains a valid ranges-specifier, and either the range-unit is not
-supported for that target resource or the ranges-specifier is
-unsatisfiable with respect to the selected representation, the server
-SHOULD send a 416 (Range Not Satisfiable) response.
+만약 모든 사전 조건들이 참이고, 서버가 타겟 리소스에 대해 Range 헤더 필드를 지원하고, 수신된 Range 필드-값이 유효한 ranges-specifier를 포함하고, range-unit은 해당 타겟 리소스에 대해 지원되지 않거나 ranges-specifier가 선택된 표현에 대해 만족할 수 없다면, 서버는 웬만하면(SHOULD) 416(Range Not Satisfiable) 응답을 보내야 한다.
 
 14.3. Accept-Ranges
 
