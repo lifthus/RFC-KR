@@ -257,8 +257,9 @@ than English.
 
 [14. 범위 요청들](#14-범위-요청들)
 
-- [14.1. Range Unit들](#141-range-unit들)
-  - [14.1.1 Range Specifier들](#1411-range-specifier들)
+- [14.1. Range Units](#141-range-units)
+  - [14.1.1 Range Specifiers](#1411-range-specifiers)
+  - [14.1.2 Byte Ranges](#1412-byte-ranges)
     14.1.2. Byte Ranges
     14.2. Range
     14.3. Accept-Ranges
@@ -3044,7 +3045,7 @@ If-Range 비교는, 검증자가 HTTP-date일 때를 포함해, 정확한 매치
 
 범위 요청들은 HTTP의 선택적인(OPTIONAL) 기능으로, 이 기능을 구현하지 않는(혹은 해당 타겟 리소스를 위해 지원하지 않는) 수신자들이 상호운용성에 영향을 주지 않으면서 정상적인 GET 요청인 것 처럼 응답할 수 있도록 설계됐다. 부분 응답들은 이 기능을 구현하지 않을 수 있는 캐시들에 의해 완전한 응답들과 혼동되지 않도록 구분되는 상태 코드로 나타내진다.
 
-### 14.1. Range Unit들
+### 14.1. Range Units
 
 표현 데이터는 그 데이터의 콘텐츠 코딩이나 미디어 타입에 내재된 주소 지정 가능한 구조적 단위들이 있을 때 서브레인지들로 분할될 수 있다. 예를 들어, octet(일명, byte) 바운더리들은 모든 표현 데이터에 공통적인 구조적 단위로, 데이터의 분할들이 그 데이터의 시작이나 끝으로 부터의 어느 오프셋에서의 바이트들의 범위로 식별될 수 있도록 한다.
 
@@ -3056,7 +3057,7 @@ If-Range 비교는, 검증자가 HTTP-date일 때를 포함해, 정확한 매치
 
 Range unit들은, 16.5절에 서술된대로 확장 가능하도록 의도된다.
 
-#### 14.1.1. Range Specifier들
+#### 14.1.1. Range Specifiers
 
 Range들은 range specifier들의 세트와 짝지어진 range unit의 측면에서 표현된다. Range unit 이름은 어떤 range-spec이 그 자신의 specifier들에 적용 가능한지를 결정한다. 이리하여, 다음의 문법은 일반적이다: 각 range unit은 int-range, suffix-range, 그리고 other-range가 허용될 때의 요구사항들을 지정하도록 기대된다.
 
@@ -3090,165 +3091,88 @@ ranges-specifier는 만약 그것이 지정된 range-unit에 대해 유효하지
 
 유효한 ranges-specifier는 만약 그것이, 지정된 range-unit에 의해 정의된대로, 최소 하나의 만족할 수 있는 range-spec을 포함한다면 "만족할 수 있는" 것이다. 그렇지 않으면, 그 ranges-specifier는 "만족할 수 없는" 것이다.
 
-14.1.2. Byte Ranges
+#### 14.1.2. Byte Ranges
 
-The "bytes" range unit is used to express subranges of a
-representation data's octet sequence. Each byte range is expressed
-as an integer range at some offset, relative to either the beginning
-(int-range) or end (suffix-range) of the representation data. Byte
-ranges do not use the other-range specifier.
+"bytes" range unit은 표현 데이터의 옥텟 시퀀스의 서브레인지들을 표현하기 위해 사용된다. 각 byte range는, 표현 데이터의 시작(int-range)이나 끝(suffix-range) 중 하나에 상대적인 어떤 오프셋에 있는 한 정수 범위로 표현된다. Byte 범위들은 other-range specifier를 사용하지 않는다.
 
-The first-pos value in a bytes int-range gives the offset of the
-first byte in a range. The last-pos value gives the offset of the
-last byte in the range; that is, the byte positions specified are
-inclusive. Byte offsets start at zero.
+bytes int-range의 first-pos 값은 범위 내 첫 바이트의 오프셋을 제공한다. last-post 값은 범위 내 마지막 바이트의 오프셋을 제공한다; 즉, 지정된 바이트 포지션들은 포함된다. 바이트 오프셋들은 0에서 시작한다.
 
-If the representation data has a content coding applied, each byte
-range is calculated with respect to the encoded sequence of bytes,
-not the sequence of underlying bytes that would be obtained after
-decoding.
+만약 표현 데이터가 적용된 콘텐츠 코딩을 가지고 있다면, 각 byte range는, 기본적으로 디코딩된 후에 얻어질 바이트들의 시퀀스가 아니라, 바이트들의 인코딩된 시퀀스에 관하여 계산된다.
 
-Examples of bytes range specifiers:
+bytes range specifier들의 예시들:
 
-- The first 500 bytes (byte offsets 0-499, inclusive):
+- 첫 500 바이트 (바이트 오프셋 0-499, 가장자리 포함):
 
        bytes=0-499
 
-- The second 500 bytes (byte offsets 500-999, inclusive):
+- 둘째 500 바이트 (바이트 오프셋 500-999, 가장자리 포함):
 
        bytes=500-999
 
-A client can limit the number of bytes requested without knowing the
-size of the selected representation. If the last-pos value is
-absent, or if the value is greater than or equal to the current
-length of the representation data, the byte range is interpreted as
-the remainder of the representation (i.e., the server replaces the
-value of last-pos with a value that is one less than the current
-length of the selected representation).
+클라이언트는 선택된 표현의 사이즈를 알지 않고도 요청된 바이트들의 수를 제한할 수 있다. 만약 last-post 값이 없거나, 값이 표현 데이터의 현재 길이보다 크거나 같다면, byte range는 표현의 나머지 부분으로 해석된다(즉, 서버는 last-post의 값을 선택된 표현의 현재 길이보다 하나 작은 값으로 대체한다).
 
-A client can refer to the last N bytes (N > 0) of the selected
-representation using a suffix-range. If the selected representation
-is shorter than the specified suffix-length, the entire
-representation is used.
+클라이언트는 suffix-range를 사용해 선택된 표현의 마지막 N 바이트들(N>0)을 참조할 수 있다. 만약 선택된 표현이 지정된 suffix-length보다 짧다면, 전체 표현이 사용된다.
 
-Additional examples, assuming a representation of length 10000:
+길이 10000의 표현을 가정한, 추가적인 예시들:
 
-- The final 500 bytes (byte offsets 9500-9999, inclusive):
+- 최종 500 바이트 (바이트 오프셋 95000-9999, 가장자리 포함):
 
        bytes=-500
 
-  Or:
+  혹은:
 
        bytes=9500-
 
-- The first and last bytes only (bytes 0 and 9999):
+- 오직 첫 그리고 마지막 바이트 (바이트 0과 9999):
 
        bytes=0-0,-1
 
-- The first, middle, and last 1000 bytes:
+- 처음, 중간, 그리고 마지막 1000 바이트:
 
        bytes= 0-999, 4500-5499, -1000
 
-- Other valid (but not canonical) specifications of the second 500
-  bytes (byte offsets 500-999, inclusive):
+- 둘째 500 바이트의 다른 유효한(그러나 정식적인 것은 아닌) 지정들 (바이트 오프셋 500-999, 가장자리 포함):
 
        bytes=500-600,601-999
        bytes=500-700,601-999
 
-For a GET request, a valid bytes range-spec is satisfiable if it is
-either:
+GET 요청에 대해, 유효한 bytes range-spec은 만약 그것이 다음 중 하나라면 만족할 수 있다:
 
-- an int-range with a first-pos that is less than the current length
-  of the selected representation or
+- 선택된 표현의 현재 길이보다 작은 first-pos를 가진 int-range 혹은
 
-- a suffix-range with a non-zero suffix-length.
+- 0이 아닌 suffix-length를 가진 suffix-range.
 
-When a selected representation has zero length, the only satisfiable
-form of range-spec in a GET request is a suffix-range with a non-zero
-suffix-length.
+선택된 표현의 길이가 0일 때, GET 요청에서 만족할 수 있는 range-spec의 유일한 형태는 0이 아닌 suffix-length를 가진 suffix-range이다.
 
-In the byte-range syntax, first-pos, last-pos, and suffix-length are
-expressed as decimal number of octets. Since there is no predefined
-limit to the length of content, recipients MUST anticipate
-potentially large decimal numerals and prevent parsing errors due to
-integer conversion overflows.
+byte-range 구문에서, first-pos, last-pos, 그리고 suffix-length는 옥텟들의 십진수 숫자로 표현된다. 콘텐츠의 길이에 미리 정의된 제한 같은 것은 없기 때문에, 수신자들은 반드시(MUST) 잠재적으로 큰 십진수들을 예상하고 정수 변환 오버플로우들로 인한 파싱 에러들을 방지해야 한다.
 
-14.2. Range
+### 14.2. Range
 
-The "Range" header field on a GET request modifies the method
-semantics to request transfer of only one or more subranges of the
-selected representation data (Section 8.1), rather than the entire
-selected representation.
+GET 요청에서의 "Range" 헤더 필드는, 전체 선택된 표현 보다는 선택된 표현 데이터의 하나 이상의 서브레인지들의 전송을 요청하기 위해(8.1절) 메소드 의미체계를 수정한다.
 
      Range = ranges-specifier
 
-A server MAY ignore the Range header field. However, origin servers
-and intermediate caches ought to support byte ranges when possible,
-since they support efficient recovery from partially failed transfers
-and partial retrieval of large representations.
+서버는 아마(MAY) Range 헤더 필드를 무시할 수도 있을 것이다. 그러나, 오리진 서버들과 중간 캐시들은 가능할 때는 byte range들을 지원해야 하는데, 이는 그것들이 부분적으로 실패한 전송들과 큰 표현들의 부분적인 검색들로부터 효율적인 복구를 지원하기 때문이다.
 
-A server MUST ignore a Range header field received with a request
-method that is unrecognized or for which range handling is not
-defined. For this specification, GET is the only method for which
-range handling is defined.
+서버는 인식되지 않거나 범위 처리가 정의되지 않은 요청 메소드와 함께 수신된 Range 헤더 필드를 반드시(MUST) 무시해야 한다. 이 사양에 대해, GET은 범위 처리가 정의된 유일한 메소드이다.
 
-An origin server MUST ignore a Range header field that contains a
-range unit it does not understand. A proxy MAY discard a Range
-header field that contains a range unit it does not understand.
+오리진 서버는 이해할 수 없는 range unit을 포함하는 Range 헤더 필드를 반드시(MUST) 무시해야 한다. 프록시는 아마(MAY) 이해할 수 없는 range unit을 포함하는 Range 헤더 필드를 버릴 수 있을 것이다.
 
-A server that supports range requests MAY ignore or reject a Range
-header field that contains an invalid ranges-specifier
-(Section 14.1.1), a ranges-specifier with more than two overlapping
-ranges, or a set of many small ranges that are not listed in
-ascending order, since these are indications of either a broken
-client or a deliberate denial-of-service attack (Section 17.15). A
-client SHOULD NOT request multiple ranges that are inherently less
-efficient to process and transfer than a single range that
-encompasses the same data.
+범위 요청들을 지원하는 서버는 아마(MAY) 유효하지 않은 ranges-specifier(14.1.1절)나, 두 개를 넘는 겹치는 범위들의 ranges-specifier나, 혹은 오름차순으로 나열되지 않은 많은 작은 범위들의 세트를 포함하는 Range 헤더 필드를 무시하거나 거부할 수 있을 것인데, 이는 이것들이 클라이언트가 망가졌다거나 의도적인 denial-of-service 공격임을 나타내는 것이기 때문이다(17.15). 클라이언트는 웬만해서는(SHOULD NOT) 같은 데이터를 포함하는 단일 범위보다 처리하고 전송하는 데 있어 본질적으로 덜 효율적인 여러 범위들에 대한 요청을 하면 안된다.
 
-A server that supports range requests MAY ignore a Range header field
-when the selected representation has no content (i.e., the selected
-representation's data is of zero length).
+범위 요청들을 지원하는 서버는 아마(MAY) 선택된 표현에 콘텐츠가 없을 때(즉, 선택된 표현의 데이터 길이가 0일 때) Range 헤더 필드를 무시할 수도 있을 것이다.
 
-A client that is requesting multiple ranges SHOULD list those ranges
-in ascending order (the order in which they would typically be
-received in a complete representation) unless there is a specific
-need to request a later part earlier. For example, a user agent
-processing a large representation with an internal catalog of parts
-might need to request later parts first, particularly if the
-representation consists of pages stored in reverse order and the user
-agent wishes to transfer one page at a time.
+여러 범위들을 요청하는 클라이언트는 나중 부분을 더 일찍 요청해야할 특정한 이유가 없다면 웬만하면(SHOULD) 그 범위들을 오름차순으로(완성된 표현에서 그것들이 전형적으로 수신될 순서) 나열해야 한다. 예를 들어, 부분들의 내부 카탈로그를 가진 큰 표현을 처리하는 유저 에이전트는 나중 부분들을 먼저 요청할 필요가 있을 수 있는데, 특히 표현이 역순으로 저장된 페이지들로 구성되어 있고 유저 에이전트는 한 번에 한 페이지씩 전달하고 싶을 때 그러하다.
 
-The Range header field is evaluated after evaluating the precondition
-header fields defined in Section 13.1, and only if the result in
-absence of the Range header field would be a 200 (OK) response. In
-other words, Range is ignored when a conditional GET would result in
-a 304 (Not Modified) response.
+Range 헤더 필드는 13.1절에 정의된 사전 조건 헤더 필드들을 평가하고 나서, 오직 Range 헤더 필드가 없을 때의 결과가 200(OK) 응답이 될 것이어야만 평가된다. 다시 말해, 조건부 GET이 304(Not Modified) 응답을 나타낼 것일 때 Range는 무시된다.
 
-The If-Range header field (Section 13.1.5) can be used as a
-precondition to applying the Range header field.
+If-Range 헤더 필드(13.1.5절)는 Range 헤더 필드를 적용하기 위한 사전 조건으로 사용될 수 있다.
 
-If all of the preconditions are true, the server supports the Range
-header field for the target resource, the received Range field-value
-contains a valid ranges-specifier with a range-unit supported for
-that target resource, and that ranges-specifier is satisfiable with
-respect to the selected representation, the server SHOULD send a 206
-(Partial Content) response with content containing one or more
-partial representations that correspond to the satisfiable
-range-spec(s) requested.
+만약 모든 사전 조건들이 참이고, 서버는 타겟 리소스에 대해 Range 헤더 필드를 지원하고, 수신된 Range 필드-값은 타겟 리소스에 대해 지원되는 range-unit과 함께 유효한 ranges-specifier를 포함하고, 그 ranges-specifier는 선택된 표현에 대해 만족할 수 있다면, 서버는 웬만하면(SHOULD) 그 만족 가능한 요청된 range-spec(들)에 해당하는 하나 이상의 부분적인 표현들을 포함하는 콘텐츠와 함께 206(Partial Content) 응답을 보내야 한다.
 
-The above does not imply that a server will send all requested
-ranges. In some cases, it may only be possible (or efficient) to
-send a portion of the requested ranges first, while expecting the
-client to re-request the remaining portions later if they are still
-desired (see Section 15.3.7).
+위 내용은 서버가 요청된 모든 범위들을 보낼 것임을 암시하지는 않는다. 어떤 경우들에서는, 클라이언트가 나머지 부분을 나중에도 여전히 바라고 있다면 재요청하는 것을 기대하면서, 요청된 범위들의 한 부분만 먼저 보내는 것만 가능할 수(혹은 효율적일 수) 있다(15.3.7절).
 
-If all of the preconditions are true, the server supports the Range
-header field for the target resource, the received Range field-value
-contains a valid ranges-specifier, and either the range-unit is not
-supported for that target resource or the ranges-specifier is
-unsatisfiable with respect to the selected representation, the server
-SHOULD send a 416 (Range Not Satisfiable) response.
+만약 모든 사전 조건들이 참이고, 서버가 타겟 리소스에 대해 Range 헤더 필드를 지원하고, 수신된 Range 필드-값이 유효한 ranges-specifier를 포함하고, range-unit은 해당 타겟 리소스에 대해 지원되지 않거나 ranges-specifier가 선택된 표현에 대해 만족할 수 없다면, 서버는 웬만하면(SHOULD) 416(Range Not Satisfiable) 응답을 보내야 한다.
 
 14.3. Accept-Ranges
 
