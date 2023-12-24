@@ -260,10 +260,10 @@ than English.
 - [14.1. Range Units](#141-range-units)
   - [14.1.1 Range Specifiers](#1411-range-specifiers)
   - [14.1.2 Byte Ranges](#1412-byte-ranges)
-    14.1.2. Byte Ranges
-    14.2. Range
-    14.3. Accept-Ranges
-    14.4. Content-Range
+  - [14.1.2. Byte Ranges](#1412-byte-ranges)
+  - [14.2. Range](#142-range)
+  - [14.3. Accept-Ranges](#143-accept-ranges)
+  - [14.4. Content-Range](#144-content-range)
     14.5. Partial PUT
     14.6. Media Type multipart/byteranges
 
@@ -3174,49 +3174,32 @@ If-Range 헤더 필드(13.1.5절)는 Range 헤더 필드를 적용하기 위한 
 
 만약 모든 사전 조건들이 참이고, 서버가 타겟 리소스에 대해 Range 헤더 필드를 지원하고, 수신된 Range 필드-값이 유효한 ranges-specifier를 포함하고, range-unit은 해당 타겟 리소스에 대해 지원되지 않거나 ranges-specifier가 선택된 표현에 대해 만족할 수 없다면, 서버는 웬만하면(SHOULD) 416(Range Not Satisfiable) 응답을 보내야 한다.
 
-14.3. Accept-Ranges
+### 14.3. Accept-Ranges
 
-The "Accept-Ranges" field in a response indicates whether an upstream
-server supports range requests for the target resource.
+응답의 "Accept-Ranges" 필드는 업스트림 서버가 타겟 리소스에 대해 범위 요청들을 지원하는지를 나타낸다.
 
      Accept-Ranges     = acceptable-ranges
      acceptable-ranges = 1#range-unit
 
-For example, a server that supports byte-range requests
-(Section 14.1.2) can send the field
+예를 들어, byte-range 요청들(14.1.2절)을 지원하는 서버는 다음 필드를
 
-Accept-Ranges: bytes
+     Accept-Ranges: bytes
 
-to indicate that it supports byte range requests for that target
-resource, thereby encouraging its use by the client for future
-partial requests on the same request path. Range units are defined
-in Section 14.1.
+타겟 리소스에 대해 byte range 요청들을 지원한다는 것을 나타내기 위해 보낼 수 있으며, 그리하여 같은 요청 경로 상의 차후의 부분 요청들에 대해 클라이언트에 의해 그것이 사용되는 것을 장려한다. Range unit들은 14.1절에 정의된다.
 
-A client MAY generate range requests regardless of having received an
-Accept-Ranges field. The information only provides advice for the
-sake of improving performance and reducing unnecessary network
-transfers.
+클라이언트는 아마(MAY) Accept-Ranges 필드를 수신한 것과 관계없이 범위 요청들을 생성할 수도 있을 것이다. 이 필드의 정보는 오직 성능을 향상시키고 불필요한 네트워크 전송들을 줄이기 위한 조언만을 제공한다.
 
-Conversely, a client MUST NOT assume that receiving an Accept-Ranges
-field means that future range requests will return partial responses.
-The content might change, the server might only support range
-requests at certain times or under certain conditions, or a different
-intermediary might process the next request.
+거꾸로, 클라이언트는 절대(MUST NOT) Accept-Ranges 필드를 수신한 것이 차후 범위 요청들이 부분 응답들을 반환할 것임을 의미한다고 가정해서는 안된다. 콘텐츠는 변경될 수도 있고, 서버는 오직 특정 시간대나 특정 조건들 아래서만 범위 요청들을 지원할 수도 있으며, 혹은 다른 중개자가 다음 요청을 처리할 수도 있다.
 
-A server that does not support any kind of range request for the
-target resource MAY send
+타겟 리소스에 대해 어떠한 범위 요청들도 지원핮 않는 서버는 아마(MAY) 다음을 보내서
 
-Accept-Ranges: none
+     Accept-Ranges: none
 
-to advise the client not to attempt a range request on the same
-request path. The range unit "none" is reserved for this purpose.
+클라이언트가 같은 요청 경로 상에서 범위 요청을 시도하지 않도록 조언할 수도 있을 것이다. range unit "none"은 이 목적을 위해 예약된다.
 
-The Accept-Ranges field MAY be sent in a trailer section, but is
-preferred to be sent as a header field because the information is
-particularly useful for restarting large information transfers that
-have failed in mid-content (before the trailer section is received).
+Accept-Ranges 필드는 아마(MAY) 트레일러 섹션에서 보내질 수도 있지만, 헤더 필드로서 보내지는 것이 선호되는데 이는 해당 정보가 중간 콘텐츠에서 실패한(트레일러 섹션이 수신되기 전에) 큰 정보 전송들을 재시작하는 데 특히 유용하기 때문이다.
 
-14.4. Content-Range
+### 14.4. Content-Range
 
 The "Content-Range" header field is sent in a single part 206
 (Partial Content) response to indicate the partial range of the
