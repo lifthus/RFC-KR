@@ -3212,7 +3212,7 @@ Accept-Ranges 필드는 아마(MAY) 트레일러 섹션에서 보내질 수도 �
 
      complete-length     = 1*DIGIT
 
-만약 206(Partial Content) 응답이 수신자가 이해하지 못하는 range unit(14.1절)과 함께 있는 Content-Range 헤더 필드를 포함한다면, 수신자는 절대(MUST NOT) 그것을 저장되ㅐ내 표현과 재결합하려고 시도해서는 안된다. 그러한 메시지를 수신하는 프록시는 웬만하면(SHOULD) 그것을 다운스트림으로 포워딩해야 한다.
+만약 206(Partial Content) 응답이 수신자가 이해하지 못하는 range unit(14.1절)과 함께 있는 Content-Range 헤더 필드를 포함한다면, 수신자는 절대(MUST NOT) 그것을 저장된 표현과 재결합하려고 시도해서는 안된다. 그러한 메시지를 수신하는 프록시는 웬만하면(SHOULD) 그것을 다운스트림으로 포워딩해야 한다.
 
 Content-Range는 또한, 14.5절에 기술된대로, 클라이언트와 오리진 서버 간의 사적인 합의들에 기반하여 부분적 PUT을 요청하기 위해 요청 수정자로서 보내질 수도 있다. 서버는 Content-Range 지원이 정의되지 않은 메소드와의 요청에서 수신한 Content-Range 헤더 필드를 반드시(MUST) 무시해야 한다.
 
