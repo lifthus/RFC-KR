@@ -3201,13 +3201,7 @@ Accept-Ranges 필드는 아마(MAY) 트레일러 섹션에서 보내질 수도 �
 
 ### 14.4. Content-Range
 
-The "Content-Range" header field is sent in a single part 206
-(Partial Content) response to indicate the partial range of the
-selected representation enclosed as the message content, sent in each
-part of a multipart 206 response to indicate the range enclosed
-within each body part (Section 14.6), and sent in 416 (Range Not
-Satisfiable) responses to provide information about the selected
-representation.
+"Content-Range" 헤더 필드는 메시지 콘텐츠로 동봉된 선택된 표현의 부분적 범위를 나타내기 위해서 단일 부분 206(Partial Content) 응답에서 보내지고, 각 바디 파트 내에 동봉된 범위를 나타내기 위해 multipart 206 응답의 각 부분에서 보내지며(14.6절), 선택된 표현에 관한 정보를 제공하기 위해 416(Range Not Satisfiable) 응답들에서 보내진다.
 
      Content-Range       = range-unit SP
                            ( range-resp / unsatisfied-range )
@@ -3218,71 +3212,45 @@ representation.
 
      complete-length     = 1*DIGIT
 
-If a 206 (Partial Content) response contains a Content-Range header
-field with a range unit (Section 14.1) that the recipient does not
-understand, the recipient MUST NOT attempt to recombine it with a
-stored representation. A proxy that receives such a message SHOULD
-forward it downstream.
+만약 206(Partial Content) 응답이 수신자가 이해하지 못하는 range unit(14.1절)과 함께 있는 Content-Range 헤더 필드를 포함한다면, 수신자는 절대(MUST NOT) 그것을 저장되ㅐ내 표현과 재결합하려고 시도해서는 안된다. 그러한 메시지를 수신하는 프록시는 웬만하면(SHOULD) 그것을 다운스트림으로 포워딩해야 한다.
 
-Content-Range might also be sent as a request modifier to request a
-partial PUT, as described in Section 14.5, based on private
-agreements between client and origin server. A server MUST ignore a
-Content-Range header field received in a request with a method for
-which Content-Range support is not defined.
+Content-Range는 또한, 14.5절에 기술된대로, 클라이언트와 오리진 서버 간의 사적인 합의들에 기반하여 부분적 PUT을 요청하기 위해 요청 수정자로서 보내질 수도 있다. 서버는 Content-Range 지원이 정의되지 않은 메소드와의 요청에서 수신한 Content-Range 헤더 필드를 반드시(MUST) 무시해야 한다.
 
-For byte ranges, a sender SHOULD indicate the complete length of the
-representation from which the range has been extracted, unless the
-complete length is unknown or difficult to determine. An asterisk
-character ("\*") in place of the complete-length indicates that the
-representation length was unknown when the header field was
-generated.
+byte range들에 대해, 발신자는 완전한 길이가 알려지지 않았거나 결정하기 어려운 것이 아닌 한, 웬만하면(SHOULD) 범위가 추출된 표현의 완전한 길이를 나타내야 한다. complete-length 대신의 한 asterisk 문자("\*")는 헤더 필드가 생성됐을 때 표현 길이가 알려지지 않았음을 나타낸다.
 
-The following example illustrates when the complete length of the
-selected representation is known by the sender to be 1234 bytes:
+다음 예시는 선택된 표현의 완전한 길이가 1234 바이트라고 송신자에게 알려졌을 때를 보여준다:
 
-Content-Range: bytes 42-1233/1234
+     Content-Range: bytes 42-1233/1234
 
-and this second example illustrates when the complete length is
-unknown:
+그리고 이 두번째 예시는 완전한 길이가 알려지지 않았을 때를 보여준다.
 
-Content-Range: bytes 42-1233/\*
+     Content-Range: bytes 42-1233/\*
 
-A Content-Range field value is invalid if it contains a range-resp
-that has a last-pos value less than its first-pos value, or a
-complete-length value less than or equal to its last-pos value. The
-recipient of an invalid Content-Range MUST NOT attempt to recombine
-the received content with a stored representation.
+Content-Range 필드 값은 만약 그것이 first-pos 값보다 작은 last-pos 값을 가지거나, 혹은 last-pos 값보다 작거나 같은 complete-length 값을 가지는 range-resp를 포함한다면 유효하지 않다. 유효하지 않은 Content-Range의 수신자는 절대(MUST NOT) 수신한 콘텐츠를 저장된 표현과 재결합하려고 시도해서는 안된다.
 
-A server generating a 416 (Range Not Satisfiable) response to a byte-
-range request SHOULD send a Content-Range header field with an
-unsatisfied-range value, as in the following example:
+byte-range 요청에 대해 416(Range Not Satisfiable) 응답을 생성하는 서버는 웬만하면(SHOULD) unsatisfied-range 값과 함께 Content-Range 헤더 필드를 보내야 하는데, 다음 예시와 같다:
 
-Content-Range: bytes \*/1234
+     Content-Range: bytes \*/1234
 
-The complete-length in a 416 response indicates the current length of
-the selected representation.
+416 응답의 complete-length는 선택된 표현의 현재 길이를 나타낸다.
 
-The Content-Range header field has no meaning for status codes that
-do not explicitly describe its semantic. For this specification,
-only the 206 (Partial Content) and 416 (Range Not Satisfiable) status
-codes describe a meaning for Content-Range.
+Content-Range 헤더 필드는 명시적으로 그 의미를 기술하지 않는 상태 코드들에 대해서는 어떤 의미도 가지지 않는다. 이 사양에서는, 오직 206(Partial Coontent)와 416(Range Not Satisfiable) 상태 코드들만이 Content-Range에 대한 의미를 기술한다.
 
-The following are examples of Content-Range values in which the
-selected representation contains a total of 1234 bytes:
+다음 예시들은 선택된 표현이 총 1234 바이트를 포함하는 경우의 Content-Range 값들이다:
 
-- The first 500 bytes:
+- 첫 500 bytes:
 
   Content-Range: bytes 0-499/1234
 
-- The second 500 bytes:
+- 둘째 500 bytes:
 
   Content-Range: bytes 500-999/1234
 
-- All except for the first 500 bytes:
+- 첫 500 bytes를 제외한 모두:
 
   Content-Range: bytes 500-1233/1234
 
-- The last 500 bytes:
+- 마지막 500 bytes:
 
   Content-Range: bytes 734-1233/1234
 
