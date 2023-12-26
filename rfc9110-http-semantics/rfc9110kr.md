@@ -258,14 +258,14 @@ than English.
 [14. 범위 요청들](#14-범위-요청들)
 
 - [14.1. Range Units](#141-range-units)
-  - [14.1.1 Range Specifiers](#1411-range-specifiers)
-  - [14.1.2 Byte Ranges](#1412-byte-ranges)
-  - [14.1.2. Byte Ranges](#1412-byte-ranges)
-  - [14.2. Range](#142-range)
-  - [14.3. Accept-Ranges](#143-accept-ranges)
-  - [14.4. Content-Range](#144-content-range)
-    14.5. Partial PUT
-    14.6. Media Type multipart/byteranges
+  - - [14.1.1 Range Specifiers](#1411-range-specifiers)
+  - - [14.1.2 Byte Ranges](#1412-byte-ranges)
+  - - [14.1.2. Byte Ranges](#1412-byte-ranges)
+- [14.2. Range](#142-range)
+- [14.3. Accept-Ranges](#143-accept-ranges)
+- [14.4. Content-Range](#144-content-range)
+- [14.5. 부분적 PUT](#145-부분적-put)
+- [14.6. Media Type multipart/byteranges](#146-media-type-multipartbyteranges)
 
 [15. 상태 코드](#15-상태-코드)
 
@@ -3264,7 +3264,7 @@ Content-Range 헤더 필드는 명시적으로 그 의미를 기술하지 않는
 
 부분적 리소스 업데이트들은 별도로 식별된 더 큰 리소스의 부분을 겹치거나 확장하는 상태의 리소스를 타게팅하거나, 혹은 부분 업데이트들을 위해 특별히 정의된 다른 메소드를 사용함으로써(예를 들어, [[RFC5789](https://www.rfc-editor.org/info/rfc5789)]에 정의된 PATCH 메소드) 가능하다.
 
-14.6. Media Type multipart/byteranges
+### 14.6. Media Type multipart/byteranges
 
 When a 206 (Partial Content) response message includes the content of
 multiple ranges, they are transmitted as body parts in a multipart
