@@ -3254,29 +3254,15 @@ Content-Range 헤더 필드는 명시적으로 그 의미를 기술하지 않는
 
   Content-Range: bytes 734-1233/1234
 
-  14.5. Partial PUT
+### 14.5. 부분적 PUT
 
-Some origin servers support PUT of a partial representation when the
-user agent sends a Content-Range header field (Section 14.4) in the
-request, though such support is inconsistent and depends on private
-agreements with user agents. In general, it requests that the state
-of the target resource be partly replaced with the enclosed content
-at an offset and length indicated by the Content-Range value, where
-the offset is relative to the current selected representation.
+비록 비일관적이고 유저 에이전트들과의 사적인 합의들에 의존하긴 하지만, 일부 오리진 서버들은 유저 에이전트가 요청에 Content-Range 필드(14.4절)을 보낼 때 부분적 표현의 PUT을 지원하기도 한다. 일반적으로, 이는 타겟 리소스의 상태가 Content-Range 값에 의해 지정된 offset과 길이에서 동봉된 콘텐츠로 부분적으로 대체되길 요청하며, 여기서 offset은 현재 선택된 표현에 대해 상대적이다.
 
-An origin server SHOULD respond with a 400 (Bad Request) status code
-if it receives Content-Range on a PUT for a target resource that does
-not support partial PUT requests.
+오리진 서버는 만약 부분적 PUT 요청들을 지원하지 않는 타겟 리소스에 대한 PUT에서 Content-Range를 수신한다면 웬만하면(SHOULD) 400(Bad Request) 상태 코드로 응답해야 한다.
 
-Partial PUT is not backwards compatible with the original definition
-of PUT. It may result in the content being written as a complete
-replacement for the current representation.
+부분적 PUT은 PUT의 원래 정의에 있어 하위 호환성이 없다. 현재 표현을 위한 완전한 대체로 콘텐츠가 작성되는 결과를 낳을 수 있다.
 
-Partial resource updates are also possible by targeting a separately
-identified resource with state that overlaps or extends a portion of
-the larger resource, or by using a different method that has been
-specifically defined for partial updates (for example, the PATCH
-method defined in [RFC5789]).
+부분적 리소스 업데이트들은 별도로 식별된 더 큰 리소스의 부분을 겹치거나 확장하는 상태의 리소스를 타게팅하거나, 혹은 부분 업데이트들을 위해 특별히 정의된 다른 메소드를 사용함으로써(예를 들어, [[RFC5789](https://www.rfc-editor.org/info/rfc5789)]에 정의된 PATCH 메소드) 가능하다.
 
 14.6. Media Type multipart/byteranges
 
