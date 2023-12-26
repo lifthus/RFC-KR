@@ -258,14 +258,14 @@ than English.
 [14. 범위 요청들](#14-범위-요청들)
 
 - [14.1. Range Units](#141-range-units)
-  - [14.1.1 Range Specifiers](#1411-range-specifiers)
-  - [14.1.2 Byte Ranges](#1412-byte-ranges)
-    14.1.2. Byte Ranges
-    14.2. Range
-    14.3. Accept-Ranges
-    14.4. Content-Range
-    14.5. Partial PUT
-    14.6. Media Type multipart/byteranges
+  - - [14.1.1 Range Specifiers](#1411-range-specifiers)
+  - - [14.1.2 Byte Ranges](#1412-byte-ranges)
+  - - [14.1.2. Byte Ranges](#1412-byte-ranges)
+- [14.2. Range](#142-range)
+- [14.3. Accept-Ranges](#143-accept-ranges)
+- [14.4. Content-Range](#144-content-range)
+- [14.5. 부분적 PUT](#145-부분적-put)
+- [14.6. Media Type multipart/byteranges](#146-media-type-multipartbyteranges)
 
 [15. 상태 코드](#15-상태-코드)
 
@@ -3174,57 +3174,34 @@ If-Range 헤더 필드(13.1.5절)는 Range 헤더 필드를 적용하기 위한 
 
 만약 모든 사전 조건들이 참이고, 서버가 타겟 리소스에 대해 Range 헤더 필드를 지원하고, 수신된 Range 필드-값이 유효한 ranges-specifier를 포함하고, range-unit은 해당 타겟 리소스에 대해 지원되지 않거나 ranges-specifier가 선택된 표현에 대해 만족할 수 없다면, 서버는 웬만하면(SHOULD) 416(Range Not Satisfiable) 응답을 보내야 한다.
 
-14.3. Accept-Ranges
+### 14.3. Accept-Ranges
 
-The "Accept-Ranges" field in a response indicates whether an upstream
-server supports range requests for the target resource.
+응답의 "Accept-Ranges" 필드는 업스트림 서버가 타겟 리소스에 대해 범위 요청들을 지원하는지를 나타낸다.
 
      Accept-Ranges     = acceptable-ranges
      acceptable-ranges = 1#range-unit
 
-For example, a server that supports byte-range requests
-(Section 14.1.2) can send the field
+예를 들어, byte-range 요청들(14.1.2절)을 지원하는 서버는 다음 필드를
 
-Accept-Ranges: bytes
+     Accept-Ranges: bytes
 
-to indicate that it supports byte range requests for that target
-resource, thereby encouraging its use by the client for future
-partial requests on the same request path. Range units are defined
-in Section 14.1.
+타겟 리소스에 대해 byte range 요청들을 지원한다는 것을 나타내기 위해 보낼 수 있으며, 그리하여 같은 요청 경로 상의 차후의 부분 요청들에 대해 클라이언트에 의해 그것이 사용되는 것을 장려한다. Range unit들은 14.1절에 정의된다.
 
-A client MAY generate range requests regardless of having received an
-Accept-Ranges field. The information only provides advice for the
-sake of improving performance and reducing unnecessary network
-transfers.
+클라이언트는 아마(MAY) Accept-Ranges 필드를 수신한 것과 관계없이 범위 요청들을 생성할 수도 있을 것이다. 이 필드의 정보는 오직 성능을 향상시키고 불필요한 네트워크 전송들을 줄이기 위한 조언만을 제공한다.
 
-Conversely, a client MUST NOT assume that receiving an Accept-Ranges
-field means that future range requests will return partial responses.
-The content might change, the server might only support range
-requests at certain times or under certain conditions, or a different
-intermediary might process the next request.
+거꾸로, 클라이언트는 절대(MUST NOT) Accept-Ranges 필드를 수신한 것이 차후 범위 요청들이 부분 응답들을 반환할 것임을 의미한다고 가정해서는 안된다. 콘텐츠는 변경될 수도 있고, 서버는 오직 특정 시간대나 특정 조건들 아래서만 범위 요청들을 지원할 수도 있으며, 혹은 다른 중개자가 다음 요청을 처리할 수도 있다.
 
-A server that does not support any kind of range request for the
-target resource MAY send
+타겟 리소스에 대해 어떠한 범위 요청들도 지원하지 않는 서버는 아마(MAY) 다음을 보내서
 
-Accept-Ranges: none
+     Accept-Ranges: none
 
-to advise the client not to attempt a range request on the same
-request path. The range unit "none" is reserved for this purpose.
+클라이언트가 같은 요청 경로 상에서 범위 요청을 시도하지 않도록 조언할 수도 있을 것이다. range unit "none"은 이 목적을 위해 예약된다.
 
-The Accept-Ranges field MAY be sent in a trailer section, but is
-preferred to be sent as a header field because the information is
-particularly useful for restarting large information transfers that
-have failed in mid-content (before the trailer section is received).
+Accept-Ranges 필드는 아마(MAY) 트레일러 섹션에서 보내질 수도 있지만, 헤더 필드로서 보내지는 것이 선호되는데 이는 해당 정보가 중간 콘텐츠에서 실패한(트레일러 섹션이 수신되기 전에) 큰 정보 전송들을 재시작하는 데 특히 유용하기 때문이다.
 
-14.4. Content-Range
+### 14.4. Content-Range
 
-The "Content-Range" header field is sent in a single part 206
-(Partial Content) response to indicate the partial range of the
-selected representation enclosed as the message content, sent in each
-part of a multipart 206 response to indicate the range enclosed
-within each body part (Section 14.6), and sent in 416 (Range Not
-Satisfiable) responses to provide information about the selected
-representation.
+"Content-Range" 헤더 필드는 메시지 콘텐츠로 동봉된 선택된 표현의 부분적 범위를 나타내기 위해서 단일 부분 206(Partial Content) 응답에서 보내지고, 각 바디 파트 내에 동봉된 범위를 나타내기 위해 multipart 206 응답의 각 부분에서 보내지며(14.6절), 선택된 표현에 관한 정보를 제공하기 위해 416(Range Not Satisfiable) 응답들에서 보내진다.
 
      Content-Range       = range-unit SP
                            ( range-resp / unsatisfied-range )
@@ -3235,99 +3212,59 @@ representation.
 
      complete-length     = 1*DIGIT
 
-If a 206 (Partial Content) response contains a Content-Range header
-field with a range unit (Section 14.1) that the recipient does not
-understand, the recipient MUST NOT attempt to recombine it with a
-stored representation. A proxy that receives such a message SHOULD
-forward it downstream.
+만약 206(Partial Content) 응답이 수신자가 이해하지 못하는 range unit(14.1절)과 함께 있는 Content-Range 헤더 필드를 포함한다면, 수신자는 절대(MUST NOT) 그것을 저장된 표현과 재결합하려고 시도해서는 안된다. 그러한 메시지를 수신하는 프록시는 웬만하면(SHOULD) 그것을 다운스트림으로 포워딩해야 한다.
 
-Content-Range might also be sent as a request modifier to request a
-partial PUT, as described in Section 14.5, based on private
-agreements between client and origin server. A server MUST ignore a
-Content-Range header field received in a request with a method for
-which Content-Range support is not defined.
+Content-Range는 또한, 14.5절에 기술된대로, 클라이언트와 오리진 서버 간의 사적인 합의들에 기반하여 부분적 PUT을 요청하기 위해 요청 수정자로서 보내질 수도 있다. 서버는 Content-Range 지원이 정의되지 않은 메소드와의 요청에서 수신한 Content-Range 헤더 필드를 반드시(MUST) 무시해야 한다.
 
-For byte ranges, a sender SHOULD indicate the complete length of the
-representation from which the range has been extracted, unless the
-complete length is unknown or difficult to determine. An asterisk
-character ("\*") in place of the complete-length indicates that the
-representation length was unknown when the header field was
-generated.
+byte range들에 대해, 발신자는 완전한 길이가 알려지지 않았거나 결정하기 어려운 것이 아닌 한, 웬만하면(SHOULD) 범위가 추출된 표현의 완전한 길이를 나타내야 한다. complete-length 대신의 한 asterisk 문자("\*")는 헤더 필드가 생성됐을 때 표현 길이가 알려지지 않았음을 나타낸다.
 
-The following example illustrates when the complete length of the
-selected representation is known by the sender to be 1234 bytes:
+다음 예시는 선택된 표현의 완전한 길이가 1234 바이트라고 송신자에게 알려졌을 때를 보여준다:
 
-Content-Range: bytes 42-1233/1234
+     Content-Range: bytes 42-1233/1234
 
-and this second example illustrates when the complete length is
-unknown:
+그리고 이 두번째 예시는 완전한 길이가 알려지지 않았을 때를 보여준다.
 
-Content-Range: bytes 42-1233/\*
+     Content-Range: bytes 42-1233/\*
 
-A Content-Range field value is invalid if it contains a range-resp
-that has a last-pos value less than its first-pos value, or a
-complete-length value less than or equal to its last-pos value. The
-recipient of an invalid Content-Range MUST NOT attempt to recombine
-the received content with a stored representation.
+Content-Range 필드 값은 만약 그것이 first-pos 값보다 작은 last-pos 값을 가지거나, 혹은 last-pos 값보다 작거나 같은 complete-length 값을 가지는 range-resp를 포함한다면 유효하지 않다. 유효하지 않은 Content-Range의 수신자는 절대(MUST NOT) 수신한 콘텐츠를 저장된 표현과 재결합하려고 시도해서는 안된다.
 
-A server generating a 416 (Range Not Satisfiable) response to a byte-
-range request SHOULD send a Content-Range header field with an
-unsatisfied-range value, as in the following example:
+byte-range 요청에 대해 416(Range Not Satisfiable) 응답을 생성하는 서버는 웬만하면(SHOULD) unsatisfied-range 값과 함께 Content-Range 헤더 필드를 보내야 하는데, 다음 예시와 같다:
 
-Content-Range: bytes \*/1234
+     Content-Range: bytes \*/1234
 
-The complete-length in a 416 response indicates the current length of
-the selected representation.
+416 응답의 complete-length는 선택된 표현의 현재 길이를 나타낸다.
 
-The Content-Range header field has no meaning for status codes that
-do not explicitly describe its semantic. For this specification,
-only the 206 (Partial Content) and 416 (Range Not Satisfiable) status
-codes describe a meaning for Content-Range.
+Content-Range 헤더 필드는 명시적으로 그 의미를 기술하지 않는 상태 코드들에 대해서는 어떤 의미도 가지지 않는다. 이 사양에서는, 오직 206(Partial Coontent)와 416(Range Not Satisfiable) 상태 코드들만이 Content-Range에 대한 의미를 기술한다.
 
-The following are examples of Content-Range values in which the
-selected representation contains a total of 1234 bytes:
+다음 예시들은 선택된 표현이 총 1234 바이트를 포함하는 경우의 Content-Range 값들이다:
 
-- The first 500 bytes:
+- 첫 500 bytes:
 
   Content-Range: bytes 0-499/1234
 
-- The second 500 bytes:
+- 둘째 500 bytes:
 
   Content-Range: bytes 500-999/1234
 
-- All except for the first 500 bytes:
+- 첫 500 bytes를 제외한 모두:
 
   Content-Range: bytes 500-1233/1234
 
-- The last 500 bytes:
+- 마지막 500 bytes:
 
   Content-Range: bytes 734-1233/1234
 
-  14.5. Partial PUT
+### 14.5. 부분적 PUT
 
-Some origin servers support PUT of a partial representation when the
-user agent sends a Content-Range header field (Section 14.4) in the
-request, though such support is inconsistent and depends on private
-agreements with user agents. In general, it requests that the state
-of the target resource be partly replaced with the enclosed content
-at an offset and length indicated by the Content-Range value, where
-the offset is relative to the current selected representation.
+비록 비일관적이고 유저 에이전트들과의 사적인 합의들에 의존하긴 하지만, 일부 오리진 서버들은 유저 에이전트가 요청에 Content-Range 필드(14.4절)을 보낼 때 부분적 표현의 PUT을 지원하기도 한다. 일반적으로, 이는 타겟 리소스의 상태가 Content-Range 값에 의해 지정된 offset과 길이에서 동봉된 콘텐츠로 부분적으로 대체되길 요청하며, 여기서 offset은 현재 선택된 표현에 대해 상대적이다.
 
-An origin server SHOULD respond with a 400 (Bad Request) status code
-if it receives Content-Range on a PUT for a target resource that does
-not support partial PUT requests.
+오리진 서버는 만약 부분적 PUT 요청들을 지원하지 않는 타겟 리소스에 대한 PUT에서 Content-Range를 수신한다면 웬만하면(SHOULD) 400(Bad Request) 상태 코드로 응답해야 한다.
 
-Partial PUT is not backwards compatible with the original definition
-of PUT. It may result in the content being written as a complete
-replacement for the current representation.
+부분적 PUT은 PUT의 원래 정의에 있어 하위 호환성이 없다. 현재 표현을 위한 완전한 대체로 콘텐츠가 작성되는 결과를 낳을 수 있다.
 
-Partial resource updates are also possible by targeting a separately
-identified resource with state that overlaps or extends a portion of
-the larger resource, or by using a different method that has been
-specifically defined for partial updates (for example, the PATCH
-method defined in [RFC5789]).
+부분적 리소스 업데이트들은 별도로 식별된 더 큰 리소스의 부분을 겹치거나 확장하는 상태의 리소스를 타게팅하거나, 혹은 부분 업데이트들을 위해 특별히 정의된 다른 메소드를 사용함으로써(예를 들어, [[RFC5789](https://www.rfc-editor.org/info/rfc5789)]에 정의된 PATCH 메소드) 가능하다.
 
-14.6. Media Type multipart/byteranges
+### 14.6. Media Type multipart/byteranges
 
 When a 206 (Partial Content) response message includes the content of
 multiple ranges, they are transmitted as body parts in a multipart
