@@ -3266,33 +3266,19 @@ Content-Range 헤더 필드는 명시적으로 그 의미를 기술하지 않는
 
 ### 14.6. Media Type multipart/byteranges
 
-When a 206 (Partial Content) response message includes the content of
-multiple ranges, they are transmitted as body parts in a multipart
-message body ([RFC2046], Section 5.1) with the media type of
-"multipart/byteranges".
+206(Partial Content) 응답 메시지가 여러 범위들의 콘텐츠를 포함할 때, 그것들은 "multipart/byteranges" 미디어 타입과 함께 multipart 메시지 바디에서 바디 파트들로 전송된다([[RFC2046](https://www.rfc-editor.org/info/rfc2046)], 5.1절).
 
-The "multipart/byteranges" media type includes one or more body
-parts, each with its own Content-Type and Content-Range fields. The
-required boundary parameter specifies the boundary string used to
-separate each body part.
+"multipart/byteranges" 미디어 타입은 하나 이상의 바디 파트들을 포함하며, 각각 자신의 Content-Type과 Content-Range 필드들과 함께 한다. 요청된 바운더리 파라미터는 각 바디 파트를 구별하기 위해 사용된 바운더리 스트링을 지정한다.
 
-Implementation Notes:
+구현시 주의사항들:
 
-1.  Additional CRLFs might precede the first boundary string in the
-    body.
+1. 추가적인 CRLF들은 바디의 첫 바운더리 스트링에 앞설 수 있다.
 
-2.  Although [RFC2046] permits the boundary string to be quoted, some
-    existing implementations handle a quoted boundary string
-    incorrectly.
+2. [[RFC2046](https://www.rfc-editor.org/info/rfc2046)]은 바운더리 스트링이 따옴표로 둘러싸여 있도록 허용하지만, 일부 기존 구현체들은 따옴표 바운더리 스트링을 잘못되게 처리한다.
 
-3.  A number of clients and servers were coded to an early draft of
-    the byteranges specification that used a media type of
-    "multipart/x-byteranges", which is almost (but not quite)
-    compatible with this type.
+3. 많은 클라이언트들과 서버들은, 이 타입과 거의(하지만 완전히는 아닌) 호환되는 "multipart/x-byteranges" 미디어 타입을 사용하는 byteranges 사양의 초기 초안에 따라 코딩되었다.
 
-Despite the name, the "multipart/byteranges" media type is not
-limited to byte ranges. The following example uses an "exampleunit"
-range unit:
+그 이름에도 불구하고, "multipart/byteranges" 미디어 타입은 byte 범위들로 제한되지 않는다. 다음 예시는 "exampleunit" range unit을 사용한다:
 
 HTTP/1.1 206 Partial Content
 Date: Tue, 14 Nov 1995 06:25:24 GMT
@@ -3312,8 +3298,7 @@ Content-Range: exampleunit 11.2-14.3/25
 ...the second range
 --THIS_STRING_SEPARATES--
 
-The following information serves as the registration form for the
-"multipart/byteranges" media type.
+다음의 정보는 "multipart/byteranges" 미디어 타입을 위한 등록 폼으로서 사용된다.
 
 Type name: multipart
 
