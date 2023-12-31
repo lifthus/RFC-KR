@@ -2753,7 +2753,7 @@ Accept-Encoding의 가장 흔한 사용처는, 클라이언트들에 의한 낙�
 
 matching을 위해, [[RFC4647](https://www.rfc-editor.org/info/rfc4647)]의 3절은 몇몇 matching scheme들을 정의한다. 구현들은 그들의 요구사항을 위해 가장 적합한 matching scheme을 제공할 수 있다. "Basic Filtering" scheme([RFC4647](https://www.rfc-editor.org/info/rfc4647), 3.3.1절)은 [[RFC2616](https://www.rfc-editor.org/info/rfc2616)]의 14.4절에 HTTP를 위해 이전에 정의된 matching scheme과 동일하다.
 
-모든 요청에서 유저의 완전한 언허적 선호들과 Accept-Language 헤더 필드를 보내는 것은 유저의 프라이버시 기대사항들에 반할 수도 있다.
+모든 요청에서 유저의 완전한 언어적 선호들과 Accept-Language 헤더 필드를 보내는 것은 유저의 프라이버시 기대사항들에 반할 수도 있다.
 
 이해가능성은 개인 유저들에 크게 의존적이기 때문에, 유저 에이전트들은 유저들이 언어적 선호를 제어할 수 있도록 해야 한다(유저 에이전트 자체의 설정을 통해 혹은 유저가 제어할 수 있는 시스템 설정을 기본값으로 함으로써). 그러한 제어를 유저에게 제공하지 않는 유저 에이전트는 절대(MUST NOT) Accept-Language 헤더 필드를 보내서는 안된다.
 
