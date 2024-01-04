@@ -3506,29 +3506,29 @@ If-Range 헤더 필드를 갖는 요청에 대한 206 응답을 생성하는 발
 
 다중 파트 콘텐츠의 각 body 부분의 헤더 영역 내에서, 서버는 해당 body 부분으로 둘러싸인 범위에 해당하는 Content-Range 헤더 필드를 생성해야 한다. 만약 선택한 표현에 200(OK) 응답에서 Content-Type 헤더 필드가 있다면, 서버는 각 body 부분의 헤더 영역에 동일한 Content-Type 헤더 필드를 생성해야 한다. 예를 들어:
 
-HTTP/1.1 206 Partial Content
-Date: Wed, 15 Nov 1995 06:25:24 GMT
-Last-Modified: Wed, 15 Nov 1995 04:58:08 GMT
-Content-Length: 1741
-Content-Type: multipart/byteranges; boundary=THIS_STRING_SEPARATES
+     HTTP/1.1 206 Partial Content
+     Date: Wed, 15 Nov 1995 06:25:24 GMT
+     Last-Modified: Wed, 15 Nov 1995 04:58:08 GMT
+     Content-Length: 1741
+     Content-Type: multipart/byteranges; boundary=THIS_STRING_SEPARATES
 
---THIS_STRING_SEPARATES
-Content-Type: application/pdf
-Content-Range: bytes 500-999/8000
+     --THIS_STRING_SEPARATES
+     Content-Type: application/pdf
+     Content-Range: bytes 500-999/8000
 
-...the first range...
---THIS_STRING_SEPARATES
-Content-Type: application/pdf
-Content-Range: bytes 7000-7999/8000
+     ...the first range...
+     --THIS_STRING_SEPARATES
+     Content-Type: application/pdf
+     Content-Range: bytes 7000-7999/8000
 
-...the second range
---THIS_STRING_SEPARATES--
+     ...the second range
+     --THIS_STRING_SEPARATES--
 
 여러 범위들이 요청될 때, 서버는 아마(MAY) 겹치거나, 혹은 여러 파트들을 보낼 때의 오버헤드 보다 작은 간격으로 나눠진 어느 범위들이든 합칠 수 있을 것이며, 수신된 Range 헤더 필드에서 해당하는 range-spec이 나타나는 순서와는 관계 없다. "multiple/byteranges"의 각 파트들 사이의 전형적인 오버헤드는 80 바이트 정도이기 때문에, 선택된 표현의 미디어 타입과 선택된 경계 파라미터 길이에 따라, 선택된 표현의 전체를 전송하는 것보다 분리된 많은 작은 부분들을 전송하는 것이 덜 효율적일 수 있다.
 
-여러 부분을 요청하지 않는 클라이언트는 다중 부분 응답을 지원하지 않을 수 있으므로 서버는 단일 범위에 대한 요청에 대해 다중 부분 응답을 절대(MUST NOT) 생성해서는 안 된다. 그러나, 여러 범위가 요청되었으나 하나의 범위만이 만족스러운 것으로 확인되거나 합쳐진 후 하나의 범위만 남은 경우 서버는 단일 body 부분으로만 "multipart/byteranges" 응답을 아마(MAY) 생성할 수 있다. "multipart/byteranges” 응답을 처리할 수 없는 클라이언트는 다중 범위를 요청하는 요청을 절대(MUST NOT) 생성해서는 안 된다.
+여러 부분을 요청하지 않는 클라이언트는 다중 부분 응답을 지원하지 않을 수 있으므로 서버는 단일 범위에 대한 요청에 대해 다중 부분 응답을 절대(MUST NOT) 생성해서는 안된다. 그러나, 여러 범위가 요청되었으나 하나의 범위만이 만족스러운 것으로 확인되거나 합쳐진 후 하나의 범위만 남은 경우 서버는 단일 body 부분으로만 "multipart/byteranges" 응답을 아마(MAY) 생성할 수 있을 것이다. "multipart/byteranges” 응답을 처리할 수 없는 클라이언트는 다중 범위를 요청하는 요청을 절대(MUST NOT) 생성해서는 안 된다.
 
-다중 파트 응답을 생성하는 서버는 수신된 범위 헤더 필드에 대한 범위 사양이 표시된 순서대로 파트를 웬만하면(SHOULD) 보내야 하며, 만족스럽지 않은 것으로 간주되거나 다른 범위로 합쳐진 범위는 제외해야 한다. 다중 파트 응답을 수신하는 클라이언트는 각 body 파트에 있는 Content-Range 헤더 필드를 반드시(MUST) 검사하여 해당 body 파트에 포함된 범위를 확인해야 한다; 클라이언트는 요청한 것과 동일한 범위나, 동일한 순서를 받을 것이라고 확신할 수 없다.
+다중 파트 응답을 생성하는 서버는 웬만하면(SHOULD) 수신된 범위 헤더 필드에 대한 범위 사양이 표시된 순서대로 파트를 보내야 하며, 만족스럽지 않은 것으로 간주되거나 다른 범위로 합쳐진 범위는 제외해야 한다. 다중 파트 응답을 수신하는 클라이언트는 각 body 파트에 있는 Content-Range 헤더 필드를 반드시(MUST) 검사하여 해당 body 파트에 포함된 범위를 확인해야 한다; 클라이언트는 요청한 것과 동일한 범위나, 동일한 순서를 받을 것이라고 확신할 수 없다.
 
 ##### 15.3.7.3. Combining Parts
 
