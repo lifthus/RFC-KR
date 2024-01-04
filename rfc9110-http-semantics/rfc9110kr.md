@@ -270,20 +270,20 @@ than English.
 [15. 상태 코드](#15-상태-코드)
 
 - [15.1. 상태 코드의 개요](#151-상태-코드의-개요)
-- [15.2. Informational 1xx](#152-Informational-1xx)
-  - [15.2.1. 100 Continue](#1521-100-Continue)
-  - [15.2.2. 101 Switching Protocols](#1522-101-Switching-Protocols)
-- [15.3. Successful 2xx](#153-Successful-2xx)
-  - [15.3.1. 200 OK](#1531-200-OK)
-  - [15.3.2. 201 Created](#1532-201-Created)
-  - [15.3.3. 202 Accepted](#1533-202-Accepted)
-  - [15.3.4. 203 Non-Authoritative Information](#1534-203-Non-Authoritative-Information)
-  - [15.3.5. 204 No Content ](#1535-204-No-Content)
-  - [15.3.6. 205 Reset Content](#1536-205-Reset-Content)
-  - [15.3.7. 206 Partial Content](#1537-206-Partial-Content)
-    - [15.3.7.1. Single Part](#15371-Single-Part)
-    - [15.3.7.2. Multiple Parts](#15372-Multiple-Parts)
-    - [15.3.7.3. Combining Parts](#15373-Combining-Parts)
+- [15.2. Informational 1xx](#152-informational-1xx)
+  - [15.2.1. 100 Continue](#1521-100-continue)
+  - [15.2.2. 101 Switching Protocols](#1522-101-switching-protocols)
+- [15.3. Successful 2xx](#153-successful-2xx)
+  - [15.3.1. 200 OK](#1531-200-ok)
+  - [15.3.2. 201 Created](#1532-201-created)
+  - [15.3.3. 202 Accepted](#1533-202-accepted)
+  - [15.3.4. 203 Non-Authoritative Information](#1534-203-non-authoritative-information)
+  - [15.3.5. 204 No Content ](#1535-204-no-content)
+  - [15.3.6. 205 Reset Content](#1536-205-reset-content)
+  - [15.3.7. 206 Partial Content](#1537-206-partial-content)
+    - [15.3.7.1. Single Part](#15371-single-part)
+    - [15.3.7.2. Multiple Parts](#15372-multiple-parts)
+    - [15.3.7.3. Combining Parts](#15373-combining-parts)
 - [15.4. Redirection 3xx](#154-Redirection-3xx)
   - [15.4.1. 300 Multiple Choices](#1541-300-Multiple-Choices)
   - [15.4.2. 301 Moved Permanently](#1542-301-Moved-Permanently)
@@ -3407,23 +3407,20 @@ Heuristic하게 캐시 가능한 것으로 정의된 상태 코드를 갖는 응
 200 응답으로 전송되는 내용은 요청 메소드에 따라 다르다.
 본 명세서에서 정의된 메소드의 경우, 콘텐츠의 의도된 의미는 다음과 같이 요약할 수 있다:
 
-+================+============================================+
-| Request Method | 응답 콘텐츠는 다음을 나타낸다: |
-+================+============================================+
-| GET | 타켓 리소스 |
-+----------------+--------------------------------------------+
-| HEAD | GET과 같이 대상 리소스를 전송하지만 표현 데이터는 전송하지 않는다. |
-+----------------+--------------------------------------------+
-| POST | 작업의 상태 또는 작업으로부터 얻은 결과 |
-+----------------+--------------------------------------------+
-| PUT, DELETE | 작업의 상태 |
-+----------------+--------------------------------------------+
-| OPTIONS | 대상 리소스에 대한 통신 옵션 |
-+----------------+--------------------------------------------+
-| TRACE | trace를 반환하는 서버에 의해 수신된 요청 메시지 |
-+----------------+--------------------------------------------+
+<center>
 
-                               Table 6
+| Request Method | 응답 콘텐츠는 다음을 나타낸다:                                     |
+| -------------- | ------------------------------------------------------------------ |
+| GET            | 타켓 리소스                                                        |
+| HEAD           | GET과 같이 대상 리소스를 전송하지만 표현 데이터는 전송하지 않는다. |
+| POST           | 작업의 상태 또는 작업으로부터 얻은 결과                            |
+| PUT, DELETE    | 작업의 상태                                                        |
+| OPTIONS        | 대상 리소스에 대한 통신 옵션                                       |
+| TRACE          | trace를 반환하는 서버에 의해 수신된 요청 메시지                    |
+
+Table 6
+
+</center>
 
 CONNECT에 대한 응답과 별도로, 메세지 프레임에 콘텐츠 길이가 0임을 명시적으로 표시하지 않는 한 200 응답은 메세지 콘텐츠를 포함할 것으로 예상한다. 요청의 일부 측면이 성공 시 콘텐츠가 없는 것을 선호하는 경우, origin 서버는 대신 204 (No Content) 응답을 전송해야 한다. CONNECT의 경우, 성공적인 결과는 200 응답 헤더 섹션 바로 뒤에 시작되는 터널이므로 콘텐츠가 없다.
 
