@@ -3498,7 +3498,7 @@ If-Range 헤더 필드를 갖는 요청에 대한 206 응답을 생성하는 발
      Content-Length: 26012
      Content-Type: image/gif
 
-... 26012 bytes of partial image data ...
+     ... 26012 bytes of partial image data ...
 
 ##### 15.3.7.2. Multiple Parts
 
