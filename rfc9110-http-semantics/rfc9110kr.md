@@ -3491,12 +3491,12 @@ If-Range 헤더 필드를 갖는 요청에 대한 206 응답을 생성하는 발
 
 만약 단일 부분이 전송되는 경우, 206 응답을 생성하는 서버는, 선택한 표현의 어떤 범위가 포함되는지를 기술하는 Content-Range 헤더 필드 및 범위로 구성되는 콘텐츠틑 반드시(MUST) 생성해야 한다. 예를 들어:
 
-HTTP/1.1 206 Partial Content
-Date: Wed, 15 Nov 1995 06:25:24 GMT
-Last-Modified: Wed, 15 Nov 1995 04:58:08 GMT
-Content-Range: bytes 21010-47021/47022
-Content-Length: 26012
-Content-Type: image/gif
+     HTTP/1.1 206 Partial Content
+     Date: Wed, 15 Nov 1995 06:25:24 GMT
+     Last-Modified: Wed, 15 Nov 1995 04:58:08 GMT
+     Content-Range: bytes 21010-47021/47022
+     Content-Length: 26012
+     Content-Type: image/gif
 
 ... 26012 bytes of partial image data ...
 
