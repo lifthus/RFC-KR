@@ -295,7 +295,7 @@ than English.
   - [15.4.8. 307 Temporary Redirect](#1548-307-temporary-redirect)
   - [15.4.9. 308 Permanent Redirect](#1549-308-permanent-redirect)
 - [15.5. Client Error 4xx](#155-client-error-4xx)
-  - [15.5.1. 400 Bad Request](#1551-400-Bad-Request)
+  - [15.5.1. 400 Bad Request](#1551-400-bad-request)
   - [15.5.2. 401 Unauthorized](#1552-401-Unauthorized)
   - [15.5.3. 402 Payment Required](#1553-402-Payment-Required)
   - [15.5.4. 403 Forbidden](#1554-403-Forbidden)
